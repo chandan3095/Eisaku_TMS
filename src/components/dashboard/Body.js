@@ -93,7 +93,7 @@ const Body = () => {
                            <div className="card-body">
                               <div className="tab-content p-0">
                                  <div className="chart tab-pane active" id="revenue-chart" style={{ position: 'relative', height: 300 }}>
-                                    <canvas id="revenue-chart-canvas" height={300} style={{ height: 300 }} />
+                                    <canvas id="revenue-chart-canvas" height={300} style={{ height: 300 }}/>
                                  </div>
                                  <div className="chart tab-pane" id="sales-chart" style={{ position: 'relative', height: 300 }}>
                                     <canvas id="sales-chart-canvas" height={300} style={{ height: 300 }} />
