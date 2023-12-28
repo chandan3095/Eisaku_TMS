@@ -1,10 +1,10 @@
 import './App.css';
-import EsakuDashboard from './pages/EsakuDashboard';
+import HomeDashboard from './pages/HomeDashboard';
 
 function App() {
   return (
     <div className="wrapper">
-        <EsakuDashboard />
+        <HomeDashboard />
     </div>
   );
 }
