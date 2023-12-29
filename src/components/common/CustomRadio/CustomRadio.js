@@ -1,12 +1,12 @@
 import React from 'react'
 
-const CustomRadio= () => {
+const CustomRadio= (props) => {
+  const{label, id, defaultChecked} = props
+
   return (
     <div className="icheck-primary d-inline">
-      <input type="radio" id="radioPrimary1" name="r1" defaultChecked />
-      <label htmlFor="radioPrimary1">
-        Primary radio one
-      </label>
+      <input type="radio" id={id} name="r1" defaultChecked />
+      {label && <label htmlFor={id}>{label}</label>}
     </div> 
   )
 }

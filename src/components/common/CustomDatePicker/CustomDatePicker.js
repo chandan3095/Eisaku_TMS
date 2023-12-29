@@ -1,9 +1,10 @@
 import React from "react";
 
-const CustomDatePicker = () => {
+const CustomDatePicker = (props) => {
+  const{label, id} = props 
   return (
     <div class="form-group">
-      <label>Date:</label>
+      {label && <label>{label}</label>} 
       <div
         class="input-group date"
         id="reservationdate"
