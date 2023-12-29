@@ -1,9 +1,9 @@
 import React from "react";
-import CustomInput from '../../../components/common/CustomInput';
-import CustomDatePicker from "../../../components/common/CustomDatePicker";
-import CustomRadio from "../../../components/common/CustomRadio";
-import CustomFileUpload from "../../../components/common/CustomFileUpload";
-import CustomDropdown from "../../../components/common/CustomDropdown";
+import CustomInput from '../../../components/common/CustomInput/CustomInput';
+import CustomDatePicker from "../../../components/common/CustomDatePicker/CustomDatePicker";
+import CustomRadio from "../../../components/common/CustomRadio/CustomRadio";
+import CustomFileUpload from "../../../components/common/CustomFileUpload/CustomFileUpload";
+import CustomDropdown from "../../../components/common/CustomDropdown/CustomDropdown";
 
 function FleetMasterAddForm() {
   return (
