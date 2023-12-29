@@ -1,6 +1,6 @@
 import React from "react";
 
-function CustomDropdown() {
+const CustomDropdown= () => {
   return (
     <div class="form-group">
       <label>Minimal</label>

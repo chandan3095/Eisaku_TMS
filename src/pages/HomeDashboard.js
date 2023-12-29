@@ -2,8 +2,7 @@ import React from 'react';
 import Header from '../components/common/Header';
 import Body from '../components/common/Body';
 import Footer from '../components/common/Footer';
-import CommonSideBar from '../components/common/CommonSideBar/Index';
-import Sidenav from '../components/common/Sidenav';
+import CommonSideBar from '../components/common/CommonSideBar';
 
 const HomeDashboard = () => {
   return (

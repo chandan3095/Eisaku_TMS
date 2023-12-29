@@ -1,6 +1,6 @@
 import React from "react";
 
-function CustomFileUpload() {
+const CustomFileUpload = () => {
   return (
     <div class="btn-group w-100">
       <span class="btn btn-success col fileinput-button">

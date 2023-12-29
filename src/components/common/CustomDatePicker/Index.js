@@ -1,6 +1,6 @@
 import React from "react";
 
-function CustomDatePicker() {
+const CustomDatePicker = () => {
   return (
     <div class="form-group">
       <label>Date:</label>

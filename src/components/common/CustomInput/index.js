@@ -1,14 +1,14 @@
 import React from "react";
 
-function CustomInput(props) {
-  const{label, inputType, placeholder} = props
+const CustomInput = (props) => {
+  const{label, id, inputType, placeholder} = props
   return (
     <div className="form-group">
-      {label && <label htmlFor="exampleInputEmail1">{label}</label>}  
+      {label && <label htmlFor={id}>{label}</label>}  
       <input
         type={`${inputType}`}
         className="form-control"
-        id="exampleInputEmail1"
+        id={id}
         placeholder={placeholder}
       />
     </div>
