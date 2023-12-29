@@ -268,20 +268,27 @@ function FleetMasterAddForm() {
             <CustomFileUpload />
             </div>
 
-
-
-
-
-
-
-
-
-
-            <CustomInput />
-            <CustomDatePicker />
+            {/* Tyre Sec */}
+            <div className="col-lg-4">
+            <label class="text-bold">Tyre</label>
+            <CustomDropdown selected='' optionData={['Odometer reading', 'Tyre Type (New/Remold) Nylon/Radial', 'Tyre Change date', 'Tyre Amount', 'Tyre Station Name']}/>
+            <label class="text-bold">Bill upload along with warranty status</label>
             <CustomFileUpload />
-            <CustomDropdown selected='' optionData={[]}/>
-            <CustomRadio />
+            </div>
+
+
+            {/* Tyre Sec */}
+            <div className="col-lg-4">
+            <label class="text-bold">Monthly Maintenance Budget (vehicle wise)</label>
+            <CustomInput
+              label="Fabricator Location"
+              id="fitnessAmount"
+              inputType="text"
+              placeholder="Enter Fabricator Location"
+            />
+            <label class="text-bold">Bill upload along with warranty status</label>
+            <CustomFileUpload />
+            </div>
           
         </div>
       </form>
