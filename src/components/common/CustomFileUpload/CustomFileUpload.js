@@ -4,7 +4,7 @@ const CustomFileUpload = () => {
   return (
     <div class="btn-group w-100">
       <span class="btn btn-success col fileinput-button">
-        <i class="fas fa-plus"></i>
+        <i class="fas fa-plus mr-2"></i>
         <span>Add files</span>
       </span>
       {/* <button type="submit" class="btn btn-primary col start">
