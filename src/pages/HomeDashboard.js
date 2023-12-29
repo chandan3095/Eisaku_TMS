@@ -1,14 +1,16 @@
 import React from 'react';
 import Header from '../components/common/Header';
-import Sidenav from '../components/common/Sidenav';
 import Body from '../components/common/Body';
 import Footer from '../components/common/Footer';
+import CommonSideBar from '../components/common/CommonSideBar/Index';
+import Sidenav from '../components/common/Sidenav';
 
 const HomeDashboard = () => {
   return (
     <div>
       <Header/>
-      <Sidenav/>
+      <CommonSideBar/>
+      {/* <Sidenav/> */}
       <Body/>
       <Footer/>
     </div>

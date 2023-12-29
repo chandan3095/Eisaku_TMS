@@ -563,7 +563,7 @@ const Sidenav = () => {
                            </li>
                         </ul>
                      </li>
-                     <li className="nav-header">MISCELLANEOUS</li>
+                     {/* <li className="nav-header">MISCELLANEOUS</li>
                      <li className="nav-item">
                         <a href="iframe.html" className="nav-link">
                            <i className="nav-icon fas fa-ellipsis-h" />
@@ -659,7 +659,7 @@ const Sidenav = () => {
                            <i className="nav-icon far fa-circle text-info" />
                            <p>Informational</p>
                         </a>
-                     </li>
+                     </li> */}
                   </ul>
                </nav>
             </div>

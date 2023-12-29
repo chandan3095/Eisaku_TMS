@@ -1,14 +1,18 @@
-import React from 'react'
+import React from "react";
 
-function CustomInput() {
+function CustomInput(props) {
+  const{label, inputType, placeholder} = props
   return (
-    <div>
-        <div className="form-group">
-            <label htmlFor="exampleInputEmail1">Email address</label>
-            <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Enter email" />
-        </div>
+    <div className="form-group">
+      {label && <label htmlFor="exampleInputEmail1">{label}</label>}  
+      <input
+        type={`${inputType}`}
+        className="form-control"
+        id="exampleInputEmail1"
+        placeholder={placeholder}
+      />
     </div>
-  )
+  );
 }
 
-export default CustomInput
+export default CustomInput;
