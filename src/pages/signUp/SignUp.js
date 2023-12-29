@@ -1,8 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CustomInput from '../../components/common/CustomInput/CustomInput';
 import CustomDropdown from '../../components/common/CustomDropdown/CustomDropdown';
 
 const SignUp = () => {
+   const [selectedOption, setSelectedOption] = useState('')
+   const [showManagerDropdown, setShowManagerDropdown] = useState(false)
+
+
+   const handleManagerDropdown = (value) => {
+      setSelectedOption(value)
+      console.log(value);
+      if (value === 'supervisor') {
+         setShowManagerDropdown(true)
+      } else {
+         setShowManagerDropdown(false)
+      }
+   }
+
    return (
       <div className="login-form d-flex justify-content-center align-items-center">
          <div className="card card-primary ">
@@ -22,9 +36,19 @@ const SignUp = () => {
                   </div>
                   <div className="form-group">
                      <label htmlFor="address">Enter Address</label>
-                     <textarea name="address" id="address" cols="30" rows="3" className='form-control' placeholder='Enter Address'></textarea>
+                     <textarea name="address" id="address" cols="30" rows="2" className='form-control' placeholder='Enter Address'></textarea>
                   </div>
-                  
+                  <div className="form-group">
+                     <label class="text-bold">Vehicle Category</label>
+                     <CustomDropdown selected='' optionData={['Select', 'supervisor', 'corporate admin', 'management', 'manager']}
+                        onSelect={handleManagerDropdown} />
+                  </div>
+                  {showManagerDropdown &&
+                     <div className="form-group">
+                        <label class="text-bold">Reporting Manager</label>
+                        <CustomDropdown selected='' optionData={['supervisor', 'corporate admin', 'management', 'manager']} />
+                     </div>
+                  }
                </div>
                <div className="card-footer d-flex justify-content-center">
                   <button type="submit" className="btn btn-primary">Submit</button>
