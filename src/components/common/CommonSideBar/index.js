@@ -8,7 +8,7 @@ const CommonSideBar = () => {
     <aside className="main-sidebar sidebar-dark-primary elevation-4">
     <a href="index3.html" className="brand-link">
        <img src={Logo} alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{ opacity: '.8' }} />
-       <span className="brand-text font-weight-light">Eisaku Transport Management</span>
+       <span className="brand-text font-weight-light">Eisaku TMS</span>
     </a>
     <div className="sidebar">
        <div className="user-panel mt-3 pb-3 mb-3 d-flex">
