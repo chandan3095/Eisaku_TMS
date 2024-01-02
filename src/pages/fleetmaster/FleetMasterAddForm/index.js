@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import CustomInput from "../../../components/common/CustomInput/CustomInput";
 import CustomDatePicker from "../../../components/common/CustomDatePicker/CustomDatePicker";
 import CustomRadio from "../../../components/common/CustomRadio/CustomRadio";
 import CustomFileUpload from "../../../components/common/CustomFileUpload/CustomFileUpload";
 import CustomDropdown from "../../../components/common/CustomDropdown/CustomDropdown";
+import CustomMonthYear from "../../../components/common/CustomMonthYear/CustomMonthYear";
 
 function FleetMasterAddForm() {
+  const [ fuelType, setFuelType]= useState(true)
+  const handelFuelType =(event) => {
+    const {value, name} = event
+    setFuelType(event.target.value);
+    console.log(value, name);
+  }
   return (
     <div className="container-fluid py-5">
       <form className="p-5 shadow-lg">
@@ -15,15 +22,13 @@ function FleetMasterAddForm() {
             <CustomInput
               label="Vehicle owner name"
               id="#vehicleOwner"
-              inputType="text"
               placeholder="Enter vehicle owner name"
             />
 
             {/* Dimension  */}
               <CustomInput
                 label="Dimension(L B H (ft))"
-                id="#dimension"
-                inputType="text"
+                id="#dimension"  
                 placeholder="Enter L B H (ft)"
               />
 
@@ -31,7 +36,6 @@ function FleetMasterAddForm() {
             <CustomInput
               label="Financed by"
               id="#financedBy"
-              inputType="text"
               placeholder="Enter name"
             />
 
@@ -42,18 +46,15 @@ function FleetMasterAddForm() {
             <CustomFileUpload />
             <CustomDatePicker
               label="Start date"
-              inputType="text"
               placeholder="Enter vehicle owner name"
             />
             <CustomDatePicker
               label="End date"
-              inputType="text"
               placeholder="Enter vehicle owner name"
             />
             <CustomInput
               label="Amount"
               id="emiAmount"
-              inputType="text"
               placeholder="Enter Amount"
             />
           </div>
@@ -64,13 +65,11 @@ function FleetMasterAddForm() {
             <CustomFileUpload />
             <CustomDatePicker
               label="Expiry Date"
-              inputType="text"
               placeholder="Enter Expiry Date"
             />            
             <CustomInput
               label="Amount"
               id="fitnessAmount"
-              inputType="text"
               placeholder="Enter Amount"
             />
             </div>
@@ -81,13 +80,11 @@ function FleetMasterAddForm() {
             <CustomFileUpload />
             <CustomDatePicker
               label="Expiry Date"
-              inputType="text"
               placeholder="Enter Expiry Date"
             />            
             <CustomInput
               label="Amount"
               id="fitnessAmount"
-              inputType="text"
               placeholder="Enter Amount"
             />
             </div>            
@@ -98,13 +95,11 @@ function FleetMasterAddForm() {
             <CustomFileUpload />
             <CustomDatePicker
               label="Expiry Date"
-              inputType="text"
               placeholder="Enter Expiry Date"
             />            
             <CustomInput
               label="Amount"
               id="fitnessAmount"
-              inputType="text"
               placeholder="Enter Amount"
             />
             </div>
@@ -115,13 +110,11 @@ function FleetMasterAddForm() {
             <CustomFileUpload />
             <CustomDatePicker
               label="Expiry Date"
-              inputType="text"
               placeholder="Enter Expiry Date"
             />            
             <CustomInput
               label="Amount"
               id="fitnessAmount"
-              inputType="text"
               placeholder="Enter Amount"
             />
             </div>
@@ -132,13 +125,11 @@ function FleetMasterAddForm() {
             <CustomFileUpload />
             <CustomDatePicker
               label="Expiry Date"
-              inputType="text"
               placeholder="Enter Expiry Date"
             />            
             <CustomInput
               label="Amount"
               id="fitnessAmount"
-              inputType="text"
               placeholder="Enter Amount"
             />
             </div>
@@ -165,8 +156,7 @@ function FleetMasterAddForm() {
             <div className="col-lg-4">
             <label class="text-bold">Make</label>
             <CustomFileUpload />
-
-            <CustomDropdown selected='' optionData={[]}/>
+            <CustomDropdown selected='' optionData={['Tata', 'Eicher', 'Ashok leyland']} />
 
             </div>
 
@@ -174,20 +164,19 @@ function FleetMasterAddForm() {
             <div className="col-lg-4">
             <label class="text-bold">Model</label>
             <CustomFileUpload />
+            <CustomMonthYear />
+
             </div>
 
             {/* Fuel Type Sec */}
             <div className="col-lg-4">
             <label class="text-bold">Fuel Type</label>
             <CustomFileUpload />
-            <CustomRadio />
+            <div className="form-group" >
+            <CustomRadio label="Diesel" id="diesel" value="Diesel" name="fuelType" onChange={handelFuelType}/>
+            <CustomRadio label="CNG" id="cng" value="CNG" name="fuelType" onChange={handelFuelType}/>
             </div>
 
-            {/* Fuel Type Sec */}
-            <div className="col-lg-4">
-            <label class="text-bold">Fuel Type</label>
-            <CustomFileUpload />
-            <CustomRadio />
             </div>
 
             {/* Fuel Type Sec */}
@@ -196,13 +185,11 @@ function FleetMasterAddForm() {
             <CustomFileUpload />
             <CustomDatePicker
               label="Expiry Date"
-              inputType="text"
               placeholder="Enter Expiry Date"
             />            
             <CustomInput
               label="Amount"
               id="fitnessAmount"
-              inputType="text"
               placeholder="Enter Amount"
             />
             </div>
@@ -212,13 +199,11 @@ function FleetMasterAddForm() {
             <CustomInput
               label="GPS Provider Name"
               id="#gpsProvider"
-              inputType="text"
               placeholder="Enter GPS Provider Name"
             />
             <CustomInput
               label="Amount"
               id="fitnessAmount"
-              inputType="text"
               placeholder="Enter Amount"
             />
             </div>
@@ -228,7 +213,6 @@ function FleetMasterAddForm() {
             <CustomInput
               label="Fastag bank name"
               id="fitnessAmount"
-              inputType="text"
               placeholder="Enter Fastag bank name"
             />
             </div>
@@ -238,13 +222,11 @@ function FleetMasterAddForm() {
             <CustomInput
               label="Fabricator Name"
               id="fitnessAmount"
-              inputType="text"
               placeholder="Enter Fabricator Name"
             />
             <CustomInput
               label="Fabricator Location"
               id="fitnessAmount"
-              inputType="text"
               placeholder="Enter Fabricator Location"
             />
             </div>
@@ -266,6 +248,8 @@ function FleetMasterAddForm() {
             <label class="text-bold">Service Record</label>
             <CustomDropdown selected='' optionData={['Odometer reeding', 'Service date', 'Service Amount', 'Service Station Name']}/>
             <CustomFileUpload />
+            <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</button>
+
             </div>
 
             {/* Tyre Sec */}
@@ -274,6 +258,8 @@ function FleetMasterAddForm() {
             <CustomDropdown selected='' optionData={['Odometer reading', 'Tyre Type (New/Remold) Nylon/Radial', 'Tyre Change date', 'Tyre Amount', 'Tyre Station Name']}/>
             <label class="text-bold">Bill upload along with warranty status</label>
             <CustomFileUpload />
+            <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</button>
+
             </div>
 
 
@@ -281,10 +267,9 @@ function FleetMasterAddForm() {
             <div className="col-lg-4">
             <label class="text-bold">Monthly Maintenance Budget (vehicle wise)</label>
             <CustomInput
-              label="Fabricator Location"
+              label="Amount"
               id="fitnessAmount"
-              inputType="text"
-              placeholder="Enter Fabricator Location"
+              placeholder="Enter Amount"
             />
             <label class="text-bold">Bill upload along with warranty status</label>
             <CustomFileUpload />

@@ -1,12 +1,12 @@
 import React from "react";
 
-const CustomInput = (props) => {
+const CustomMonthYear = (props) => {
   const{label, id, placeholder} = props
   return (
     <div className="form-group">
       {label && <label htmlFor={id}>{label}</label>}  
       <input
-        type="text"
+        type="month"
         className="form-control"
         id={id}
         placeholder={placeholder}
@@ -15,4 +15,4 @@ const CustomInput = (props) => {
   );
 }
 
-export default CustomInput;
+export default CustomMonthYear;
