@@ -22,6 +22,10 @@ function ListUser() {
          name: 'Supervisor Name',
          selector: row => row.supervisor,
          sortable: true
+      },
+      {
+         name: 'Action',
+         selector: row => row.action,
       }
    ]
 
@@ -31,44 +35,96 @@ function ListUser() {
          userName: 'aaa',
          mobileNo: '9874563214',
          userType: 'manager',
-         supervisor: 'aab'
+         supervisor: 'aab',
+         action: <>
+            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-danger mx-2"> Delete</button>
+         </>
       },
       {
          id: 1,
          userName: 'aaa',
          mobileNo: '9874563214',
          userType: 'manager',
-         supervisor: 'aba'
+         supervisor: 'aba',
+         action: <>
+            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-danger mx-2"> Delete</button>
+         </>
       },
       {
          id: 2,
          userName: 'bbb',
          mobileNo: '9874563214',
          userType: 'admin',
-         supervisor: 'abb'
+         supervisor: 'abb',
+         action: <>
+            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-danger mx-2"> Delete</button>
+         </>
       },
       {
          id: 3,
          userName: 'ccc',
          mobileNo: '9874563214',
          userType: 'user',
-         supervisor: 'acb'
+         supervisor: 'acb',
+         action: <>
+            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-danger mx-2"> Delete</button>
+         </>
       },
       {
          id: 4,
          userName: 'ddd',
          mobileNo: '9874563214',
          userType: 'management',
-         supervisor: 'dab'
+         supervisor: 'dab',
+         action: <>
+            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-danger mx-2"> Delete</button>
+         </>
       },
       {
          id: 5,
          userName: 'eee',
          mobileNo: '9874563214',
          userType: 'manager',
-         supervisor: 'bcb'
+         supervisor: 'bcb',
+         action: <>
+            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-danger mx-2"> Delete</button>
+         </>
       },
    ]
+
+   const customStyles = {
+      table: {
+         style: {
+            border: '1px solid #0bc4f0', // Set border color
+         },
+      },
+      rows: {
+         style: {
+            minHeight: '72px', // override the row height
+         }
+      },
+      headCells: {
+         style: {
+            paddingLeft: '8px', // override the cell padding for head cells
+            paddingRight: '8px',
+            backgroundColor: '#0bc4f0',
+         },
+      },
+      cells: {
+         style: {
+            paddingLeft: '8px', // override the cell padding for data cells
+            paddingRight: '8px',
+            fontSize: '14px', // Set font size for regular cells
+            border: '1px solid #0bc4f0',
+         },
+      },
+   };
    const [records, setRecords] = useState(data)
 
    const handleFilter = (e) => {
@@ -82,8 +138,9 @@ function ListUser() {
    };
 
    return (
-      <div className='container'>
-         <div className="text-end">
+      <div className='container mt-5'>
+         <div className=" d-flex justify-content-between">
+            <h3>User's List</h3>
             <CustomInput inputType="text" placeholder="Search..." id="search" onChange={(e) => handleFilter(e)} />
          </div>
          <DataTable
@@ -91,7 +148,12 @@ function ListUser() {
             data={records}
             sortable
             fixedHeader
-            pagination>
+            pagination
+            responsive
+            striped={true}
+            borderColor="#000000"
+            selectableRows
+            customStyles={customStyles}>
          </DataTable>
       </div>
    )
