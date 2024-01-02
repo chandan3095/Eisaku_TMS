@@ -98,6 +98,10 @@ function FleetMasterAddForm() {
                 <h3 className="card-title">Expierence (Years)</h3>
               </div>
               <div className="card-body">
+              <CustomDatePicker
+                  label="Expierence (Years)"
+                  placeholder="Select Expierence (Years)"
+                />
                 <label className="text-bold">DL</label>
                 <CustomFileUpload />                
               </div>
@@ -110,6 +114,10 @@ function FleetMasterAddForm() {
                 <h3 className="card-title">Driver License</h3>
               </div>
               <div className="card-body">
+              <CustomDatePicker
+                  label="Driver License"
+                  placeholder="Select Driver License"
+                />
                 <label className="text-bold">DL</label>
                 <CustomFileUpload />  
                 <CustomDatePicker
@@ -125,6 +133,7 @@ function FleetMasterAddForm() {
                 <h3 className="card-title">Address</h3>
               </div>
               <div className="card-body">
+                
                 <label className="text-bold">Aadhar card</label>
                 <CustomFileUpload />                
               </div>
