@@ -6,6 +6,9 @@ import Login from '../pages/login/Login'
 import SignUp from '../pages/signUp/SignUp'
 import FleetMasterAddForm from '../pages/fleetmaster/FleetMasterAddForm'
 import DriverMasterAddForm from '../pages/drivermaster/DriverMasterAddForm'
+import AddUser from '../pages/user/AddUser'
+import ListUser from '../pages/user/ListUser'
+
 function AppRoutes() {
   return (
     <Routes>
@@ -14,6 +17,8 @@ function AppRoutes() {
         <Route path={RouteNames.driverMasterAddForm} element={<DriverMasterAddForm/>}/> 
         <Route path="/Login" element={<Login/>}/>
         <Route path="/Signup" element={<SignUp />} />
+        <Route path={RouteNames.addUser} element={<AddUser />} />
+        <Route path={RouteNames.listUser} element={<ListUser />} />
     </Routes>
   )
 }
