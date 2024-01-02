@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import CustomInput from "../../../components/common/CustomInput/CustomInput";
-import CustomDatePicker from "../../../components/common/CustomDatePicker/CustomDatePicker";
-import CustomRadio from "../../../components/common/CustomRadio/CustomRadio";
-import CustomFileUpload from "../../../components/common/CustomFileUpload/CustomFileUpload";
-import CustomDropdown from "../../../components/common/CustomDropdown/CustomDropdown";
-import CustomMonthYear from "../../../components/common/CustomMonthYear/CustomMonthYear";
+import CustomInput from "../../../../components/common/CustomInput/CustomInput";
+import CustomDatePicker from "../../../../components/common/CustomDatePicker/CustomDatePicker";
+import CustomRadio from "../../../../components/common/CustomRadio/CustomRadio";
+import CustomFileUpload from "../../../../components/common/CustomFileUpload/CustomFileUpload";
+import CustomDropdown from "../../../../components/common/CustomDropdown/CustomDropdown";
+import CustomMonthYear from "../../../../components/common/CustomMonthYear/CustomMonthYear";
 
 function FleetMasterAddForm() {
   const [fuelType, setFuelType] = useState(true);
