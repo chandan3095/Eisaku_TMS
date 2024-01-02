@@ -5,42 +5,10 @@ import CustomRadio from "../../../../components/common/CustomRadio/CustomRadio";
 import CustomFileUpload from "../../../../components/common/CustomFileUpload/CustomFileUpload";
 import CustomDropdown from "../../../../components/common/CustomDropdown/CustomDropdown";
 import CustomMonthYear from "../../../../components/common/CustomMonthYear/CustomMonthYear";
+import CustomTextArea from "../../../../components/common/CustomTextArea/CustomTextArea";
 
 function FleetMasterAddForm() {
-  const [fuelType, setFuelType] = useState(true);
-  const [tyreSelect, setTyreSelected] = useState("");
-  const [makeSelect, setMake] = useState("");
-  const [tonnageSelect, setTonnage] = useState("");
-  const [vehicleSelect, setVehicleCategory] = useState("");
-  const [serviceSelect, setServiceRecord] = useState("");
-
-  const [tyreAdd, setTyreAdd] = useState([{ selectedFile: "", tyreType: "" }]);
-  const [serviceBillAdd, setServiceBillAdd] = useState([
-    { selectedBillFile: "", serviceRecord: "" },
-  ]);
-
-  const handleServiceBill = () => {
-    setServiceBillAdd([
-      ...serviceBillAdd,
-      { selectedBillFile: "", serviceRecord: "" },
-    ]);
-  };
-  const handleServiceBillDelete = () => {
-    if (serviceBillAdd.length > 1) {
-      const updatedServiceBill = serviceBillAdd.slice(0, -1); // Removes the last element
-      setServiceBillAdd(updatedServiceBill);
-    }
-  };
-  const handleTyreAdd = () => {
-    setTyreAdd([...tyreAdd, { selectedFile: "", tyreType: "" }]);
-  };
-  const handleTyreDelete = () => {
-    if (tyreAdd.length > 1) {
-      const updatedTyreAdd = tyreAdd.slice(0, -1); // Removes the last element
-      setTyreAdd(updatedTyreAdd);
-    }
-  };
-
+  const [payRollType, setpayRollType] = useState('Eisaku Pay roll');
   return (
     <div>
       <form className="p-5 shadow-lg">
@@ -133,6 +101,7 @@ function FleetMasterAddForm() {
                 <h3 className="card-title">Address</h3>
               </div>
               <div className="card-body">
+              <CustomTextArea label="Address" id="" placeholder="Enter Address"/>                
                 
                 <label className="text-bold">Aadhar card</label>
                 <CustomFileUpload />                
@@ -145,6 +114,11 @@ function FleetMasterAddForm() {
                 <h3 className="card-title">Aadhar Card</h3>
               </div>
               <div className="card-body">
+              <CustomInput
+                label="Aadhar Card"
+                id="aadharCard"
+                placeholder="Enter Aadhar Card"
+              />
                 <label className="text-bold">Aadhar card</label>
                 <CustomFileUpload />                
               </div>
@@ -156,6 +130,11 @@ function FleetMasterAddForm() {
                 <h3 className="card-title">Pan Card</h3>
               </div>
               <div className="card-body">
+              <CustomInput
+                label="Pan Card"
+                id="panCard"
+                placeholder="Enter Pan Card"
+              />
                 <label className="text-bold">Pan Card</label>
                 <CustomFileUpload />                
               </div>
@@ -167,22 +146,71 @@ function FleetMasterAddForm() {
           <div className="col-lg-4">
             <div className="card card-primary">
               <div className="card-header">
-                <h3 className="card-title">Monthly Maintenance Budget</h3>
+                <h3 className="card-title">Eisaku Pay roll / Contractor</h3>
               </div>
 
               <div className="card-body">
-                <label className="text-bold">
-                  Monthly Maintenance Budget (vehicle wise)
-                </label>
+              <div className="form-group">
+                  <CustomRadio
+                    label="Eisaku Pay roll"
+                    id="eisakuPayRoll"
+                    value="Eisaku Pay roll"
+                    name="payRollType"
+                    defaultChecked={payRollType=='Eisaku Pay roll'}
+                    onChange={(event) => setpayRollType(event.target.value)}
+                  />
+                  <CustomRadio
+                    label="Contractor"
+                    id="contractor"
+                    value="Contractor"
+                    name="payRollType"
+                    onChange={(event) => setpayRollType(event.target.value)}
+                  />
+                </div>
+                { payRollType == 'Contractor' && 
+                <div>
                 <CustomInput
-                  label="Amount"
-                  id="fitnessAmount"
-                  placeholder="Enter Amount"
+                  label="Contractor Name"
+                  id="contractorName"
+                  placeholder="Enter contractor Name"
                 />
-                <label className="text-bold">
-                  Bill upload along with warranty status
-                </label>
-                <CustomFileUpload />
+                <CustomInput
+                label="Monthly Commission Amount"
+                id="monthlyCommAmount"
+                placeholder="Enter monthly commission amount"
+              />
+              </div>
+                 }
+                
+                { payRollType == 'Eisaku Pay roll' && 
+                  <div>
+                    <CustomInput
+                  label="Bank name"
+                  id="bankName"
+                  placeholder="Enter Bank Name"
+                />
+                <CustomInput
+                  label="IFSC Code"
+                  id="ifscCode"
+                  placeholder="Enter IFSC Code"
+                />
+                <CustomInput
+                  label="Account Number"
+                  id="AccountNumber"
+                  placeholder="Enter Account Number"
+                />
+                <CustomInput
+                  label="Account Holder Name"
+                  id="accountHolderName"
+                  placeholder="Enter Account Holder name"
+                />
+                <CustomInput
+                  label="Monthly salary amount"
+                  id="monthlyAmount"
+                  placeholder="Enter Monthly salary amount"
+                />
+                  </div>
+                }
               </div>
             </div>
           </div>
