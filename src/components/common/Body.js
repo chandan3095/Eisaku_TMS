@@ -1,5 +1,6 @@
 import React from 'react'
-
+import FleetMasterAddForm from '../../pages/fleetmaster/FleetMasterAddForm'
+import DriverMasterAddForm from '../../pages/drivermaster/DriverMasterAddForm'
 const Body = () => {
    return (
       <div>
@@ -479,6 +480,10 @@ const Body = () => {
                         </div> */}
                      </section>
                   </div>
+               </div>
+               <div className='container-fluid'>
+                  <FleetMasterAddForm/>
+                  <DriverMasterAddForm/>
                </div>
             </section>
          </div>

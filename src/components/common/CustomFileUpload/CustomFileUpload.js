@@ -2,11 +2,8 @@ import React from "react";
 
 const CustomFileUpload = () => {
   return (
-    <div class="form-group btn-group w-100">
-      <span class="btn btn-success col fileinput-button">
-        <i class="fas fa-plus mr-2"></i>
-        <span>Add files</span>
-      </span>
+    <div class="form-group w-100">
+      <input type="file" className="form-control h-auto" />
       {/* <button type="submit" class="btn btn-primary col start">
         <i class="fas fa-upload"></i>
         <span>Start upload</span>
