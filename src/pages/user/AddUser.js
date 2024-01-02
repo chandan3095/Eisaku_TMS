@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import CustomInput from '../../components/common/CustomInput/CustomInput'
 import CustomDropdown from '../../components/common/CustomDropdown/CustomDropdown'
+import MultiSelectDropdown from '../../components/common/MultiSelectDropdown/MultiSelectDropdown'
+import { Form, Formik, FormikProvider, useFormik } from 'formik'
+import * as yup from 'yup'
 
 function AddUser() {
    const [selectedOption, setSelectedOption] = useState(null)
@@ -19,6 +22,34 @@ function AddUser() {
    const handlemanagementDropdown = (value) => {
       setShowManagementDropdown(value)
    }
+
+   const userAddSchema = yup.object().shape({
+      userName: yup.string()
+         .min(2, 'Too Short!')
+         .max(50, 'Too Long!')
+         .required('Required'),
+
+      mobile: yup.number()
+         .min(9, 'Too Short!')
+         .max(10, 'Too Long!')
+         .required('Required'),
+
+      userType: yup.string()
+         .required('Required'),
+   })
+
+   const formik = useFormik({
+      initialValues: {
+         userName: '',
+         mobile: '',
+         userType: ''
+      },
+      validationSchema: userAddSchema
+   })
+
+   const {errors, touched, getFieldProps, handleSubmit, resetForm}=formik
+
+
    return (
       <>
          <div className='addUser-form d-flex align-items-center' style={{ height: '100vh' }}>
@@ -27,40 +58,66 @@ function AddUser() {
                   <div className="card-header">
                      <h3 className="card-title text-center">Add User</h3>
                   </div>
-                  <form>
-                     <div className="card-body">
-                        <div className="form-group">
-                           <CustomInput label="Enter Name" name="userName" id="#userName" inputType='text' placeholder='Enter User Name' />
-                        </div>
-
-                        <div className="form-group">
-                           <CustomInput label="Enter Mobile No." name="mobile" id="#mobile" inputType='text' placeholder='Enter Mobile No.' />
-                        </div>
-
-                        <div className="form-group">
-                           <label class="text-bold">User Type</label>
-                           <CustomDropdown selected='' optionData={['Select', 'supervisor', 'corporate admin', 'management', 'manager']}
-                              onChange={(e) => handleRolesDropdown(e.target.value)} />
-                        </div>
-
-                        {selectedOption === 'supervisor' && (
+                  <FormikProvider value={formik}>
+                     <Form className='needs-validation' noValidate>
+                        <div className="card-body">
                            <div className="form-group">
-                              <label class="text-bold">Reporting Manager</label>
-                              <CustomDropdown value={showManagerDropdown} optionData={['supervisor', 'corporate admin', 'management', 'manager']} onChange={(e) => handlemanagerDropdown(e.target.value)} />
+                              <CustomInput
+                                 label="Enter Name"
+                                 name="userName"
+                                 id="#userName"
+                                 inputType='text'
+                                 placeholder='Enter User Name'
+                                 {...getFieldProps('userName')}
+                                 errors={true}
+                                 message={"ERROR"}
+                                  />
                            </div>
-                        )}
 
-                        {selectedOption === 'manager' && (
                            <div className="form-group">
-                              <label class="text-bold">Management</label>
-                              <CustomDropdown value={showManagementDropdown} optionData={['supervisor', 'corporate admin', 'management', 'manager']} onChange={(e) => handlemanagementDropdown(e.target.value)} />
+                              <CustomInput
+                                 label="Enter Mobile No."
+                                 name="mobile"
+                                 id="#mobile"
+                                 inputType='text'
+                                 placeholder='Enter Mobile No.'
+                                 {...getFieldProps('mobile')} />
                            </div>
-                        )}
-                     </div>
-                     <div className="card-footer d-flex justify-content-center">
-                        <button type="submit" className="btn btn-primary">Add User</button>
-                     </div>
-                  </form>
+
+                           <div className="form-group">
+                              <label class="text-bold">User Type</label>
+                              <CustomDropdown
+                              selected='' 
+                              name="userType" 
+                              optionData={['Select', 'supervisor', 'corporate admin', 'management', 'manager']}
+                                 {...getFieldProps('userType')}
+                              />
+                           </div>
+
+                           {getFieldProps('userType').value === 'supervisor' && (
+                              <div className="form-group">
+                                 <label class="text-bold">Reporting Manager</label>
+                                 <MultiSelectDropdown />
+                              </div>
+                           )}
+
+                           {getFieldProps('userType').value === 'manager' && (
+                              <div className="form-group">
+                                 <label class="text-bold">Management</label>
+                                 <MultiSelectDropdown options={[
+                                    { value: '1', label: 'Management1' },
+                                    { value: '2', label: 'Management2' },
+                                    { value: '3', label: 'Management3' },
+                                    { value: '4', label: 'Management4' },
+                                 ]} />
+                              </div>
+                           )}
+                        </div>
+                        <div className="card-footer d-flex justify-content-center">
+                           <button type="submit" className="btn btn-primary">Add User</button>
+                        </div>
+                     </Form>
+                  </FormikProvider>
                </div>
             </div>
          </div>
