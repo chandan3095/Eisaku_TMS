@@ -1,6 +1,6 @@
 import React from 'react'
-import FleetMasterAddForm from '../../pages/fleetmaster/FleetMasterAddForm'
-import DriverMasterAddForm from '../../pages/drivermaster/DriverMasterAddForm'
+import FleetMasterAddForm from '../../pages/corporate-admin/fleetmaster/FleetMasterAddForm'
+import DriverMasterAddForm from '../../pages/corporate-admin/drivermaster/DriverMasterAddForm'
 const Body = () => {
    return (
       <div>

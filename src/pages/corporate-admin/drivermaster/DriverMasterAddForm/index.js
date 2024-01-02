@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import CustomInput from "../../../components/common/CustomInput/CustomInput";
-import CustomDatePicker from "../../../components/common/CustomDatePicker/CustomDatePicker";
-import CustomRadio from "../../../components/common/CustomRadio/CustomRadio";
-import CustomFileUpload from "../../../components/common/CustomFileUpload/CustomFileUpload";
-import CustomDropdown from "../../../components/common/CustomDropdown/CustomDropdown";
-import CustomMonthYear from "../../../components/common/CustomMonthYear/CustomMonthYear";
+import CustomInput from "../../../../components/common/CustomInput/CustomInput";
+import CustomDatePicker from "../../../../components/common/CustomDatePicker/CustomDatePicker";
+import CustomRadio from "../../../../components/common/CustomRadio/CustomRadio";
+import CustomFileUpload from "../../../../components/common/CustomFileUpload/CustomFileUpload";
+import CustomDropdown from "../../../../components/common/CustomDropdown/CustomDropdown";
+import CustomMonthYear from "../../../../components/common/CustomMonthYear/CustomMonthYear";
 
 function FleetMasterAddForm() {
   const [fuelType, setFuelType] = useState(true);
@@ -52,6 +52,11 @@ function FleetMasterAddForm() {
                 <h3 className="card-title">Name</h3>
               </div>
               <div className="card-body">
+                <CustomInput
+                label="Name"
+                id="driverName"
+                placeholder="Enter Name"
+              />
                 <label className="text-bold">Aadhar card</label>
                 <CustomFileUpload />                
               </div>
@@ -63,6 +68,10 @@ function FleetMasterAddForm() {
                 <h3 className="card-title">DOB</h3>
               </div>
               <div className="card-body">
+                <CustomDatePicker
+                  label="DOB"
+                  placeholder="Select DOB"
+                />
                 <label className="text-bold">Aadhar card</label>
                 <CustomFileUpload />                
               </div>
