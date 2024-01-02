@@ -3,20 +3,22 @@ import CustomInput from '../../components/common/CustomInput/CustomInput';
 import CustomDropdown from '../../components/common/CustomDropdown/CustomDropdown';
 
 const SignUp = () => {
-   const [selectedOption, setSelectedOption] = useState('')
-   const [showManagerDropdown, setShowManagerDropdown] = useState(false)
+   const [selectedOption, setSelectedOption] = useState(null)
+   const [showManagerDropdown, setShowManagerDropdown] = useState(null)
+   const [showManagementDropdown, setShowManagementDropdown] = useState(null)
 
-
-   const handleManagerDropdown = (value) => {
+   const handleRolesDropdown = (value) => {
       setSelectedOption(value)
       console.log(value);
-      if (value === 'supervisor') {
-         setShowManagerDropdown(true)
-      } else {
-         setShowManagerDropdown(false)
-      }
+      setShowManagerDropdown(null)
+      setShowManagementDropdown(null)
    }
-
+   const handlemanagerDropdown = (value)=>{
+      setShowManagerDropdown(value)
+    }
+   const handlemanagementDropdown = (value) => {
+      setShowManagementDropdown(value)
+   }
    return (
       <div className="login-form d-flex justify-content-center align-items-center">
          <div className="card card-primary ">
@@ -39,16 +41,24 @@ const SignUp = () => {
                      <textarea name="address" id="address" cols="30" rows="2" className='form-control' placeholder='Enter Address'></textarea>
                   </div>
                   <div className="form-group">
-                     <label class="text-bold">Vehicle Category</label>
+                     <label class="text-bold">User Type</label>
                      <CustomDropdown selected='' optionData={['Select', 'supervisor', 'corporate admin', 'management', 'manager']}
-                        onSelect={handleManagerDropdown} />
+                        onChange={(e) => handleRolesDropdown(e.target.value)} />
                   </div>
-                  {showManagerDropdown &&
+
+                  {selectedOption === 'supervisor' && (
                      <div className="form-group">
                         <label class="text-bold">Reporting Manager</label>
-                        <CustomDropdown selected='' optionData={['supervisor', 'corporate admin', 'management', 'manager']} />
+                        <CustomDropdown value={showManagerDropdown} optionData={['supervisor', 'corporate admin', 'management', 'manager']} onChange={(e) => handlemanagerDropdown(e.target.value)} />
                      </div>
-                  }
+                  )}
+
+                  {selectedOption === 'manager' &&(
+                     <div className="form-group">
+                        <label class="text-bold">Management</label>
+                        <CustomDropdown value={showManagementDropdown} optionData={['supervisor', 'corporate admin', 'management', 'manager']} onChange={(e) => handlemanagementDropdown(e.target.value)} />
+                     </div>
+                  )}
                </div>
                <div className="card-footer d-flex justify-content-center">
                   <button type="submit" className="btn btn-primary">Submit</button>
