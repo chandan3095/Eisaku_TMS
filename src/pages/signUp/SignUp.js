@@ -41,21 +41,21 @@ const SignUp = () => {
                      <textarea name="address" id="address" cols="30" rows="2" className='form-control' placeholder='Enter Address'></textarea>
                   </div>
                   <div className="form-group">
-                     <label class="text-bold">User Type</label>
+                     <label className="text-bold">User Type</label>
                      <CustomDropdown selected='' optionData={['Select', 'supervisor', 'corporate admin', 'management', 'manager']}
                         onChange={(e) => handleRolesDropdown(e.target.value)} />
                   </div>
 
                   {selectedOption === 'supervisor' && (
                      <div className="form-group">
-                        <label class="text-bold">Reporting Manager</label>
+                        <label className="text-bold">Reporting Manager</label>
                         <CustomDropdown value={showManagerDropdown} optionData={['supervisor', 'corporate admin', 'management', 'manager']} onChange={(e) => handlemanagerDropdown(e.target.value)} />
                      </div>
                   )}
 
                   {selectedOption === 'manager' &&(
                      <div className="form-group">
-                        <label class="text-bold">Management</label>
+                        <label className="text-bold">Management</label>
                         <CustomDropdown value={showManagementDropdown} optionData={['supervisor', 'corporate admin', 'management', 'manager']} onChange={(e) => handlemanagementDropdown(e.target.value)} />
                      </div>
                   )}

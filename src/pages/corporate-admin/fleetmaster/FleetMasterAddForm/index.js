@@ -7,7 +7,7 @@ import CustomDropdown from "../../../../components/common/CustomDropdown/CustomD
 import CustomMonthYear from "../../../../components/common/CustomMonthYear/CustomMonthYear";
 
 function FleetMasterAddForm() {
-  const [fuelType, setFuelType] = useState(true);
+  const [fuelType, setFuelType] = useState('Diesel');
   const [tyreSelect, setTyreSelected] = useState("");
   const [makeSelect, setMake] = useState("");
   const [tonnageSelect, setTonnage] = useState("");
@@ -260,12 +260,13 @@ function FleetMasterAddForm() {
               <div className="card-body">
                 <label className="text-bold">Fuel Type</label>
                 <CustomFileUpload />
-                <div className="form-group">
+                <div className="form-group mt-3">
                   <CustomRadio
                     label="Diesel"
                     id="diesel"
                     value="Diesel"
                     name="fuelType"
+                    defaultChecked={fuelType}                    
                     onChange={(event) => setFuelType(event.target.value)}
                   />
                   <CustomRadio
@@ -480,9 +481,7 @@ function FleetMasterAddForm() {
               </div>
 
               <div className="card-body">
-                <label className="text-bold">
-                  Monthly Maintenance Budget (vehicle wise)
-                </label>
+                
                 <CustomInput
                   label="Amount"
                   id="fitnessAmount"
@@ -496,11 +495,11 @@ function FleetMasterAddForm() {
             </div>
           </div>
           <div className="col-12 mt-3 text-center">
-            <button className="btn btn-primary px-4 py-3" type="submit">
-              <h5 className="mb-0 text-uppercase">Submit</h5>
+          <button className="btn btn-primary px-4 py-3" type="submit">
+              <h6 className="mb-0 text-uppercase">Submit</h6>
             </button>
             <button className="btn btn-danger ml-3 px-4 py-3" type="submit">
-              <h5 className="mb-0 text-uppercase">reset</h5>
+              <h6 className="mb-0 text-uppercase">reset</h6>
             </button>
           </div>
         </div>

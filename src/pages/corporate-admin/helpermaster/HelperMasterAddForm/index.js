@@ -10,7 +10,7 @@ function FleetMasterAddForm() {
   return (
     <div>
       <form className="p-5 shadow-lg">
-        <h1 className="mb-4 text-center">Add Driver Master</h1>
+        <h1 className="mb-4 text-center">Add Helper Master</h1>
         <div className="row">
           <div className="col-lg-4">
             <CustomInput
@@ -37,57 +37,34 @@ function FleetMasterAddForm() {
               placeholder="Select Date of Exit"
             />
           </div>
-          {/* Expierence (Years) */}
-          <div className="col-lg-4">
-            <CustomDatePicker
-              label="Expierence (Years)"
-              placeholder="Select Expierence (Years)"
-            />
-          </div>
 
-          {/* Driver License */}
+          
+
           <div className="col-lg-4">
             <CustomInput
-              label="Driver License"
-              id="driverDriverLicense"
-              placeholder="Enter Driver License"
+              label="Aadhar Card"
+              id="aadharCard"
+              placeholder="Enter Aadhar Card"
             />
+            </div>
+            <div className="col-lg-4">
+            <label className="text-bold">Aadhar Document</label>
+            <CustomFileUpload />
           </div>
           <div className="col-lg-4">
-            <CustomDatePicker
-              label="Expiry details"
-              placeholder="Select Expiry details"
+            <CustomInput
+              label="Pan Card"
+              id="panCard"
+              placeholder="Enter Pan Card"
             />
+            </div>
+            <div className="col-lg-4">
+            <label className="text-bold">Pan Card Document</label>
+            <CustomFileUpload />
           </div>
-         
           <div className="col-lg-4">
             <CustomTextArea label="Address" id="" placeholder="Enter Address" />
           </div>
-          <div className="col-lg-4">
-            
-                <label className="text-bold">DL Document</label>
-                <CustomFileUpload />
-              </div>
-          <div className="col-lg-4">
-                <CustomInput
-                  label="Aadhar Card"
-                  id="aadharCard"
-                  placeholder="Enter Aadhar Card"
-                />
-                <label className="text-bold">Aadhar card</label>
-                <CustomFileUpload />
-          </div>
-          <div className="col-lg-4">
-            
-                <CustomInput
-                  label="Pan Card"
-                  id="panCard"
-                  placeholder="Enter Pan Card"
-                />
-                <label className="text-bold">Pan Card</label>
-                <CustomFileUpload />
-              </div>
-
           {/* Tyre Sec */}
           <div className="col-lg-12">
             <div className="card card-primary">
@@ -175,7 +152,7 @@ function FleetMasterAddForm() {
             </div>
           </div>
           <div className="col-12 mt-3 text-center">
-          <button className="btn btn-primary px-4 py-3" type="submit">
+            <button className="btn btn-primary px-4 py-3" type="submit">
               <h6 className="mb-0 text-uppercase">Submit</h6>
             </button>
             <button className="btn btn-danger ml-3 px-4 py-3" type="submit">

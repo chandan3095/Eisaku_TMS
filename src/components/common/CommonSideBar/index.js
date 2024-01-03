@@ -49,14 +49,17 @@ const CommonSideBar = () => {
                    </p>
                 </a>
              </li> */}
-            
-             <SideBarDropdown label='Fleet Master' icon='fa-tree' dropdownList={SideBarDropdownData} />
-             <SideBarDropdown label='Driver Master' icon='fa-table' dropdownList={SideBarDropdownData} />
+            {
+               SideBarDropdownData.map((item) => (
+                  <SideBarDropdown label={item.menuName} url={item.url} icon={item.icon} dropdownList={item.dropdownList} />
+               ))
+            }
+             {/* <SideBarDropdown label='Driver Master' icon='fa-table' dropdownList={SideBarDropdownData} />
              <SideBarDropdown label='Helper Master' icon='fa-calendar-alt' dropdownList={SideBarDropdownData} />
              <SideBarDropdown label='Customer Master' icon='fa-columns' dropdownList={SideBarDropdownData} />
              <SideBarDropdown label='Vendor Master' icon='fa-book' dropdownList={SideBarDropdownData} />
              <SideBarDropdown label='Lane Master (Expense)' icon='fa-th' dropdownList={SideBarDropdownData} />
-             <SideBarDropdown label='Contractor Master' icon='fa-tree' dropdownList={SideBarDropdownData} />
+             <SideBarDropdown label='Contractor Master' icon='fa-tree' dropdownList={SideBarDropdownData} /> */}
              
              {/* <li className="nav-header">MISCELLANEOUS</li>
              <li className="nav-item">

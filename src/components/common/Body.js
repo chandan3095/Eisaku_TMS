@@ -1,6 +1,8 @@
 import React from 'react'
 import FleetMasterAddForm from '../../pages/corporate-admin/fleetmaster/FleetMasterAddForm'
 import DriverMasterAddForm from '../../pages/corporate-admin/drivermaster/DriverMasterAddForm'
+import HelperMasterAddForm from '../../pages/corporate-admin/helpermaster/HelperMasterAddForm'
+import CustomerMasterAddForm from '../../pages/corporate-admin/customermaster/CustomerMasterAddForm'
 const Body = () => {
    return (
       <div>
@@ -482,8 +484,11 @@ const Body = () => {
                   </div>
                </div>
                <div className='container-fluid'>
+                  
                   <FleetMasterAddForm/>
                   <DriverMasterAddForm/>
+                  <HelperMasterAddForm/>
+                  <CustomerMasterAddForm/>
                </div>
             </section>
          </div>

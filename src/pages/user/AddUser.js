@@ -85,7 +85,7 @@ function AddUser() {
                            </div>
 
                            <div className="form-group">
-                              <label class="text-bold">User Type</label>
+                              <label className="text-bold">User Type</label>
                               <CustomDropdown
                               selected='' 
                               name="userType" 
@@ -96,14 +96,14 @@ function AddUser() {
 
                            {getFieldProps('userType').value === 'supervisor' && (
                               <div className="form-group">
-                                 <label class="text-bold">Reporting Manager</label>
+                                 <label className="text-bold">Reporting Manager</label>
                                  <MultiSelectDropdown />
                               </div>
                            )}
 
                            {getFieldProps('userType').value === 'manager' && (
                               <div className="form-group">
-                                 <label class="text-bold">Management</label>
+                                 <label className="text-bold">Management</label>
                                  <MultiSelectDropdown options={[
                                     { value: '1', label: 'Management1' },
                                     { value: '2', label: 'Management2' },
