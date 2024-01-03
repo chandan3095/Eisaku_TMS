@@ -6,7 +6,7 @@ const CustomRadio= (props) => {
   return (
     <div className="icheck-primary d-inline mr-3">
       <input type="radio" id={id} name={name} value={value} defaultChecked={defaultChecked ? true : false} onChange={onChange}/>
-      {label && <label htmlFor={id}>{label}</label>}
+      {label && <label className="text-capitalize" htmlFor={id}>{label}</label>}
     </div> 
   )
 }

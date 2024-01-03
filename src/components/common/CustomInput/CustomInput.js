@@ -4,7 +4,7 @@ const CustomInput = ({ label, id, inputType, placeholder, onChange, errors, mess
    // const { label, id, inputType, placeholder, onChange, errors, message } = props
   return (
     <div className="form-group">
-      {label && <label htmlFor={id}>{label}</label>}  
+      {label && <label className="text-capitalize" htmlFor={id}>{label}</label>}  
       <input
         type={`${inputType}`}
         className="form-control "

@@ -8,7 +8,7 @@ import CustomMonthYear from "../../../../components/common/CustomMonthYear/Custo
 import BodyHeader from "../../../../components/common/CommonBodyHeader";
 
 function FleetMasterAddForm() {
-  const [fuelType, setFuelType] = useState('Diesel');
+  const [fuelType, setFuelType] = useState("Diesel");
   const [tyreSelect, setTyreSelected] = useState("");
   const [makeSelect, setMake] = useState("");
   const [tonnageSelect, setTonnage] = useState("");
@@ -44,180 +44,271 @@ function FleetMasterAddForm() {
 
   return (
     <div>
-      <BodyHeader/>
+      <BodyHeader title="Add Fleet Master" />
       <form className="p-5 shadow-lg">
-        <h1 className="mb-4 text-center">Add Fleet Master</h1>
         <div className="row">
-          <div className="col-lg-4">
-            <CustomInput
-              label="Vehicle owner name"
-              id="#vehicleOwner"
-              placeholder="Enter vehicle owner name"
-            />
+          <div className="col-lg-12">
+            <div className="card card-primary">
+              <div className="card-header">
+                <h3 className="card-title">Vehicle Details</h3>
+              </div>
 
-            {/* Dimension  */}
-            <CustomInput
-              label="Dimension(L B H (ft))"
-              id="#dimension"
-              placeholder="Enter L B H (ft)"
-            />
+              <div className="row card-body">
+                {/* Vehicle No Sec */}
+                <div className="col-lg-4">
+                  <CustomInput
+                    label="Vehicle No"
+                    id="vehicleNo"
+                    placeholder="Enter Vehicle No"
+                  />
+                </div>
+                <div className="col-lg-4">
+                  {/* Vehicle No Sec */}
+                  <CustomInput
+                    label="Chasis No"
+                    id="chasisNo"
+                    placeholder="Enter Chasis No"
+                  />
+                </div>
+                <div className="col-lg-4">
+                  {/* Vehicle No Sec */}
+                  <CustomInput
+                    label="Engine No"
+                    id="engineNo"
+                    placeholder="Enter Engine No"
+                  />
+                </div>
 
-            {/* Financed by sec */}
-            <CustomInput
-              label="Financed by"
-              id="#financedBy"
-              placeholder="Enter name"
-            />
+                <div className="col-lg-4">
+                  <CustomInput
+                    label="Vehicle owner name"
+                    id="#vehicleOwner"
+                    placeholder="Enter vehicle owner name"
+                  />
+                </div>
+
+                {/* Dimension  */}
+                <div className="col-lg-4">
+                  <CustomInput
+                    label="Dimension(L B H (ft))"
+                    id="#dimension"
+                    placeholder="Enter L B H (ft)"
+                  />
+                </div>
+
+                {/* Financed by sec */}
+                <div className="col-lg-4">
+                  <CustomInput
+                    label="Financed by"
+                    id="#financedBy"
+                    placeholder="Enter name"
+                  />
+                </div>
+                <div className="col-lg-4">
+                <label className="text-bold">Fuel Type</label>
+                                 
+                <div className="form-group mt-3">
+                  <CustomRadio
+                    label="Diesel"
+                    id="diesel"
+                    value="Diesel"
+                    name="fuelType"
+                    defaultChecked={fuelType}
+                    onChange={(event) => setFuelType(event.target.value)}
+                  />
+                    
+                  <CustomRadio
+                    label="CNG"
+                    id="cng"
+                    value="CNG"
+                    name="fuelType"
+                    onChange={(event) => setFuelType(event.target.value)}
+                  /></div>
+                </div>
+
+                <div className="col-lg-4">
+                  <label className="text-bold">RC </label>
+                  <CustomFileUpload />
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="col-lg-4">
+          <div className="col-lg-12">
             <div className="card card-primary">
               <div className="card-header">
                 <h3 className="card-title">EMI</h3>
               </div>
 
-              <div className="card-body">
                 {/* Emi Sec */}
-                <label className="text-bold">EMI Schedule</label>
-                <CustomFileUpload />
+              <div className="row card-body">
+                
+                <div className="col-lg-4">
                 <CustomDatePicker
                   label="Start date"
                   placeholder="Enter vehicle owner name"
                 />
+                </div>
+                <div className="col-lg-4">
                 <CustomDatePicker
                   label="End date"
                   placeholder="Enter vehicle owner name"
                 />
+                </div>
+                <div className="col-lg-4">
                 <CustomInput
                   label="Amount"
                   id="emiAmount"
                   placeholder="Enter Amount"
                 />
+                </div>
+                <div className="col-lg-4">
+                <label className="text-bold">Certificate </label>
+                <CustomFileUpload />
+                </div>
               </div>
             </div>
           </div>
           {/* Fitness Certificate Sec */}
-          <div className="col-lg-4">
+          <div className="col-lg-12">
             <div className="card card-primary">
               <div className="card-header">
-                <h3 className="card-title">Fitness</h3>
+                <h3 className="card-title">Fitness Certificate</h3>
               </div>
 
-              <div className="card-body">
-                <label className="text-bold">Fitness Certificate</label>
-                <CustomFileUpload />
+              <div className="row card-body">
+                <div className="col-lg-4">
                 <CustomDatePicker
                   label="Expiry Date"
                   placeholder="Enter Expiry Date"
                 />
+                </div>
+                <div className="col-lg-4">
                 <CustomInput
                   label="Amount"
                   id="fitnessAmount"
                   placeholder="Enter Amount"
                 />
+                </div>
+                <div className="col-lg-4">
+                <label className="text-bold">Certificate</label>
+                  <CustomFileUpload />
+                </div>
               </div>
             </div>
           </div>
           {/* Insurance Certificate Sec */}
-          <div className="col-lg-4">
+          <div className="col-lg-12">
             <div className="card card-primary">
               <div className="card-header">
                 <h3 className="card-title">Insurance</h3>
               </div>
 
-              <div className="card-body">
-                <label className="text-bold">Insurance Certificate</label>
-                <CustomFileUpload />
+              <div className="card-body row">
+                
+                <div className="col-lg-4">
                 <CustomDatePicker
                   label="Expiry Date"
                   placeholder="Enter Expiry Date"
                 />
+                </div>
+                <div className="col-lg-4">
                 <CustomInput
                   label="Amount"
                   id="fitnessAmount"
                   placeholder="Enter Amount"
                 />
+                </div>
+                <div className="col-lg-4">
+                <label className="text-bold">Insurance Certificate</label>
+                <CustomFileUpload />
+                </div>
               </div>
             </div>
           </div>
           {/* Local Permit Sec */}
-          <div className="col-lg-4">
+          <div className="col-lg-12">
             <div className="card card-primary">
               <div className="card-header">
                 <h3 className="card-title">Local Permit</h3>
               </div>
 
-              <div className="card-body">
-                <label className="text-bold">Local Permit</label>
-                <CustomFileUpload />
+              <div className="card-body row">
+                
+                <div className="col-lg-4">
                 <CustomDatePicker
                   label="Expiry Date"
                   placeholder="Enter Expiry Date"
                 />
+                </div>
+                <div className="col-lg-4">
                 <CustomInput
                   label="Amount"
                   id="fitnessAmount"
                   placeholder="Enter Amount"
                 />
+                </div>
+                <div className="col-lg-4">
+                <label className="text-bold">Local Permit</label>
+                <CustomFileUpload />
+                </div>
               </div>
             </div>
           </div>
           {/* National Permit Sec */}
-          <div className="col-lg-4">
+          <div className="col-lg-12">
             <div className="card card-primary">
               <div className="card-header">
                 <h3 className="card-title">National Permit</h3>
               </div>
-
-              <div className="card-body">
-                <label className="text-bold">National Permit</label>
-                <CustomFileUpload />
+              <div className="card-body row">
+                <div className="col-lg-4">
                 <CustomDatePicker
                   label="Expiry Date"
                   placeholder="Enter Expiry Date"
                 />
+                </div>
+                <div className="col-lg-4">
                 <CustomInput
                   label="Amount"
                   id="fitnessAmount"
                   placeholder="Enter Amount"
                 />
+                </div>
+                <div className="col-lg-4">
+                <label className="text-bold">National Permit</label>
+                <CustomFileUpload />
               </div>
             </div>
           </div>
+          </div>
           {/* PUC Sec */}
-          <div className="col-lg-4">
+          <div className="col-lg-12">
             <div className="card card-primary">
               <div className="card-header">
                 <h3 className="card-title">PUC</h3>
               </div>
 
-              <div className="card-body">
-                <label className="text-bold">PUC</label>
-                <CustomFileUpload />
+              <div className="card-body row">
+                
+                <div className="col-lg-4">
                 <CustomDatePicker
                   label="Expiry Date"
                   placeholder="Enter Expiry Date"
                 />
+                </div>
+                <div className="col-lg-4">
                 <CustomInput
                   label="Amount"
                   id="fitnessAmount"
                   placeholder="Enter Amount"
                 />
+                </div>
+                <div className="col-lg-4">
+                <label className="text-bold">PUC</label>
+                <CustomFileUpload />
+                </div>
               </div>
             </div>
-          </div>
-
-          {/* Vehicle No Sec */}
-          <div className="col-lg-4">
-            <label className="text-bold">Vehicle No</label>
-            <CustomFileUpload />
-
-            {/* Vehicle No Sec */}
-            <label className="text-bold">Chasis No</label>
-            <CustomFileUpload />
-
-            {/* Vehicle No Sec */}
-            <label className="text-bold">Engine No</label>
-            <CustomFileUpload />
           </div>
 
           {/* Make Sec */}
@@ -227,7 +318,7 @@ function FleetMasterAddForm() {
                 <h3 className="card-title">Make</h3>
               </div>
 
-              <div className="card-body">
+              <div className="card-body row">
                 <label className="text-bold">Make</label>
                 <CustomFileUpload />
                 <CustomDropdown
@@ -244,7 +335,7 @@ function FleetMasterAddForm() {
               <div className="card-header">
                 <h3 className="card-title">Model</h3>
               </div>
-              <div className="card-body">
+              <div className="card-body row">
                 <label className="text-bold">RC</label>
                 <CustomFileUpload />
                 <label className="text-bold">Month Year</label>
@@ -259,7 +350,7 @@ function FleetMasterAddForm() {
                 <h3 className="card-title">Fuel Type</h3>
               </div>
 
-              <div className="card-body">
+              <div className="card-body row">
                 <label className="text-bold">Fuel Type</label>
                 <CustomFileUpload />
                 <div className="form-group mt-3">
@@ -268,7 +359,7 @@ function FleetMasterAddForm() {
                     id="diesel"
                     value="Diesel"
                     name="fuelType"
-                    defaultChecked={fuelType}                    
+                    defaultChecked={fuelType}
                     onChange={(event) => setFuelType(event.target.value)}
                   />
                   <CustomRadio
@@ -289,7 +380,7 @@ function FleetMasterAddForm() {
                 <h3 className="card-title">MV Tax</h3>
               </div>
 
-              <div className="card-body">
+              <div className="card-body row">
                 <label className="text-bold">MV Tax</label>
                 <CustomFileUpload />
                 <CustomDatePicker
@@ -311,7 +402,7 @@ function FleetMasterAddForm() {
                 <h3 className="card-title">GPS</h3>
               </div>
 
-              <div className="card-body">
+              <div className="card-body row">
                 <CustomInput
                   label="GPS Provider Name"
                   id="#gpsProvider"
@@ -333,7 +424,7 @@ function FleetMasterAddForm() {
                 <h3 className="card-title">Fabricator</h3>
               </div>
 
-              <div className="card-body">
+              <div className="card-body row">
                 <CustomInput
                   label="Fabricator Name"
                   id="fitnessAmount"
@@ -391,7 +482,7 @@ function FleetMasterAddForm() {
                 <h3 className="card-title">Service Record</h3>
               </div>
 
-              <div className="card-body">
+              <div className="card-body row">
                 {serviceBillAdd.map(() => (
                   <div>
                     <label className="text-bold">Service Record</label>
@@ -434,7 +525,7 @@ function FleetMasterAddForm() {
               <div className="card-header">
                 <h3 className="card-title">Tyre</h3>
               </div>
-              <div className="card-body">
+              <div className="card-body row">
                 {tyreAdd.map(() => (
                   <div>
                     <label className="text-bold">Tyre</label>
@@ -482,8 +573,7 @@ function FleetMasterAddForm() {
                 <h3 className="card-title">Monthly Maintenance Budget</h3>
               </div>
 
-              <div className="card-body">
-                
+              <div className="card-body row">
                 <CustomInput
                   label="Amount"
                   id="fitnessAmount"
@@ -497,7 +587,7 @@ function FleetMasterAddForm() {
             </div>
           </div>
           <div className="col-12 mt-3 text-center">
-          <button className="btn btn-primary px-4 py-3" type="submit">
+            <button className="btn btn-primary px-4 py-3" type="submit">
               <h6 className="mb-0 text-uppercase">Submit</h6>
             </button>
             <button className="btn btn-danger ml-3 px-4 py-3" type="submit">
