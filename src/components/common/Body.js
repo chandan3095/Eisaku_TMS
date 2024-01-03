@@ -397,8 +397,6 @@ const Body = () => {
         </div>
       </div>
       <div className="container-fluid">
-        <AddUser />
-        <ListUser />
       </div>
     </div>
   );
