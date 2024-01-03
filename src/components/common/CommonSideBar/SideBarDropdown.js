@@ -16,9 +16,9 @@ const {label, url, dropdownList, icon} = props;
       </a>
       <ul className="nav nav-treeview">
         {dropdownList.map((item, index) => {
-          console.log(item)
-          return<li className="nav-item">
-          <Link to={url + item.url} className="nav-link" key={index.toString()}>
+          // console.log(item)
+          return<li className="nav-item" key={index.toString()}>
+          <Link to={url + item.url} className="nav-link">
             <i className="far fa-circle nav-icon" />
             <p>{item.subMenuName}</p>
           </Link>
