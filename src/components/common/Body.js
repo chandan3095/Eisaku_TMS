@@ -3,6 +3,10 @@ import FleetMasterAddForm from '../../pages/corporate-admin/fleetmaster/FleetMas
 import DriverMasterAddForm from '../../pages/corporate-admin/drivermaster/DriverMasterAddForm'
 import HelperMasterAddForm from '../../pages/corporate-admin/helpermaster/HelperMasterAddForm'
 import CustomerMasterAddForm from '../../pages/corporate-admin/customermaster/CustomerMasterAddForm'
+import VendorMasterAdd from '../../pages/corporate-admin/vendormaster/VendorMasterAdd'
+import LaneMasterAdd from '../../pages/corporate-admin/lanemaster/LaneMasterAdd'
+import AddUser from '../../pages/user/AddUser'
+import ListUser from '../../pages/user/ListUser'
 const Body = () => {
    return (
       <div>
@@ -489,6 +493,10 @@ const Body = () => {
                   <DriverMasterAddForm/>
                   <HelperMasterAddForm/>
                   <CustomerMasterAddForm/>
+                  <VendorMasterAdd/>
+                  <LaneMasterAdd/>
+                  <AddUser/>
+                  <ListUser/>
                </div>
             </section>
          </div>

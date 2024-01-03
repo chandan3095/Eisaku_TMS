@@ -115,7 +115,6 @@ $(function () {
   // Sales chart
   var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d')
 //   $('#revenue-chart').get(0).getContext('2d');
-  console.log(salesChartCanvas);
 
   var salesChartData = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -173,7 +172,6 @@ $(function () {
     options: salesChartOptions
   })
 
-  console.log('kcheqwuigfibedf');
   // Donut Chart
   var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')
   var pieData = {

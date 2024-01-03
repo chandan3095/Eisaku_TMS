@@ -3,8 +3,9 @@ const RouteNames = {
     driverMasterAddForm:'/driver-master/add-form',
     helperMasterAddForm:'/helper-master/add-form',
     customerMasterAddForm:'/customer-master/add-form',
+    vendorMasterAddForm: '/vendor-master/add-form',
 
     addUser: '/user/add-user',
-   listUser: '/user/user-List',
+    listUser: '/user/user-List',
 }
 export default RouteNames
