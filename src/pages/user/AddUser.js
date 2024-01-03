@@ -47,13 +47,14 @@ function AddUser() {
       validationSchema: userAddSchema
    })
 
-   const {errors, touched, getFieldProps, handleSubmit, resetForm}=formik
+   const { errors, touched, getFieldProps, handleSubmit, resetForm } = formik
 
 
    return (
       <>
          <div className='addUser-form d-flex align-items-center' style={{ height: '100vh' }}>
             <div className="container">
+               <h1 className="mb-4 text-center">Add User</h1>
                <div className="card card-primary ">
                   <div className="card-header">
                      <h3 className="card-title text-center">Add User</h3>
@@ -71,7 +72,7 @@ function AddUser() {
                                  {...getFieldProps('userName')}
                                  errors={true}
                                  message={"ERROR"}
-                                  />
+                              />
                            </div>
 
                            <div className="form-group">
@@ -87,9 +88,9 @@ function AddUser() {
                            <div className="form-group">
                               <label class="text-bold">User Type</label>
                               <CustomDropdown
-                              selected='' 
-                              name="userType" 
-                              optionData={['Select', 'supervisor', 'corporate admin', 'management', 'manager']}
+                                 selected=''
+                                 name="userType"
+                                 optionData={['Select', 'supervisor', 'corporate admin', 'management', 'manager']}
                                  {...getFieldProps('userType')}
                               />
                            </div>

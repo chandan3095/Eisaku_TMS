@@ -139,6 +139,7 @@ function ListUser() {
 
    return (
       <div className='container mt-5'>
+         <h1 className="mb-4 text-center">User's List</h1>
          <div className=" d-flex justify-content-between">
             <h3>User's List</h3>
             <CustomInput inputType="text" placeholder="Search..." id="search" onChange={(e) => handleFilter(e)} />

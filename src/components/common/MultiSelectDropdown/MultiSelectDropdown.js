@@ -3,10 +3,10 @@ import Select from 'react-select';
 
 const MultiSelectDropdown = ({
    options = [
-      { value: '1', label: 'Manager1' },
-      { value: '2', label: 'Manager2' },
-      { value: '3', label: 'Manager3' },
-      { value: '4', label: 'Manager4' },
+      { value: '1', label: 'abcd' },
+      { value: '2', label: 'dcbd' },
+      { value: '3', label: 'adcb' },
+      { value: '4', label: 'bacd' },
    ] }) => {
 
    const [selectedOption, setSelectedOption] = useState([])
