@@ -50,8 +50,8 @@ const CommonSideBar = () => {
                 </a>
              </li> */}
             {
-               SideBarDropdownData.map((item) => (
-                  <SideBarDropdown label={item.menuName} url={item.url} icon={item.icon} dropdownList={item.dropdownList} />
+               SideBarDropdownData.map((item, index) => (
+                  <SideBarDropdown label={item.menuName} url={item.url} icon={item.icon} dropdownList={item.dropdownList} key={index.toString()}/>
                ))
             }
              {/* <SideBarDropdown label='Driver Master' icon='fa-table' dropdownList={SideBarDropdownData} />
@@ -61,103 +61,6 @@ const CommonSideBar = () => {
              <SideBarDropdown label='Lane Master (Expense)' icon='fa-th' dropdownList={SideBarDropdownData} />
              <SideBarDropdown label='Contractor Master' icon='fa-tree' dropdownList={SideBarDropdownData} /> */}
              
-             {/* <li className="nav-header">MISCELLANEOUS</li>
-             <li className="nav-item">
-                <a href="iframe.html" className="nav-link">
-                   <i className="nav-icon fas fa-ellipsis-h" />
-                   <p>Tabbed IFrame Plugin</p>
-                </a>
-             </li>
-             <li className="nav-item">
-                <a href="https://adminlte.io/docs/3.1/" className="nav-link">
-                   <i className="nav-icon fas fa-file" />
-                   <p>Documentation</p>
-                </a>
-             </li>
-             <li className="nav-header">MULTI LEVEL EXAMPLE</li>
-             <li className="nav-item">
-                <a href="#" className="nav-link">
-                   <i className="fas fa-circle nav-icon" />
-                   <p>Level 1</p>
-                </a>
-             </li>
-             <li className="nav-item">
-                <a href="#" className="nav-link">
-                   <i className="nav-icon fas fa-circle" />
-                   <p>
-                      Level 1
-                      <i className="right fas fa-angle-left" />
-                   </p>
-                </a>
-                <ul className="nav nav-treeview">
-                   <li className="nav-item">
-                      <a href="#" className="nav-link">
-                         <i className="far fa-circle nav-icon" />
-                         <p>Level 2</p>
-                      </a>
-                   </li>
-                   <li className="nav-item">
-                      <a href="#" className="nav-link">
-                         <i className="far fa-circle nav-icon" />
-                         <p>
-                            Level 2
-                            <i className="right fas fa-angle-left" />
-                         </p>
-                      </a>
-                      <ul className="nav nav-treeview">
-                         <li className="nav-item">
-                            <a href="#" className="nav-link">
-                               <i className="far fa-dot-circle nav-icon" />
-                               <p>Level 3</p>
-                            </a>
-                         </li>
-                         <li className="nav-item">
-                            <a href="#" className="nav-link">
-                               <i className="far fa-dot-circle nav-icon" />
-                               <p>Level 3</p>
-                            </a>
-                         </li>
-                         <li className="nav-item">
-                            <a href="#" className="nav-link">
-                               <i className="far fa-dot-circle nav-icon" />
-                               <p>Level 3</p>
-                            </a>
-                         </li>
-                      </ul>
-                   </li>
-                   <li className="nav-item">
-                      <a href="#" className="nav-link">
-                         <i className="far fa-circle nav-icon" />
-                         <p>Level 2</p>
-                      </a>
-                   </li>
-                </ul>
-             </li>
-             <li className="nav-item">
-                <a href="#" className="nav-link">
-                   <i className="fas fa-circle nav-icon" />
-                   <p>Level 1</p>
-                </a>
-             </li>
-             <li className="nav-header">LABELS</li>
-             <li className="nav-item">
-                <a href="#" className="nav-link">
-                   <i className="nav-icon far fa-circle text-danger" />
-                   <p className="text">Important</p>
-                </a>
-             </li>
-             <li className="nav-item">
-                <a href="#" className="nav-link">
-                   <i className="nav-icon far fa-circle text-warning" />
-                   <p>Warning</p>
-                </a>
-             </li>
-             <li className="nav-item">
-                <a href="#" className="nav-link">
-                   <i className="nav-icon far fa-circle text-info" />
-                   <p>Informational</p>
-                </a>
-             </li> */}
           </ul>
        </nav>
     </div>

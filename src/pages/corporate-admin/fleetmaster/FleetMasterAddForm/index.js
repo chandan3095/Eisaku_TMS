@@ -5,6 +5,7 @@ import CustomRadio from "../../../../components/common/CustomRadio/CustomRadio";
 import CustomFileUpload from "../../../../components/common/CustomFileUpload/CustomFileUpload";
 import CustomDropdown from "../../../../components/common/CustomDropdown/CustomDropdown";
 import CustomMonthYear from "../../../../components/common/CustomMonthYear/CustomMonthYear";
+import BodyHeader from "../../../../components/common/CommonBodyHeader";
 
 function FleetMasterAddForm() {
   const [fuelType, setFuelType] = useState('Diesel');
@@ -43,6 +44,7 @@ function FleetMasterAddForm() {
 
   return (
     <div>
+      <BodyHeader/>
       <form className="p-5 shadow-lg">
         <h1 className="mb-4 text-center">Add Fleet Master</h1>
         <div className="row">

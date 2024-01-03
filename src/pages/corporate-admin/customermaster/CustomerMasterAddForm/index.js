@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CustomInput from "../../../../components/common/CustomInput/CustomInput";
 import CustomTextArea from "../../../../components/common/CustomTextArea/CustomTextArea";
 import CustomFileUpload from "../../../../components/common/CustomFileUpload/CustomFileUpload";
+import BodyHeader from "../../../../components/common/CommonBodyHeader";
 
 function FleetMasterAddForm() {
   const [locationAdd, setLocationAdd] = useState([{ enterLocation: "" }]);
@@ -77,6 +78,7 @@ function FleetMasterAddForm() {
 
   return (
     <div>
+      <BodyHeader />
       <form className="p-5 shadow-lg">
         <h1 className="mb-4 text-center">Add Customer Master</h1>
         <div className="row">
