@@ -78,9 +78,8 @@ function FleetMasterAddForm() {
 
   return (
     <div>
-      <BodyHeader />
+      <BodyHeader title="Add Customer Master"/>
       <form className="p-5 shadow-lg">
-        <h1 className="mb-4 text-center">Add Customer Master</h1>
         <div className="row">
           <div className="col-lg-4">
             <CustomInput

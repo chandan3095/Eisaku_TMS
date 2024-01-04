@@ -5,7 +5,7 @@ const CustomDropdown= (props) => {
 
   return (
     <div className="form-group">
-      {label && <label>{label}</label>}  
+      {label && <label className="text-capitalize">{label}</label>}  
         <select className="form-control select2" style={{ width: '100%' }} onChange={onChange} name={name} value={value}>        
       {optionData.map((item, index) => <option key={index} value={item}>{item}</option>
       )}
