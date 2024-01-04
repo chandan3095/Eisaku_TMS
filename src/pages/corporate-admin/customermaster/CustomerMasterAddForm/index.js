@@ -78,13 +78,11 @@ function FleetMasterAddForm() {
 
    return (
       <div>
-         <BodyHeader />
+         <BodyHeader title="Add Customer Master" />
          <form className="p-5 shadow-lg">
-            <h1 className="mb-4 text-center">Add Customer Master</h1>
-
             <div className="card card-primary">
                <div className="card-header">
-                  <h3 className="card-title">Identification Documents</h3>
+                  <h3 className="card-title">Personal Details</h3>
                </div>
                <div className="card-body">
                   <div className="row">

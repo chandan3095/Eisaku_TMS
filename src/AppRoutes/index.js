@@ -11,6 +11,8 @@ import CustomerMasterAddForm from '../pages/corporate-admin/customermaster/Custo
 import AddUser from '../pages/user/AddUser'
 import ListUser from '../pages/user/ListUser'
 import VendorMasterAdd from '../pages/corporate-admin/vendormaster/VendorMasterAdd'
+import LaneMasterAdd from '../pages/corporate-admin/lanemaster/LaneMasterAdd'
+import ContractorMasterAdd from '../pages/corporate-admin/contractormaster/ContractorMasterAdd'
 
 function AppRoutes() {
   return (
@@ -21,6 +23,8 @@ function AppRoutes() {
         <Route path={RouteNames.helperMasterAddForm} element={<HelperMasterAddForm/>}/> 
         <Route path={RouteNames.customerMasterAddForm} element={<CustomerMasterAddForm/>}/> 
         <Route path={RouteNames.vendorMasterAddForm} element={<VendorMasterAdd />} />
+        <Route path={RouteNames.LaneMasterAddForm} element={<LaneMasterAdd />} />
+        <Route path={RouteNames.ContractorMasterAddForm} element={<ContractorMasterAdd />} />
         <Route path="/Login" element={<Login/>}/>
         <Route path="/Signup" element={<SignUp />} />
         <Route path={RouteNames.addUser} element={<AddUser />} />

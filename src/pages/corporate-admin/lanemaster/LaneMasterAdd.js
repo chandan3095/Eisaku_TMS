@@ -5,6 +5,7 @@ import CustomDatePicker from '../../../components/common/CustomDatePicker/Custom
 import CustomDropdown from '../../../components/common/CustomDropdown/CustomDropdown';
 import CustomMonthYear from '../../../components/common/CustomMonthYear/CustomMonthYear';
 import CustomRadio from '../../../components/common/CustomRadio/CustomRadio';
+import BodyHeader from '../../../components/common/CommonBodyHeader';
 
 
 const LaneMasterAdd = () => {
@@ -43,22 +44,24 @@ const LaneMasterAdd = () => {
    };
    return (
       <div>
+         <BodyHeader title="Add Lane Master" />
          <form className="p-5 shadow-lg">
-            <h1 className="mb-4 text-center">Lane Master</h1>
-            <div className="row">
-               <div className="col-lg-4">
-                  <div className="card card-primary">
-                     <div className="card-header">
-                        <h3 className="card-title">Add Lane Master</h3>
-                     </div>
-                     <div className="card-body">
+            <div className="card card-primary">
+               <div className="card-header">
+                  <h3 className="card-title">Personal Details</h3>
+               </div>
+               <div className="card-body">
+                  <div className="row">
+                     <div className="col-lg-4">
                         <CustomDropdown
                            label="Lane Name"
                            optionData={["Select", "customer1", "customer2", "customer3"]}
                            value={makeSelect}
                            onChange={(event) => setMake(event.target.value)}
                         />
+                     </div>
 
+                     <div className="col-lg-4">
                         {/* Dimension  */}
                         <CustomDropdown
                            label="Vendor Name"
@@ -66,31 +69,104 @@ const LaneMasterAdd = () => {
                            value={makeSelect}
                            onChange={(event) => setMake(event.target.value)}
                         />
+                     </div>
 
+                     <div className="col-lg-4">
                         {/* Financed by sec */}
                         <CustomInput
                            label="Origin"
                            id="#Origin"
                            placeholder="Enter Origin"
                         />
+                     </div>
 
+                     <div className="col-lg-4">
                         <CustomInput
                            label="Destination"
                            id="#Destination"
                            placeholder="Enter Destination"
                         />
                      </div>
+
+                     <div className="col-lg-4">
+                        <CustomInput
+                           label="Driver Trip Advance"
+                           id="#tripadvance"
+                           placeholder="E.g. 500.00"
+                        />
+                     </div>
+
+                     <div className="col-lg-4">
+                        <CustomInput
+                           label="Trip Diesel budget (ltr)"
+                           id="#dieselBudget"
+                           placeholder="E.g. 500.00"
+                        />
+                     </div>
+
+                     <div className="col-lg-4">
+                        <CustomInput
+                           label="Trip Adblue budget (ltr)"
+                           id="#adblueBudget"
+                           placeholder="E.g. 500.00"
+                        />
+                     </div>
+
+                     <div className="col-lg-4">
+                        <CustomInput
+                           label="Trip Toll"
+                           id="#tripToll"
+                           placeholder="E.g. 500.00"
+                        />
+                     </div>
+
+                     <div className="col-lg-4">
+                        {/* Vehicle Type  */}
+                        <CustomDropdown
+                           label="Vehicle Type"
+                           optionData={["Vehicle", "Vehicle1", "Vehicle2", "Vehicle3"]}
+                           value={makeSelect}
+                           onChange={(event) => setMake(event.target.value)}
+                        />
+                     </div>
+
+                     <div className="col-lg-4">
+                        {/* Tonnage */}
+                        <CustomDropdown
+                           label="Tonnage"
+                           optionData={["5T", "6T", "7T", "8T", "9T", "10.5T", "15T", "18T", "Any Other"]}
+                           value={makeSelect}
+                           onChange={(event) => setMake(event.target.value)}
+                        />
+                     </div>
+
+                     <div className="col-lg-4">
+                        <CustomInput
+                           label="Customer Name (Including broker)"
+                           id="#nameBroker"
+                           placeholder="Broker"
+                        />
+                     </div>
+
+                     <div className="col-lg-4">
+                        <CustomInput
+                           label="TAT (in Hrs)"
+                           id="#tat"
+                           inputType="number"
+                           placeholder="2 Hrs"
+                        />
+                     </div>
                   </div>
                </div>
 
-               <div className="col-12 mt-3 text-center">
-                  <button className="btn btn-primary px-4 py-3" type="submit">
-                     <h5 className="mb-0 text-uppercase">Submit</h5>
-                  </button>
-                  <button className="btn btn-danger ml-3 px-4 py-3" type="submit">
-                     <h5 className="mb-0 text-uppercase">reset</h5>
-                  </button>
-               </div>
+            </div>
+            <div className="col-12 mt-3 text-center">
+               <button className="btn btn-primary px-4 py-3" type="submit">
+                  <h5 className="mb-0 text-uppercase">Submit</h5>
+               </button>
+               <button className="btn btn-danger ml-3 px-4 py-3" type="submit">
+                  <h5 className="mb-0 text-uppercase">reset</h5>
+               </button>
             </div>
          </form>
       </div>

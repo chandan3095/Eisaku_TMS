@@ -4,14 +4,14 @@ import CustomDatePicker from "../../../../components/common/CustomDatePicker/Cus
 import CustomRadio from "../../../../components/common/CustomRadio/CustomRadio";
 import CustomFileUpload from "../../../../components/common/CustomFileUpload/CustomFileUpload";
 import CustomTextArea from "../../../../components/common/CustomTextArea/CustomTextArea";
+import BodyHeader from "../../../../components/common/CommonBodyHeader";
 
 function FleetMasterAddForm() {
    const [payRollType, setpayRollType] = useState("Eisaku Pay roll");
    return (
       <div>
+         <BodyHeader title="Add Driver Master" />
          <form className="p-5 shadow-lg">
-            <h1 className="mb-4 text-center">Driver Master</h1>
-
             <div className="card card-primary">
                <div className="card-header">
                   <h3 className="card-title">Personal Details</h3>

@@ -4,6 +4,8 @@ const RouteNames = {
     helperMasterAddForm:'/helper-master/add-form',
     customerMasterAddForm:'/customer-master/add-form',
     vendorMasterAddForm: '/vendor-master/add-form',
+    LaneMasterAddForm: '/lane-master/add-form',
+    ContractorMasterAddForm: '/contractor-master/add-form',
 
     addUser: '/user/add-user',
     listUser: '/user/user-List',
