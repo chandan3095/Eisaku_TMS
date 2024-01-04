@@ -4,21 +4,22 @@ import CustomDatePicker from "../../../../components/common/CustomDatePicker/Cus
 import CustomRadio from "../../../../components/common/CustomRadio/CustomRadio";
 import CustomFileUpload from "../../../../components/common/CustomFileUpload/CustomFileUpload";
 import CustomTextArea from "../../../../components/common/CustomTextArea/CustomTextArea";
+import BodyHeader from "../../../../components/common/CommonBodyHeader";
 
 function FleetMasterAddForm() {
    const [payRollType, setpayRollType] = useState("Eisaku Pay roll");
    return (
       <div>
+         <BodyHeader title="Add Driver Master" />
          <form className="p-5 shadow-lg">
-            <h1 className="mb-4 text-center">Driver Master</h1>
 
             <div className="card card-primary">
                <div className="card-header">
-                  <h3 className="card-title">Add Driver Master</h3>
+                  <h3 className="card-title">Personal Details</h3>
                </div>
                <div className="card-body">
                   <div className="row">
-                     <div className="col-lg-6">
+                     <div className="col-lg-4">
                         <CustomInput
                            label="Name"
                            id="driverName"
@@ -26,7 +27,7 @@ function FleetMasterAddForm() {
                         />
                      </div>
 
-                     <div className="col-lg-6">
+                     <div className="col-lg-4">
                         <CustomDatePicker label="DOB" placeholder="Select DOB" />
                      </div>
 
@@ -84,7 +85,7 @@ function FleetMasterAddForm() {
                      </div>
 
                      <div className="col-lg-4">
-                        {/* <label className="text-bold">DL Document</label> */}
+                        <label className="text-bold">DL Document</label>
                         <CustomFileUpload label="DL Document" />
                      </div>
                   </div>
@@ -103,10 +104,10 @@ function FleetMasterAddForm() {
                            id="aadharCard"
                            placeholder="Enter Aadhar Card"
                         />
-                        {/* <label className="text-bold">Aadhar card</label> */}
                      </div>
 
                      <div className="col-lg-6">
+                        <label className="text-bold">Aadhar Document</label>
                         <CustomFileUpload label="Aadhar card" />
                      </div>
                      
@@ -119,7 +120,7 @@ function FleetMasterAddForm() {
                      </div>
 
                      <div className="col-lg-6">
-                        {/* <label className="text-bold">Pan Card</label> */}
+                        <label className="text-bold">Pan Document</label>
                         <CustomFileUpload label="Pan Card" />
                      </div>
                   </div>
@@ -161,7 +162,7 @@ function FleetMasterAddForm() {
                            </div>
                            <div className="col-lg-6">
                               <CustomInput
-                                 label="Monthly Commission Amount"
+                                 label="Monthly Salary & Commission Amount"
                                  id="monthlyCommAmount"
                                  placeholder="Enter monthly commission amount"
                               />
@@ -171,6 +172,13 @@ function FleetMasterAddForm() {
 
                      {payRollType === "Eisaku Pay roll" && (
                         <div className="row">
+                           <div className="col-lg-4">
+                              <CustomInput
+                                 label="Account Number"
+                                 id="AccountNumber"
+                                 placeholder="Enter Account Number"
+                              />
+                           </div>
                            <div className="col-lg-4">
                               <CustomInput
                                  label="Bank name"
@@ -185,13 +193,7 @@ function FleetMasterAddForm() {
                                  placeholder="Enter IFSC Code"
                               />
                            </div>
-                           <div className="col-lg-4">
-                              <CustomInput
-                                 label="Account Number"
-                                 id="AccountNumber"
-                                 placeholder="Enter Account Number"
-                              />
-                           </div>
+                           
                            <div className="col-lg-4">
                               <CustomInput
                                  label="Account Holder Name"
@@ -210,7 +212,7 @@ function FleetMasterAddForm() {
                      )}
                   </div>
                </div>
-            <div className="col-12 mt-3 text-center">
+            <div className="col-12 mt-4 text-center">
                <button className="btn btn-primary px-4 py-3" type="submit">
                   <h6 className="mb-0 text-uppercase">Submit</h6>
                </button>

@@ -16,7 +16,7 @@ function FleetMasterAddForm() {
          <div className="col-lg-12">
          <div className="card card-primary">
             <div className="card-header">
-              <h3 className="card-title">Helper Master Details</h3>
+              <h3 className="card-title">Personal Details</h3>
             </div>
             <div className="card-body row">
               <div className="col-lg-4">
@@ -128,6 +128,13 @@ function FleetMasterAddForm() {
                       <div className="row">
                         <div className="col-lg-4">
                           <CustomInput
+                            label="Account Number"
+                            id="AccountNumber"
+                            placeholder="Enter Account Number"
+                          />
+                        </div>
+                        <div className="col-lg-4">
+                          <CustomInput
                             label="Bank name"
                             id="bankName"
                             placeholder="Enter Bank Name"
@@ -140,13 +147,7 @@ function FleetMasterAddForm() {
                             placeholder="Enter IFSC Code"
                           />
                         </div>
-                        <div className="col-lg-4">
-                          <CustomInput
-                            label="Account Number"
-                            id="AccountNumber"
-                            placeholder="Enter Account Number"
-                          />
-                        </div>
+                        
                         <div className="col-lg-4">
                           <CustomInput
                             label="Account Holder Name"
