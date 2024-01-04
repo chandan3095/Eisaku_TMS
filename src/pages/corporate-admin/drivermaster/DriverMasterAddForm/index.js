@@ -14,7 +14,7 @@ function FleetMasterAddForm() {
 
             <div className="card card-primary">
                <div className="card-header">
-                  <h3 className="card-title">Add Driver Master</h3>
+                  <h3 className="card-title">Personal Details</h3>
                </div>
                <div className="card-body">
                   <div className="row">
