@@ -12,7 +12,6 @@ function FleetMasterAddForm() {
       <div>
          <BodyHeader title="Add Driver Master" />
          <form className="p-5 shadow-lg">
-
             <div className="card card-primary">
                <div className="card-header">
                   <h3 className="card-title">Personal Details</h3>
