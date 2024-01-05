@@ -119,11 +119,11 @@ const VendorMasterAdd = () => {
                         <div key={index} className="row">
                           <div className="col-12 col-sm-12 col-md- col-lg-4">
                             <CustomInput
-                              label="Contact Persion Name"
+                              label="Contact Person Name"
                               inputType="number"
                               id="#vendorMobile"
                               name="vendorMobile"
-                              placeholder="Enter Contact Person Contact Persion Name."
+                              placeholder="Enter Contact Person Contact Person Name."
                               value={contact}
                             />
                           </div>

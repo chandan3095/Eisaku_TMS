@@ -8,6 +8,8 @@ import BodyHeader from "../../../../components/common/CommonBodyHeader";
 
 function FleetMasterAddForm() {
    const [payRollType, setpayRollType] = useState("Eisaku Pay roll");
+
+
    return (
       <div>
          <BodyHeader title="Add Driver Master" />
@@ -35,6 +37,7 @@ function FleetMasterAddForm() {
                         <CustomDatePicker
                            label="Date of Joining"
                            placeholder="Select Date of Joining"
+                           
                         />
                      </div>
 
@@ -84,7 +87,7 @@ function FleetMasterAddForm() {
                      </div>
 
                      <div className="col-lg-4">
-                        {/* <label className="text-bold">DL Document</label> */}
+                        <label className="text-bold">DL Document</label>
                         <CustomFileUpload label="DL Document" />
                      </div>
                   </div>
@@ -103,30 +106,30 @@ function FleetMasterAddForm() {
                            id="aadharCard"
                            placeholder="Enter Aadhar Card"
                         />
-                        {/* <label className="text-bold">Aadhar card</label> */}
                      </div>
 
                      <div className="col-lg-6">
+                        <label className="text-bold">Aadhar card</label>
                         <CustomFileUpload label="Aadhar card" />
                      </div>
                      
                      <div className="col-lg-6">
-                           <CustomInput
-                              label="Pan Card"
-                              id="panCard"
-                              placeholder="Enter Pan Card"
-                           />
+                        <CustomInput
+                           label="Pan Card"
+                           id="panCard"
+                           placeholder="Enter Pan Card"
+                        />
                      </div>
 
                      <div className="col-lg-6">
-                        {/* <label className="text-bold">Pan Card</label> */}
+                        <label className="text-bold">Pan Card</label>
                         <CustomFileUpload label="Pan Card" />
                      </div>
                   </div>
                </div>
             </div>
 
-            {/* Tyre Sec */}
+            {/* Pay roll Sec */}
                <div className="card card-primary">
                   <div className="card-header">
                      <h3 className="card-title">Pay roll</h3>
