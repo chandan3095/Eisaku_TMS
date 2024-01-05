@@ -6,6 +6,7 @@ import CustomDropdown from '../../../components/common/CustomDropdown/CustomDrop
 import CustomMonthYear from '../../../components/common/CustomMonthYear/CustomMonthYear';
 import CustomRadio from '../../../components/common/CustomRadio/CustomRadio';
 import BodyHeader from '../../../components/common/CommonBodyHeader';
+import selectOptionData from '../../../constansts/LocalData';
 
 
 const LaneMasterAdd = () => {
@@ -55,9 +56,9 @@ const LaneMasterAdd = () => {
                      <div className="col-lg-4">
                         <CustomDropdown
                            label="Lane Name"
-                           optionData={["Select", "customer1", "customer2", "customer3"]}
+                           optionData={selectOptionData}
                            value={makeSelect}
-                           onChange={(event) => setMake(event.target.value)}
+                           // onChange={(event) => setMake(event.target.value)}
                         />
                      </div>
 
@@ -65,9 +66,9 @@ const LaneMasterAdd = () => {
                         {/* Dimension  */}
                         <CustomDropdown
                            label="Vendor Name"
-                           optionData={["NA", "customer1", "customer2", "customer3"]}
+                           optionData={selectOptionData}
                            value={makeSelect}
-                           onChange={(event) => setMake(event.target.value)}
+                           // onChange={(event) => setMake(event.target.value)}
                         />
                      </div>
 
@@ -124,9 +125,9 @@ const LaneMasterAdd = () => {
                         {/* Vehicle Type  */}
                         <CustomDropdown
                            label="Vehicle Type"
-                           optionData={["Vehicle", "Vehicle1", "Vehicle2", "Vehicle3"]}
+                           optionData={selectOptionData}
                            value={makeSelect}
-                           onChange={(event) => setMake(event.target.value)}
+                           // onChange={(event) => setMake(event.target.value)}
                         />
                      </div>
 
@@ -134,9 +135,9 @@ const LaneMasterAdd = () => {
                         {/* Tonnage */}
                         <CustomDropdown
                            label="Tonnage"
-                           optionData={["5T", "6T", "7T", "8T", "9T", "10.5T", "15T", "18T", "Any Other"]}
+                           optionData={selectOptionData}
                            value={makeSelect}
-                           onChange={(event) => setMake(event.target.value)}
+                           // onChange={(event) => setMake(event.target.value)}
                         />
                      </div>
 

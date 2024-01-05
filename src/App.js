@@ -13,7 +13,7 @@ function App() {
       <Header />
       <CommonSideBar />
       <div className="content-wrapper">        
-        <section className="content">
+        <section className="content pb-5">
           <div className="container-fluid">
             <AppRoutes />
           </div>

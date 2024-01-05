@@ -6,10 +6,11 @@ import CustomFileUpload from "../../../../components/common/CustomFileUpload/Cus
 import CustomDropdown from "../../../../components/common/CustomDropdown/CustomDropdown";
 import CustomMonthYear from "../../../../components/common/CustomMonthYear/CustomMonthYear";
 import BodyHeader from "../../../../components/common/CommonBodyHeader";
+import selectOptionData from "../../../../constansts/LocalData";
 
 function FleetMasterAddForm() {
   const [fuelType, setFuelType] = useState("Diesel");
-  const [tyreType, setTyreType] = useState("New/Remold");
+  const [tyreType, setTyreType] = useState("");
   const [makeSelect, setMake] = useState("");
   const [tonnageSelect, setTonnage] = useState("");
   const [vehicleSelect, setVehicleCategory] = useState("");
@@ -57,7 +58,7 @@ function FleetMasterAddForm() {
   return (
     <div>
       <BodyHeader title="Add Fleet Master" />
-      <form className="p-3 shadow-lg">
+      <form className="">
         <div className="row">
           <div className="col-lg-12">
             <div className="card card-primary card-outline card-tabs">
@@ -211,34 +212,20 @@ function FleetMasterAddForm() {
                         <div className="col-lg-4">
                           <label className="text-bold">Vehicle Category</label>
                           <CustomDropdown
-                            optionData={[
-                              "20ft",
-                              "22ft",
-                              "24ft",
-                              "32ft SXL",
-                              "32ft MXL",
-                              "Any Other",
-                            ]}
+                            optionData={selectOptionData}
                             value={vehicleSelect}
-                            onChange={(event) =>
-                              setVehicleCategory(event.target.value)
-                            }
+                            // onChange={(event) =>
+                            //   setVehicleCategory(event.target.value)
+                            // }
                           />
                         </div>
                         {/* Tonnage Sec */}
                         <div className="col-lg-4">
                           <label className="text-bold">Tonnage</label>
                           <CustomDropdown
-                            optionData={[
-                              "20ft",
-                              "22ft",
-                              "24ft",
-                              "32ft SXL",
-                              "32ft MXL",
-                              "Any Other",
-                            ]}
+                            optionData={selectOptionData}
                             value={tonnageSelect}
-                            onChange={(event) => setTonnage(event.target.value)}
+                            // onChange={(event) => setTonnage(event.target.value)}
                           />
                         </div>
 
@@ -271,9 +258,9 @@ function FleetMasterAddForm() {
                         <div className="col-lg-4">
                           <label className="text-bold">Make</label>
                           <CustomDropdown
-                            optionData={["Tata", "Eicher", "Ashok leyland"]}
+                            optionData={selectOptionData}
                             value={makeSelect}
-                            onChange={(event) => setMake(event.target.value)}
+                            // onChange={(event) => setMake(event.target.value)}
                           />
                         </div>
                         <div className="col-lg-4">
@@ -578,28 +565,13 @@ function FleetMasterAddForm() {
                               </div>
                               <div className="col-lg-4">
                                 <label className="text-bold">Tyre Type</label>
-                                <div className="form-group mt-2">
-                                  <CustomRadio
-                                    label="New/Remold"
-                                    id="New/Remold"
-                                    value="New/Remold"
-                                    name="tyreType"
-                                    defaultChecked={tyreType}
-                                    onChange={(event) => {
-                                      setTyreType(event.target.value);
-                                      // console.log(event.target.value)
-                                    }}
+                                <CustomDropdown
+                                  optionData={selectOptionData}
+                                  value={tyreType}
+                                  // onChange={(event) =>
+                                  //   setTyreType(event.target.value)
+                                  // }
                                   />
-                                  <CustomRadio
-                                    label="Nylon/Radial"
-                                    id="Nylon/Radial"
-                                    value="Nylon/Radial"
-                                    name="tyreType"
-                                    onChange={(event) =>
-                                      setTyreType(event.target.value)
-                                    }
-                                  />
-                                </div>
                               </div>
                               <div className="col-lg-4">
                                 <CustomDatePicker
