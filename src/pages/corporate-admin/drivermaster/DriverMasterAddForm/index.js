@@ -20,7 +20,7 @@ function FleetMasterAddForm() {
                </div>
                <div className="card-body">
                   <div className="row">
-                     <div className="col-lg-6">
+                     <div className="col-lg-4">
                         <CustomInput
                            label="Name"
                            id="driverName"
@@ -28,7 +28,7 @@ function FleetMasterAddForm() {
                         />
                      </div>
 
-                     <div className="col-lg-6">
+                     <div className="col-lg-4">
                         <CustomDatePicker label="DOB" placeholder="Select DOB" />
                      </div>
 
@@ -164,7 +164,7 @@ function FleetMasterAddForm() {
                            </div>
                            <div className="col-lg-6">
                               <CustomInput
-                                 label="Monthly Commission Amount"
+                                 label="Monthly Salary & Commission Amount"
                                  id="monthlyCommAmount"
                                  placeholder="Enter monthly commission amount"
                               />
@@ -174,6 +174,13 @@ function FleetMasterAddForm() {
 
                      {payRollType === "Eisaku Pay roll" && (
                         <div className="row">
+                           <div className="col-lg-4">
+                              <CustomInput
+                                 label="Account Number"
+                                 id="AccountNumber"
+                                 placeholder="Enter Account Number"
+                              />
+                           </div>
                            <div className="col-lg-4">
                               <CustomInput
                                  label="Bank name"
@@ -188,13 +195,7 @@ function FleetMasterAddForm() {
                                  placeholder="Enter IFSC Code"
                               />
                            </div>
-                           <div className="col-lg-4">
-                              <CustomInput
-                                 label="Account Number"
-                                 id="AccountNumber"
-                                 placeholder="Enter Account Number"
-                              />
-                           </div>
+                           
                            <div className="col-lg-4">
                               <CustomInput
                                  label="Account Holder Name"
@@ -213,7 +214,7 @@ function FleetMasterAddForm() {
                      )}
                   </div>
                </div>
-            <div className="col-12 mt-3 text-center">
+            <div className="col-12 mt-4 text-center">
                <button className="btn btn-primary px-4 py-3" type="submit">
                   <h6 className="mb-0 text-uppercase">Submit</h6>
                </button>

@@ -1,24 +1,16 @@
 import React, { useState } from "react";
 import CustomInput from "../../../components/common/CustomInput/CustomInput";
 import CustomFileUpload from "../../../components/common/CustomFileUpload/CustomFileUpload";
-import CustomMonthYear from "../../../components/common/CustomMonthYear/CustomMonthYear";
-import CustomRadio from "../../../components/common/CustomRadio/CustomRadio";
-import CustomDropdown from "../../../components/common/CustomDropdown/CustomDropdown";
 import MultipleFileUpload from "../../../components/common/MultipleFileUpload/MultipleFileUpload";
 import MultiSelectDropdown from "../../../components/common/MultiSelectDropdown/MultiSelectDropdown";
 import BodyHeader from "../../../components/common/CommonBodyHeader";
 
 const VendorMasterAdd = () => {
   const [addContact, setAddContact] = useState([""]);
-  const [addEmail, setAddEmail] = useState([""]);
 
   const handleAddContact = () => {
     setAddContact([...addContact, ""]);
   };
-  const handleAddEmail = () => {
-    setAddEmail([...addEmail, ""]);
-  };
-
   const handleRemoveContact = (index) => {
     const updatedContacts = [...addContact];
     updatedContacts.splice(index, 1);
@@ -211,11 +203,12 @@ const VendorMasterAdd = () => {
         </div>
         <div className="mt-3 text-center">
             <button className="btn btn-primary px-4 py-3" type="submit">
-              <h5 className="mb-0 text-uppercase">Submit</h5>
+              <h6 className="mb-0 text-uppercase">Submit</h6>
             </button>
             <button className="btn btn-danger ml-3 px-4 py-3" type="submit">
-              <h5 className="mb-0 text-uppercase">reset</h5>
+              <h6 className="mb-0 text-uppercase">reset</h6>
             </button>
+            
           </div>
       </form>
     </div>
