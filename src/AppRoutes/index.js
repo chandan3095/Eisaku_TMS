@@ -13,6 +13,13 @@ import ListUser from '../pages/user/ListUser'
 import VendorMasterAdd from '../pages/corporate-admin/vendormaster/VendorMasterAdd'
 import LaneMasterAdd from '../pages/corporate-admin/lanemaster/LaneMasterAdd'
 import ContractorMasterAdd from '../pages/corporate-admin/contractormaster/ContractorMasterAdd'
+import FleetMasterView from '../pages/corporate-admin/fleetmaster/FleetMasterView'
+import DriverMasterList from '../pages/corporate-admin/drivermaster/DriverMasterList'
+import HelperMasterView from '../pages/corporate-admin/helpermaster/HelperMasterView'
+import CustomerMasterView from '../pages/corporate-admin/customermaster/CustomerMasterView'
+import VendorMasterView from '../pages/corporate-admin/vendormaster/VendorMasterView'
+import LaneMasterView from '../pages/corporate-admin/lanemaster/LaneMasterView'
+import ContractorMasterView from '../pages/corporate-admin/contractormaster/ContractorMasterView'
 
 function AppRoutes() {
   return (
@@ -25,6 +32,14 @@ function AppRoutes() {
         <Route path={RouteNames.vendorMasterAddForm} element={<VendorMasterAdd />} />
         <Route path={RouteNames.LaneMasterAddForm} element={<LaneMasterAdd />} />
         <Route path={RouteNames.ContractorMasterAddForm} element={<ContractorMasterAdd />} />
+
+        <Route path={RouteNames.fleetMasterView} element={<FleetMasterView />} />
+        <Route path={RouteNames.driverMasterView} element={<DriverMasterList />} />
+        <Route path={RouteNames.helperMasterView} element={<HelperMasterView />} />
+        <Route path={RouteNames.customerMasterView} element={<CustomerMasterView />} />
+        <Route path={RouteNames.vendorMasterView} element={<VendorMasterView />} />
+        <Route path={RouteNames.laneMasterView} element={<LaneMasterView/>} />
+        <Route path={RouteNames.contractorMasterView} element={<ContractorMasterView/>} />
         <Route path="/Login" element={<Login/>}/>
         <Route path="/Signup" element={<SignUp />} />
         <Route path={RouteNames.addUser} element={<AddUser />} />

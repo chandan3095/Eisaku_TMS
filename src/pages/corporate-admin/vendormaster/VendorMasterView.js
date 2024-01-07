@@ -1,27 +1,22 @@
 import React, { useState } from 'react'
-import DataTable from 'react-data-table-component'
-import CustomInput from '../../components/common/CustomInput/CustomInput'
+import BodyHeader from '../../../components/common/CommonBodyHeader';
+import CustomInput from '../../../components/common/CustomInput/CustomInput';
+import DataTable from 'react-data-table-component';
 
-function ListUser() {
+const VendorMasterView = () => {
    const columns = [
       {
-         name: 'User Name',
-         selector: row => row.userName,
+         name: 'Vendor Name',
+         selector: row => row.vendorName,
          sortable: true
       },
       {
-         name: 'Mobile No',
-         selector: row => row.mobileNo
+         name: 'Location',
+         selector: row => row.location,
       },
       {
-         name: 'User Type',
-         selector: row => row.userType,
-         sortable: true
-      },
-      {
-         name: 'Supervisor Name',
-         selector: row => row.supervisor,
-         sortable: true
+         name: 'Contact Person Name',
+         selector: row => row.contactPersonName,
       },
       {
          name: 'Action',
@@ -32,21 +27,9 @@ function ListUser() {
    const data = [
       {
          id: 1,
-         userName: 'aaa',
-         mobileNo: '9874563214',
-         userType: 'manager',
-         supervisor: 'aab',
-         action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
-         </>
-      },
-      {
-         id: 1,
-         userName: 'aaa',
-         mobileNo: '9874563214',
-         userType: 'manager',
-         supervisor: 'aba',
+         vendorName: 'A Vendor',
+         location: 'Kolkata',
+         contactPersonName: 'Paityn Harris',
          action: <>
             <button className="btn btn-primary mx-2">Edit</button>
             <button className="btn btn-danger mx-2"> Delete</button>
@@ -54,10 +37,9 @@ function ListUser() {
       },
       {
          id: 2,
-         userName: 'bbb',
-         mobileNo: '9874563214',
-         userType: 'admin',
-         supervisor: 'abb',
+         vendorName: 'B Vendor',
+         location: 'Kolkata',
+         contactPersonName: 'Paityn Harris',
          action: <>
             <button className="btn btn-primary mx-2">Edit</button>
             <button className="btn btn-danger mx-2"> Delete</button>
@@ -65,10 +47,9 @@ function ListUser() {
       },
       {
          id: 3,
-         userName: 'ccc',
-         mobileNo: '9874563214',
-         userType: 'user',
-         supervisor: 'acb',
+         vendorName: 'C Vendor',
+         location: 'Kolkata',
+         contactPersonName: 'Paityn Harris',
          action: <>
             <button className="btn btn-primary mx-2">Edit</button>
             <button className="btn btn-danger mx-2"> Delete</button>
@@ -76,10 +57,9 @@ function ListUser() {
       },
       {
          id: 4,
-         userName: 'ddd',
-         mobileNo: '9874563214',
-         userType: 'management',
-         supervisor: 'dab',
+         vendorName: 'D Vendor',
+         location: 'Kolkata',
+         contactPersonName: 'Paityn Harris',
          action: <>
             <button className="btn btn-primary mx-2">Edit</button>
             <button className="btn btn-danger mx-2"> Delete</button>
@@ -87,10 +67,19 @@ function ListUser() {
       },
       {
          id: 5,
-         userName: 'eee',
-         mobileNo: '9874563214',
-         userType: 'manager',
-         supervisor: 'bcb',
+         vendorName: 'E Vendor',
+         location: 'Kolkata',
+         contactPersonName: 'Paityn Harris',
+         action: <>
+            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-danger mx-2"> Delete</button>
+         </>
+      },
+      {
+         id: 6,
+         vendorName: 'F Vendor',
+         location: 'Kolkata',
+         contactPersonName: 'Paityn Harris',
          action: <>
             <button className="btn btn-primary mx-2">Edit</button>
             <button className="btn btn-danger mx-2"> Delete</button>
@@ -131,16 +120,16 @@ function ListUser() {
    const handleFilter = (e) => {
       const searchText = e.target.value.toLowerCase();
       const newData = data.filter(row => {
-         return row.userName.toLowerCase().includes(searchText) ||
-            row.supervisor.toLowerCase().includes(searchText) ||
-            row.userType.toLowerCase().includes(searchText);
+         return row.vendorName.toLowerCase().includes(searchText) ||
+            row.contactPersonName.toLowerCase().includes(searchText) ||
+            row.location.toLowerCase().includes(searchText);
       });
       setRecords(newData);
    };
-
    return (
-      <div className='container mt-5'>
-         <h1 className="mb-4 text-center">User's List</h1>
+      <div>
+         <BodyHeader title="Vendor Master List" />
+
          <div className=" d-flex justify-content-between">
             <h3>User's List</h3>
             <CustomInput inputType="text" placeholder="Search..." id="search" onChange={(e) => handleFilter(e)} />
@@ -161,4 +150,4 @@ function ListUser() {
    )
 }
 
-export default ListUser
+export default VendorMasterView

@@ -8,6 +8,25 @@ import BodyHeader from "../../../../components/common/CommonBodyHeader";
 
 function FleetMasterAddForm() {
    const [payRollType, setpayRollType] = useState("Eisaku Pay roll");
+   const [formData,setFormData]= useState({
+      Name: '',
+      dob: '',
+      joiningDate: '',
+      exitDate: '',
+      expofyears: '',
+      address:''
+   })
+   console.log(formData);
+   const handleChange=(e)=>{
+      const {name ,value} = e.target;
+      console.log(name);
+      setFormData({
+         ...formData,
+         [name]: value  // Corrected this line
+      });
+   }
+
+
    return (
       <div>
          <BodyHeader title="Add Driver Master" />
@@ -23,11 +42,20 @@ function FleetMasterAddForm() {
                            label="Name"
                            id="driverName"
                            placeholder="Enter Name"
+                           value={formData.Name}
+                           onChange={handleChange}
+                           name="Name"
                         />
                      </div>
 
                      <div className="col-lg-4">
-                        <CustomDatePicker label="DOB" placeholder="Select DOB" />
+                        <CustomDatePicker 
+                        label="DOB" 
+                        name="dob" 
+                        id="dob" 
+                        placeholder="Select DOB"
+                        value={formData.dob}
+                        onChange={handleChange} />
                      </div>
 
                      {/* Date of Joining */}
@@ -35,6 +63,10 @@ function FleetMasterAddForm() {
                         <CustomDatePicker
                            label="Date of Joining"
                            placeholder="Select Date of Joining"
+                           id="joiningDate"
+                           name="joiningDate"
+                           value= {formData.joiningDate}
+                           onChange={handleChange}
                         />
                      </div>
 
@@ -43,6 +75,10 @@ function FleetMasterAddForm() {
                         <CustomDatePicker
                            label="Date of Exit"
                            placeholder="Select Date of Exit"
+                           id="exitDate"
+                           name="exitDate"
+                           value={formData.exitDate}
+                           onChange={handleChange}
                         />
                      </div>
 
@@ -51,11 +87,21 @@ function FleetMasterAddForm() {
                         <CustomDatePicker
                            label="Expierence (Years)"
                            placeholder="Select Expierence (Years)"
+                           id="expofyears"
+                           name="expofyears"
+                           value={formData.expofyears}
+                           onChange={handleChange}
                         />
                      </div>
 
                      <div className="col-lg-12">
-                        <CustomTextArea label="Address" id="" placeholder="Enter Address" />
+                        <CustomTextArea 
+                        label="Address" 
+                        id="address" 
+                        name="address"
+                        placeholder="Enter Address"
+                        value={formData.address}
+                        onChange={handleChange} />
                      </div>
                   </div>
                </div>
@@ -106,27 +152,27 @@ function FleetMasterAddForm() {
                      </div>
 
                      <div className="col-lg-6">
-                        <label className="text-bold">Aadhar Document</label>
+                        <label className="text-bold">Aadhar card</label>
                         <CustomFileUpload label="Aadhar card" />
                      </div>
                      
                      <div className="col-lg-6">
-                           <CustomInput
-                              label="Pan Card"
-                              id="panCard"
-                              placeholder="Enter Pan Card"
-                           />
+                        <CustomInput
+                           label="Pan Card"
+                           id="panCard"
+                           placeholder="Enter Pan Card"
+                        />
                      </div>
 
                      <div className="col-lg-6">
-                        <label className="text-bold">Pan Document</label>
+                        <label className="text-bold">Pan Card</label>
                         <CustomFileUpload label="Pan Card" />
                      </div>
                   </div>
                </div>
             </div>
 
-            {/* Tyre Sec */}
+            {/* Pay roll Sec */}
                <div className="card card-primary">
                   <div className="card-header">
                      <h3 className="card-title">Pay roll</h3>
