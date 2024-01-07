@@ -4,6 +4,7 @@ import CustomFileUpload from "../../../components/common/CustomFileUpload/Custom
 import MultipleFileUpload from "../../../components/common/MultipleFileUpload/MultipleFileUpload";
 import MultiSelectDropdown from "../../../components/common/MultiSelectDropdown/MultiSelectDropdown";
 import BodyHeader from "../../../components/common/CommonBodyHeader";
+import CustomDatePicker from "../../../components/common/CustomDatePicker/CustomDatePicker";
 
 const VendorMasterAdd = () => {
   const [addContact, setAddContact] = useState([""]);
@@ -14,6 +15,7 @@ const VendorMasterAdd = () => {
   const handleRemoveContact = (index) => {
     const updatedContacts = [...addContact];
     updatedContacts.splice(index, 1);
+    // console.log(updatedContacts);
     setAddContact(updatedContacts);
   };
 
@@ -94,32 +96,52 @@ const VendorMasterAdd = () => {
                     <label className="text-bold">GST Document</label>
                     <CustomFileUpload label="GST Details" id="gst" name="gst" />
                   </div>
-                  <div className="col-12 col-sm-12 col-md-12 col-lg- mb-3">
-                    <label htmlFor="address">Address</label>
-                    <textarea
-                      name="address"
-                      id="address"
-                      cols="30"
-                      rows="2"
-                      className="form-control"
-                      placeholder="Enter Address"
-                    ></textarea>
+                  <div className="col-12 col-sm-12 col-md-12 col-lg- mb-3 border-bottom mb-2 pb-3">
+                    <div className="row">
+                      <div className="col-lg-6">
+                      <label htmlFor="address">location</label>
+                        <textarea 
+                          name="location"
+                          id="location"
+                          cols="30"
+                          rows="2"
+                          className="form-control"
+                          placeholder="Enter location"
+                        ></textarea>
+                      </div>
+                      <div className="col-lg-6">
+                      <label htmlFor="address">Address</label>
+                        <textarea 
+                          name="address"
+                          id="address"
+                          cols="30"
+                          rows="2"
+                          className="form-control"
+                          placeholder="Enter Address"
+                        ></textarea>
+                      </div>
+                    </div>
                   </div>
                   <div className="col-12">
-                    {addContact.map((contact, email, index) => {
+                    {addContact.map((item, index) => {
+                      const {name, contact, email}= item
                       return (
-                        <div key={index} className="row">
-                          <div className="col-12 col-sm-12 col-md- col-lg-4">
+                        <div key={index} className={
+                          index < addContact.length - 1 && addContact.length > 1
+                            ? "row border-bottom mb-4 pb-3"
+                            : "row"
+                        }>
+                          <div className="col-12 col-sm-12 col-md-6 col-lg-4">
                             <CustomInput
-                              label="Contact Persion Name"
+                              label="Contact Person Name"
                               inputType="number"
                               id="#vendorMobile"
                               name="vendorMobile"
-                              placeholder="Enter Contact Person Contact Persion Name."
-                              value={contact}
+                              placeholder="Enter Contact Person Name."
+                              value={name}
                             />
                           </div>
-                          <div className="col-12 col-sm-12 col-md- col-lg-4">
+                          <div className="col-12 col-sm-12 col-md-6 col-lg-4">
                             <CustomInput
                               label="Mobile No"
                               inputType="number"
@@ -129,7 +151,7 @@ const VendorMasterAdd = () => {
                               value={contact}
                             />
                           </div>
-                          <div className="col-12 col-sm-12 col-md- col-lg-4">
+                          <div className="col-12 col-sm-12 col-md-6 col-lg-4">
                             <CustomInput
                               label="Email Id"
                               inputType="text"
@@ -141,13 +163,15 @@ const VendorMasterAdd = () => {
                           </div>
 
                           {index > 0 && (
-                            <button
+                           <div className="col-12">
+                             <button
                               type="button"
                               className="btn btn-danger float-right ml-3 mb-3"
                               onClick={handleRemoveContact}
                             >
                               <i className="fas fa-trash"></i> Delete item
                             </button>
+                           </div>
                           )}
                         </div>
                       );
@@ -172,9 +196,22 @@ const VendorMasterAdd = () => {
                 <h3 className="card-title">Agreement Details</h3>
               </div>
               <div className="card-body row">
+              <div className="col-lg-4">
+                      <CustomDatePicker
+                            label="Agreement Start Date"
+                            placeholder="Enter Agreement Start Date"
+                          />
+                </div>
+                <div className="col-lg-4">
+                      <CustomDatePicker
+                            label="Agreement End Date"
+                            placeholder="Enter Agreement End Date"
+                          />
+                </div>
                <div className="col-lg-4">
-               <MultipleFileUpload label="Agreement Details" />
+                  <MultipleFileUpload label="Agreement Document" />
                </div>
+               
               </div>
             </div>
           </div>

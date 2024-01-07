@@ -1,18 +1,20 @@
-import React from "react";
+import Select from "react-dropdown-select";
 
-const CustomDropdown= (props) => {
-   const { label, selected, optionData, onChange,name, value } = props
+const CustomDropdown = (props) => {
+  const { label, optionData, onChange, onBlur, name, value } = props;
 
+  // console.log({ value });
   return (
     <div className="form-group">
-      {label && <label className="text-capitalize">{label}</label>}  
-        <select className="form-control select2" style={{ width: '100%' }} onChange={onChange} name={name} value={value}> 
-       { !value && <option aria-readonly={true}>Select</option> }   
-      {optionData.map((item, index) => <option key={index} value={item}>{item}</option>
-      )}
-      </select>
+      {label && <label className="text-capitalize">{label}</label>}
+      <Select
+        options={optionData}
+        labelField="label"
+        valueField="value"
+        onChange={(values) => onChange(values)}
+      />
     </div>
   );
-}
+};
 
 export default CustomDropdown;
