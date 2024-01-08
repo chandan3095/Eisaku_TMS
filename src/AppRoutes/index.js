@@ -21,6 +21,7 @@ import VendorMasterView from '../pages/corporate-admin/vendormaster/VendorMaster
 import LaneMasterView from '../pages/corporate-admin/lanemaster/LaneMasterView'
 import ContractorMasterView from '../pages/corporate-admin/contractormaster/ContractorMasterView'
 import LocationMasterAdd from '../pages/corporate-admin/locationmaster/LocationMasterAdd'
+import LocationMasterView from '../pages/corporate-admin/locationmaster/LocationMasterView'
 
 function AppRoutes() {
   return (
@@ -42,6 +43,9 @@ function AppRoutes() {
         <Route path={RouteNames.vendorMasterView} element={<VendorMasterView />} />
         <Route path={RouteNames.laneMasterView} element={<LaneMasterView/>} />
         <Route path={RouteNames.contractorMasterView} element={<ContractorMasterView/>} />
+        <Route path={RouteNames.LocationMasterView} element={<LocationMasterView/>} />
+
+
         <Route path="/Login" element={<Login/>}/>
         <Route path="/Signup" element={<SignUp />} />
         <Route path={RouteNames.addUser} element={<AddUser />} />
