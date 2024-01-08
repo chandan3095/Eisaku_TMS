@@ -5,9 +5,12 @@ import MultipleFileUpload from "../../../components/common/MultipleFileUpload/Mu
 import MultiSelectDropdown from "../../../components/common/MultiSelectDropdown/MultiSelectDropdown";
 import BodyHeader from "../../../components/common/CommonBodyHeader";
 import CustomDatePicker from "../../../components/common/CustomDatePicker/CustomDatePicker";
-
+import CustomDropdown from "../../../components/common/CustomDropdown/CustomDropdown";
+import { useFormik } from "formik";
+import { event } from "jquery";
 const VendorMasterAdd = () => {
     const [addContact, setAddContact] = useState([""]);
+    const [laneNameSelect, setlaneNameSelect] = useState([""]);
 
     const handleAddContact = () => {
         setAddContact([...addContact, ""]);
@@ -18,7 +21,42 @@ const VendorMasterAdd = () => {
         // console.log(updatedContacts);
         setAddContact(updatedContacts);
     };
-
+    const [isDisabled, setIsdisabled] = useState(true);
+    // Lane Name Details
+    const handleLaneNameSelect = () => {
+        setSelectedOption(false);
+        setlaneNameSelect([...laneNameSelect, { enterLaneName: "" }]);
+    };
+    const handleLaneNameSelectDelete = () => {
+        if (laneNameSelect.length > 1) {
+            const updatedlaneNameSelect = laneNameSelect.slice(0, -1); // Removes the last element
+            setlaneNameSelect(updatedlaneNameSelect);
+        }
+    };
+    const destinationData = [
+        {
+            label: "Lane 1",
+            value: "Lane 1",
+        },
+        {
+            label: "Lane 2",
+            value: "Lane 2",
+        },
+        {
+            label: "Lane 3",
+            value: "Lane 3",
+        },
+        {
+            label: "Lane 4",
+            value: "Lane 4",
+        },
+    ];
+    const [selectedOption, setSelectedOption] = useState('');
+    const handleSelectChange = (selected) => {
+        setSelectedOption(selected[0].value);
+        setIsdisabled(false)
+        // console.log(selected[0].value);
+    };
     return (
         <div>
             <BodyHeader title="Add Vendor Master" />
@@ -134,7 +172,7 @@ const VendorMasterAdd = () => {
                                                     key={index}
                                                     className={
                                                         index < addContact.length - 1 &&
-                                                        addContact.length > 1
+                                                            addContact.length > 1
                                                             ? "row border-bottom mb-4 pb-3"
                                                             : "row"
                                                     }
@@ -233,16 +271,131 @@ const VendorMasterAdd = () => {
                                 <h3 className="card-title">Lane Details</h3>
                             </div>
                             <div className="card-body row">
-                                <div className="col-lg-4">
-                                    <label htmlFor="laneName">Lane Name</label>
-                                    <MultiSelectDropdown
-                                        options={[
-                                            { value: "1", label: "Management1" },
-                                            { value: "2", label: "Management2" },
-                                            { value: "3", label: "Management3" },
-                                            { value: "4", label: "Management4" },
-                                        ]}
+                                {laneNameSelect.map((item, index)=>(
+                                    <div className="col-lg-4">
+                                    <label className="text-bold">Lane Name</label>
+                                    <CustomDropdown
+                                        optionData={destinationData}
+                                        // value={showLaneDetails}
+                                        onChange={handleSelectChange}
                                     />
+                                </div>
+                                ))}
+                                
+                                {selectedOption && (
+
+                                    <div className="row mt-3">
+                                        <div className="col-lg-4">
+                                            <CustomInput
+                                                label="Express mode rate additional"
+                                                id="expressModeRateAdditional"
+                                                placeholder="Enter Amount"
+                                            // onChange={formik.handleChange}
+                                            // onBlur={formik.handleBlur}
+                                            // value={formik.values.expressModeRateAdditional}
+                                            />
+                                        </div>
+                                        <div className="col-lg-4">
+                                            <CustomInput
+                                                label="Super express mode rate additional"
+                                                id="superExpressModeRateAdditional"
+                                                placeholder="Enter amount"
+                                            // onChange={formik.handleChange}
+                                            // onBlur={formik.handleBlur}
+                                            // value={
+                                            //   formik.values.superExpressModeRateAdditional
+                                            // }
+                                            />
+                                        </div>
+                                        <div className="col-lg-4">
+                                            <CustomInput
+                                                label="Detention rate additional"
+                                                id="detentionRateAdditional"
+                                                placeholder="Enter amount"
+                                            // onChange={formik.handleChange}
+                                            // onBlur={formik.handleBlur}
+                                            // value={formik.values.detentionRateAdditional}
+                                            />
+                                        </div>
+                                        <div className="col-lg-4">
+                                            <CustomInput
+                                                label="Multiple loading location rate additional"
+                                                id="multipleLoadingLocationRateAdditional"
+                                                placeholder="Enter amount"
+                                            // onChange={formik.handleChange}
+                                            // onBlur={formik.handleBlur}
+                                            // value={
+                                            //   formik.values
+                                            //     .multipleLoadingLocationRateAdditional
+                                            // }
+                                            />
+                                        </div>
+
+                                        <div className="col-lg-4">
+                                            <CustomInput
+                                                label="Multiple unloading location rate additional"
+                                                id="multipleUnloadingLocationRateAdditional"
+                                                placeholder="Enter amount"
+                                            // onChange={formik.handleChange}
+                                            // onBlur={formik.handleBlur}
+                                            // value={
+                                            //   formik.values
+                                            //     .multipleUnloadingLocationRateAdditional
+                                            // }
+                                            />
+                                        </div>
+                                        <div className="col-lg-4">
+                                            <CustomInput
+                                                label="Loading charges"
+                                                id="loadingCharges"
+                                                placeholder="Enter amount"
+                                            // onChange={formik.handleChange}
+                                            // onBlur={formik.handleBlur}
+                                            // value={formik.values.loadingCharges}
+                                            />
+                                        </div>
+                                        <div className="col-lg-4">
+                                            <CustomInput
+                                                label="Unloading charge"
+                                                id="unloadingCharge"
+                                                placeholder="Enter amount"
+                                            // onChange={formik.handleChange}
+                                            // onBlur={formik.handleBlur}
+                                            // value={formik.values.unloadingCharge}
+                                            />
+                                        </div>
+                                        <div className="col-lg-4">
+                                            <CustomInput
+                                                label="miscellaneous charges"
+                                                id="miscellaneousCharges"
+                                                placeholder="Enter amount"
+                                            // onChange={formik.handleChange}
+                                            // onBlur={formik.handleBlur}
+                                            // value={formik.values.miscellaneousCharges}
+                                            />
+                                        </div>
+                                        <div className="col-lg-4">
+                                            <CustomInput
+                                                label="miscellaneous Remarks"
+                                                id="miscellaneousRemarks"
+                                                placeholder="Enter remarks"
+                                            // onChange={formik.handleChange}
+                                            // onBlur={formik.handleBlur}
+                                            // value={formik.values.miscellaneousRemarks}
+                                            />
+                                        </div>
+
+                                    </div>
+                                )}
+                                <div className="text-right mt-3 pt-3">
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary float-right"
+                                        onClick={handleLaneNameSelect}
+                                        disabled={isDisabled}
+                                    >
+                                        <i className="fas fa-plus"></i> Add New
+                                    </button>
                                 </div>
                             </div>
                         </div>

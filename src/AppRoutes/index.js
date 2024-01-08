@@ -20,7 +20,8 @@ import CustomerMasterView from '../pages/corporate-admin/customermaster/Customer
 import VendorMasterView from '../pages/corporate-admin/vendormaster/VendorMasterView'
 import LaneMasterView from '../pages/corporate-admin/lanemaster/LaneMasterView'
 import ContractorMasterView from '../pages/corporate-admin/contractormaster/ContractorMasterView'
-import DriverMasterEdit from '../pages/corporate-admin/drivermaster/DriverMasterEdit'
+import LocationMasterAdd from '../pages/corporate-admin/locationmaster/LocationMasterAdd'
+import LocationMasterView from '../pages/corporate-admin/locationmaster/LocationMasterView'
 
 function AppRoutes() {
   return (
@@ -33,6 +34,7 @@ function AppRoutes() {
         <Route path={RouteNames.vendorMasterAddForm} element={<VendorMasterAdd />} />
         <Route path={RouteNames.LaneMasterAddForm} element={<LaneMasterAdd />} />
         <Route path={RouteNames.ContractorMasterAddForm} element={<ContractorMasterAdd />} />
+        <Route path={RouteNames.LocationMasterAddForm} element={<LocationMasterAdd />} />
 
         <Route path={RouteNames.fleetMasterView} element={<FleetMasterView />} />
         <Route path={RouteNames.driverMasterView} element={<DriverMasterList />} />
@@ -41,8 +43,7 @@ function AppRoutes() {
         <Route path={RouteNames.vendorMasterView} element={<VendorMasterView />} />
         <Route path={RouteNames.laneMasterView} element={<LaneMasterView/>} />
         <Route path={RouteNames.contractorMasterView} element={<ContractorMasterView/>} />
-
-        <Route path={RouteNames.driverMasterEdit} element={<DriverMasterEdit />} />
+        <Route path={RouteNames.LocationMasterView} element={<LocationMasterView/>} />
 
 
         <Route path="/Login" element={<Login/>}/>
