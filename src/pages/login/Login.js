@@ -20,7 +20,7 @@ const Login = () => {
                         <CustomInput label="Enter Password" name="password" id="#password" inputType="password" placeholder="Enter Password" />
                      </div>
                   </div>
-                  <div className="mb-3">
+                  <div className="mb-3 d-flex justify-content-center">
                      <button type="button" className="btn btn-info btn-lg px-5">Submit</button>
                   </div>
                </form>
