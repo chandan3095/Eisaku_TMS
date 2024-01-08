@@ -15,6 +15,7 @@ function FleetMasterAddForm() {
   const [contactPersonAdd, setContactPersonAdd] = useState([
     { mobileNo: "", emailId: "" },
   ]);
+  
   const [laneNameAdd, setLaneNameAdd] = useState([
     {
       enterName: "",
@@ -24,6 +25,7 @@ function FleetMasterAddForm() {
       tonnage: "",
     },
   ]);
+
   const vehicleCategory = [
     {
       label: "20ft",
@@ -50,6 +52,7 @@ function FleetMasterAddForm() {
       value: "Any Other",
     },
   ];
+
   const tonnageData = [
     {
       label: "5T",
@@ -88,6 +91,7 @@ function FleetMasterAddForm() {
       value: "any other",
     },
   ];
+
   const destinationData = [
     {
       label: "New York",
@@ -106,6 +110,7 @@ function FleetMasterAddForm() {
       value: "London",
     },
   ];
+
   const [isDisabled, setIsdisabled] = useState(true);
 
   const handelLaneSave = () => {

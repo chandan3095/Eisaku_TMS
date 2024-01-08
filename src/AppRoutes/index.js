@@ -20,6 +20,7 @@ import CustomerMasterView from '../pages/corporate-admin/customermaster/Customer
 import VendorMasterView from '../pages/corporate-admin/vendormaster/VendorMasterView'
 import LaneMasterView from '../pages/corporate-admin/lanemaster/LaneMasterView'
 import ContractorMasterView from '../pages/corporate-admin/contractormaster/ContractorMasterView'
+import DriverMasterEdit from '../pages/corporate-admin/drivermaster/DriverMasterEdit'
 
 function AppRoutes() {
   return (
@@ -40,6 +41,10 @@ function AppRoutes() {
         <Route path={RouteNames.vendorMasterView} element={<VendorMasterView />} />
         <Route path={RouteNames.laneMasterView} element={<LaneMasterView/>} />
         <Route path={RouteNames.contractorMasterView} element={<ContractorMasterView/>} />
+
+        <Route path={RouteNames.driverMasterEdit} element={<DriverMasterEdit />} />
+
+
         <Route path="/Login" element={<Login/>}/>
         <Route path="/Signup" element={<SignUp />} />
         <Route path={RouteNames.addUser} element={<AddUser />} />
