@@ -20,6 +20,7 @@ import CustomerMasterView from '../pages/corporate-admin/customermaster/Customer
 import VendorMasterView from '../pages/corporate-admin/vendormaster/VendorMasterView'
 import LaneMasterView from '../pages/corporate-admin/lanemaster/LaneMasterView'
 import ContractorMasterView from '../pages/corporate-admin/contractormaster/ContractorMasterView'
+import LocationMasterAdd from '../pages/corporate-admin/locationmaster/LocationMasterAdd'
 
 function AppRoutes() {
   return (
