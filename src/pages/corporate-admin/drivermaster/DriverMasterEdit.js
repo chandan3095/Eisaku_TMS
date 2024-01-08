@@ -1,17 +1,19 @@
-import React, { useState } from "react";
-import CustomInput from "../../../../components/common/CustomInput/CustomInput";
-import CustomDatePicker from "../../../../components/common/CustomDatePicker/CustomDatePicker";
-import CustomRadio from "../../../../components/common/CustomRadio/CustomRadio";
-import CustomFileUpload from "../../../../components/common/CustomFileUpload/CustomFileUpload";
-import CustomTextArea from "../../../../components/common/CustomTextArea/CustomTextArea";
-import BodyHeader from "../../../../components/common/CommonBodyHeader";
-import { useDispatch } from "react-redux";
-import { addDriveMaster } from "../../../../reducer/DriveMasterReducer";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import CustomInput from '../../../components/common/CustomInput/CustomInput';
+import CustomDatePicker from '../../../components/common/CustomDatePicker/CustomDatePicker';
+import CustomTextArea from '../../../components/common/CustomTextArea/CustomTextArea';
+import CustomFileUpload from '../../../components/common/CustomFileUpload/CustomFileUpload';
+import CustomRadio from '../../../components/common/CustomRadio/CustomRadio';
+import BodyHeader from '../../../components/common/CommonBodyHeader';
+import { editDriveMaster } from '../../../reducer/DriveMasterReducer';
+import { useNavigate, useParams } from 'react-router-dom';
 
-function FleetMasterAddForm() {
-   // const [payRollType, setpayRollType] = useState("Eisaku Pay roll");
-
+const DriverMasterEdit = () => {
+   const [payRollType, setpayRollType] = useState("Eisaku Pay roll");
+   const params = useParams()
+   const driverMaster = useSelector((state) => state.driveMaster)
+   console.log(params);
    const [formData, setFormData] = useState({
       Name: '',
       dob: '',
@@ -21,9 +23,9 @@ function FleetMasterAddForm() {
       address: '',
       drivingLicense: '',
       licenseExp: '',
-      aadharCard:'',
-      panCard:'',
-      payRollType:''
+      aadharCard: '',
+      panCard: '',
+      payRollType: ''
    })
 
    const dispatch = useDispatch()
@@ -38,14 +40,26 @@ function FleetMasterAddForm() {
       });
    }
 
-    const handleFormData=()=>{
-       dispatch(addDriveMaster(formData))
-       navigate('/driver-master/view')
-    }
+   const handleFormData = () => {
+      dispatch(editDriveMaster(formData))
+      navigate('/driver-master/view')
+   }
+
+   useEffect(() => {
+      console.log(driverMaster);
+      const driverList = driverMaster.driveMasterList.filter((item) => {
+         return item.drivingLicense === params.id
+      })[0]
+
+      setFormData(driverList)
+      console.log(driverList);
+
+   }, [driverMaster.driveMasterList, params.id])
+
 
    return (
       <div>
-         <BodyHeader title="Add Driver Master" />
+         <BodyHeader title="Edit Driver Master" />
          <form className="p-5 shadow-lg">
             <div className="card card-primary">
                <div className="card-header">
@@ -214,26 +228,18 @@ function FleetMasterAddForm() {
                         id="eisakuPayRoll"
                         value="Eisaku Pay roll"
                         name="payRollType"
-                        defaultChecked={formData.payRollType === "Eisaku Pay roll"}
-                        checked={formData.payRollType === "Eisaku Pay roll"}
-                        onChange={(event) => setFormData((prev)=>({
-                           ...prev,
-                           payRollType: event.target.value
-                        }))}
+                        defaultChecked={payRollType === "Eisaku Pay roll"}
+                        onChange={(event) => setpayRollType(handleChange(event.target.value))}
                      />
                      <CustomRadio
                         label="Contractor"
                         id="contractor"
                         value="Contractor"
                         name="payRollType"
-                        checked={formData.payRollType === "Contractor"}
-                        onChange={(event) => setFormData((prev) => ({
-                           ...prev,
-                           payRollType: event.target.value
-                        }))}
+                        onChange={(event) => setpayRollType(handleChange(event.target.value))}
                      />
                   </div>
-                  {formData.payRollType === "Contractor" && (
+                  {payRollType === "Contractor" && (
                      <div className="row">
                         <div className="col-lg-6">
                            <CustomInput
@@ -252,7 +258,7 @@ function FleetMasterAddForm() {
                      </div>
                   )}
 
-                  {formData.payRollType === "Eisaku Pay roll" && (
+                  {payRollType === "Eisaku Pay roll" && (
                      <div className="row">
                         <div className="col-lg-4">
                            <CustomInput
@@ -296,7 +302,7 @@ function FleetMasterAddForm() {
             </div>
             <div className="col-12 mt-4 text-center">
                <button className="btn btn-primary px-4 py-3" type="button" onClick={handleFormData}>
-                  <h6 className="mb-0 text-uppercase">Submit</h6>
+                  <h6 className="mb-0 text-uppercase">Update</h6>
                </button>
                <button className="btn btn-danger ml-3 px-4 py-3" type="submit">
                   <h6 className="mb-0 text-uppercase">reset</h6>
@@ -308,4 +314,4 @@ function FleetMasterAddForm() {
    );
 }
 
-export default FleetMasterAddForm;
+export default DriverMasterEdit

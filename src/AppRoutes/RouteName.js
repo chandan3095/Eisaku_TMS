@@ -19,6 +19,15 @@ const RouteNames = {
     contractorMasterView: '/contractor-master/view',
     LocationMasterView: '/location-master/view',
 
+   // edit 
+   fleetMasterEdit: '/fleet-master/edit',
+   driverMasterEdit: '/driver-master/edit/:id',
+   helperMasterEdit: '/helper-master/edit',
+   customerMasterEdit: '/customer-master/edit',
+   vendorMasterEdit: '/vendor-master/edit',
+   laneMasterEdit: '/lane-master/edit',
+   contractorMasterEdit: '/contractor-master/edit',
+
     addUser: '/user/add-user',
     listUser: '/user/user-List',
 }
