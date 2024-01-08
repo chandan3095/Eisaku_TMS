@@ -15,7 +15,7 @@ function FleetMasterAddForm() {
   const [contactPersonAdd, setContactPersonAdd] = useState([
     { mobileNo: "", emailId: "" },
   ]);
-  
+
   const [laneNameAdd, setLaneNameAdd] = useState([
     {
       enterName: "",
@@ -363,14 +363,18 @@ function FleetMasterAddForm() {
                 {/* Location  */}
                 <div className="">
                   {locationAdd.map(() => (
-                    <CustomTextArea
-                      label="Location"
-                      id=""
-                      placeholder="Enter Location"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.location}
-                    />
+                    <div>
+                      <CustomDropdown
+                        optionData={destinationData}
+                        label="Location"
+                        id=""
+                        onChange={(value) => {
+                          formik.setFieldValue("origin", value[0].value);
+                        }}
+                        // onBlur={formik.handleBlur}
+                        value={formik.values.location}
+                      />
+                    </div>
                   ))}
                   {/* <button
                     type="button"
@@ -491,6 +495,7 @@ function FleetMasterAddForm() {
                           formik.setFieldValue("origin", value[0].value);
                         }}
                       />
+                      {formik.values.origin}
                     </div>
                     <div className="col-lg-4">
                       <label className="text-bold">Destination</label>
@@ -544,20 +549,13 @@ function FleetMasterAddForm() {
                     <div className="col-lg-12">
                       <h4 className="border-bottom mb-3 pb-2">
                         {formik.values.customerName &&
-                          `${formik.values.customerName}`
-                        }
-                        {formik.values.origin &&
-                          `#${formik.values.origin}`
-                        }
+                          `${formik.values.customerName}`}
+                        {formik.values.origin && `#${formik.values.origin}`}
                         {formik.values.destination &&
-                          `#${formik.values.destination}`
-                        }
+                          `#${formik.values.destination}`}
                         {formik.values.vehicleCategory &&
-                          `#${formik.values.vehicleCategory}`
-                        }
-                        {formik.values.tonnage &&
-                          `#${formik.values.tonnage}`                        
-                        }
+                          `#${formik.values.vehicleCategory}`}
+                        {formik.values.tonnage && `#${formik.values.tonnage}`}
                       </h4>
                     </div>
                     <div className="col-lg-4">
@@ -577,9 +575,7 @@ function FleetMasterAddForm() {
                         placeholder="Enter amount"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={
-                          formik.values.superExpressModeRateAdditional
-                        }
+                        value={formik.values.superExpressModeRateAdditional}
                       />
                     </div>
                     <div className="col-lg-4">
@@ -600,8 +596,7 @@ function FleetMasterAddForm() {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={
-                          formik.values
-                            .multipleLoadingLocationRateAdditional
+                          formik.values.multipleLoadingLocationRateAdditional
                         }
                       />
                     </div>
@@ -614,8 +609,7 @@ function FleetMasterAddForm() {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={
-                          formik.values
-                            .multipleUnloadingLocationRateAdditional
+                          formik.values.multipleUnloadingLocationRateAdditional
                         }
                       />
                     </div>

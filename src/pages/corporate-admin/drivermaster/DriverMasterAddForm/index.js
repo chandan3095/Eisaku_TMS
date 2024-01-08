@@ -127,6 +127,13 @@ function FleetMasterAddForm() {
                            onChange={handleChange}
                         />
                      </div>
+                     <div className="col-lg-4">
+                        <label className="text-bold">Driver Image</label>
+                        <CustomFileUpload
+                           label="Driver Image"
+                           id="driverImage"
+                           name="driverImage" />
+                     </div>
 
                      <div className="col-lg-12">
                         <CustomTextArea
