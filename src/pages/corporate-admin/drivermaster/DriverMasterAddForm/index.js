@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 function FleetMasterAddForm() {
    // const [payRollType, setpayRollType] = useState("Eisaku Pay roll");
 
+   const [selectedFile,setSelectedFile] = useState(null)
+
    const [formData, setFormData] = useState({
       Name: '',
       dob: '',
@@ -21,27 +23,43 @@ function FleetMasterAddForm() {
       address: '',
       drivingLicense: '',
       licenseExp: '',
-      aadharCard:'',
-      panCard:'',
-      payRollType:''
+      aadharCard: '',
+      panCard: '',
+      payRollType: '',
+      dlUpload: '',
+      contractorName: '',
+      monthlyCommAmount: '',
+      accountNumber: '',
+      bankName:'',
+      ifscCode:'',
+      accountHolderName:'',
+      monthlyAmount: '',
    })
 
    const dispatch = useDispatch()
    const navigate = useNavigate()
    console.log(formData);
+
    const handleChange = (e) => {
-      const { name, value } = e.target;
-      console.log(name);
-      setFormData({
-         ...formData,
-         [name]: value
-      });
+      const { name, value,type } = e.target;
+
+      if(type === 'file'){
+         const file = e.target.files[0]
+         console.log(name, file);
+      }else{
+         setFormData({
+            ...formData,
+            [name]: value
+         });
+      }
    }
 
-    const handleFormData=()=>{
-       dispatch(addDriveMaster(formData))
-       navigate('/driver-master/view')
-    }
+
+
+   const handleFormData = () => {
+      dispatch(addDriveMaster(formData))
+      navigate('/driver-master/view')
+   }
 
    return (
       <div>
@@ -154,7 +172,11 @@ function FleetMasterAddForm() {
 
                      <div className="col-lg-4">
                         <label className="text-bold">DL Document</label>
-                        <CustomFileUpload label="DL Document" />
+                        <CustomFileUpload
+                           label="DL Document"
+                           id="dlUpload"
+                           name="dlUpload"
+                           onChange={handleChange} />
                      </div>
                   </div>
                </div>
@@ -179,7 +201,10 @@ function FleetMasterAddForm() {
 
                      <div className="col-lg-6">
                         <label className="text-bold">Aadhar card</label>
-                        <CustomFileUpload label="Aadhar card" />
+                        <CustomFileUpload
+                           label="Aadhar card"
+                           name="adharCard"
+                           onChange={handleChange} />
                      </div>
 
                      <div className="col-lg-6">
@@ -216,7 +241,7 @@ function FleetMasterAddForm() {
                         name="payRollType"
                         defaultChecked={formData.payRollType === "Eisaku Pay roll"}
                         checked={formData.payRollType === "Eisaku Pay roll"}
-                        onChange={(event) => setFormData((prev)=>({
+                        onChange={(event) => setFormData((prev) => ({
                            ...prev,
                            payRollType: event.target.value
                         }))}
@@ -240,6 +265,9 @@ function FleetMasterAddForm() {
                               label="Contractor Name"
                               id="contractorName"
                               placeholder="Enter contractor Name"
+                              value={formData.contractorName}
+                              onChange={handleChange}
+                              name="contractorName"
                            />
                         </div>
                         <div className="col-lg-6">
@@ -247,6 +275,9 @@ function FleetMasterAddForm() {
                               label="Monthly Salary & Commission Amount"
                               id="monthlyCommAmount"
                               placeholder="Enter monthly commission amount"
+                              value={formData.monthlyCommAmount}
+                              onChange={handleChange}
+                              name="monthlyCommAmount"
                            />
                         </div>
                      </div>
@@ -257,8 +288,11 @@ function FleetMasterAddForm() {
                         <div className="col-lg-4">
                            <CustomInput
                               label="Account Number"
-                              id="AccountNumber"
+                              id="accountNumber"
                               placeholder="Enter Account Number"
+                              value={formData.accountNumber}
+                              onChange={handleChange}
+                              name="accountNumber"
                            />
                         </div>
                         <div className="col-lg-4">
@@ -266,6 +300,9 @@ function FleetMasterAddForm() {
                               label="Bank name"
                               id="bankName"
                               placeholder="Enter Bank Name"
+                              value={formData.bankName}
+                              onChange={handleChange}
+                              name="bankName"
                            />
                         </div>
                         <div className="col-lg-4">
@@ -273,6 +310,9 @@ function FleetMasterAddForm() {
                               label="IFSC Code"
                               id="ifscCode"
                               placeholder="Enter IFSC Code"
+                              value={formData.ifscCode}
+                              onChange={handleChange}
+                              name="ifscCode"
                            />
                         </div>
 
@@ -281,6 +321,9 @@ function FleetMasterAddForm() {
                               label="Account Holder Name"
                               id="accountHolderName"
                               placeholder="Enter Account Holder name"
+                              value={formData.accountHolderName}
+                              onChange={handleChange}
+                              name="accountHolderName"
                            />
                         </div>
                         <div className="col-lg-4">
@@ -288,6 +331,9 @@ function FleetMasterAddForm() {
                               label="Monthly salary amount"
                               id="monthlyAmount"
                               placeholder="Enter Monthly salary amount"
+                              value={formData.monthlyAmount}
+                              onChange={handleChange}
+                              name="monthlyAmount"
                            />
                         </div>
                      </div>

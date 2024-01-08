@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 import BodyHeader from '../../../components/common/CommonBodyHeader';
 import CustomInput from '../../../components/common/CustomInput/CustomInput';
 import DataTable from 'react-data-table-component';
+import { useNavigate } from 'react-router-dom';
 
 const ContractorMasterView = () => {
+
+   const navigate = useNavigate()
    const columns = [
       {
          name: 'Contractor Name',
@@ -31,7 +34,7 @@ const ContractorMasterView = () => {
          mobileNumber: '811344934',
          location: 'Kolkata',
          action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-primary mx-2" onClick={()=>navigate('/contractor-master/add-form')}>Edit</button>
             <button className="btn btn-danger mx-2"> Delete</button>
          </>
       },
@@ -41,7 +44,7 @@ const ContractorMasterView = () => {
          mobileNumber: '811344934',
          location: 'Kolkata',
          action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-primary mx-2" onClick={()=>navigate('/contractor-master/add-form')}>Edit</button>
             <button className="btn btn-danger mx-2"> Delete</button>
          </>
       },
@@ -51,7 +54,7 @@ const ContractorMasterView = () => {
          mobileNumber: '811344934',
          location: 'Kolkata',
          action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-primary mx-2" onClick={()=>navigate('/contractor-master/add-form')}>Edit</button>
             <button className="btn btn-danger mx-2"> Delete</button>
          </>
       },
@@ -61,7 +64,7 @@ const ContractorMasterView = () => {
          mobileNumber: '811344934',
          location: 'Kolkata',
          action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-primary mx-2" onClick={()=>navigate('/contractor-master/add-form')}>Edit</button>
             <button className="btn btn-danger mx-2"> Delete</button>
          </>
       },
@@ -71,7 +74,7 @@ const ContractorMasterView = () => {
          mobileNumber: '811344934',
          location: 'Kolkata',
          action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-primary mx-2" onClick={()=>navigate('/contractor-master/add-form')}>Edit</button>
             <button className="btn btn-danger mx-2"> Delete</button>
          </>
       },
@@ -81,7 +84,7 @@ const ContractorMasterView = () => {
          mobileNumber: '811344934',
          location: 'Kolkata',
          action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-primary mx-2" onClick={()=>navigate('/contractor-master/add-form')}>Edit</button>
             <button className="btn btn-danger mx-2"> Delete</button>
          </>
       },

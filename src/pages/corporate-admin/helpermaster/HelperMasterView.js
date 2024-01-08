@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import BodyHeader from '../../../components/common/CommonBodyHeader';
 import CustomInput from '../../../components/common/CustomInput/CustomInput';
 import DataTable from 'react-data-table-component';
+import { useNavigate } from 'react-router-dom';
 
 const HelperMasterView = () => {
+   const navigate = useNavigate()
    const columns = [
       {
          name: 'Helper Name',
@@ -31,7 +33,7 @@ const HelperMasterView = () => {
          dob: '19/2/2026',
          payrollType: 'Esaku Pay Roll',
          action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-primary mx-2" onClick={() => navigate('/helper-master/add-form')}>Edit</button>
             <button className="btn btn-danger mx-2"> Delete</button>
          </>
       },
@@ -41,7 +43,7 @@ const HelperMasterView = () => {
          dob: '19/2/2026',
          payrollType: 'Esaku Pay Roll',
          action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-primary mx-2" onClick={() => navigate('/helper-master/add-form')}>Edit</button>
             <button className="btn btn-danger mx-2"> Delete</button>
          </>
       },
@@ -51,7 +53,7 @@ const HelperMasterView = () => {
          dob: '19/2/2026',
          payrollType: 'Esaku Pay Roll',
          action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-primary mx-2" onClick={() => navigate('/helper-master/add-form')}>Edit</button>
             <button className="btn btn-danger mx-2"> Delete</button>
          </>
       },
@@ -61,7 +63,7 @@ const HelperMasterView = () => {
          dob: '19/2/2026',
          payrollType: 'Esaku Pay Roll',
          action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-primary mx-2" onClick={() => navigate('/helper-master/add-form')}>Edit</button>
             <button className="btn btn-danger mx-2"> Delete</button>
          </>
       },
@@ -71,7 +73,7 @@ const HelperMasterView = () => {
          dob: '19/2/2026',
          payrollType: 'Esaku Pay Roll',
          action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-primary mx-2" onClick={() => navigate('/helper-master/add-form')}>Edit</button>
             <button className="btn btn-danger mx-2"> Delete</button>
          </>
       },
@@ -81,7 +83,7 @@ const HelperMasterView = () => {
          dob: '19/2/2026',
          payrollType: 'Esaku Pay Roll',
          action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
+            <button className="btn btn-primary mx-2" onClick={() => navigate('/helper-master/add-form')}>Edit</button>
             <button className="btn btn-danger mx-2"> Delete</button>
          </>
       },

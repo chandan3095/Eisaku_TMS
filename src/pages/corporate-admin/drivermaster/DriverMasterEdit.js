@@ -25,7 +25,15 @@ const DriverMasterEdit = () => {
       licenseExp: '',
       aadharCard: '',
       panCard: '',
-      payRollType: ''
+      payRollType: '',
+      dlUpload: '',
+      contractorName: '',
+      monthlyCommAmount: '',
+      accountNumber: '',
+      bankName: '',
+      ifscCode: '',
+      accountHolderName: '',
+      monthlyAmount: '',
    })
 
    const dispatch = useDispatch()
@@ -168,7 +176,12 @@ const DriverMasterEdit = () => {
 
                      <div className="col-lg-4">
                         <label className="text-bold">DL Document</label>
-                        <CustomFileUpload label="DL Document" />
+                        <CustomFileUpload
+                           label="DL Document"
+                           id="dlUpload"
+                           name="dlUpload"
+                           value={formData.dlUpload}
+                           onChange={handleChange} />
                      </div>
                   </div>
                </div>
@@ -246,6 +259,9 @@ const DriverMasterEdit = () => {
                               label="Contractor Name"
                               id="contractorName"
                               placeholder="Enter contractor Name"
+                              value={formData.contractorName}
+                              onChange={handleChange}
+                              name="contractorName"
                            />
                         </div>
                         <div className="col-lg-6">
@@ -253,6 +269,9 @@ const DriverMasterEdit = () => {
                               label="Monthly Salary & Commission Amount"
                               id="monthlyCommAmount"
                               placeholder="Enter monthly commission amount"
+                              value={formData.monthlyCommAmount}
+                              onChange={handleChange}
+                              name="monthlyCommAmount"
                            />
                         </div>
                      </div>
@@ -265,6 +284,9 @@ const DriverMasterEdit = () => {
                               label="Account Number"
                               id="AccountNumber"
                               placeholder="Enter Account Number"
+                              value={formData.accountNumber}
+                              onChange={handleChange}
+                              name="accountNumber"
                            />
                         </div>
                         <div className="col-lg-4">
@@ -272,6 +294,9 @@ const DriverMasterEdit = () => {
                               label="Bank name"
                               id="bankName"
                               placeholder="Enter Bank Name"
+                              value={formData.bankName}
+                              onChange={handleChange}
+                              name="bankName"
                            />
                         </div>
                         <div className="col-lg-4">
@@ -279,6 +304,9 @@ const DriverMasterEdit = () => {
                               label="IFSC Code"
                               id="ifscCode"
                               placeholder="Enter IFSC Code"
+                              value={formData.ifscCode}
+                              onChange={handleChange}
+                              name="ifscCode"
                            />
                         </div>
 
@@ -287,6 +315,9 @@ const DriverMasterEdit = () => {
                               label="Account Holder Name"
                               id="accountHolderName"
                               placeholder="Enter Account Holder name"
+                              value={formData.accountHolderName}
+                              onChange={handleChange}
+                              name="accountHolderName"
                            />
                         </div>
                         <div className="col-lg-4">
@@ -294,6 +325,9 @@ const DriverMasterEdit = () => {
                               label="Monthly salary amount"
                               id="monthlyAmount"
                               placeholder="Enter Monthly salary amount"
+                              value={formData.monthlyAmount}
+                              onChange={handleChange}
+                              name="monthlyAmount"
                            />
                         </div>
                      </div>
