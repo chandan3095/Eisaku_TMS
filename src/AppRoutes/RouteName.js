@@ -7,6 +7,7 @@ const RouteNames = {
     vendorMasterAddForm: '/vendor-master/add-form',
     LaneMasterAddForm: '/lane-master/add-form',
     ContractorMasterAddForm: '/contractor-master/add-form',
+    LocationMasterAddForm: '/location-master/add-form',
 
    // list 
     fleetMasterView: '/fleet-master/view',
@@ -16,6 +17,7 @@ const RouteNames = {
     vendorMasterView: '/vendor-master/view',
     laneMasterView: '/lane-master/view',
     contractorMasterView: '/contractor-master/view',
+    LocationMasterView: '/location-master/view',
 
     addUser: '/user/add-user',
     listUser: '/user/user-List',

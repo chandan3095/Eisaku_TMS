@@ -229,7 +229,7 @@ function FleetMasterAddForm() {
                           />
                         </div>
 
-                        <div className="col-lg-4">
+                        <div className="col-lg-2">
                           <label className="text-bold">Fuel Type</label>
                           <div className="form-group mt-2">
                             <CustomRadio
@@ -255,7 +255,7 @@ function FleetMasterAddForm() {
                           </div>
                         </div>
 
-                        <div className="col-lg-4">
+                        <div className="col-lg-2">
                           <label className="text-bold">Make</label>
                           <CustomDropdown
                             optionData={selectOptionData}
@@ -383,21 +383,21 @@ function FleetMasterAddForm() {
                             placeholder="Enter MV Tax Amount"
                           />
                         </div>
-                        <div className="col-lg-4">
+                        <div className="col-lg-6">
                           <CustomInput
                             label="GPS Provider Name"
                             id="#gpsProvider"
                             placeholder="Enter GPS Provider Name"
                           />
                         </div>
-                        <div className="col-lg-4">
+                        <div className="col-lg-6">
                           <CustomInput
                             label="GPS Amount"
                             id="fitnessAmount"
                             placeholder="Enter GPS Amount"
                           />
                         </div>
-                        <div className="col-lg-4">
+                        <div className="col-lg-6">
                           <CustomInput
                             label="Fabricator Name"
                             id="fitnessAmount"
@@ -405,12 +405,26 @@ function FleetMasterAddForm() {
                           />
                         </div>
 
-                        <div className="col-lg-4">
+                        <div className="col-lg-6">
                           <CustomInput
                             label="Fabricator Location"
                             id="fitnessAmount"
                             placeholder="Enter Fabricator Location"
                           />
+                        </div>
+                        <div className="col-12 mt-3 text-right">
+                          <button
+                            className="btn btn-primary px-4 py-3"
+                            type="submit"
+                          >
+                            <h6 className="mb-0 text-uppercase">Next</h6>
+                          </button>
+                          <button
+                            className="btn btn-danger ml-3 px-4 py-3"
+                            type="submit"
+                          >
+                            <h6 className="mb-0 text-uppercase">reset</h6>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -452,6 +466,20 @@ function FleetMasterAddForm() {
                             <label className="text-bold">Certificate </label>
                             <CustomFileUpload />
                           </div>
+                          <div className="col-12 mt-3 text-right">
+                          <button
+                            className="btn btn-primary px-4 py-3"
+                            type="submit"
+                          >
+                            <h6 className="mb-0 text-uppercase">Next</h6>
+                          </button>
+                          <button
+                            className="btn btn-danger ml-3 px-4 py-3"
+                            type="submit"
+                          >
+                            <h6 className="mb-0 text-uppercase">reset</h6>
+                          </button>
+                        </div>
                         </div>
                       </div>
                     </div>
@@ -515,9 +543,11 @@ function FleetMasterAddForm() {
                               </div>
                             </div>
                           ))}
-                          <button
+                          <div className="row">
+                            <div className="col-6">
+                            <button
                             type="button"
-                            className="btn btn-primary float-right"
+                            className="btn btn-primary float-left"
                             onClick={handleServiceBill}
                           >
                             <i className="fas fa-plus"></i> Add More
@@ -525,12 +555,30 @@ function FleetMasterAddForm() {
                           {serviceBillAdd.length > 1 && (
                             <button
                               type="button"
-                              className="btn btn-danger float-right mr-3"
+                              className="btn btn-danger float-left ml-3"
                               onClick={handleServiceBillDelete}
                             >
                               <i className="fas fa-trash"></i> Delete item
                             </button>
                           )}
+                            </div>
+                            <div className="col-6 mt-3 text-right">
+                          <button
+                            className="btn btn-primary px-4 py-3"
+                            type="submit"
+                          >
+                            <h6 className="mb-0 text-uppercase">Next</h6>
+                          </button>
+                          <button
+                            className="btn btn-danger ml-3 px-4 py-3"
+                            type="submit"
+                          >
+                            <h6 className="mb-0 text-uppercase">reset</h6>
+                          </button>
+                        </div>
+                          </div>
+                          
+                          
                         </div>
                       </div>
                     </div>
@@ -571,7 +619,7 @@ function FleetMasterAddForm() {
                                   // onChange={(event) =>
                                   //   setTyreType(event.target.value)
                                   // }
-                                  />
+                                />
                               </div>
                               <div className="col-lg-4">
                                 <CustomDatePicker
@@ -603,10 +651,11 @@ function FleetMasterAddForm() {
                               </div>
                             </div>
                           ))}
-
-                          <button
+                          <div className="row">
+                            <div className="col-lg-6">
+                            <button
                             type="button"
-                            className="btn btn-primary float-right"
+                            className="btn btn-primary float-left"
                             onClick={handleTyreAdd}
                           >
                             <i className="fas fa-plus"></i> Add More
@@ -614,12 +663,23 @@ function FleetMasterAddForm() {
                           {tyreAdd.length > 1 && (
                             <button
                               type="button"
-                              className="btn btn-danger float-right mr-3"
+                              className="btn btn-danger float-left ml-3"
                               onClick={handleTyreDelete}
                             >
                               <i className="fas fa-trash"></i> Delete item
                             </button>
                           )}
+                            </div>
+                            <div className="col-6 mt-3 text-right">
+            <button className="btn btn-primary px-4 py-3" type="submit">
+              <h6 className="mb-0 text-uppercase">Next</h6>
+            </button>
+            <button className="btn btn-danger ml-3 px-4 py-3" type="submit">
+              <h6 className="mb-0 text-uppercase">reset</h6>
+            </button>
+          </div>
+                          </div>
+                          
                         </div>
                       </div>
                     </div>
@@ -664,9 +724,11 @@ function FleetMasterAddForm() {
                               </div>
                             </div>
                           ))}
-                          <button
+                          <div className="row">
+                            <div className="col-lg-6">
+                            <button
                             type="button"
-                            className="btn btn-primary float-right"
+                            className="btn btn-primary float-left"
                             onClick={maintenanceBudgetAdd}
                           >
                             <i className="fas fa-plus"></i> Add More
@@ -674,12 +736,23 @@ function FleetMasterAddForm() {
                           {maintenanceBudget.length > 1 && (
                             <button
                               type="button"
-                              className="btn btn-danger float-right mr-3"
+                              className="btn btn-danger float-left ml-3"
                               onClick={maintenanceBudgetDelete}
                             >
                               <i className="fas fa-trash"></i> Delete item
                             </button>
                           )}
+                            </div>
+                            <div className="col-6 mt-3 text-right">
+            <button className="btn btn-primary px-4 py-3" type="submit">
+              <h6 className="mb-0 text-uppercase">Submit</h6>
+            </button>
+            <button className="btn btn-danger ml-3 px-4 py-3" type="submit">
+              <h6 className="mb-0 text-uppercase">reset</h6>
+            </button>
+          </div>
+                          </div>
+                          
                         </div>
                       </div>
                     </div>
@@ -688,16 +761,7 @@ function FleetMasterAddForm() {
               </div>
               {/* /.card */}
             </div>
-          </div>
-
-          <div className="col-12 mt-3 text-center">
-            <button className="btn btn-primary px-4 py-3" type="submit">
-              <h6 className="mb-0 text-uppercase">Submit</h6>
-            </button>
-            <button className="btn btn-danger ml-3 px-4 py-3" type="submit">
-              <h6 className="mb-0 text-uppercase">reset</h6>
-            </button>
-          </div>
+          </div>          
         </div>
       </form>
     </div>

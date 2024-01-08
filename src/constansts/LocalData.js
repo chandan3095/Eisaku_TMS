@@ -104,6 +104,21 @@ export const SideBarDropdownData = [
             }
         ]
     },
+    {
+        menuName: "Location Master",
+        url: "/location-master",
+        icon:"fa-tree",
+        dropdownList:[
+            {
+                subMenuName: "Add",
+                url: "/add-form",
+            },
+            {
+                subMenuName: "View",
+                url: "/view",
+            }
+        ]
+    }
     
 ]
 
