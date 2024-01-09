@@ -3,10 +3,18 @@ import BodyHeader from '../../../components/common/CommonBodyHeader';
 import CustomInput from '../../../components/common/CustomInput/CustomInput';
 import DataTable from 'react-data-table-component';
 import { useNavigate } from 'react-router-dom';
+import CustomToggleSwitch from '../../../components/common/CustomToggle';
 
 const ContractorMasterView = () => {
 
    const navigate = useNavigate()
+
+   const [isChecked, setIsChecked] = useState({}); // State to manage toggle
+
+     const toggleSwitch = () => {
+        setIsChecked(isChecked ? isChecked = true : isChecked = false); // Toggle the state
+       console.log(isChecked);
+     };
    const columns = [
       {
          name: 'Contractor Name',
@@ -35,7 +43,7 @@ const ContractorMasterView = () => {
          location: 'Kolkata',
          action: <>
             <button className="btn btn-primary mx-2" onClick={()=>navigate('/contractor-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="contractor1" />
          </>
       },
       {
@@ -45,7 +53,7 @@ const ContractorMasterView = () => {
          location: 'Kolkata',
          action: <>
             <button className="btn btn-primary mx-2" onClick={()=>navigate('/contractor-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="contractor2" />
          </>
       },
       {
@@ -55,7 +63,7 @@ const ContractorMasterView = () => {
          location: 'Kolkata',
          action: <>
             <button className="btn btn-primary mx-2" onClick={()=>navigate('/contractor-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="contractor3" />
          </>
       },
       {
@@ -65,7 +73,7 @@ const ContractorMasterView = () => {
          location: 'Kolkata',
          action: <>
             <button className="btn btn-primary mx-2" onClick={()=>navigate('/contractor-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="contractor4" />
          </>
       },
       {
@@ -75,7 +83,7 @@ const ContractorMasterView = () => {
          location: 'Kolkata',
          action: <>
             <button className="btn btn-primary mx-2" onClick={()=>navigate('/contractor-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="contractor5" />
          </>
       },
       {
@@ -85,7 +93,7 @@ const ContractorMasterView = () => {
          location: 'Kolkata',
          action: <>
             <button className="btn btn-primary mx-2" onClick={()=>navigate('/contractor-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="contractor6" />
          </>
       },
    ]

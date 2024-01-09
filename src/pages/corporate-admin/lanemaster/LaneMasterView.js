@@ -3,9 +3,16 @@ import BodyHeader from '../../../components/common/CommonBodyHeader';
 import CustomInput from '../../../components/common/CustomInput/CustomInput';
 import DataTable from 'react-data-table-component';
 import { useNavigate } from 'react-router-dom';
+import CustomToggleSwitch from '../../../components/common/CustomToggle';
 
 const LaneMasterView = () => {
    const navigate = useNavigate()
+   const [isChecked, setIsChecked] = useState({}); // State to manage toggle
+
+   const toggleSwitch = () => {
+      setIsChecked(isChecked ? isChecked = true : isChecked = false); // Toggle the state
+      console.log(isChecked);
+   };
    const columns = [
       {
          name: 'Lane Name',
@@ -44,7 +51,7 @@ const LaneMasterView = () => {
          customerName:'Danny Zurick',
          action: <>
             <button className="btn btn-primary mx-2" onClick={() => navigate('/lane-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="lane1" />
          </>
       },
       {
@@ -56,7 +63,7 @@ const LaneMasterView = () => {
          customerName: 'Danny Zurick',
          action: <>
             <button className="btn btn-primary mx-2" onClick={() => navigate('/lane-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="lane2" />
          </>
       },
       {
@@ -68,7 +75,7 @@ const LaneMasterView = () => {
          customerName: 'Danny Zurick',
          action: <>
             <button className="btn btn-primary mx-2" onClick={() => navigate('/lane-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="lane3" />
          </>
       },
       {
@@ -80,7 +87,7 @@ const LaneMasterView = () => {
          customerName: 'Danny Zurick',
          action: <>
             <button className="btn btn-primary mx-2" onClick={() => navigate('/lane-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="lane4" />
          </>
       },
       {
@@ -92,7 +99,7 @@ const LaneMasterView = () => {
          customerName: 'Danny Zurick',
          action: <>
             <button className="btn btn-primary mx-2" onClick={() => navigate('/lane-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="lane5" />
          </>
       },
       {
@@ -104,7 +111,7 @@ const LaneMasterView = () => {
          customerName: 'Danny Zurick',
          action: <>
             <button className="btn btn-primary mx-2" onClick={() => navigate('/lane-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="lane6" />
          </>
       },
    ]
