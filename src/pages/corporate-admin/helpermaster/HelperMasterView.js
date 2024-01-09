@@ -3,9 +3,17 @@ import BodyHeader from '../../../components/common/CommonBodyHeader';
 import CustomInput from '../../../components/common/CustomInput/CustomInput';
 import DataTable from 'react-data-table-component';
 import { useNavigate } from 'react-router-dom';
+import CustomToggleSwitch from '../../../components/common/CustomToggle';
 
 const HelperMasterView = () => {
    const navigate = useNavigate()
+
+   const [isChecked, setIsChecked] = useState({}); // State to manage toggle
+
+   const toggleSwitch = () => {
+      setIsChecked(isChecked ? isChecked = true : isChecked = false); // Toggle the state
+      console.log(isChecked);
+   };
    const columns = [
       {
          name: 'Helper Name',
@@ -34,7 +42,7 @@ const HelperMasterView = () => {
          payrollType: 'Esaku Pay Roll',
          action: <>
             <button className="btn btn-primary mx-2" onClick={() => navigate('/helper-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="helper1" />
          </>
       },
       {
@@ -44,7 +52,7 @@ const HelperMasterView = () => {
          payrollType: 'Esaku Pay Roll',
          action: <>
             <button className="btn btn-primary mx-2" onClick={() => navigate('/helper-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="helper2" />
          </>
       },
       {
@@ -54,7 +62,7 @@ const HelperMasterView = () => {
          payrollType: 'Esaku Pay Roll',
          action: <>
             <button className="btn btn-primary mx-2" onClick={() => navigate('/helper-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="helper3" />
          </>
       },
       {
@@ -64,7 +72,7 @@ const HelperMasterView = () => {
          payrollType: 'Esaku Pay Roll',
          action: <>
             <button className="btn btn-primary mx-2" onClick={() => navigate('/helper-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="helper4" />
          </>
       },
       {
@@ -74,7 +82,7 @@ const HelperMasterView = () => {
          payrollType: 'Esaku Pay Roll',
          action: <>
             <button className="btn btn-primary mx-2" onClick={() => navigate('/helper-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="helper5" />
          </>
       },
       {
@@ -84,7 +92,7 @@ const HelperMasterView = () => {
          payrollType: 'Esaku Pay Roll',
          action: <>
             <button className="btn btn-primary mx-2" onClick={() => navigate('/helper-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="helper6" />
          </>
       },
    ]

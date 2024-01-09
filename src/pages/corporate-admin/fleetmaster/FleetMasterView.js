@@ -7,12 +7,19 @@ import CustomToggleSwitch from "../../../components/common/CustomToggle";
 
 const FleetMasterView = () => {
   const navigate = useNavigate();
-  const [isChecked, setIsChecked] = useState(false); // State to manage toggle
+  const [isChecked, setIsChecked] = useState({}); // State to manage toggle
 
   const toggleSwitch = () => {
     setIsChecked(!isChecked); // Toggle the state 
     console.log(isChecked);
   };
+
+   // const toggleSwitch = (switchId) => {
+   //    setIsChecked((prevStates) => ({
+   //       ...prevStates,
+   //       [switchId]: !prevStates[switchId],
+   //    }));
+   // };
 
   const columns = [
     {
