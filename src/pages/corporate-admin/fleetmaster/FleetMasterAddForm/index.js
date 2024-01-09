@@ -190,15 +190,7 @@ function FleetMasterAddForm() {
                             placeholder="Enter L B H (ft)"
                           />
                         </div>
-
-                        {/* Financed by sec */}
-                        <div className="col-lg-4">
-                          <CustomInput
-                            label="Financed by"
-                            id="#financedBy"
-                            placeholder="Enter name"
-                          />
-                        </div>
+                       
 
                         {/* Fastag bank name Sec */}
                         <div className="col-lg-4">
@@ -229,7 +221,7 @@ function FleetMasterAddForm() {
                           />
                         </div>
 
-                        <div className="col-lg-2">
+                        <div className="col-lg-4">
                           <label className="text-bold">Fuel Type</label>
                           <div className="form-group mt-2">
                             <CustomRadio
@@ -255,7 +247,7 @@ function FleetMasterAddForm() {
                           </div>
                         </div>
 
-                        <div className="col-lg-2">
+                        <div className="col-lg-4">
                           <label className="text-bold">Make</label>
                           <CustomDropdown
                             optionData={selectOptionData}
@@ -274,6 +266,25 @@ function FleetMasterAddForm() {
                           <CustomFileUpload />
                         </div>
                         <div className="col-lg-4">
+                            <CustomDatePicker
+                              label="Insurance Expiry Date"
+                              placeholder="Enter Insurance Expiry Date"
+                            />
+                          </div>
+                          <div className="col-lg-4">
+                            <CustomInput
+                              label="Insurance Amount"
+                              id="fitnessAmount"
+                              placeholder="Enter Insurance Amount"
+                            />
+                          </div>
+                          <div className="col-lg-4">
+                            <label className="text-bold">
+                              Insurance Certificate
+                            </label>
+                            <CustomFileUpload />
+                          </div>
+                        <div className="col-lg-4">
                           <CustomDatePicker
                             label="Fitness Expiry Date"
                             placeholder="Enter Fitness Expiry Date"
@@ -289,25 +300,6 @@ function FleetMasterAddForm() {
                         <div className="col-lg-4">
                           <label className="text-bold">
                             Fitness Certificate
-                          </label>
-                          <CustomFileUpload />
-                        </div>
-                        <div className="col-lg-4">
-                          <CustomDatePicker
-                            label="Insurance Expiry Date"
-                            placeholder="Enter Insurance Expiry Date"
-                          />
-                        </div>
-                        <div className="col-lg-4">
-                          <CustomInput
-                            label="Insurance Amount"
-                            id="fitnessAmount"
-                            placeholder="Enter Insurance Amount"
-                          />
-                        </div>
-                        <div className="col-lg-4">
-                          <label className="text-bold">
-                            Insurance Certificate
                           </label>
                           <CustomFileUpload />
                         </div>
@@ -445,41 +437,51 @@ function FleetMasterAddForm() {
                         <div className="row card-body">
                           <div className="col-lg-4">
                             <CustomDatePicker
-                              label="Start date"
+                              label="EMI Start date"
                               placeholder="Enter vehicle owner name"
                             />
                           </div>
                           <div className="col-lg-4">
                             <CustomDatePicker
-                              label="End date"
+                              label="EMI End date"
                               placeholder="Enter vehicle owner name"
                             />
                           </div>
                           <div className="col-lg-4">
                             <CustomInput
-                              label="Amount"
+                              label="EMI Amount"
                               id="emiAmount"
                               placeholder="Enter Amount"
                             />
                           </div>
                           <div className="col-lg-4">
-                            <label className="text-bold">Certificate </label>
+                            <label className="text-bold">
+                              EMI Certificate{" "}
+                            </label>
                             <CustomFileUpload />
                           </div>
-                          <div className="col-12 mt-3 text-right">
-                          <button
-                            className="btn btn-primary px-4 py-3"
-                            type="submit"
-                          >
-                            <h6 className="mb-0 text-uppercase">Next</h6>
-                          </button>
-                          <button
-                            className="btn btn-danger ml-3 px-4 py-3"
-                            type="submit"
-                          >
-                            <h6 className="mb-0 text-uppercase">reset</h6>
-                          </button>
+                           {/* Financed by sec */}
+                        <div className="col-lg-4">
+                          <CustomInput
+                            label="Financed by"
+                            id="#financedBy"
+                            placeholder="Enter name"
+                          />
                         </div>
+                          <div className="col-12 mt-3 text-right">
+                            <button
+                              className="btn btn-primary px-4 py-3"
+                              type="submit"
+                            >
+                              <h6 className="mb-0 text-uppercase">Next</h6>
+                            </button>
+                            <button
+                              className="btn btn-danger ml-3 px-4 py-3"
+                              type="submit"
+                            >
+                              <h6 className="mb-0 text-uppercase">reset</h6>
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -545,40 +547,38 @@ function FleetMasterAddForm() {
                           ))}
                           <div className="row">
                             <div className="col-6">
-                            <button
-                            type="button"
-                            className="btn btn-primary float-left"
-                            onClick={handleServiceBill}
-                          >
-                            <i className="fas fa-plus"></i> Add More
-                          </button>
-                          {serviceBillAdd.length > 1 && (
-                            <button
-                              type="button"
-                              className="btn btn-danger float-left ml-3"
-                              onClick={handleServiceBillDelete}
-                            >
-                              <i className="fas fa-trash"></i> Delete item
-                            </button>
-                          )}
+                              <button
+                                type="button"
+                                className="btn btn-primary float-left"
+                                onClick={handleServiceBill}
+                              >
+                                <i className="fas fa-plus"></i> Add More
+                              </button>
+                              {serviceBillAdd.length > 1 && (
+                                <button
+                                  type="button"
+                                  className="btn btn-danger float-left ml-3"
+                                  onClick={handleServiceBillDelete}
+                                >
+                                  <i className="fas fa-trash"></i> Delete item
+                                </button>
+                              )}
                             </div>
                             <div className="col-6 mt-3 text-right">
-                          <button
-                            className="btn btn-primary px-4 py-3"
-                            type="submit"
-                          >
-                            <h6 className="mb-0 text-uppercase">Next</h6>
-                          </button>
-                          <button
-                            className="btn btn-danger ml-3 px-4 py-3"
-                            type="submit"
-                          >
-                            <h6 className="mb-0 text-uppercase">reset</h6>
-                          </button>
-                        </div>
+                              <button
+                                className="btn btn-primary px-4 py-3"
+                                type="submit"
+                              >
+                                <h6 className="mb-0 text-uppercase">Next</h6>
+                              </button>
+                              <button
+                                className="btn btn-danger ml-3 px-4 py-3"
+                                type="submit"
+                              >
+                                <h6 className="mb-0 text-uppercase">reset</h6>
+                              </button>
+                            </div>
                           </div>
-                          
-                          
                         </div>
                       </div>
                     </div>
@@ -653,33 +653,38 @@ function FleetMasterAddForm() {
                           ))}
                           <div className="row">
                             <div className="col-lg-6">
-                            <button
-                            type="button"
-                            className="btn btn-primary float-left"
-                            onClick={handleTyreAdd}
-                          >
-                            <i className="fas fa-plus"></i> Add More
-                          </button>
-                          {tyreAdd.length > 1 && (
-                            <button
-                              type="button"
-                              className="btn btn-danger float-left ml-3"
-                              onClick={handleTyreDelete}
-                            >
-                              <i className="fas fa-trash"></i> Delete item
-                            </button>
-                          )}
+                              <button
+                                type="button"
+                                className="btn btn-primary float-left"
+                                onClick={handleTyreAdd}
+                              >
+                                <i className="fas fa-plus"></i> Add More
+                              </button>
+                              {tyreAdd.length > 1 && (
+                                <button
+                                  type="button"
+                                  className="btn btn-danger float-left ml-3"
+                                  onClick={handleTyreDelete}
+                                >
+                                  <i className="fas fa-trash"></i> Delete item
+                                </button>
+                              )}
                             </div>
                             <div className="col-6 mt-3 text-right">
-            <button className="btn btn-primary px-4 py-3" type="submit">
-              <h6 className="mb-0 text-uppercase">Next</h6>
-            </button>
-            <button className="btn btn-danger ml-3 px-4 py-3" type="submit">
-              <h6 className="mb-0 text-uppercase">reset</h6>
-            </button>
-          </div>
+                              <button
+                                className="btn btn-primary px-4 py-3"
+                                type="submit"
+                              >
+                                <h6 className="mb-0 text-uppercase">Next</h6>
+                              </button>
+                              <button
+                                className="btn btn-danger ml-3 px-4 py-3"
+                                type="submit"
+                              >
+                                <h6 className="mb-0 text-uppercase">reset</h6>
+                              </button>
+                            </div>
                           </div>
-                          
                         </div>
                       </div>
                     </div>
@@ -709,50 +714,63 @@ function FleetMasterAddForm() {
                                   : "row"
                               }
                             >
-                              <div className="col-lg-6">
+                              <div className="col-lg-4">
                                 <CustomInput
                                   label="Amount"
                                   id="fitnessAmount"
                                   placeholder="Enter Amount"
                                 />
                               </div>
-                              <div className="col-lg-6">
-                                <label className="text-bold">
-                                  Bill upload along with warranty status
-                                </label>
-                                <CustomFileUpload />
+                              <div className="col-lg-4">
+                                <CustomDatePicker
+                                  label="To Date"
+                                  id="serviceDate"
+                                  placeholder="Select To Date"
+                                />
+                              </div>
+                              <div className="col-lg-4">
+                                <CustomDatePicker
+                                  label="From Date"
+                                  id="serviceDate"
+                                  placeholder="Select From Date"
+                                />
                               </div>
                             </div>
                           ))}
                           <div className="row">
                             <div className="col-lg-6">
-                            <button
-                            type="button"
-                            className="btn btn-primary float-left"
-                            onClick={maintenanceBudgetAdd}
-                          >
-                            <i className="fas fa-plus"></i> Add More
-                          </button>
-                          {maintenanceBudget.length > 1 && (
-                            <button
-                              type="button"
-                              className="btn btn-danger float-left ml-3"
-                              onClick={maintenanceBudgetDelete}
-                            >
-                              <i className="fas fa-trash"></i> Delete item
-                            </button>
-                          )}
+                              <button
+                                type="button"
+                                className="btn btn-primary float-left"
+                                onClick={maintenanceBudgetAdd}
+                              >
+                                <i className="fas fa-plus"></i> Add More
+                              </button>
+                              {maintenanceBudget.length > 1 && (
+                                <button
+                                  type="button"
+                                  className="btn btn-danger float-left ml-3"
+                                  onClick={maintenanceBudgetDelete}
+                                >
+                                  <i className="fas fa-trash"></i> Delete item
+                                </button>
+                              )}
                             </div>
                             <div className="col-6 mt-3 text-right">
-            <button className="btn btn-primary px-4 py-3" type="submit">
-              <h6 className="mb-0 text-uppercase">Submit</h6>
-            </button>
-            <button className="btn btn-danger ml-3 px-4 py-3" type="submit">
-              <h6 className="mb-0 text-uppercase">reset</h6>
-            </button>
-          </div>
+                              <button
+                                className="btn btn-primary px-4 py-3"
+                                type="submit"
+                              >
+                                <h6 className="mb-0 text-uppercase">Submit</h6>
+                              </button>
+                              <button
+                                className="btn btn-danger ml-3 px-4 py-3"
+                                type="submit"
+                              >
+                                <h6 className="mb-0 text-uppercase">reset</h6>
+                              </button>
+                            </div>
                           </div>
-                          
                         </div>
                       </div>
                     </div>
@@ -761,7 +779,7 @@ function FleetMasterAddForm() {
               </div>
               {/* /.card */}
             </div>
-          </div>          
+          </div>
         </div>
       </form>
     </div>

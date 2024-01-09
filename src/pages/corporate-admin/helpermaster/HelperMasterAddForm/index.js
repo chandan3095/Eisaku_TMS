@@ -67,6 +67,13 @@ function FleetMasterAddForm() {
                 <label className="text-bold">Pan Card Document</label>
                 <CustomFileUpload />
               </div>
+              <div className="col-lg-4">
+                        <label className="text-bold">Helper Image</label>
+                        <CustomFileUpload
+                           label="helper Image"
+                           id="helperImage"
+                           name="helperImage" />
+                     </div>
               <div className="col-lg-12">
                 <CustomTextArea
                   label="Address"

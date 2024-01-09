@@ -2,8 +2,18 @@ import React, { useState } from "react";
 import BodyHeader from "../../../components/common/CommonBodyHeader";
 import CustomInput from "../../../components/common/CustomInput/CustomInput";
 import DataTable from "react-data-table-component";
+import { useNavigate } from "react-router";
+import CustomToggleSwitch from "../../../components/common/CustomToggle";
 
 const FleetMasterView = () => {
+  const navigate = useNavigate();
+  const [isChecked, setIsChecked] = useState(false); // State to manage toggle
+
+  const toggleSwitch = () => {
+    setIsChecked(!isChecked); // Toggle the state
+    console.log(isChecked);
+  };
+
   const columns = [
     {
       name: "Vehicle Number",
@@ -33,8 +43,13 @@ const FleetMasterView = () => {
       vehicleTitle: "Mini Car",
       action: (
         <>
-          <button className="btn btn-primary mx-2">Edit</button>
-          <button className="btn btn-danger mx-2"> Delete</button>
+          <button
+            className="btn btn-primary mx-2"
+            onClick={() => navigate("/fleet-master/add-form")}
+          >
+            Edit
+          </button>
+          <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} />
         </>
       ),
     },
@@ -45,8 +60,13 @@ const FleetMasterView = () => {
       vehicleTitle: "Mini Car",
       action: (
         <>
-          <button className="btn btn-primary mx-2">Edit</button>
-          <button className="btn btn-danger mx-2"> Delete</button>
+          <button
+            className="btn btn-primary mx-2"
+            onClick={() => navigate("/fleet-master/add-form")}
+          >
+            Edit
+          </button>
+          <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} />
         </>
       ),
     },
@@ -57,8 +77,13 @@ const FleetMasterView = () => {
       vehicleTitle: "Mini Car",
       action: (
         <>
-          <button className="btn btn-primary mx-2">Edit</button>
-          <button className="btn btn-danger mx-2"> Delete</button>
+          <button
+            className="btn btn-primary mx-2"
+            onClick={() => navigate("/fleet-master/add-form")}
+          >
+            Edit
+          </button>
+          <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} />
         </>
       ),
     },
@@ -69,8 +94,13 @@ const FleetMasterView = () => {
       vehicleTitle: "Mini Car",
       action: (
         <>
-          <button className="btn btn-primary mx-2">Edit</button>
-          <button className="btn btn-danger mx-2"> Delete</button>
+          <button
+            className="btn btn-primary mx-2"
+            onClick={() => navigate("/fleet-master/add-form")}
+          >
+            Edit
+          </button>
+          <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} />
         </>
       ),
     },
@@ -81,8 +111,13 @@ const FleetMasterView = () => {
       vehicleTitle: "Mini Car",
       action: (
         <>
-          <button className="btn btn-primary mx-2">Edit</button>
-          <button className="btn btn-danger mx-2"> Delete</button>
+          <button
+            className="btn btn-primary mx-2"
+            onClick={() => navigate("/fleet-master/add-form")}
+          >
+            Edit
+          </button>
+          <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} />
         </>
       ),
     },
@@ -93,8 +128,13 @@ const FleetMasterView = () => {
       vehicleTitle: "Mini Car",
       action: (
         <>
-          <button className="btn btn-primary mx-2">Edit</button>
-          <button className="btn btn-danger mx-2"> Delete</button>
+          <button
+            className="btn btn-primary mx-2"
+            onClick={() => navigate("/fleet-master/add-form")}
+          >
+            Edit
+          </button>
+          <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} />
         </>
       ),
     },
@@ -110,7 +150,6 @@ const FleetMasterView = () => {
       style: {
         minHeight: "72px", // override the row height
         fontSize: "1rem",
-
       },
     },
     headCells: {
@@ -128,7 +167,6 @@ const FleetMasterView = () => {
         border: "1px solid #0bc4f0",
       },
     },
-    
   };
   const [records, setRecords] = useState(data);
 
@@ -247,6 +285,14 @@ const FleetMasterView = () => {
                           <dt className="col-sm-3">Vehicle Owner Name</dt>
                           <dd className="col-sm-9">Test</dd>
                         </dl>
+                        <div>
+                          <button className="btn btn-primary mx-2">Edit</button>
+                          <CustomToggleSwitch
+                          id="vehicleDetails"
+                            checked={isChecked}
+                            onChange={toggleSwitch}
+                          />
+                        </div>
                       </div>
                       {/* /.card-body */}
                     </div>
@@ -257,7 +303,7 @@ const FleetMasterView = () => {
                     role="tabpanel"
                     aria-labelledby="custom-tabs-three-profile-tab"
                   >
-                     <div className="card">
+                    <div className="card">
                       <div className="card-header">
                         <h3 className="card-title">EMI Details</h3>
                       </div>
@@ -273,7 +319,16 @@ const FleetMasterView = () => {
                           <dt className="col-sm-3">Certificate</dt>
                           <dd className="col-sm-9">Test</dd>
                         </dl>
+                        <div>
+                          <button className="btn btn-primary mx-2">Edit</button>
+                          <CustomToggleSwitch
+                          id="emiDetails"
+                            checked={isChecked}
+                            onChange={toggleSwitch}
+                          />
+                        </div>
                       </div>
+
                       {/* /.card-body */}
                     </div>
                   </div>
@@ -285,7 +340,7 @@ const FleetMasterView = () => {
                   >
                     <div className="card-body p-0">
                       <div className=" d-flex justify-content-between">
-                        <h3>User's List</h3>
+                        <h3>Service List</h3>
                         <CustomInput
                           inputType="text"
                           placeholder="Search..."
@@ -314,7 +369,7 @@ const FleetMasterView = () => {
                   >
                     <div className="card-body p-0">
                       <div className=" d-flex justify-content-between">
-                        <h3>User's List</h3>
+                        <h3>Tyre's List</h3>
                         <CustomInput
                           inputType="text"
                           placeholder="Search..."
@@ -343,7 +398,7 @@ const FleetMasterView = () => {
                   >
                     <div className="card-body p-0">
                       <div className=" d-flex justify-content-between">
-                        <h3>User's List</h3>
+                        <h3>Monthly Maintenance Budget List</h3>
                         <CustomInput
                           inputType="text"
                           placeholder="Search..."
