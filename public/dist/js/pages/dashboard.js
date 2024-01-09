@@ -114,7 +114,7 @@ $(function () {
   /* Chart.js Charts */
   // Sales chart
   var salesChartCanvas = document.getElementById('revenue-chart-canvas').getContext('2d')
-//   $('#revenue-chart').get(0).getContext('2d');
+  // $('#revenue-chart').get(0).getContext('2d');
 
   var salesChartData = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],

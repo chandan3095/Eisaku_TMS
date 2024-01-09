@@ -10,7 +10,7 @@ const FleetMasterView = () => {
   const [isChecked, setIsChecked] = useState(false); // State to manage toggle
 
   const toggleSwitch = () => {
-    setIsChecked(!isChecked); // Toggle the state
+    setIsChecked(!isChecked); // Toggle the state 
     console.log(isChecked);
   };
 
@@ -49,7 +49,7 @@ const FleetMasterView = () => {
           >
             Edit
           </button>
-          <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} />
+          <CustomToggleSwitch id="dataOne" checked={isChecked} onChange={toggleSwitch} />
         </>
       ),
     },
@@ -66,7 +66,7 @@ const FleetMasterView = () => {
           >
             Edit
           </button>
-          <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} />
+          <CustomToggleSwitch id="dataTwo" checked={isChecked} onChange={toggleSwitch} />
         </>
       ),
     },
@@ -83,7 +83,7 @@ const FleetMasterView = () => {
           >
             Edit
           </button>
-          <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} />
+          <CustomToggleSwitch id="dataThree" checked={isChecked} onChange={toggleSwitch} />
         </>
       ),
     },
@@ -100,7 +100,7 @@ const FleetMasterView = () => {
           >
             Edit
           </button>
-          <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} />
+          <CustomToggleSwitch id="dataFour" checked={isChecked} onChange={toggleSwitch} />
         </>
       ),
     },
@@ -117,7 +117,7 @@ const FleetMasterView = () => {
           >
             Edit
           </button>
-          <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} />
+          <CustomToggleSwitch id="dataFive" checked={isChecked} onChange={toggleSwitch} />
         </>
       ),
     },
@@ -134,7 +134,7 @@ const FleetMasterView = () => {
           >
             Edit
           </button>
-          <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} />
+          <CustomToggleSwitch id="dataSix" checked={isChecked} onChange={toggleSwitch} />
         </>
       ),
     },
