@@ -126,36 +126,36 @@ export const SideBarDropdownData = [
                           
 const selectOptionData =[
     {
-        label:"5T",
-        value:"5T"
+        label:"Company 1",
+        value:"Company 1"
       },
       {
-        label:"6T",
-        value:"6T"
+        label:"Company 2",
+        value:"Company 2"
       },
       {
-        label:"7T",
-        value:"7T"
+        label:"Company 3",
+        value:"Company 3"
       },
       {
-        label:"8T",
-        value:"8T"
+        label:"Company 4",
+        value:"Company 4"
       },
       {
-        label:"9T",
-        value:"9T"
+        label:"Company 5",
+        value:"Company 5"
       },
       {
-        label:"10.5T",
-        value:"10.5T"
+        label:"Company 6",
+        value:"Company 6"
       },
       {
-        label:"15T",
-        value:"15T"
+        label:"Company 7",
+        value:"Company 7"
       },
       {
-        label:"18T",
-        value:"18T"
+        label:"Company 8",
+        value:"Company 8"
       },
       {
         label:"NA",
