@@ -1,4 +1,8 @@
 const RouteNames = {
+   addUser: '/user/add-user',
+   listUser: '/user/user-List',
+
+
    // add forms 
     fleetMasterAddForm:'/fleet-master/add-form',
     driverMasterAddForm:'/driver-master/add-form',
@@ -28,7 +32,9 @@ const RouteNames = {
    laneMasterEdit: '/lane-master/edit',
    contractorMasterEdit: '/contractor-master/edit',
 
-    addUser: '/user/add-user',
-    listUser: '/user/user-List',
+   // Supervisior Trip Create
+   tripCreate: '/trip/add-trip',
+   tripView: '/trip/view-trip',
+
 }
 export default RouteNames

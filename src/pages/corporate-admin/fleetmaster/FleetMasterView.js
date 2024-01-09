@@ -7,19 +7,15 @@ import CustomToggleSwitch from "../../../components/common/CustomToggle";
 
 const FleetMasterView = () => {
   const navigate = useNavigate();
-  const [isChecked, setIsChecked] = useState({}); // State to manage toggle
+  const [isChecked, setIsChecked] = useState(false); // State to manage toggle
 
-  const toggleSwitch = () => {
-     setIsChecked(isChecked ? isChecked = true : isChecked = false); // Toggle the state
-    console.log(isChecked);
+   console.log({ isChecked });
+
+  const toggleSwitch = (e) => {
+   console.log(e, "gafigf");
+     setIsChecked(e.target.checked); // Toggle the state
+   //  console.log(isChecked);
   };
-
-   // const toggleSwitch = (switchId) => {
-   //    setIsChecked((prevStates) => ({
-   //       ...prevStates,
-   //       [switchId]: !prevStates[switchId],
-   //    }));
-   // };
 
   const columns = [
     {
@@ -40,6 +36,10 @@ const FleetMasterView = () => {
       name: "Action",
       selector: (row) => row.action,
     },
+     {
+        name: "Active",
+        selector: (row) => row.active,
+     },
   ];
 
   const data = [
@@ -56,12 +56,17 @@ const FleetMasterView = () => {
           >
             Edit
           </button>
-            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car1" />
+            {/* <CustomToggleSwitch checked={true} onChange={toggleSwitch} id="car1" /> */}
             {/* <CustomToggleSwitch
                checked={isChecked[row.id] || false}
                onChange={() => toggleSwitch(row.id)}
             /> */}
         </>
+      ),
+      active: (
+         <>
+            <CustomToggleSwitch checked={true} onChange={toggleSwitch} id="car1" />
+         </>
       ),
     },
     {
@@ -77,9 +82,14 @@ const FleetMasterView = () => {
           >
             Edit
           </button>
-            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car2" />
+            {/* <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car2" /> */}
         </>
       ),
+       active: (
+          <>
+             <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car2" />
+          </>
+       ),
     },
     {
       id: 3,
@@ -94,9 +104,14 @@ const FleetMasterView = () => {
           >
             Edit
           </button>
-            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car3" />
+            {/* <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car3" /> */}
         </>
       ),
+       active: (
+          <>
+             <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car3" />
+          </>
+       ),
     },
     {
       id: 4,
@@ -111,9 +126,14 @@ const FleetMasterView = () => {
           >
             Edit
           </button>
-            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car4" />
+            {/* <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car4" /> */}
         </>
       ),
+       active: (
+          <>
+             <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car4" />
+          </>
+       ),
     },
     {
       id: 5,
@@ -128,9 +148,14 @@ const FleetMasterView = () => {
           >
             Edit
           </button>
-            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car5" />
+            {/* <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car5" /> */}
         </>
       ),
+       active: (
+          <>
+             <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car5" />
+          </>
+       ),
     },
     {
       id: 6,
@@ -145,9 +170,14 @@ const FleetMasterView = () => {
           >
             Edit
           </button>
-            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car6" />
+            {/* <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car6" /> */}
         </>
       ),
+       active: (
+          <>
+             <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car6" />
+          </>
+       ),
     },
   ];
 
