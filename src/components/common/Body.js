@@ -2,6 +2,9 @@ import React from "react";
 import AddUser from "../../pages/user/AddUser";
 import ListUser from "../../pages/user/ListUser";
 import BodyHeader from "./CommonBodyHeader";
+import { PolarArea } from 'react-chartjs-2';
+import AreaChart from "./chart/AreaChart";
+
 const Body = () => {
   return (
     <div>
@@ -105,11 +108,7 @@ const Body = () => {
                     id="revenue-chart"
                     style={{ position: "relative", height: 300 }}
                   >
-                    <canvas
-                      id="revenue-chart-canvas"
-                      height={300}
-                      style={{ height: 300 }}
-                    />
+                   <AreaChart/>
                   </div>
                   <div
                     className="chart tab-pane"

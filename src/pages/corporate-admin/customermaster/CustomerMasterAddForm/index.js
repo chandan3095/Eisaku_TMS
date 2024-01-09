@@ -26,7 +26,7 @@ function FleetMasterAddForm() {
     },
   ]);
 
-  const vehicleCategory = [
+  const vehicleCategoryData = [
     {
       label: "20ft",
       value: "20ft",
@@ -113,81 +113,114 @@ function FleetMasterAddForm() {
 
   const [isDisabled, setIsdisabled] = useState(true);
   const [showLaneDetailsData, setShowLaneDetailsData] = useState(false);
-  
+  const [showLaneNameTop, setShowLaneNameTop] = useState(true);
+
+  const [laneAddData, setLaneAddData] = useState();
+
+  const [newLaneDetails, setnewLaneDetails] = useState([]);
   const handelLaneSave = () => {
-    formik.handleSubmit();
-    const updatedlaneNameAdd = laneNameAdd.slice(0, -1); // Removes the last element
-    setLaneNameAdd(updatedlaneNameAdd);
+    setShowLaneNameTop(false);
     setShowLaneDetails(true);
-    setIsdisabled(false);
+    const laneBodyData = {
+      laneName: formik.values.customerName,
+      origin: formik.values.origin,
+      destination: formik.values.destination,
+      vehicleCategory: formik.values.vehicleCategory,
+      tonnage: formik.values.tonnage,
+      expressModeRateAdditional: "",
+      superExpressModeRateAdditional: "",
+      detentionRateAdditional: "",
+      multipleLoadingLocationRateAdditional: "",
+      multipleUnloadingLocationRateAdditional: "",
+      loadingCharges: "",
+      unloadingCharge: "",
+      miscellaneousCharges: "",
+      miscellaneousRemarks: "",
+    };
+    // setnewLaneDetails([...newLaneDetails, laneBodyData])
+    setLaneAddData(laneBodyData);
   };
   const handelSave = () => {
-    formik.handleSubmit();
-    setShowLaneDetailsData(false)
-    setShowLaneDetailsData(true)
+    let laneBodyData = laneAddData;
+    laneBodyData = {
+      ...laneBodyData,
+      expressModeRateAdditional: formik.values.expressModeRateAdditional,
+      superExpressModeRateAdditional:
+        formik.values.superExpressModeRateAdditional,
+      detentionRateAdditional: formik.values.detentionRateAdditional,
+      multipleLoadingLocationRateAdditional:
+        formik.values.multipleLoadingLocationRateAdditional,
+      multipleUnloadingLocationRateAdditional:
+        formik.values.multipleUnloadingLocationRateAdditional,
+      loadingCharges: formik.values.loadingCharges,
+      unloadingCharge: formik.values.unloadingCharge,
+      miscellaneousCharges: formik.values.miscellaneousCharges,
+      miscellaneousRemarks: formik.values.miscellaneousRemarks,
+    };
+    setnewLaneDetails([...newLaneDetails, laneBodyData]);
+
+    setShowLaneNameTop(true);
+    setShowLaneDetails(false);
+    setLaneAddData();
+    formik.resetForm();
   };
   const handelLaneBack = () => {
-    setIsdisabled(true);
-
-    // setLaneNameAdd(laneNameAdd - 1)
-    setLaneNameAdd([...laneNameAdd, { enterLaneName: "" }]);
     setShowLaneDetails(false);
+    setShowLaneNameTop(true);
+    console.log(newLaneDetails);
   };
   // Lane Name Details
   const handleLaneNameAdd = () => {
     setShowLaneDetails(false);
-    setLaneNameAdd([...laneNameAdd, { enterLaneName: "" }]);
+    setShowLaneNameTop(true);
+    setLaneAddData();
   };
   const handleLaneNameDelete = () => {
     if (laneNameAdd.length > 1) {
-      const updatedLaneNameAdd = laneNameAdd.slice(0, -1); // Removes the last element
+      const updatedLaneNameAdd = laneNameAdd.slice(0, -1);
       setLaneNameAdd(updatedLaneNameAdd);
     }
   };
-
   // Contact Person Details
   const handleContactPersonAdd = () => {
     setContactPersonAdd([...contactPersonAdd, { enterContactPerson: "" }]);
   };
-  const handleContactPersonDelete = () => {
-    if (contactPersonAdd.length > 1) {
-      const updatedContactPersonAdd = contactPersonAdd.slice(0, -1); // Removes the last element
-      setContactPersonAdd(updatedContactPersonAdd);
-    }
+  const handleContactPersonDelete = (index) => {
+    const updatedContactPersonAdd = [...contactPersonAdd];
+    updatedContactPersonAdd.splice(index, 1);
+    setContactPersonAdd(updatedContactPersonAdd);
   };
 
   // Agreement Details
   const handleAgreementAdd = () => {
     setAgreementAdd([...agreementAdd, { enterAgreement: "" }]);
   };
-  const handleAgreementDelete = () => {
-    if (agreementAdd.length > 1) {
-      const updatedAgreementAdd = agreementAdd.slice(0, -1); // Removes the last element
-      setAgreementAdd(updatedAgreementAdd);
-    }
+  const handleAgreementDelete = (index) => {
+    const updatedAgreementAdd = [...agreementAdd];
+    updatedAgreementAdd.splice(index, 1);
+    setAgreementAdd(updatedAgreementAdd);
   };
 
   // Add Location
   const handleLocationAdd = () => {
     setLocationAdd([...locationAdd, { enterLocation: "" }]);
   };
-  const handleLocationDelete = () => {
-    if (locationAdd.length > 1) {
-      const updatedLocationAdd = locationAdd.slice(0, -1); // Removes the last element
+  const handleLocationDelete = (index) => {
+    const updatedLocationAdd = [...locationAdd]
+      updatedLocationAdd.splice(index, 1)
       setLocationAdd(updatedLocationAdd);
-    }
   };
 
   // Add Address
   const handleAddressAdd = () => {
     setAddressAdd([...addressAdd, { enterAddress: "" }]);
   };
-  const handleAddressDelete = () => {
-    if (addressAdd.length > 1) {
-      const updatedAddressAdd = addressAdd.slice(0, -1); // Removes the last element
-      setAddressAdd(updatedAddressAdd);
-    }
+  const handleAddressDelete = (index) => {
+    const updatedAddressAdd = [...addressAdd]
+    updatedAddressAdd.splice(index, 1)
+    setAddressAdd(updatedAddressAdd)
   };
+
   const formik = useFormik({
     initialValues: {
       customerName: "",
@@ -198,10 +231,10 @@ function FleetMasterAddForm() {
       location: "",
       address: "",
       laneName: "",
-      origin: "",
-      destination: "",
-      vehicleCategory: "",
-      tonnage: "",
+      origin: laneAddData ? laneAddData.origin : [],
+      destination: [],
+      vehicleCategory: [],
+      tonnage: [],
       expressModeRateAdditional: "",
       superExpressModeRateAdditional: "",
       detentionRateAdditional: "",
@@ -213,12 +246,9 @@ function FleetMasterAddForm() {
       miscellaneousRemarks: "",
     },
     CustomerMasterSchema, // Apply the validation schema
-    onSubmit: (values) => {
-      // Handle form submission
-      console.log(values);
-    },
+    onSubmit: (values) => {},
   });
-
+  console.log(newLaneDetails, "000");
   return (
     <div>
       <BodyHeader title="Add Customer Master" />
@@ -246,9 +276,9 @@ function FleetMasterAddForm() {
 
               {/* Agreement Details */}
               <div className="col-lg-12">
-                <div className="row">
-                  {agreementAdd.map(() => (
-                    <div className="col-lg-6">
+                {agreementAdd.map((item, index) => (
+                  <div className="row">
+                    <div className="col-lg-6" key={index}>
                       <label className="text-bold">Agreement Document</label>
                       <CustomFileUpload
                         label="Agreement Details"
@@ -264,27 +294,19 @@ function FleetMasterAddForm() {
                         <div>{formik.errors.agreementDocument}</div>
                       ) : null}
                     </div>
-                  ))}
-                  <div className="col-12 mb-3">
-                    {/* <button
-                    type="button"
-                    className="btn btn-primary mr-3"
-                    onClick={handleAgreementAdd}
-                  >
-                    <i className="fas fa-plus"></i> Add File
-                  </button> */}
-
-                    {agreementAdd.length > 1 && (
-                      <button
-                        type="button"
-                        className="btn btn-danger"
-                        onClick={handleAgreementDelete}
-                      >
-                        <i className="fas fa-trash"></i> Delete File
-                      </button>
+                    {index > 0 && (
+                      <div className="col-lg-6 mt-4 pt-2">
+                        <button
+                          type="button"
+                          className="btn btn-danger"
+                          onClick={handleAgreementDelete}
+                        >
+                          <i className="fas fa-trash"></i> Delete File
+                        </button>
+                      </div>
                     )}
                   </div>
-                </div>
+                ))}
               </div>
 
               {/* Contact Person Details  */}
@@ -340,59 +362,50 @@ function FleetMasterAddForm() {
                         <div>{formik.errors.customerEmail}</div>
                       ) : null}
                     </div>
-                  </div>
-                ))}
-                {/* <button
-                  type="button"
-                  className="btn btn-primary float-right"
-                  onClick={handleContactPersonAdd}
-                >
-                  <i className="fas fa-plus"></i> Add Contact Person
-                </button> */}
-                {contactPersonAdd.length > 1 && (
+                    <div className="col-12">
+                    {index > 0 && (
                   <button
                     type="button"
                     className="btn btn-danger float-right mr-3"
                     onClick={handleContactPersonDelete}
                   >
-                    <i className="fas fa-trash"></i> Delete Contact Person
+                    <i className="fas fa-trash"></i> Delete
                   </button>
                 )}
+                    </div>
+                  </div>
+                ))}
+               
               </div>
 
               <div className="col-lg-6">
                 {/* Location  */}
                 <div className="">
-                  {locationAdd.map(() => (
+                  {locationAdd.map((item, index) => (
                     <div>
                       <CustomDropdown
                         optionData={destinationData}
                         label="Location"
                         id=""
                         onChange={(value) => {
-                          formik.setFieldValue("origin", value[0].value);
+                          formik.setFieldValue("origin", value);
                         }}
                         // onBlur={formik.handleBlur}
                         value={formik.values.location}
                       />
-                    </div>
-                  ))}
-                  {/* <button
-                    type="button"
-                    className="btn btn-primary float-right"
-                    onClick={handleLocationAdd}
-                  >
-                    <i className="fas fa-plus"></i> Add Location
-                  </button> */}
-                  {locationAdd.length > 1 && (
+                      {index > 0 && (
                     <button
                       type="button"
-                      className="btn btn-danger float-right"
+                      className="btn btn-danger float-right mb-3"
                       onClick={handleLocationDelete}
                     >
                       <i className="fas fa-trash"></i> Delete Location
                     </button>
                   )}
+                    </div>
+                  ))}
+                 
+                  
                 </div>
               </div>
 
@@ -400,31 +413,27 @@ function FleetMasterAddForm() {
                 {/* Address  */}
                 <div className="d-block">
                   {addressAdd.map((item, index) => (
-                    <CustomTextArea
-                      label="Address"
-                      id=""
-                      placeholder="Enter Address "
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.address}
-                    />
+                    <>
+                      <CustomTextArea
+                        label="Address"
+                        id=""
+                        placeholder="Enter Address "
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.address}
+                      />
+                      {index > 0 && (
+                        <button
+                          type="button"
+                          className="btn btn-danger float-right mb-3"
+                          onClick={handleAddressDelete}
+                        >
+                          <i className="fas fa-trash"></i> Delete Address
+                        </button>
+                      )}
+                    </>
                   ))}
-                  {/* <button
-                    type="button"
-                    className="btn btn-primary float-right"
-                    onClick={handleAddressAdd}
-                  >
-                    <i className="fas fa-plus"></i> Add Address
-                  </button> */}
-                  {addressAdd.length > 1 && (
-                    <button
-                      type="button"
-                      className="btn btn-danger float-right"
-                      onClick={handleAddressDelete}
-                    >
-                      <i className="fas fa-trash"></i> Delete Address
-                    </button>
-                  )}
+                 
                 </div>
               </div>
               <div className="col-12 mt-4">
@@ -470,242 +479,216 @@ function FleetMasterAddForm() {
             <div className="row">
               {/* Lane name  */}
               <div className="col-lg-12">
-                {laneNameAdd.map((item, index) => (
-                  <div
-                    className={
-                      index < laneNameAdd.length - 1 && laneNameAdd.length > 1
-                        ? "row border-bottom mb-4 pb-3"
-                        : "row"
-                    }
-                  >
-                    <div className="col-lg-4">
-                      <CustomInput
-                        label="Customer Name"
-                        id="laneCustomerName"
-                        placeholder="Customer Name"
-                        onChange={formik.handleChange}
-                        value={formik.values.customerName}
-                      />
-                    </div>
-                    <div className="col-lg-4">
-                      <label className="text-bold">Origin</label>
-                      <CustomDropdown
-                        optionData={destinationData}
-                        value={formik.values.origin}
-                        onChange={(value) => {
-                          formik.setFieldValue("origin", value[0].value);
-                        }}
-                      />
-                    </div>
-                    <div className="col-lg-4">
-                      <label className="text-bold">Destination</label>
-                      <CustomDropdown
-                        optionData={destinationData}
-                        value={formik.values.destination}
-                        onChange={(value) => {
-                          formik.setFieldValue("destination", value[0].value);
-                        }}
-                      />
-                    </div>
-                    {/* Vehicle Category Sec */}
-                    <div className="col-lg-6">
-                      <label className="text-bold">Vehicle Type</label>
-                      <CustomDropdown
-                        optionData={vehicleCategory}
-                        value={formik.values.vehicleCategory}
-                        onChange={(value) => {
-                          formik.setFieldValue(
-                            "vehicleCategory",
-                            value[0].value
-                          );
-                        }}
-                      />
-                    </div>
-                    {/* Tonnage Sec */}
-                    <div className="col-lg-6">
-                      <label className="text-bold">Tonnage</label>
-                      <CustomDropdown
-                        optionData={tonnageData}
-                        value={formik.values.tonnage}
-                        onChange={(value) => {
-                          formik.setFieldValue("tonnage", value[0].value);
-                        }}
-                      />
-                    </div>
-                    <div className="text-left">
-                      <button
-                        type="button"
-                        className="btn btn-success mr-2"
-                        onClick={handelLaneSave}
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </div>
-                ))}
-
-                {showLaneDetails && (
-                  <div className="row mt-3">
-                    <div className="col-lg-12">
-                      <h4 className="border-bottom mb-3 pb-2">
-                        {formik.values.customerName &&
-                          `${formik.values.customerName}`}
-                        {formik.values.origin && `#${formik.values.origin}`}
-                        {formik.values.destination &&
-                          `#${formik.values.destination}`}
-                        {formik.values.vehicleCategory &&
-                          `#${formik.values.vehicleCategory}`}
-                        {formik.values.tonnage && `#${formik.values.tonnage}`}
-                      </h4>
-                    </div>
-                    <div className="col-lg-4">
-                      <CustomInput
-                        label="Express mode rate additional"
-                        id="expressModeRateAdditional"
-                        placeholder="Enter Amount"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.expressModeRateAdditional}
-                      />
-                    </div>
-                    <div className="col-lg-4">
-                      <CustomInput
-                        label="Super express mode rate additional"
-                        id="superExpressModeRateAdditional"
-                        placeholder="Enter amount"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.superExpressModeRateAdditional}
-                      />
-                    </div>
-                    <div className="col-lg-4">
-                      <CustomInput
-                        label="Detention rate additional"
-                        id="detentionRateAdditional"
-                        placeholder="Enter amount"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.detentionRateAdditional}
-                      />
-                    </div>
-                    <div className="col-lg-4">
-                      <CustomInput
-                        label="Multiple loading location rate additional"
-                        id="multipleLoadingLocationRateAdditional"
-                        placeholder="Enter amount"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={
-                          formik.values.multipleLoadingLocationRateAdditional
-                        }
-                      />
-                    </div>
-
-                    <div className="col-lg-4">
-                      <CustomInput
-                        label="Multiple unloading location rate additional"
-                        id="multipleUnloadingLocationRateAdditional"
-                        placeholder="Enter amount"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={
-                          formik.values.multipleUnloadingLocationRateAdditional
-                        }
-                      />
-                    </div>
-                    <div className="col-lg-4">
-                      <CustomInput
-                        label="Loading charges"
-                        id="loadingCharges"
-                        placeholder="Enter amount"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.loadingCharges}
-                      />
-                    </div>
-                    <div className="col-lg-4">
-                      <CustomInput
-                        label="Unloading charge"
-                        id="unloadingCharge"
-                        placeholder="Enter amount"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.unloadingCharge}
-                      />
-                    </div>
-                    <div className="col-lg-4">
-                      <CustomInput
-                        label="miscellaneous charges"
-                        id="miscellaneousCharges"
-                        placeholder="Enter amount"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.miscellaneousCharges}
-                      />
-                    </div>
-                    <div className="col-lg-4">
-                      <CustomInput
-                        label="miscellaneous Remarks"
-                        id="miscellaneousRemarks"
-                        placeholder="Enter remarks"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.miscellaneousRemarks}
-                      />
-                    </div>
-                    
-                    <div>
-                      <button
-                        type="button"
-                        className="btn btn-secondary mr-2"
-                        onClick={handelLaneBack}
-                      >
-                        <i className="fas fa-arrow-left mr-2"></i>
-                        Back
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-success mr-2"
-                        onClick={handelSave}
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                <div className="text-left">
-                  {laneNameAdd.length > 1 && (
-                    <button
-                      type="button"
-                      className="btn btn-danger"
-                      onClick={handleLaneNameDelete}
-                    >
-                      <i className="fas fa-trash"></i> Delete
-                    </button>
+                <div className="row">
+                  {showLaneNameTop && (
+                    <>
+                      <div className="col-lg-4">
+                        <CustomInput
+                          label="Customer Name"
+                          id="laneCustomerName"
+                          placeholder="Customer Name"
+                          disabled={true}
+                          onChange={(event) => {}}
+                          value={formik.values.customerName}
+                        />
+                      </div>
+                      <div className="col-lg-4">
+                        <label className="text-bold">Origin</label>
+                        <CustomDropdown
+                          optionData={destinationData}
+                          values={formik.values.origin}
+                          onChange={(value) => {
+                            formik.setFieldValue("origin", value);
+                          }}
+                        />
+                      </div>
+                      <div className="col-lg-4">
+                        <label className="text-bold">Destination</label>
+                        <CustomDropdown
+                          optionData={destinationData}
+                          values={formik.values.destination}
+                          onChange={(value) => {
+                            formik.setFieldValue("destination", value);
+                          }}
+                        />
+                      </div>
+                      {/* Vehicle Category Sec */}
+                      <div className="col-lg-6">
+                        <label className="text-bold">Vehicle Type</label>
+                        <CustomDropdown
+                          optionData={vehicleCategoryData}
+                          values={formik.values.vehicleCategory}
+                          onChange={(value) => {
+                            formik.setFieldValue("vehicleCategory", value);
+                          }}
+                        />
+                      </div>
+                      {/* Tonnage Sec */}
+                      <div className="col-lg-6">
+                        <label className="text-bold">Tonnage</label>
+                        <CustomDropdown
+                          optionData={tonnageData}
+                          values={formik.values.tonnage}
+                          onChange={(value) => {
+                            formik.setFieldValue("tonnage", value);
+                          }}
+                        />
+                      </div>
+                      <div className="text-left">
+                        <button
+                          type="button"
+                          className="btn btn-success mr-2"
+                          onClick={handelLaneSave}
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </>
                   )}
-                </div>
-                <div className="mb-4">
-                  <button
-                    type="button"
-                    className="btn btn-primary float-right"
-                    onClick={handleLaneNameAdd}
-                    disabled={isDisabled}
-                  >
-                    <i className="fas fa-plus"></i> Add New
-                  </button>
-                </div>
-                {showLaneDetailsData &&
+                  {showLaneDetails && (
+                    <div className="row mt-3">
+                      <div className="col-lg-12">
+                        <h4 className="border-bottom mb-3 pb-2">
+                          {formik.values.customerName &&
+                            `${formik.values.customerName}`}
+                          {formik.values.origin[0].value &&
+                            `#${formik.values.origin[0].value}`}
+                          {formik.values.destination[0].value &&
+                            `#${formik.values.destination[0].value}`}
+                          {formik.values.vehicleCategory[0].value &&
+                            `#${formik.values.vehicleCategory[0].value}`}
+                          {formik.values.tonnage[0].value &&
+                            `#${formik.values.tonnage[0].value}`}
+                        </h4>
+                      </div>
+                      <div className="col-lg-4">
+                        <CustomInput
+                          label="Express mode rate additional"
+                          id="expressModeRateAdditional"
+                          placeholder="Enter Amount"
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          value={formik.values.expressModeRateAdditional}
+                        />
+                      </div>
+                      <div className="col-lg-4">
+                        <CustomInput
+                          label="Super express mode rate additional"
+                          id="superExpressModeRateAdditional"
+                          placeholder="Enter amount"
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          value={formik.values.superExpressModeRateAdditional}
+                        />
+                      </div>
+                      <div className="col-lg-4">
+                        <CustomInput
+                          label="Detention rate additional"
+                          id="detentionRateAdditional"
+                          placeholder="Enter amount"
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          value={formik.values.detentionRateAdditional}
+                        />
+                      </div>
+                      <div className="col-lg-4">
+                        <CustomInput
+                          label="Multiple loading location rate additional"
+                          id="multipleLoadingLocationRateAdditional"
+                          placeholder="Enter amount"
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          value={
+                            formik.values.multipleLoadingLocationRateAdditional
+                          }
+                        />
+                      </div>
+
+                      <div className="col-lg-4">
+                        <CustomInput
+                          label="Multiple unloading location rate additional"
+                          id="multipleUnloadingLocationRateAdditional"
+                          placeholder="Enter amount"
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          value={
+                            formik.values
+                              .multipleUnloadingLocationRateAdditional
+                          }
+                        />
+                      </div>
+                      <div className="col-lg-4">
+                        <CustomInput
+                          label="Loading charges"
+                          id="loadingCharges"
+                          placeholder="Enter amount"
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          value={formik.values.loadingCharges}
+                        />
+                      </div>
+                      <div className="col-lg-4">
+                        <CustomInput
+                          label="Unloading charge"
+                          id="unloadingCharge"
+                          placeholder="Enter amount"
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          value={formik.values.unloadingCharge}
+                        />
+                      </div>
+                      <div className="col-lg-4">
+                        <CustomInput
+                          label="miscellaneous charges"
+                          id="miscellaneousCharges"
+                          placeholder="Enter amount"
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          value={formik.values.miscellaneousCharges}
+                        />
+                      </div>
+                      <div className="col-lg-4">
+                        <CustomInput
+                          label="miscellaneous Remarks"
+                          id="miscellaneousRemarks"
+                          placeholder="Enter remarks"
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          value={formik.values.miscellaneousRemarks}
+                        />
+                      </div>
+
                       <div>
+                        <button
+                          type="button"
+                          className="btn btn-secondary mr-2"
+                          onClick={handelLaneBack}
+                        >
+                          <i className="fas fa-arrow-left mr-2"></i>
+                          Back
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-success mr-2"
+                          onClick={handelSave}
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  {newLaneDetails.map((item) => (
+                    <div className="mt-3">
                       <h4 className="border-bottom mb-3 pb-2">
-                        {formik.values.customerName &&
-                          `${formik.values.customerName}`}
-                        {formik.values.origin && `#${formik.values.origin}`}
-                        {formik.values.destination &&
-                          `#${formik.values.destination}`}
-                        {formik.values.vehicleCategory &&
-                          `#${formik.values.vehicleCategory}`}
-                        {formik.values.tonnage && `#${formik.values.tonnage}`}
+                        {item.laneName +
+                          "#" +
+                          item.origin[0].value +
+                          "#" +
+                          item.destination[0].value +
+                          "#" +
+                          item.vehicleCategory[0].value +
+                          "#" +
+                          item.tonnage[0].value}
                       </h4>
                       <table className="table table-bordered">
                         <thead>
@@ -723,32 +706,90 @@ function FleetMasterAddForm() {
                         </thead>
                         <tbody>
                           <tr>
-                            <td>{formik.values.expressModeRateAdditional}</td>
+                            <td>{item.expressModeRateAdditional}</td>
+                            <td>{item.superExpressModeRateAdditional}</td>
+                            <td>{item.detentionRateAdditional}</td>
                             <td>
-                              {formik.values.superExpressModeRateAdditional}
-                            </td>
-                            <td>{formik.values.detentionRateAdditional}</td>
-                            <td>
-                              {
-                                formik.values
-                                  .multipleLoadingLocationRateAdditional
-                              }
+                              {item.multipleLoadingLocationRateAdditional}
                             </td>
                             <td>
-                              {
-                                formik.values
-                                  .multipleUnloadingLocationRateAdditional
-                              }
+                              {item.multipleUnloadingLocationRateAdditional}
                             </td>
-                            <td>{formik.values.loadingCharges}</td>
-                            <td>{formik.values.unloadingCharge}</td>
-                            <td>{formik.values.miscellaneousCharges}</td>
-                            <td>{formik.values.miscellaneousRemarks}</td>
+                            <td>{item.loadingCharges}</td>
+                            <td>{item.unloadingCharge}</td>
+                            <td>{item.miscellaneousCharges}</td>
+                            <td>{item.miscellaneousRemarks}</td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
-                    }
+                  ))}
+                </div>
+
+                {/* <div className="mb-4">
+                  <button
+                    type="button"
+                    className="btn btn-primary float-right"
+                    onClick={handleLaneNameAdd}
+                    disabled={isDisabled}
+                  >
+                    <i className="fas fa-plus"></i> Add New
+                  </button>
+                </div> */}
+                {/* {showLaneDetailsData && (
+                  <div>
+                    <h4 className="border-bottom mb-3 pb-2">
+                      {formik.values.customerName &&
+                        `${formik.values.customerName}`}
+                      {formik.values.origin && `#${formik.values.origin}`}
+                      {formik.values.destination &&
+                        `#${formik.values.destination}`}
+                      {formik.values.vehicleCategory &&
+                        `#${formik.values.vehicleCategory}`}
+                      {formik.values.tonnage && `#${formik.values.tonnage}`}
+                    </h4>
+                    <table className="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Express Mode Rate Additional</th>
+                          <th>Super Express Mode Rate Additional</th>
+                          <th>Detention Rate Additional</th>
+                          <th>Multiple Loading Location Rate Additional</th>
+                          <th>Multiple Unloading Location Rate Additional</th>
+                          <th>Loading Charges</th>
+                          <th>Unloading Charge</th>
+                          <th>Miscellaneous Charges</th>
+                          <th>Miscellaneous Remarks</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{formik.values.expressModeRateAdditional}</td>
+                          <td>
+                            {formik.values.superExpressModeRateAdditional}
+                          </td>
+                          <td>{formik.values.detentionRateAdditional}</td>
+                          <td>
+                            {
+                              formik.values
+                                .multipleLoadingLocationRateAdditional
+                            }
+                          </td>
+                          <td>
+                            {
+                              formik.values
+                                .multipleUnloadingLocationRateAdditional
+                            }
+                          </td>
+                          <td>{formik.values.loadingCharges}</td>
+                          <td>{formik.values.unloadingCharge}</td>
+                          <td>{formik.values.miscellaneousCharges}</td>
+                          <td>{formik.values.miscellaneousRemarks}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                )} */}
               </div>
             </div>
           </div>

@@ -137,6 +137,7 @@ const CustomerMasterView = () => {
       <div>
          <BodyHeader title="Customer Master List" />
 
+         <div className='px-3'>
          <div className=" d-flex justify-content-between">
             <h3>User's List</h3>
             <CustomInput inputType="text" placeholder="Search..." id="search" onChange={(e) => handleFilter(e)} />
@@ -150,9 +151,9 @@ const CustomerMasterView = () => {
             responsive
             striped={true}
             borderColor="#000000"
-            selectableRows
             customStyles={customStyles}>
          </DataTable>
+         </div>
       </div>
    )
 }

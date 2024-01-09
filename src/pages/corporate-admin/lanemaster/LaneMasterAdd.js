@@ -1,51 +1,19 @@
 import React, { useState } from 'react'
 import CustomInput from '../../../components/common/CustomInput/CustomInput';
-import CustomFileUpload from '../../../components/common/CustomFileUpload/CustomFileUpload';
-import CustomDatePicker from '../../../components/common/CustomDatePicker/CustomDatePicker';
 import CustomDropdown from '../../../components/common/CustomDropdown/CustomDropdown';
-import CustomMonthYear from '../../../components/common/CustomMonthYear/CustomMonthYear';
-import CustomRadio from '../../../components/common/CustomRadio/CustomRadio';
 import BodyHeader from '../../../components/common/CommonBodyHeader';
 import selectOptionData from '../../../constansts/LocalData';
 
 
 const LaneMasterAdd = () => {
-   const [fuelType, setFuelType] = useState(true);
-   const [tyreSelect, setTyreSelected] = useState("");
    const [makeSelect, setMake] = useState("");
-   const [tonnageSelect, setTonnage] = useState("");
-   const [vehicleSelect, setVehicleCategory] = useState("");
-   const [serviceSelect, setServiceRecord] = useState("");
-
    const [isDisabled, setIsdisabled] = useState(true);
 
    const [tyreAdd, setTyreAdd] = useState([{ selectedFile: "", tyreType: "" }]);
    const [serviceBillAdd, setServiceBillAdd] = useState([
       { selectedBillFile: "", serviceRecord: "" },
    ]);
-
-   const handleServiceBill = () => {
-      setServiceBillAdd([
-         ...serviceBillAdd,
-         { selectedBillFile: "", serviceRecord: "" },
-      ]);
-   };
-   const handleServiceBillDelete = () => {
-      if (serviceBillAdd.length > 1) {
-         const updatedServiceBill = serviceBillAdd.slice(0, -1); // Removes the last element
-         setServiceBillAdd(updatedServiceBill);
-      }
-   };
-   const handleTyreAdd = () => {
-      setTyreAdd([...tyreAdd, { selectedFile: "", tyreType: "" }]);
-   };
-   const handleTyreDelete = () => {
-      if (tyreAdd.length > 1) {
-         const updatedTyreAdd = tyreAdd.slice(0, -1); // Removes the last element
-         setTyreAdd(updatedTyreAdd);
-      }
-   };
-
+   
    const handleSelectChange = (selected) => {
       setMake(selected[0].value);
       if (selected[0].value === 'NA') {
