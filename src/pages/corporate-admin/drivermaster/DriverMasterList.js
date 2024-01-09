@@ -5,6 +5,7 @@ import BodyHeader from '../../../components/common/CommonBodyHeader'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import {deleteDriveMaster} from '../../../reducer/DriveMasterReducer'
+import CustomToggleSwitch from '../../../components/common/CustomToggle'
 
 
 // const data = [
@@ -83,6 +84,14 @@ const DriverMasterList = () => {
    const navigate = useNavigate();
    const dispatch = useDispatch()
 
+
+   const [isChecked, setIsChecked] = useState({}); // State to manage toggle
+
+   const toggleSwitch = () => {
+      setIsChecked(isChecked ? isChecked = true : isChecked = false); // Toggle the state
+      console.log(isChecked);
+   };
+
    const handleUpdate=(drivingLicense)=>{
       navigate(`/driver-master/edit/${drivingLicense}`)
 
@@ -115,7 +124,8 @@ const DriverMasterList = () => {
          name: 'Action',
          selector: row => <>
             <button className="btn btn-primary mx-2" onClick={() => handleUpdate(row.drivingLicense)}>Edit</button>
-            <button className="btn btn-danger mx-2" onClick={() => handleDelete(row.drivingLicense)}> Delete</button>
+            {/* <button className="btn btn-danger mx-2" onClick={() => handleDelete(row.drivingLicense)}> Delete</button> */}
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="driver1" />
          </>,
       }
    ]

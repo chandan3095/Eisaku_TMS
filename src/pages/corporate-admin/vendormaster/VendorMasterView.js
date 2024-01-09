@@ -3,9 +3,16 @@ import BodyHeader from '../../../components/common/CommonBodyHeader';
 import CustomInput from '../../../components/common/CustomInput/CustomInput';
 import DataTable from 'react-data-table-component';
 import { useNavigate } from 'react-router-dom';
+import CustomToggleSwitch from '../../../components/common/CustomToggle';
 
 const VendorMasterView = () => {
    const navigate = useNavigate()
+   const [isChecked, setIsChecked] = useState({}); // State to manage toggle
+
+   const toggleSwitch = () => {
+      setIsChecked(isChecked ? isChecked = true : isChecked = false); // Toggle the state
+      console.log(isChecked);
+   };
    const columns = [
       {
          name: 'Vendor Name',
@@ -34,7 +41,7 @@ const VendorMasterView = () => {
          contactPersonName: 'Paityn Harris',
          action: <>
             <button className="btn btn-primary mx-2" onClick={() => navigate('/vendor-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="vendor1" />
          </>
       },
       {
@@ -44,7 +51,7 @@ const VendorMasterView = () => {
          contactPersonName: 'Paityn Harris',
          action: <>
             <button className="btn btn-primary mx-2" onClick={() => navigate('/vendor-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="vendor2" />
          </>
       },
       {
@@ -54,7 +61,7 @@ const VendorMasterView = () => {
          contactPersonName: 'Paityn Harris',
          action: <>
             <button className="btn btn-primary mx-2" onClick={() => navigate('/vendor-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="vendor3" />
          </>
       },
       {
@@ -64,7 +71,7 @@ const VendorMasterView = () => {
          contactPersonName: 'Paityn Harris',
          action: <>
             <button className="btn btn-primary mx-2" onClick={() => navigate('/vendor-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="vendor4" />
          </>
       },
       {
@@ -74,7 +81,7 @@ const VendorMasterView = () => {
          contactPersonName: 'Paityn Harris',
          action: <>
             <button className="btn btn-primary mx-2" onClick={() => navigate('/vendor-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="vendor5" />
          </>
       },
       {
@@ -84,7 +91,7 @@ const VendorMasterView = () => {
          contactPersonName: 'Paityn Harris',
          action: <>
             <button className="btn btn-primary mx-2" onClick={() => navigate('/vendor-master/add-form')}>Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="vendor6" />
          </>
       },
    ]
