@@ -1,9 +1,8 @@
 import Select from "react-dropdown-select";
 
 const CustomDropdown = (props) => {
-  const { label, optionData, onChange, name, value } = props;
+  const { label, optionData, onChange, name, value,disabled } = props;
 
-  // console.log({ value });
   return (
     <div className="form-group">
       {label && <label className="text-capitalize">{label}</label>}
@@ -11,7 +10,10 @@ const CustomDropdown = (props) => {
         options={optionData}
         labelField="label"
         valueField="value"
-        onChange={(values) => onChange(values)}
+        name={name}
+        onChange={onChange}
+        disabled={disabled}
+           style={{ backgroundColor: disabled ? '#e9ecef' : '#fff' }}
       />
     </div>
   );
