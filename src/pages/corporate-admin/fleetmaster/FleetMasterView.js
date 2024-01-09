@@ -11,6 +11,7 @@ const FleetMasterView = () => {
 
   const toggleSwitch = () => {
     setIsChecked(!isChecked); // Toggle the state
+    console.log(isChecked);
   };
 
   const columns = [
@@ -287,6 +288,7 @@ const FleetMasterView = () => {
                         <div>
                           <button className="btn btn-primary mx-2">Edit</button>
                           <CustomToggleSwitch
+                          id="vehicleDetails"
                             checked={isChecked}
                             onChange={toggleSwitch}
                           />
@@ -320,6 +322,7 @@ const FleetMasterView = () => {
                         <div>
                           <button className="btn btn-primary mx-2">Edit</button>
                           <CustomToggleSwitch
+                          id="emiDetails"
                             checked={isChecked}
                             onChange={toggleSwitch}
                           />

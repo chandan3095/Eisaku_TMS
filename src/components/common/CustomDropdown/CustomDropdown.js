@@ -3,7 +3,7 @@ import Select from "react-dropdown-select";
 const CustomDropdown = (props) => {
   const { label, optionData, onChange, name, value } = props;
 
-  console.log({ value });
+  // console.log({ value });
   return (
     <div className="form-group">
       {label && <label className="text-capitalize">{label}</label>}

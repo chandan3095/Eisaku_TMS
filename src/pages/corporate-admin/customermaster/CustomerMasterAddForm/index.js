@@ -112,7 +112,8 @@ function FleetMasterAddForm() {
   ];
 
   const [isDisabled, setIsdisabled] = useState(true);
-
+  const [showLaneDetailsData, setShowLaneDetailsData] = useState(false);
+  
   const handelLaneSave = () => {
     formik.handleSubmit();
     const updatedlaneNameAdd = laneNameAdd.slice(0, -1); // Removes the last element
@@ -122,8 +123,8 @@ function FleetMasterAddForm() {
   };
   const handelSave = () => {
     formik.handleSubmit();
-    // const updatedShowLaneDetails = showLaneDetails.slice(0, -1); // Removes the last element
-    // setShowLaneDetails(updatedShowLaneDetails);
+    setShowLaneDetailsData(false)
+    setShowLaneDetailsData(true)
   };
   const handelLaneBack = () => {
     setIsdisabled(true);
@@ -495,7 +496,6 @@ function FleetMasterAddForm() {
                           formik.setFieldValue("origin", value[0].value);
                         }}
                       />
-                      {formik.values.origin}
                     </div>
                     <div className="col-lg-4">
                       <label className="text-bold">Destination</label>
@@ -653,6 +653,7 @@ function FleetMasterAddForm() {
                         value={formik.values.miscellaneousRemarks}
                       />
                     </div>
+                    
                     <div>
                       <button
                         type="button"
@@ -694,6 +695,60 @@ function FleetMasterAddForm() {
                     <i className="fas fa-plus"></i> Add New
                   </button>
                 </div>
+                {showLaneDetailsData &&
+                      <div>
+                      <h4 className="border-bottom mb-3 pb-2">
+                        {formik.values.customerName &&
+                          `${formik.values.customerName}`}
+                        {formik.values.origin && `#${formik.values.origin}`}
+                        {formik.values.destination &&
+                          `#${formik.values.destination}`}
+                        {formik.values.vehicleCategory &&
+                          `#${formik.values.vehicleCategory}`}
+                        {formik.values.tonnage && `#${formik.values.tonnage}`}
+                      </h4>
+                      <table className="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Express Mode Rate Additional</th>
+                            <th>Super Express Mode Rate Additional</th>
+                            <th>Detention Rate Additional</th>
+                            <th>Multiple Loading Location Rate Additional</th>
+                            <th>Multiple Unloading Location Rate Additional</th>
+                            <th>Loading Charges</th>
+                            <th>Unloading Charge</th>
+                            <th>Miscellaneous Charges</th>
+                            <th>Miscellaneous Remarks</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>{formik.values.expressModeRateAdditional}</td>
+                            <td>
+                              {formik.values.superExpressModeRateAdditional}
+                            </td>
+                            <td>{formik.values.detentionRateAdditional}</td>
+                            <td>
+                              {
+                                formik.values
+                                  .multipleLoadingLocationRateAdditional
+                              }
+                            </td>
+                            <td>
+                              {
+                                formik.values
+                                  .multipleUnloadingLocationRateAdditional
+                              }
+                            </td>
+                            <td>{formik.values.loadingCharges}</td>
+                            <td>{formik.values.unloadingCharge}</td>
+                            <td>{formik.values.miscellaneousCharges}</td>
+                            <td>{formik.values.miscellaneousRemarks}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    }
               </div>
             </div>
           </div>
