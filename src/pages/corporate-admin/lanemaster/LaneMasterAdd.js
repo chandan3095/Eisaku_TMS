@@ -17,6 +17,8 @@ const LaneMasterAdd = () => {
    const [vehicleSelect, setVehicleCategory] = useState("");
    const [serviceSelect, setServiceRecord] = useState("");
 
+   const [isDisabled, setIsdisabled] = useState(true);
+
    const [tyreAdd, setTyreAdd] = useState([{ selectedFile: "", tyreType: "" }]);
    const [serviceBillAdd, setServiceBillAdd] = useState([
       { selectedBillFile: "", serviceRecord: "" },
@@ -43,6 +45,15 @@ const LaneMasterAdd = () => {
          setTyreAdd(updatedTyreAdd);
       }
    };
+
+   const handleSelectChange = (selected) => {
+      setMake(selected[0].value);
+      if (selected[0].value === 'NA') {
+         setIsdisabled(false)
+      }else{
+         setIsdisabled(true)
+      }
+   };
    return (
       <div>
          <BodyHeader title="Add Lane Master" />
@@ -58,7 +69,7 @@ const LaneMasterAdd = () => {
                            label="Lane Name"
                            optionData={selectOptionData}
                            value={makeSelect}
-                           // onChange={(event) => setMake(event.target.value)}
+                        // onChange={(event) => setMake(event.target.value)}
                         />
                      </div>
 
@@ -68,24 +79,28 @@ const LaneMasterAdd = () => {
                            label="Vendor Name"
                            optionData={selectOptionData}
                            value={makeSelect}
-                           // onChange={(event) => setMake(event.target.value)}
+                           onChange={handleSelectChange}
                         />
                      </div>
 
                      <div className="col-lg-4">
                         {/* Financed by sec */}
-                        <CustomInput
+                        <CustomDropdown
                            label="Origin"
-                           id="#Origin"
-                           placeholder="Enter Origin"
+                           optionData={selectOptionData}
+                           value={makeSelect}
+                           disabled={isDisabled}
+                           onChange={handleSelectChange}
                         />
                      </div>
 
                      <div className="col-lg-4">
-                        <CustomInput
+                        <CustomDropdown
                            label="Destination"
-                           id="#Destination"
-                           placeholder="Enter Destination"
+                           optionData={selectOptionData}
+                           value={makeSelect}
+                           disabled={isDisabled}
+                           onChange={handleSelectChange}
                         />
                      </div>
 
@@ -93,6 +108,7 @@ const LaneMasterAdd = () => {
                         <CustomInput
                            label="Driver Trip Advance"
                            id="#tripadvance"
+                           disabled={isDisabled}
                            placeholder="E.g. 500.00"
                         />
                      </div>
@@ -101,6 +117,7 @@ const LaneMasterAdd = () => {
                         <CustomInput
                            label="Trip Diesel budget (ltr)"
                            id="#dieselBudget"
+                           disabled={isDisabled}
                            placeholder="E.g. 500.00"
                         />
                      </div>
@@ -109,6 +126,7 @@ const LaneMasterAdd = () => {
                         <CustomInput
                            label="Trip Adblue budget (ltr)"
                            id="#adblueBudget"
+                           disabled={isDisabled}
                            placeholder="E.g. 500.00"
                         />
                      </div>
@@ -117,6 +135,7 @@ const LaneMasterAdd = () => {
                         <CustomInput
                            label="Trip Toll"
                            id="#tripToll"
+                           disabled={isDisabled}
                            placeholder="E.g. 500.00"
                         />
                      </div>
@@ -127,7 +146,8 @@ const LaneMasterAdd = () => {
                            label="Vehicle Type"
                            optionData={selectOptionData}
                            value={makeSelect}
-                           // onChange={(event) => setMake(event.target.value)}
+                           disabled={isDisabled}
+                        // onChange={(event) => setMake(event.target.value)}
                         />
                      </div>
 
@@ -137,7 +157,8 @@ const LaneMasterAdd = () => {
                            label="Tonnage"
                            optionData={selectOptionData}
                            value={makeSelect}
-                           // onChange={(event) => setMake(event.target.value)}
+                           disabled={isDisabled}
+                        // onChange={(event) => setMake(event.target.value)}
                         />
                      </div>
 
@@ -145,6 +166,7 @@ const LaneMasterAdd = () => {
                         <CustomInput
                            label="Customer Name (Including broker)"
                            id="#nameBroker"
+                           disabled={isDisabled}
                            placeholder="Broker"
                         />
                      </div>
@@ -153,6 +175,7 @@ const LaneMasterAdd = () => {
                         <CustomInput
                            label="TAT (in Hrs)"
                            id="#tat"
+                           disabled={isDisabled}
                            inputType="number"
                            placeholder="2 Hrs"
                         />
