@@ -2,7 +2,7 @@ export const SideBarDropdownData = [
     {
         menuName: "Fleet Master",
         url: "/fleet-master",
-        icon:"fa-tree",
+        icon:"fa-truck-moving",
         dropdownList:[
             {
                 subMenuName: "Add",
@@ -17,7 +17,7 @@ export const SideBarDropdownData = [
     {
         menuName: "Driver Master",
         url: "/driver-master",
-        icon:"fa-tree",
+        icon:"fa-universal-access",
         dropdownList:[
             {
                 subMenuName: "Add",
@@ -32,7 +32,7 @@ export const SideBarDropdownData = [
     {
         menuName: "Helper  Master",
         url: "/helper-master",
-        icon:"fa-tree",
+        icon:"fa-hands-helping",
         dropdownList:[
             {
                 subMenuName: "Add",
@@ -47,7 +47,7 @@ export const SideBarDropdownData = [
     {
         menuName: "Customer Master",
         url: "/customer-master",
-        icon:"fa-tree",
+        icon:"fa-user",
         dropdownList:[
             {
                 subMenuName: "Add",
@@ -77,7 +77,7 @@ export const SideBarDropdownData = [
     {
         menuName: "Lane Master",
         url: "/lane-master",
-        icon:"fa-tree",
+        icon:"fa-arrows-alt-h",
         dropdownList:[
             {
                 subMenuName: "Add",
@@ -92,7 +92,7 @@ export const SideBarDropdownData = [
     {
         menuName: "Contractor Master",
         url: "/contractor-master",
-        icon:"fa-tree",
+        icon:"fa-address-card",
         dropdownList:[
             {
                 subMenuName: "Add",
@@ -107,7 +107,7 @@ export const SideBarDropdownData = [
     {
         menuName: "Location Master",
         url: "/location-master",
-        icon:"fa-tree",
+        icon:"fa-map-marker-alt",
         dropdownList:[
             {
                 subMenuName: "Add",
@@ -163,3 +163,26 @@ const selectOptionData =[
       },
 ]
 export default selectOptionData;
+
+export const fleetMasterFormTitle= [
+    {
+        label:"Vehicle Details",
+        value: 0
+    },
+    {
+        label:"EMI",
+        value: 1
+    },
+    {
+        label:"Service Record",
+        value: 2
+    },
+    {
+        label:"Tyre",
+        value: 3
+    },
+    {
+        label:"Monthly Maintenance Budget",
+        value: 4
+    }
+]

@@ -4,22 +4,26 @@ import CustomInput from "../../../components/common/CustomInput/CustomInput";
 import DataTable from "react-data-table-component";
 import { useNavigate } from "react-router";
 import CustomToggleSwitch from "../../../components/common/CustomToggle";
+import CustomDatePicker from "../../../components/common/CustomDatePicker/CustomDatePicker";
+import CustomFileUpload from "../../../components/common/CustomFileUpload/CustomFileUpload";
+import CustomRadio from "../../../components/common/CustomRadio/CustomRadio";
+import CustomMonthYear from "../../../components/common/CustomMonthYear/CustomMonthYear";
+import CustomDropdown from "../../../components/common/CustomDropdown/CustomDropdown";
+import selectOptionData from "../../../constansts/LocalData";
 
 const FleetMasterView = () => {
   const navigate = useNavigate();
   const [isChecked, setIsChecked] = useState({}); // State to manage toggle
+  const [fuelType, setFuelType] = useState("Diesel");
+  const [tyreType, setTyreType] = useState("");
+  const [makeSelect, setMake] = useState("");
+  const [tonnageSelect, setTonnage] = useState("");
+  const [vehicleSelect, setVehicleCategory] = useState("");
 
   const toggleSwitch = () => {
     setIsChecked(!isChecked); // Toggle the state 
     console.log(isChecked);
   };
-
-   // const toggleSwitch = (switchId) => {
-   //    setIsChecked((prevStates) => ({
-   //       ...prevStates,
-   //       [switchId]: !prevStates[switchId],
-   //    }));
-   // };
 
   const columns = [
     {
@@ -276,33 +280,277 @@ const FleetMasterView = () => {
                     role="tabpanel"
                     aria-labelledby="custom-tabs-three-home-tab"
                   >
-                    <div className="card">
-                      <div className="card-header">
-                        <h3 className="card-title">Vehicle Details</h3>
-                      </div>
-                      {/* /.card-header */}
-                      <div className="card-body">
-                        <dl className="row">
-                          <dt className="col-sm-3">Vehicle No</dt>
-                          <dd className="col-sm-9">ABC12345</dd>
-                          <dt className="col-sm-3">Chasis No</dt>
-                          <dd className="col-sm-9">Test12589</dd>
-                          <dt className="col-sm-3">Engine No</dt>
-                          <dd className="col-sm-9">E852369</dd>
-                          <dt className="col-sm-3">Vehicle Owner Name</dt>
-                          <dd className="col-sm-9">Test</dd>
-                        </dl>
-                        <div>
-                          <button className="btn btn-primary mx-2">Edit</button>
-                          <CustomToggleSwitch
-                          id="vehicleDetails"
-                            checked={isChecked}
-                            onChange={toggleSwitch}
+                    <div className="row card-body">
+                        {/* Vehicle No Sec */}
+                        <div className="col-lg-4">
+                          <CustomInput
+                            label="Vehicle No"
+                            id="vehicleNo"
+                            placeholder="Enter Vehicle No"
                           />
                         </div>
+                        <div className="col-lg-4">
+                          {/* Vehicle No Sec */}
+                          <CustomInput
+                            label="Chasis No"
+                            id="chasisNo"
+                            placeholder="Enter Chasis No"
+                          />
+                        </div>
+                        <div className="col-lg-4">
+                          {/* Vehicle No Sec */}
+                          <CustomInput
+                            label="Engine No"
+                            id="engineNo"
+                            placeholder="Enter Engine No"
+                          />
+                        </div>
+
+                        <div className="col-lg-4">
+                          <CustomInput
+                            label="Vehicle owner name"
+                            id="#vehicleOwner"
+                            placeholder="Enter vehicle owner name"
+                          />
+                        </div>
+
+                        {/* Dimension  */}
+                        <div className="col-lg-4">
+                          <CustomInput
+                            label="Dimension(L B H (ft))"
+                            id="#dimension"
+                            placeholder="Enter L B H (ft)"
+                          />
+                        </div>
+                       
+
+                        {/* Fastag bank name Sec */}
+                        <div className="col-lg-4">
+                          <CustomInput
+                            label="Fastag bank name"
+                            id="fitnessAmount"
+                            placeholder="Enter Fastag bank name"
+                          />
+                        </div>
+                        {/* Vehicle Category Sec */}
+                        <div className="col-lg-4">
+                          <label className="text-bold">Vehicle Category</label>
+                          <CustomDropdown
+                            optionData={selectOptionData}
+                            value={vehicleSelect}
+                            // onChange={(event) =>
+                            //   setVehicleCategory(event.target.value)
+                            // }
+                          />
+                        </div>
+                        {/* Tonnage Sec */}
+                        <div className="col-lg-4">
+                          <label className="text-bold">Tonnage</label>
+                          <CustomDropdown
+                            optionData={selectOptionData}
+                            value={tonnageSelect}
+                            // onChange={(event) => setTonnage(event.target.value)}
+                          />
+                        </div>
+
+                        <div className="col-lg-4">
+                          <label className="text-bold">Fuel Type</label>
+                          <div className="form-group mt-2">
+                            <CustomRadio
+                              label="Diesel"
+                              id="diesel"
+                              value="Diesel"
+                              name="fuelType"
+                              defaultChecked={fuelType}
+                              onChange={(event) =>
+                                setFuelType(event.target.value)
+                              }
+                            />
+
+                            <CustomRadio
+                              label="CNG"
+                              id="cng"
+                              value="CNG"
+                              name="fuelType"
+                              onChange={(event) =>
+                                setFuelType(event.target.value)
+                              }
+                            />
+                          </div>
+                        </div>
+
+                        <div className="col-lg-4">
+                          <label className="text-bold">Make</label>
+                          <CustomDropdown
+                            optionData={selectOptionData}
+                            value={makeSelect}
+                            // onChange={(event) => setMake(event.target.value)}
+                          />
+                        </div>
+                        <div className="col-lg-4">
+                          <label className="text-bold">Model(Month Year)</label>
+                          <CustomMonthYear />
+                        </div>
+                        <div className="col-lg-4">
+                          <label className="text-bold">
+                            Registration Certificate
+                          </label>
+                          <CustomFileUpload />
+                        </div>
+                        <div className="col-lg-4">
+                            <CustomDatePicker
+                              label="Insurance Expiry Date"
+                              placeholder="Enter Insurance Expiry Date"
+                            />
+                          </div>
+                          <div className="col-lg-4">
+                            <CustomInput
+                              label="Insurance Amount"
+                              id="fitnessAmount"
+                              placeholder="Enter Insurance Amount"
+                            />
+                          </div>
+                          <div className="col-lg-4">
+                            <label className="text-bold">
+                              Insurance Certificate
+                            </label>
+                            <CustomFileUpload />
+                          </div>
+                        <div className="col-lg-4">
+                          <CustomDatePicker
+                            label="Fitness Expiry Date"
+                            placeholder="Enter Fitness Expiry Date"
+                          />
+                        </div>
+                        <div className="col-lg-4">
+                          <CustomInput
+                            label="Fitness Amount"
+                            id="fitnessAmount"
+                            placeholder="Enter Fitness Amount"
+                          />
+                        </div>
+                        <div className="col-lg-4">
+                          <label className="text-bold">
+                            Fitness Certificate
+                          </label>
+                          <CustomFileUpload />
+                        </div>
+                        <div className="col-lg-4">
+                          <CustomDatePicker
+                            label="Local Permit Expiry Date"
+                            placeholder="Enter Local Permit Expiry Date"
+                          />
+                        </div>
+                        <div className="col-lg-4">
+                          <CustomInput
+                            label="Local Permit Amount"
+                            id="fitnessAmount"
+                            placeholder="Enter Local Permit Amount"
+                          />
+                        </div>
+                        <div className="col-lg-4">
+                          <label className="text-bold">
+                            Local Permit Document
+                          </label>
+                          <CustomFileUpload />
+                        </div>
+                        <div className="col-lg-4">
+                          <CustomDatePicker
+                            label="National Permit Expiry Date"
+                            placeholder="Enter National Permit Expiry Date"
+                          />
+                        </div>
+                        <div className="col-lg-4">
+                          <CustomInput
+                            label="National Permit Amount"
+                            id="fitnessAmount"
+                            placeholder="Enter National Permit Amount"
+                          />
+                        </div>
+                        <div className="col-lg-4">
+                          <label className="text-bold">
+                            National Permit Document
+                          </label>
+                          <CustomFileUpload />
+                        </div>
+                        <div className="col-lg-4">
+                          <CustomDatePicker
+                            label="PUC Expiry Date"
+                            placeholder="Enter PUC Expiry Date"
+                          />
+                        </div>
+                        <div className="col-lg-4">
+                          <CustomInput
+                            label="PUC Amount"
+                            id="fitnessAmount"
+                            placeholder="Enter PUC Amount"
+                          />
+                        </div>
+                        <div className="col-lg-4">
+                          <label className="text-bold">PUC Document</label>
+                          <CustomFileUpload />
+                        </div>
+                        <div className="col-lg-4">
+                          <label className="text-bold">MV Tax</label>
+                          <CustomFileUpload />
+                        </div>
+                        <div className="col-lg-4">
+                          <CustomDatePicker
+                            label="MV Tax Expiry Date"
+                            placeholder="Enter MV Tax Expiry Date"
+                          />
+                        </div>
+                        <div className="col-lg-4">
+                          <CustomInput
+                            label="MV Tax Amount"
+                            id="fitnessAmount"
+                            placeholder="Enter MV Tax Amount"
+                          />
+                        </div>
+                        <div className="col-lg-6">
+                          <CustomInput
+                            label="GPS Provider Name"
+                            id="#gpsProvider"
+                            placeholder="Enter GPS Provider Name"
+                          />
+                        </div>
+                        <div className="col-lg-6">
+                          <CustomInput
+                            label="GPS Amount"
+                            id="fitnessAmount"
+                            placeholder="Enter GPS Amount"
+                          />
+                        </div>
+                        <div className="col-lg-6">
+                          <CustomInput
+                            label="Fabricator Name"
+                            id="fitnessAmount"
+                            placeholder="Enter Fabricator Name"
+                          />
+                        </div>
+
+                        <div className="col-lg-6">
+                          <CustomInput
+                            label="Fabricator Location"
+                            id="fitnessAmount"
+                            placeholder="Enter Fabricator Location"
+                          />
+                        </div>
+                        <div className="col-12 mt-3 text-right">
+                          <button
+                            className="btn btn-primary px-4 py-3"
+                            type="submit"
+                          >
+                            <h6 className="mb-0 text-uppercase">Next</h6>
+                          </button>
+                          <button
+                            className="btn btn-danger ml-3 px-4 py-3"
+                            type="submit"
+                          >
+                            <h6 className="mb-0 text-uppercase">reset</h6>
+                          </button>
+                        </div>
                       </div>
-                      {/* /.card-body */}
-                    </div>
                   </div>
                   <div
                     className="tab-pane fade"
@@ -314,29 +562,55 @@ const FleetMasterView = () => {
                       <div className="card-header">
                         <h3 className="card-title">EMI Details</h3>
                       </div>
-                      {/* /.card-header */}
-                      <div className="card-body">
-                        <dl className="row">
-                          <dt className="col-sm-3">Start Date</dt>
-                          <dd className="col-sm-9">ABC12345</dd>
-                          <dt className="col-sm-3">End Date</dt>
-                          <dd className="col-sm-9">Test12589</dd>
-                          <dt className="col-sm-3">Amount</dt>
-                          <dd className="col-sm-9">E852369</dd>
-                          <dt className="col-sm-3">Certificate</dt>
-                          <dd className="col-sm-9">Test</dd>
-                        </dl>
-                        <div>
-                          <button className="btn btn-primary mx-2">Edit</button>
-                          <CustomToggleSwitch
-                          id="emiDetails"
-                            checked={isChecked}
-                            onChange={toggleSwitch}
+                      <div className="row card-body">
+                          <div className="col-lg-4">
+                            <CustomDatePicker
+                              label="EMI Start date"
+                              placeholder="Enter vehicle owner name"
+                            />
+                          </div>
+                          <div className="col-lg-4">
+                            <CustomDatePicker
+                              label="EMI End date"
+                              placeholder="Enter vehicle owner name"
+                            />
+                          </div>
+                          <div className="col-lg-4">
+                            <CustomInput
+                              label="EMI Amount"
+                              id="emiAmount"
+                              placeholder="Enter Amount"
+                            />
+                          </div>
+                          <div className="col-lg-4">
+                            <label className="text-bold">
+                              EMI Certificate{" "}
+                            </label>
+                            <CustomFileUpload />
+                          </div>
+                           {/* Financed by sec */}
+                        <div className="col-lg-4">
+                          <CustomInput
+                            label="Financed by"
+                            id="#financedBy"
+                            placeholder="Enter name"
                           />
                         </div>
-                      </div>
-
-                      {/* /.card-body */}
+                          <div className="col-12 mt-3 text-right">
+                            <button
+                              className="btn btn-primary px-4 py-3"
+                              type="submit"
+                            >
+                              <h6 className="mb-0 text-uppercase">Next</h6>
+                            </button>
+                            <button
+                              className="btn btn-danger ml-3 px-4 py-3"
+                              type="submit"
+                            >
+                              <h6 className="mb-0 text-uppercase">reset</h6>
+                            </button>
+                          </div>
+                        </div>
                     </div>
                   </div>
                   <div
