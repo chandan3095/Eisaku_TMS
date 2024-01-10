@@ -10,7 +10,7 @@ const RouteNames = {
     LocationMasterAddForm: '/location-master/add-form',
 
    // list 
-    fleetMasterView: '/fleet-master/view',
+    fleetMasterList: '/fleet-master/list',
     driverMasterView: '/driver-master/view',
     helperMasterView: '/helper-master/view',
     customerMasterView: '/customer-master/view',
@@ -18,6 +18,9 @@ const RouteNames = {
     laneMasterView: '/lane-master/view',
     contractorMasterView: '/contractor-master/view',
     LocationMasterView: '/location-master/view',
+
+    // list view 
+    fleetMasterView: '/fleet-master/view',
 
    // edit 
    fleetMasterEdit: '/fleet-master/edit',

@@ -10,7 +10,7 @@ export const SideBarDropdownData = [
             },
             {
                 subMenuName: "View",
-                url: "/view",
+                url: "/list",
             }
         ]
     },

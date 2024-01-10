@@ -1,11 +1,20 @@
 // import React from 'react'
 import React, { useState } from 'react'
-
+import { useNavigate } from 'react-router-dom';
 import BodyHeader from '../../../components/common/CommonBodyHeader'
 import DataTable from 'react-data-table-component'
 import CustomInput from '../../../components/common/CustomInput/CustomInput'
+import CustomToggleSwitch from '../../../components/common/CustomToggle'
 
 function LocationMasterView() {
+   const navigate = useNavigate()
+
+   const [isChecked, setIsChecked] = useState({}); // State to manage toggle
+
+   const toggleSwitch = () => {
+      setIsChecked(isChecked ? isChecked = true : isChecked = false); // Toggle the state
+      console.log(isChecked);
+   };
     const columns = [
         {
            name: 'Contact Person Name',
@@ -25,7 +34,7 @@ function LocationMasterView() {
            vendorName: 'A Vendor',
            action: <>
               <button className="btn btn-primary mx-2">Edit</button>
-              <button className="btn btn-danger mx-2"> Delete</button>
+              <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="helper6" />
            </>
         },
         {
@@ -33,7 +42,7 @@ function LocationMasterView() {
            vendorName: 'B Vendor',
            action: <>
               <button className="btn btn-primary mx-2">Edit</button>
-              <button className="btn btn-danger mx-2"> Delete</button>
+              <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="helper6" />
            </>
         },
         {
@@ -41,7 +50,7 @@ function LocationMasterView() {
            vendorName: 'C Vendor',
            action: <>
               <button className="btn btn-primary mx-2">Edit</button>
-              <button className="btn btn-danger mx-2"> Delete</button>
+              <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="helper6" />
            </>
         },
         {
@@ -49,7 +58,7 @@ function LocationMasterView() {
            vendorName: 'D Vendor',
            action: <>
               <button className="btn btn-primary mx-2">Edit</button>
-              <button className="btn btn-danger mx-2"> Delete</button>
+              <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="helper6" />
            </>
         }
      ]
