@@ -7,75 +7,6 @@ import { useNavigate } from 'react-router-dom'
 import {deleteDriveMaster} from '../../../reducer/DriveMasterReducer'
 import CustomToggleSwitch from '../../../components/common/CustomToggle'
 
-
-// const data = [
-//    {
-//       id: 1,
-//       driverName: 'A Driver',
-//       licenseNumber: '811344934',
-//       licenseExpDate: '19/2/2026',
-//       payrollType: 'Esaku Pay Roll',
-//       action: <>
-//          <button className="btn btn-primary mx-2">Edit</button>
-//          <button className="btn btn-danger mx-2"> Delete</button>
-//       </>
-//    },
-//    {
-//       id: 2,
-//       driverName: 'B Driver',
-//       licenseNumber: '811344934',
-//       licenseExpDate: '19/2/2026',
-//       payrollType: 'Esaku Pay Roll',
-//       action: <>
-//          <button className="btn btn-primary mx-2">Edit</button>
-//          <button className="btn btn-danger mx-2"> Delete</button>
-//       </>
-//    },
-//    {
-//       id: 3,
-//       driverName: 'C Driver',
-//       licenseNumber: '811344934',
-//       licenseExpDate: '19/2/2026',
-//       payrollType: 'Esaku Pay Roll',
-//       action: <>
-//          <button className="btn btn-primary mx-2">Edit</button>
-//          <button className="btn btn-danger mx-2"> Delete</button>
-//       </>
-//    },
-//    {
-//       id: 4,
-//       driverName: 'D Driver',
-//       licenseNumber: '811344934',
-//       licenseExpDate: '19/2/2026',
-//       payrollType: 'Esaku Pay Roll',
-//       action: <>
-//          <button className="btn btn-primary mx-2">Edit</button>
-//          <button className="btn btn-danger mx-2"> Delete</button>
-//       </>
-//    },
-//    {
-//       id: 5,
-//       driverName: 'E Driver',
-//       licenseNumber: '811344934',
-//       licenseExpDate: '19/2/2026',
-//       payrollType: 'Esaku Pay Roll',
-//       action: <>
-//          <button className="btn btn-primary mx-2">Edit</button>
-//          <button className="btn btn-danger mx-2"> Delete</button>
-//       </>
-//    },
-//    {
-//       id: 6,
-//       driverName: 'F Driver',
-//       licenseNumber: '811344934',
-//       licenseExpDate: '19/2/2026',
-//       payrollType: 'Esaku Pay Roll',
-//       action: <>
-//          <button className="btn btn-primary mx-2">Edit</button>
-//          <button className="btn btn-danger mx-2"> Delete</button>
-//       </>
-//    },
-// ]
 const DriverMasterList = () => {
    const listFormData = useSelector((state) => state.driveMaster)
    const [records, setRecords] = useState(listFormData.driveMasterList)
@@ -95,11 +26,6 @@ const DriverMasterList = () => {
    const handleUpdate=(drivingLicense)=>{
       navigate(`/driver-master/edit/${drivingLicense}`)
 
-   }
-
-   const handleDelete =(drivingLicense)=>{
-      console.log(drivingLicense);
-      dispatch(deleteDriveMaster({drivingLicense}))
    }
 
    const columns = [

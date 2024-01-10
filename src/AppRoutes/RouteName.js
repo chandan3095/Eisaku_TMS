@@ -33,7 +33,7 @@ const RouteNames = {
    contractorMasterEdit: '/contractor-master/edit',
 
    // Supervisior Trip Create
-   tripCreate: '/trip/add-trip',
+   tripCreate: '/trip/trip-details',
    tripView: '/trip/view-trip',
 
 }
