@@ -1,7 +1,7 @@
 import Select from "react-dropdown-select";
 
 const CustomDropdown = (props) => {
-  const { label, optionData, onChange, name, value,disabled } = props;
+  const { label, optionData, onChange, name, values,disabled } = props;
 
   return (
     <div className="form-group">
@@ -11,9 +11,10 @@ const CustomDropdown = (props) => {
         labelField="label"
         valueField="value"
         name={name}
+        values={values}
         onChange={onChange}
         disabled={disabled}
-           style={{ backgroundColor: disabled ? '#e9ecef' : '#fff' }}
+        style={{ backgroundColor: disabled ? '#e9ecef' : '#fff' }}
       />
     </div>
   );

@@ -10,7 +10,7 @@ const FleetMasterView = () => {
   const [isChecked, setIsChecked] = useState({}); // State to manage toggle
 
   const toggleSwitch = () => {
-     setIsChecked(isChecked ? isChecked = true : isChecked = false); // Toggle the state
+    setIsChecked(!isChecked); // Toggle the state 
     console.log(isChecked);
   };
 
@@ -56,11 +56,7 @@ const FleetMasterView = () => {
           >
             Edit
           </button>
-            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car1" />
-            {/* <CustomToggleSwitch
-               checked={isChecked[row.id] || false}
-               onChange={() => toggleSwitch(row.id)}
-            /> */}
+          <CustomToggleSwitch id="dataOne" checked={isChecked} onChange={toggleSwitch} />
         </>
       ),
     },
@@ -77,7 +73,7 @@ const FleetMasterView = () => {
           >
             Edit
           </button>
-            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car2" />
+          <CustomToggleSwitch id="dataTwo" checked={isChecked} onChange={toggleSwitch} />
         </>
       ),
     },
@@ -94,7 +90,7 @@ const FleetMasterView = () => {
           >
             Edit
           </button>
-            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car3" />
+          <CustomToggleSwitch id="dataThree" checked={isChecked} onChange={toggleSwitch} />
         </>
       ),
     },
@@ -111,7 +107,7 @@ const FleetMasterView = () => {
           >
             Edit
           </button>
-            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car4" />
+          <CustomToggleSwitch id="dataFour" checked={isChecked} onChange={toggleSwitch} />
         </>
       ),
     },
@@ -128,7 +124,7 @@ const FleetMasterView = () => {
           >
             Edit
           </button>
-            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car5" />
+          <CustomToggleSwitch id="dataFive" checked={isChecked} onChange={toggleSwitch} />
         </>
       ),
     },
@@ -145,7 +141,7 @@ const FleetMasterView = () => {
           >
             Edit
           </button>
-            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car6" />
+          <CustomToggleSwitch id="dataSix" checked={isChecked} onChange={toggleSwitch} />
         </>
       ),
     },
