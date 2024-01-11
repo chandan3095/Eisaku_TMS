@@ -25,28 +25,73 @@ import LocationMasterView from '../pages/corporate-admin/locationmaster/Location
 import CreateTrip from '../pages/supervisior/Trip/CreateTrip'
 import ViewTrip from '../pages/supervisior/Trip/ViewTrip'
 
+
 function AppRoutes() {
   return (
     <Routes>
-        <Route path="/" element={<HomeDashboard/>}/> 
-        <Route path={RouteNames.fleetMasterAddForm} element={<FleetMasterAddForm/>}/> 
-        <Route path={RouteNames.driverMasterAddForm} element={<DriverMasterAddForm/>}/> 
-        <Route path={RouteNames.helperMasterAddForm} element={<HelperMasterAddForm/>}/> 
-        <Route path={RouteNames.customerMasterAddForm} element={<CustomerMasterAddForm/>}/> 
-        <Route path={RouteNames.vendorMasterAddForm} element={<VendorMasterAdd />} />
-        <Route path={RouteNames.LaneMasterAddForm} element={<LaneMasterAdd />} />
-        <Route path={RouteNames.ContractorMasterAddForm} element={<ContractorMasterAdd />} />
-        <Route path={RouteNames.LocationMasterAddForm} element={<LocationMasterAdd />} />
+      {/* for dashboard  */}
+      <Route path="/" element={<HomeDashboard />} />
+      <Route
+        path={RouteNames.fleetMasterAddForm}
+        element={<FleetMasterAddForm />}
+      />
+      <Route
+        path={RouteNames.driverMasterAddForm}
+        element={<DriverMasterAddForm />}
+      />
+      <Route
+        path={RouteNames.helperMasterAddForm}
+        element={<HelperMasterAddForm />}
+      />
+      <Route
+        path={RouteNames.customerMasterAddForm}
+        element={<CustomerMasterAddForm />}
+      />
+      <Route
+        path={RouteNames.vendorMasterAddForm}
+        element={<VendorMasterAdd />}
+      />
+      <Route path={RouteNames.LaneMasterAddForm} element={<LaneMasterAdd />} />
+      <Route
+        path={RouteNames.ContractorMasterAddForm}
+        element={<ContractorMasterAdd />}
+      />
+      <Route
+        path={RouteNames.LocationMasterAddForm}
+        element={<LocationMasterAdd />}
+      />
 
-        <Route path={RouteNames.fleetMasterView} element={<FleetMasterView />} />
-        <Route path={RouteNames.driverMasterView} element={<DriverMasterList />} />
-        <Route path={RouteNames.helperMasterView} element={<HelperMasterView />} />
-        <Route path={RouteNames.customerMasterView} element={<CustomerMasterView />} />
-        <Route path={RouteNames.vendorMasterView} element={<VendorMasterView />} />
-        <Route path={RouteNames.laneMasterView} element={<LaneMasterView/>} />
-        <Route path={RouteNames.contractorMasterView} element={<ContractorMasterView/>} />
-        <Route path={RouteNames.LocationMasterView} element={<LocationMasterView/>} />
+      {/* for list  */}
+      <Route path={RouteNames.fleetMasterList} element={<FleetMasterList />} />
+      <Route
+        path={RouteNames.driverMasterView}
+        element={<DriverMasterList />}
+      />
+      <Route
+        path={RouteNames.helperMasterView}
+        element={<HelperMasterView />}
+      />
+      <Route
+        path={RouteNames.customerMasterView}
+        element={<CustomerMasterView />}
+      />
+      <Route
+        path={RouteNames.vendorMasterView}
+        element={<VendorMasterView />}
+      />
+      <Route path={RouteNames.laneMasterView} element={<LaneMasterView />} />
+      <Route
+        path={RouteNames.contractorMasterView}
+        element={<ContractorMasterView />}
+      />
+      <Route
+        path={RouteNames.LocationMasterView}
+        element={<LocationMasterView />}
+      />
 
+
+      {/* for view  */}
+      <Route path={RouteNames.fleetMasterView} element={<FleetMasterView />} />
         <Route path={RouteNames.tripCreate} element={<CreateTrip />} />
         <Route path={RouteNames.tripView} element={<ViewTrip />} />
 
@@ -54,8 +99,9 @@ function AppRoutes() {
         <Route path="/Signup" element={<SignUp />} />
         <Route path={RouteNames.addUser} element={<AddUser />} />
         <Route path={RouteNames.listUser} element={<ListUser />} />
+
     </Routes>
-  )
+  );
 }
 
-export default AppRoutes 
+export default AppRoutes;
