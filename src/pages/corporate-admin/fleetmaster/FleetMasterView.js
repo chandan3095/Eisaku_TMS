@@ -70,20 +70,7 @@ console.log(currentTabIndex, 'currentTabIndex');
                   className="nav nav-tabs"
                   id="custom-tabs-three-tab"
                   role="tablist"
-                >
-                  {/* <li className="nav-item">
-                    <a
-                      className="nav-link active"
-                      id="custom-tabs-three-home-tab"
-                      data-toggle="pill"
-                      href="#custom-tabs-three-home"
-                      role="tab"
-                      aria-controls="custom-tabs-three-home"
-                      aria-selected="true"
-                    >
-                      Vehicle Details
-                    </a>
-                  </li> */}
+                >                
                   {fleetMasterFormTitle.map((item) => (
                     <li className="nav-item">
                       <a
