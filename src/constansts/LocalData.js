@@ -118,8 +118,18 @@ export const SideBarDropdownData = [
                 url: "/view",
             }
         ]
-    }
-    
+    },
+   {
+      menuName: "Trip",
+      url: "/trip",
+      icon: "fa-truck",
+      dropdownList: [
+         {
+            subMenuName: "View",
+            url: "/view-trip",
+         }
+      ]
+   },
 ]
 
 
