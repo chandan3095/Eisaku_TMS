@@ -132,6 +132,24 @@ export const SideBarDropdownData = [
    },
 ]
 
+export const Roles= [
+   {
+      value: 1,
+      label: 'Management'
+   },
+   {
+      value: 2,
+      label: 'Manager'
+   },
+   {
+      value: 3,
+      label: 'Corporate Admin'
+   },
+   {
+      value: 4,
+      label: 'Supervisor'
+   },
+]
 
                           
 const selectOptionData =[
