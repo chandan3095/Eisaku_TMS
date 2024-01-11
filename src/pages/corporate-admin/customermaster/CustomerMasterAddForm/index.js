@@ -6,6 +6,7 @@ import BodyHeader from "../../../../components/common/CommonBodyHeader";
 import CustomDropdown from "../../../../components/common/CustomDropdown/CustomDropdown";
 import { useFormik } from "formik";
 import CustomerMasterSchema from "../../../../constansts/schema";
+import { destinationData, tonnageData, vehicleCategoryData } from "../../../../constansts/LocalData";
 
 function FleetMasterAddForm() {
   const [locationAdd, setLocationAdd] = useState([{ enterLocation: "" }]);
@@ -25,91 +26,6 @@ function FleetMasterAddForm() {
       tonnage: "",
     },
   ]);
-
-  const vehicleCategoryData = [
-    {
-      label: "20ft",
-      value: "20ft",
-    },
-    {
-      label: "22ft",
-      value: "22ft",
-    },
-    {
-      label: "24ft",
-      value: "24ft",
-    },
-    {
-      label: "32ft SXL",
-      value: "32ft SXL",
-    },
-    {
-      label: "32ft MXL",
-      value: "32ft MXL",
-    },
-    {
-      label: "Any Other",
-      value: "Any Other",
-    },
-  ];
-
-  const tonnageData = [
-    {
-      label: "5T",
-      value: "5T",
-    },
-    {
-      label: "6T",
-      value: "6T",
-    },
-    {
-      label: "7T",
-      value: "7T",
-    },
-    {
-      label: "8T",
-      value: "8T",
-    },
-    {
-      label: "9T",
-      value: "9T",
-    },
-    {
-      label: "10.5T",
-      value: "10.5T",
-    },
-    {
-      label: "15T",
-      value: "15T",
-    },
-    {
-      label: "18T",
-      value: "18T",
-    },
-    {
-      label: "any other",
-      value: "any other",
-    },
-  ];
-
-  const destinationData = [
-    {
-      label: "New York",
-      value: "New York",
-    },
-    {
-      label: "Paris",
-      value: "Paris",
-    },
-    {
-      label: "Tokyo",
-      value: "Tokyo",
-    },
-    {
-      label: "London",
-      value: "London",
-    },
-  ];
 
   const [isDisabled, setIsdisabled] = useState(true);
   const [showLaneDetailsData, setShowLaneDetailsData] = useState(false);

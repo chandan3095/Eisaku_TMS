@@ -7,7 +7,7 @@ import CustomDropdown from "../../../../components/common/CustomDropdown/CustomD
 import CustomMonthYear from "../../../../components/common/CustomMonthYear/CustomMonthYear";
 import BodyHeader from "../../../../components/common/CommonBodyHeader";
 import selectOptionData, {
-  fleetMasterFormTitle,
+  fleetMasterFormTitle, makeData, tonnageData, vehicleCategoryData,
 } from "../../../../constansts/LocalData";
 
 function FleetMasterAddForm() {
@@ -152,10 +152,13 @@ console.log(currentTabIndex, 'currentTabIndex');
 
                           {/* Dimension  */}
                           <div className="col-lg-4">
-                            <CustomInput
-                              label="Dimension(L B H (ft))"
-                              id="#dimension"
-                              placeholder="Enter L B H (ft)"
+                            
+                            <label className="text-bold">
+                            Dimension(L B H (ft))
+                            </label>
+                            <CustomDropdown
+                              optionData={selectOptionData}
+                              value={vehicleSelect}
                             />
                           </div>
 
@@ -173,7 +176,7 @@ console.log(currentTabIndex, 'currentTabIndex');
                               Vehicle Category
                             </label>
                             <CustomDropdown
-                              optionData={selectOptionData}
+                              optionData={vehicleCategoryData}
                               value={vehicleSelect}
                               // onChange={(event) =>
                               //   setVehicleCategory(event.target.value)
@@ -182,9 +185,9 @@ console.log(currentTabIndex, 'currentTabIndex');
                           </div>
                           {/* Tonnage Sec */}
                           <div className="col-lg-4">
-                            <label className="text-bold">Tonnage</label>
+                            <label className="text-bold">Tonnage(T)</label>
                             <CustomDropdown
-                              optionData={selectOptionData}
+                              optionData={tonnageData}
                               value={tonnageSelect}
                               // onChange={(event) => setTonnage(event.target.value)}
                             />
@@ -219,7 +222,7 @@ console.log(currentTabIndex, 'currentTabIndex');
                           <div className="col-lg-4">
                             <label className="text-bold">Make</label>
                             <CustomDropdown
-                              optionData={selectOptionData}
+                              optionData={makeData}
                               value={makeSelect}
                               // onChange={(event) => setMake(event.target.value)}
                             />

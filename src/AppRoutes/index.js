@@ -28,6 +28,7 @@ import DriverMasterEdit from '../pages/corporate-admin/drivermaster/DriverMaster
 import CreateTrip from '../pages/manager/Trip/CreateTrip'
 import ViewTrip from '../pages/manager/Trip/ViewTrip'
 import AdhocCreate from '../pages/manager/adhoc/AdhocCreate'
+import VendorCreateForm from '../pages/manager/vendor/VendorCreateForm'
 
 function AppRoutes() {
   return (
@@ -106,6 +107,9 @@ function AppRoutes() {
         <Route path="/Signup" element={<SignUp />} />
         <Route path={RouteNames.addUser} element={<AddUser />} />
         <Route path={RouteNames.listUser} element={<ListUser />} />
+
+      {/* Manager Add Vendor  */}
+      <Route path={RouteNames.managerAddVendor} element={<VendorCreateForm />} />
 
     </Routes>
   );
