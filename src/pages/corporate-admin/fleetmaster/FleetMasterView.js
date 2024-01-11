@@ -38,30 +38,9 @@ const FleetMasterView = () => {
       setMaintenanceBudget(updatedMaintenanceBudget);
    };
 
-   const handleServiceBill = () => {
-      setServiceBillAdd([
-         ...serviceBillAdd,
-         { selectedBillFile: "", serviceRecord: "" },
-      ]);
-   };
-   const handleServiceBillDelete = (index) => {
-      const updatedServiceBill = [...serviceBillAdd];
-      updatedServiceBill.splice(index, 1);
-      setServiceBillAdd(updatedServiceBill);
-   };
-   const handleTyreAdd = () => {
-      setTyreAdd([...tyreAdd, { selectedFile: "", tyreType: "" }]);
-   };
-   const handleTyreDelete = (index) => {
-      const updatedTyreAdd = [...tyreAdd];
-      updatedTyreAdd.splice(index, 1);
-      setTyreAdd(updatedTyreAdd);
-   };
-
-   return (
-      <div>
-        
-    </div>
+  return (
+    <div>
+     </div>
   );
 };
 
