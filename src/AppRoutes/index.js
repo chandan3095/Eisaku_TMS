@@ -14,6 +14,7 @@ import VendorMasterAdd from '../pages/corporate-admin/vendormaster/VendorMasterA
 import LaneMasterAdd from '../pages/corporate-admin/lanemaster/LaneMasterAdd'
 import ContractorMasterAdd from '../pages/corporate-admin/contractormaster/ContractorMasterAdd'
 import FleetMasterView from '../pages/corporate-admin/fleetmaster/FleetMasterView'
+import FleetMasterList from '../pages/corporate-admin/fleetmaster/FleetMasterList'
 import DriverMasterList from '../pages/corporate-admin/drivermaster/DriverMasterList'
 import HelperMasterView from '../pages/corporate-admin/helpermaster/HelperMasterView'
 import CustomerMasterView from '../pages/corporate-admin/customermaster/CustomerMasterView'

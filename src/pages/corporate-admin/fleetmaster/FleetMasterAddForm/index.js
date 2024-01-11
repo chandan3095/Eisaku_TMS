@@ -23,7 +23,7 @@ function FleetMasterAddForm() {
   const [maintenanceBudget, setMaintenanceBudget] = useState([{}]);
 
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
-
+console.log(currentTabIndex, 'currentTabIndex');
   const maintenanceBudgetAdd = () => {
     setMaintenanceBudget([
       ...maintenanceBudget,
@@ -86,14 +86,14 @@ function FleetMasterAddForm() {
                     <li className="nav-item">
                       <a
                         className={
-                          item.value === 0 ? "nav-link active" : "nav-link"
+                          item.value === currentTabIndex ? "nav-link active" : "nav-link"
                         }
                         id={`${item.value}`}
                         data-toggle="pill"
                         href={`#${item.value}`}
                         role="tab"
                         aria-controls={`${item.value}`}
-                        aria-selected={item.value === 0 ? "true" : "false"}
+                        aria-selected={item.value === currentTabIndex ? "true" : "false"}
                         onClick={() => setCurrentTabIndex(item.value)}
                       >
                         {item.label}
@@ -742,22 +742,7 @@ function FleetMasterAddForm() {
                                   <i className="fas fa-plus"></i> Add More
                                 </button>
                               </div>
-                              <div className="col-6 mt-3 text-right">
-                                <button
-                                  className="btn btn-primary px-4 py-3"
-                                  type="submit"
-                                >
-                                  <h6 className="mb-0 text-uppercase">
-                                    Submit
-                                  </h6>
-                                </button>
-                                <button
-                                  className="btn btn-danger ml-3 px-4 py-3"
-                                  type="submit"
-                                >
-                                  <h6 className="mb-0 text-uppercase">reset</h6>
-                                </button>
-                              </div>
+                              
                             </div>
                           </div>
                         </div>
@@ -766,21 +751,22 @@ function FleetMasterAddForm() {
                   )}
                 </div>
                 <div className="col-12 mt-3 text-right">
-                  {currentTabIndex !== fleetMasterFormTitle.length - 1 &&
-                  <button className="btn btn-primary px-4 py-3" onClick={()=>setCurrentTabIndex(currentTabIndex + 1)}>
-                    <h6 className="mb-0 text-uppercase">Next</h6>
-                  </button>
-                  }
-                  {
+                {
                     currentTabIndex !==0 &&                  
-                  <button className="btn btn-primary px-4 py-3" onClick={()=>setCurrentTabIndex(currentTabIndex - 1)}>
+                  <button className="btn btn-secondary px-4 py-3 mr-3" type="button" onClick={()=>setCurrentTabIndex(currentTabIndex - 1)}>
                     <h6 className="mb-0 text-uppercase">Back</h6>
                   </button>
                   }
+                  {currentTabIndex !== fleetMasterFormTitle.length - 1 &&
+                  <button className="btn btn-primary px-4 py-3" type="button" onClick={()=>setCurrentTabIndex(currentTabIndex + 1)}>
+                    <h6 className="mb-0 text-uppercase">Next</h6>
+                  </button>
+                  }
+                  
                   {currentTabIndex === fleetMasterFormTitle.length - 1 &&
                   <button
                     className="btn btn-danger ml-3 px-4 py-3"
-                    type="submit"
+                    type="button"
                   >
                     <h6 className="mb-0 text-uppercase">Submit</h6>
                   </button>
