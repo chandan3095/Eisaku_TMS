@@ -24,6 +24,7 @@ import LocationMasterAdd from '../pages/corporate-admin/locationmaster/LocationM
 import LocationMasterView from '../pages/corporate-admin/locationmaster/LocationMasterView'
 import CreateTrip from '../pages/supervisior/Trip/CreateTrip'
 import ViewTrip from '../pages/supervisior/Trip/ViewTrip'
+import DriverMasterEdit from '../pages/corporate-admin/drivermaster/DriverMasterEdit'
 
 
 function AppRoutes() {
@@ -89,9 +90,13 @@ function AppRoutes() {
         element={<LocationMasterView />}
       />
 
+        <Route path={RouteNames.driverMasterEdit} element={<DriverMasterEdit />} />
+
+
 
       {/* for view  */}
       <Route path={RouteNames.fleetMasterView} element={<FleetMasterView />} />
+
         <Route path={RouteNames.tripCreate} element={<CreateTrip />} />
         <Route path={RouteNames.tripView} element={<ViewTrip />} />
 

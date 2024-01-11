@@ -17,9 +17,11 @@ function AddUser() {
     setShowManagerDropdown(null);
     setShowManagementDropdown(null);
   };
+
   const handlemanagerDropdown = (value) => {
     setShowManagerDropdown(value);
   };
+  
   const handlemanagementDropdown = (value) => {
     setShowManagementDropdown(value);
   };

@@ -125,10 +125,6 @@ export const SideBarDropdownData = [
       icon: "fa-truck",
       dropdownList: [
          {
-            subMenuName: "Add",
-            url: "/add-trip",
-         },
-         {
             subMenuName: "View",
             url: "/view-trip",
          }
