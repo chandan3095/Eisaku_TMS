@@ -11,6 +11,7 @@ const CustomInput = ({
     name,
     value,
     disabled,
+    ...rest
 }) => {
     // const { label, id, inputType, placeholder, onChange, errors, message } = props
     return (
@@ -29,6 +30,7 @@ const CustomInput = ({
                 value={value}
                 name={name}
                 disabled={disabled}
+                {...rest}
             />
             {errors && (
                 <div className="text-danger" style={{ fontSize: ".8rem" }}>
