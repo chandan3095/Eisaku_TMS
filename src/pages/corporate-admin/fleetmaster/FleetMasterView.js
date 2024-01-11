@@ -12,18 +12,17 @@ import CustomDropdown from "../../../components/common/CustomDropdown/CustomDrop
 import selectOptionData from "../../../constansts/LocalData";
 
 const FleetMasterView = () => {
-  const navigate = useNavigate();
-  const [isChecked, setIsChecked] = useState({}); // State to manage toggle
+
   const [fuelType, setFuelType] = useState("Diesel");
   const [tyreType, setTyreType] = useState("");
   const [makeSelect, setMake] = useState("");
   const [tonnageSelect, setTonnage] = useState("");
   const [vehicleSelect, setVehicleCategory] = useState("");
+    const navigate = useNavigate();
+    const [isChecked, setIsChecked] = useState(false); // State to manage toggle
 
-  const toggleSwitch = () => {
-    setIsChecked(!isChecked); // Toggle the state 
-    console.log(isChecked);
-  };
+
+    console.log({ isChecked });
 
   const columns = [
     {
@@ -46,226 +45,126 @@ const FleetMasterView = () => {
     },
   ];
 
-  const data = [
-    {
-      id: 1,
-      vehicleNumber: "UP-80K-8271",
-      vehicleName: "Mini Car",
-      vehicleTitle: "Mini Car",
-      action: (
-        <>
-          <button
-            className="btn btn-primary mx-2"
-            onClick={() => navigate("/fleet-master/add-form")}
-          >
-            Edit
-          </button>
-          <CustomToggleSwitch id="dataOne" checked={isChecked} onChange={toggleSwitch} />
-        </>
-      ),
-    },
-    {
-      id: 2,
-      vehicleNumber: "UP-80K-8271",
-      vehicleName: "Mini Car",
-      vehicleTitle: "Mini Car",
-      action: (
-        <>
-          <button
-            className="btn btn-primary mx-2"
-            onClick={() => navigate("/fleet-master/add-form")}
-          >
-            Edit
-          </button>
-          <CustomToggleSwitch id="dataTwo" checked={isChecked} onChange={toggleSwitch} />
-        </>
-      ),
-    },
-    {
-      id: 3,
-      vehicleNumber: "UP-80K-8271",
-      vehicleName: "Mini Car",
-      vehicleTitle: "Mini Car",
-      action: (
-        <>
-          <button
-            className="btn btn-primary mx-2"
-            onClick={() => navigate("/fleet-master/add-form")}
-          >
-            Edit
-          </button>
-          <CustomToggleSwitch id="dataThree" checked={isChecked} onChange={toggleSwitch} />
-        </>
-      ),
-    },
-    {
-      id: 4,
-      vehicleNumber: "UP-80K-8271",
-      vehicleName: "Mini Car",
-      vehicleTitle: "Mini Car",
-      action: (
-        <>
-          <button
-            className="btn btn-primary mx-2"
-            onClick={() => navigate("/fleet-master/add-form")}
-          >
-            Edit
-          </button>
-          <CustomToggleSwitch id="dataFour" checked={isChecked} onChange={toggleSwitch} />
-        </>
-      ),
-    },
-    {
-      id: 5,
-      vehicleNumber: "UP-80K-8271",
-      vehicleName: "Mini Car",
-      vehicleTitle: "Mini Car",
-      action: (
-        <>
-          <button
-            className="btn btn-primary mx-2"
-            onClick={() => navigate("/fleet-master/add-form")}
-          >
-            Edit
-          </button>
-          <CustomToggleSwitch id="dataFive" checked={isChecked} onChange={toggleSwitch} />
-        </>
-      ),
-    },
-    {
-      id: 6,
-      vehicleNumber: "UP-80K-8271",
-      vehicleName: "Mini Car",
-      vehicleTitle: "Mini Car",
-      action: (
-        <>
-          <button
-            className="btn btn-primary mx-2"
-            onClick={() => navigate("/fleet-master/add-form")}
-          >
-            Edit
-          </button>
-          <CustomToggleSwitch id="dataSix" checked={isChecked} onChange={toggleSwitch} />
-        </>
-      ),
-    },
-  ];
 
-  const customStyles = {
-    table: {
-      style: {
-        border: "1px solid #0bc4f0", // Set border color
-      },
-    },
-    rows: {
-      style: {
-        minHeight: "72px", // override the row height
-        fontSize: "1rem",
-      },
-    },
-    headCells: {
-      style: {
-        paddingLeft: "8px", // override the cell padding for head cells
-        paddingRight: "8px",
-        backgroundColor: "#0bc4f0",
-      },
-    },
-    cells: {
-      style: {
-        paddingLeft: "8px", // override the cell padding for data cells
-        paddingRight: "8px",
-        fontSize: "14px", // Set font size for regular cells
-        border: "1px solid #0bc4f0",
-      },
-    },
-  };
-  const [records, setRecords] = useState(data);
-
-  const handleFilter = (e) => {
-    const searchText = e.target.value.toLowerCase();
-    const newData = data.filter((row) => {
-      return (
-        row.vehicleNumber.toLowerCase().includes(searchText) ||
-        row.vehicleName.toLowerCase().includes(searchText) ||
-        row.vehicleTitle.toLowerCase().includes(searchText)
-      );
-    });
-    setRecords(newData);
-  };
-  return (
-    <div>
-      <BodyHeader title="Fleet Master List" />
-      <div className="px-3">
-        <div className="row">
-          <div className="col-lg-12">
-            <div className="card card-primary card-outline card-tabs">
-              <div className="card-header p-0 pt-1 border-bottom-0">
-                <ul
-                  className="nav nav-tabs"
-                  id="custom-tabs-three-tab"
-                  role="tablist"
-                >
-                  <li className="nav-item">
-                    <a
-                      className="nav-link active"
-                      id="custom-tabs-three-home-tab"
-                      data-toggle="pill"
-                      href="#custom-tabs-three-home"
-                      role="tab"
-                      aria-controls="custom-tabs-three-home"
-                      aria-selected="true"
+    const data = [
+        {
+            id: 1,
+            vehicleNumber: "UP-80K-8271",
+            vehicleName: "Mini Car",
+            vehicleTitle: "Mini Car",
+            action: (
+                <>
+                    <button
+                        className="btn btn-primary mx-2"
+                        onClick={() => navigate("/fleet-master/add-form")}
                     >
-                      Vehicle Details
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="nav-link"
-                      id="custom-tabs-three-profile-tab"
-                      data-toggle="pill"
-                      href="#custom-tabs-three-profile"
-                      role="tab"
-                      aria-controls="custom-tabs-three-profile"
-                      aria-selected="false"
+                        Edit
+                    </button>
+                    {/* <CustomToggleSwitch checked={true} onChange={toggleSwitch} id="car1" /> */}
+                    {/* <CustomToggleSwitch
+               checked={isChecked[row.id] || false}
+               onChange={() => toggleSwitch(row.id)}
+            /> */}
+                </>
+            ),
+            active: (
+                <>
+                    <CustomToggleSwitch
+                        checked={true}
+                        onChange={toggleSwitch}
+                        id="car1"
+                    />
+                </>
+            ),
+        },
+        {
+            id: 2,
+            vehicleNumber: "UP-80K-8271",
+            vehicleName: "Mini Car",
+            vehicleTitle: "Mini Car",
+            action: (
+                <>
+                    <button
+                        className="btn btn-primary mx-2"
+                        onClick={() => navigate("/fleet-master/add-form")}
                     >
-                      EMI
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="nav-link"
-                      id="custom-tabs-three-messages-tab"
-                      data-toggle="pill"
-                      href="#custom-tabs-three-messages"
-                      role="tab"
-                      aria-controls="custom-tabs-three-messages"
-                      aria-selected="false"
+                        Edit
+                    </button>
+                    {/* <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car2" /> */}
+                </>
+            ),
+            active: (
+                <>
+                    <CustomToggleSwitch
+                        checked={isChecked}
+                        onChange={toggleSwitch}
+                        id="car2"
+                    />
+                </>
+            ),
+        },
+        {
+            id: 3,
+            vehicleNumber: "UP-80K-8271",
+            vehicleName: "Mini Car",
+            vehicleTitle: "Mini Car",
+            action: (
+                <>
+                    <button
+                        className="btn btn-primary mx-2"
+                        onClick={() => navigate("/fleet-master/add-form")}
                     >
-                      Service Record
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="nav-link"
-                      id="custom-tabs-three-settings-tab"
-                      data-toggle="pill"
-                      href="#custom-tabs-three-settings"
-                      role="tab"
-                      aria-controls="custom-tabs-three-settings"
-                      aria-selected="false"
+                        Edit
+                    </button>
+                    {/* <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car3" /> */}
+                </>
+            ),
+            active: (
+                <>
+                    <CustomToggleSwitch
+                        checked={isChecked}
+                        onChange={toggleSwitch}
+                        id="car3"
+                    />
+                </>
+            ),
+        },
+        {
+            id: 4,
+            vehicleNumber: "UP-80K-8271",
+            vehicleName: "Mini Car",
+            vehicleTitle: "Mini Car",
+            action: (
+                <>
+                    <button
+                        className="btn btn-primary mx-2"
+                        onClick={() => navigate("/fleet-master/add-form")}
                     >
-                      Tyre
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      className="nav-link"
-                      id="custom-tabs-four-settings-tab"
-                      data-toggle="pill"
-                      href="#custom-tabs-four-settings"
-                      role="tab"
-                      aria-controls="custom-tabs-four-settings"
-                      aria-selected="false"
+                        Edit
+                    </button>
+                    {/* <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="car4" /> */}
+                </>
+            ),
+            active: (
+                <>
+                    <CustomToggleSwitch
+                        checked={isChecked}
+                        onChange={toggleSwitch}
+                        id="car4"
+                    />
+                </>
+            ),
+        },
+        {
+            id: 5,
+            vehicleNumber: "UP-80K-8271",
+            vehicleName: "Mini Car",
+            vehicleTitle: "Mini Car",
+            action: (
+                <>
+                    <button
+                        className="btn btn-primary mx-2"
+                        onClick={() => navigate("/fleet-master/add-form")}
                     >
                       Monthly Maintenance Budget
                     </a>
@@ -698,17 +597,12 @@ const FleetMasterView = () => {
                         borderColor="#000000"
                         customStyles={customStyles}
                       ></DataTable>
+                      
                     </div>
-                  </div>
                 </div>
-              </div>
-              {/* /.card */}
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default FleetMasterView;
