@@ -1,16 +1,14 @@
-import React, { useState } from "react";
-import CustomInput from "../../../components/common/CustomInput/CustomInput";
-import CustomFileUpload from "../../../components/common/CustomFileUpload/CustomFileUpload";
-import MultipleFileUpload from "../../../components/common/MultipleFileUpload/MultipleFileUpload";
-import MultiSelectDropdown from "../../../components/common/MultiSelectDropdown/MultiSelectDropdown";
-import BodyHeader from "../../../components/common/CommonBodyHeader";
-import CustomDatePicker from "../../../components/common/CustomDatePicker/CustomDatePicker";
-import CustomDropdown from "../../../components/common/CustomDropdown/CustomDropdown";
-import { useFormik } from "formik";
-import { event } from "jquery";
-import { locationData } from "../../../constansts/LocalData";
-import CustomTextArea from "../../../components/common/CustomTextArea/CustomTextArea";
-const VendorMasterAdd = () => {
+import React, {useState} from 'react'
+import BodyHeader from '../../../components/common/CommonBodyHeader';
+import CustomInput from '../../../components/common/CustomInput/CustomInput';
+import CustomFileUpload from '../../../components/common/CustomFileUpload/CustomFileUpload';
+import CustomDatePicker from '../../../components/common/CustomDatePicker/CustomDatePicker';
+import MultipleFileUpload from '../../../components/common/MultipleFileUpload/MultipleFileUpload';
+import CustomDropdown from '../../../components/common/CustomDropdown/CustomDropdown';
+import { locationData } from '../../../constansts/LocalData';
+import CustomTextArea from '../../../components/common/CustomTextArea/CustomTextArea';
+
+const VendorCreateForm = () => {
     const [addContact, setAddContact] = useState([""]);
     const [laneNameSelect, setlaneNameSelect] = useState([""]);
 
@@ -53,7 +51,6 @@ const VendorMasterAdd = () => {
             value: "Lane 4",
         },
     ];
-
     const [selectedOption, setSelectedOption] = useState('');
     const handleSelectChange = (selected) => {
         setSelectedOption(selected[0].value);
@@ -62,7 +59,7 @@ const VendorMasterAdd = () => {
     };
     return (
         <div>
-            <BodyHeader title="Add Vendor Master" />
+            <BodyHeader title="Manager Add Vendor" />
             <form className="p-5 shadow-lg">
                 <div className="row">
                     <div className="col-lg-12">
@@ -391,6 +388,6 @@ const VendorMasterAdd = () => {
             </form>
         </div>
     );
-};
+}
 
-export default VendorMasterAdd;
+export default VendorCreateForm

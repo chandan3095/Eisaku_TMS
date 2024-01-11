@@ -36,11 +36,14 @@ const RouteNames = {
    contractorMasterEdit: '/contractor-master/edit',
 
    // manager Trip view
-   tripCreate: '/trip/trip-details',
-   tripView: '/trip/view-trip',
+   tripCreate: '/trip/adhoc/add',
+   tripView: '/trip/adhoc/view',
 
    // adhoc 
-   CreateAdhoc: '/adhoc/create-request'
+   CreateAdhoc: '/adhoc-lane/add',
+
+   // Manager add vendor 
+   managerAddVendor: '/adhoc-vendor/add'
 
 }
 export default RouteNames

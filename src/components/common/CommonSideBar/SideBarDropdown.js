@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { SideBarDropdownData } from "../../../constansts/LocalData";
 
 function SideBarDropdown(props) {
-const {label, url, dropdownList, icon} = props;
-
+  const { label, url, dropdownList, icon, } = props;
+// console.log({dropdownList});
   return (
     <li className="nav-item">
       <a href="#" className="nav-link">
@@ -16,14 +16,37 @@ const {label, url, dropdownList, icon} = props;
       </a>
       <ul className="nav nav-treeview">
         {dropdownList.map((item, index) => {
-          // console.log(item)
-          return<li className="nav-item" key={index.toString()}>
-          <Link to={url + item.url} className="nav-link">
-            <i className="far fa-circle nav-icon" />
-            <p>{item.subMenuName}</p>
-          </Link>
-        </li>
-        })}        
+          // console.log(item.subDropdownList)
+          return (
+            <li className="nav-item" key={index.toString()}>
+              <Link to={url + item.url} className="nav-link">
+                <i className="far fa-circle nav-icon" />
+                <p>{item.subMenuName}</p>  
+                {
+                  item.subDropdownList.length> 0 && (
+                    <i class="right fas fa-angle-left"></i>
+                  )
+                }              
+              </Link>
+              {item.subDropdownList.length > 0 && (
+                  <ul class="nav nav-treeview">
+                {item.subDropdownList.map((itemSub) => {
+                  // console.log(itemSub);
+                  return (
+                    <li class="nav-item">
+                      <Link to={url + item.url + itemSub.url} class="nav-link">
+                        <i class="far fa-dot-circle nav-icon"></i>
+                        <p>{itemSub.subMenuName}</p>
+                      </Link>
+                    </li>
+                   );
+                })} 
+              </ul>
+                )
+              } 
+            </li>
+          );
+        })}
       </ul>
     </li>
   );
