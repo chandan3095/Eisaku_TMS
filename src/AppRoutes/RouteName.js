@@ -32,9 +32,12 @@ const RouteNames = {
    laneMasterEdit: '/lane-master/edit',
    contractorMasterEdit: '/contractor-master/edit',
 
-   // Supervisior Trip Create
+   // manager Trip view
    tripCreate: '/trip/trip-details',
    tripView: '/trip/view-trip',
+
+   // adhoc 
+   CreateAdhoc: '/adhoc/create-request'
 
 }
 export default RouteNames

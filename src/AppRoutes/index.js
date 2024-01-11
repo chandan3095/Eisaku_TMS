@@ -22,9 +22,11 @@ import LaneMasterView from '../pages/corporate-admin/lanemaster/LaneMasterView'
 import ContractorMasterView from '../pages/corporate-admin/contractormaster/ContractorMasterView'
 import LocationMasterAdd from '../pages/corporate-admin/locationmaster/LocationMasterAdd'
 import LocationMasterView from '../pages/corporate-admin/locationmaster/LocationMasterView'
-import CreateTrip from '../pages/supervisior/Trip/CreateTrip'
-import ViewTrip from '../pages/supervisior/Trip/ViewTrip'
+
 import DriverMasterEdit from '../pages/corporate-admin/drivermaster/DriverMasterEdit'
+import CreateTrip from '../pages/manager/Trip/CreateTrip'
+import ViewTrip from '../pages/manager/Trip/ViewTrip'
+import AdhocCreate from '../pages/manager/adhoc/AdhocCreate'
 
 function AppRoutes() {
   return (
@@ -47,12 +49,12 @@ function AppRoutes() {
         <Route path={RouteNames.laneMasterView} element={<LaneMasterView/>} />
         <Route path={RouteNames.contractorMasterView} element={<ContractorMasterView/>} />
         <Route path={RouteNames.LocationMasterView} element={<LocationMasterView/>} />
-
         <Route path={RouteNames.driverMasterEdit} element={<DriverMasterEdit />} />
 
-        <Route path={RouteNames.tripCreate} element={<CreateTrip />} />
-        <Route path={RouteNames.tripView} element={<ViewTrip />} />
-
+        <Route path={RouteNames.tripCreate} element={<CreateTrip/>}/>
+        <Route path={RouteNames.tripView} element={<ViewTrip/>}/>
+        
+        <Route path={RouteNames.CreateAdhoc} element={<AdhocCreate/>}/>
         <Route path="/Login" element={<Login/>}/>
         <Route path="/Signup" element={<SignUp />} />
         <Route path={RouteNames.addUser} element={<AddUser />} />
