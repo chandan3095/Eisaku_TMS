@@ -77,9 +77,15 @@ const ContractorMasterAdd = () => {
                            </div>
 
                            <div className="col-12">
-                              {addContact.map((contact, email, index) => {
+                              {addContact.map((item, index) => {
+                                 const {contact, email} = item
                                  return (
-                                    <div key={index} className="row">
+                                    <div key={index} className={
+                                       index < addContact.length - 1 &&
+                                       addContact.length > 1
+                                         ? "row border-bottom mb-4 pb-3"
+                                         : "row"
+                                     }>
                                        <div className="col-12 col-sm-12 col-md- col-lg-4">
                                           <CustomInput
                                              label="Contact Person Name"
@@ -112,6 +118,8 @@ const ContractorMasterAdd = () => {
                                        </div>
 
                                        {index > 0 && (
+                                       <div className="col-12 col-sm-12 col-md-12">
+                                          
                                           <button
                                              type="button"
                                              className="btn btn-danger float-right ml-3 mb-3"
@@ -119,6 +127,7 @@ const ContractorMasterAdd = () => {
                                           >
                                              <i className="fas fa-trash"></i> Delete item
                                           </button>
+                                       </div>
                                        )}
                                     </div>
                                  );

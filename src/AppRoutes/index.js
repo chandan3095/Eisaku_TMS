@@ -30,6 +30,7 @@ import AdhocCreate from '../pages/manager/adhoc/AdhocCreate'
 import Skeleton from './Skeleton'
 
 import VendorCreateForm from '../pages/manager/vendor/VendorCreateForm'
+import Profile from '../components/Profile'
 
 function AppRoutes() {
    return (
@@ -40,7 +41,12 @@ function AppRoutes() {
                path=""
                element={<HomeDashboard />}
             />
-
+            
+            <Route
+               path={RouteNames.profileView}
+               element={<Profile />}
+            />
+            
             <Route
                path={RouteNames.fleetMasterAddForm}
                element={<FleetMasterAddForm />}
@@ -106,7 +112,10 @@ function AppRoutes() {
             <Route path={RouteNames.fleetMasterView} element={<FleetMasterView />} />
 
             <Route path={RouteNames.tripCreate} element={<CreateTrip />} />
+            <Route path={RouteNames.contractualView} element={<ViewTrip />} />
             <Route path={RouteNames.tripView} element={<ViewTrip />} />
+            <Route path={RouteNames.adhocView} element={<ViewTrip />} />
+            <Route path={RouteNames.managerVendorView} element={<ViewTrip />} />
 
             {/* Manager Add Vendor  */}
             <Route path={RouteNames.managerAddVendor} element={<VendorCreateForm />} />

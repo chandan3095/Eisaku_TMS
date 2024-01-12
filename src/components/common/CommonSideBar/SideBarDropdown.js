@@ -19,7 +19,7 @@ function SideBarDropdown(props) {
           // console.log(item.subDropdownList)
           return (
             <li className="nav-item" key={index.toString()}>
-              <Link to={url + item.url} className="nav-link">
+              <Link to={item.subDropdownList.length> 0 ? '' : `${url + item.url}`} className="nav-link">
                 <i className="far fa-circle nav-icon" />
                 <p>{item.subMenuName}</p>  
                 {
@@ -30,10 +30,10 @@ function SideBarDropdown(props) {
               </Link>
               {item.subDropdownList.length > 0 && (
                   <ul class="nav nav-treeview">
-                {item.subDropdownList.map((itemSub) => {
+                {item.subDropdownList.map((itemSub, index) => {
                   // console.log(itemSub);
                   return (
-                    <li class="nav-item">
+                    <li class="nav-item pl-3" key={index}>
                       <Link to={url + item.url + itemSub.url} class="nav-link">
                         <i class="far fa-dot-circle nav-icon"></i>
                         <p>{itemSub.subMenuName}</p>

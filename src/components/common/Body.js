@@ -1,8 +1,5 @@
 import React from "react";
-import AddUser from "../../pages/user/AddUser";
-import ListUser from "../../pages/user/ListUser";
 import BodyHeader from "./CommonBodyHeader";
-import { PolarArea } from 'react-chartjs-2';
 import AreaChart from "./chart/AreaChart";
 
 const Body = () => {
@@ -60,6 +57,66 @@ const Body = () => {
               <div className="inner">
                 <h3>65</h3>
                 <p>Unique Visitors</p>
+              </div>
+              <div className="icon">
+                <i className="ion ion-pie-graph" />
+              </div>
+              <a href="#" className="small-box-footer">
+                More info <i className="fas fa-arrow-circle-right" />
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-3 col-6">
+            <div className="small-box bg-info">
+              <div className="inner">
+                <h3>150</h3>
+                <p>Trip Approval Pending</p>
+              </div>
+              <div className="icon">
+                <i className="ion ion-bag" />
+              </div>
+              <a href="#" className="small-box-footer">
+                More info <i className="fas fa-arrow-circle-right" />
+              </a>
+            </div>
+          </div>
+          <div className="col-lg-3 col-6">
+            <div className="small-box bg-success">
+              <div className="inner">
+                <h3>
+                  53<sup style={{ fontSize: 20 }}>%</sup>
+                </h3>
+                <p>Today's Trip</p>
+              </div>
+              <div className="icon">
+                <i className="ion ion-stats-bars" />
+              </div>
+              <a href="#" className="small-box-footer">
+                More info <i className="fas fa-arrow-circle-right" />
+              </a>
+            </div>
+          </div>
+          <div className="col-lg-3 col-6">
+            <div className="small-box bg-warning">
+              <div className="inner">
+                <h3>44</h3>
+                <p>Adhoc Lane Pending</p>
+              </div>
+              <div className="icon">
+                <i className="ion ion-person-add" />
+              </div>
+              <a href="#" className="small-box-footer">
+                More info <i className="fas fa-arrow-circle-right" />
+              </a>
+            </div>
+          </div>
+          <div className="col-lg-3 col-6">
+            <div className="small-box bg-danger">
+              <div className="inner">
+                <h3>65</h3>
+                <p>Adhoc Vendor Pending</p>
               </div>
               <div className="icon">
                 <i className="ion ion-pie-graph" />

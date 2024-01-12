@@ -39,11 +39,19 @@ const RouteNames = {
    tripCreate: '/trip/adhoc/add',
    tripView: '/trip/adhoc/view',
 
+   // Contractual 
+   contractualView: '/trip/contractual/view',
+
    // adhoc 
    CreateAdhoc: '/adhoc-lane/add',
+   adhocView: '/adhoc-lane/view',
 
    // Manager add vendor 
-   managerAddVendor: '/adhoc-vendor/add'
+   managerAddVendor: '/adhoc-vendor/add',
+   managerVendorView: '/adhoc-vendor/view',
+
+   // common pages 
+   profileView:'/profile'
 
 }
 export default RouteNames
