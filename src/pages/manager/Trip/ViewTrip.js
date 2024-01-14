@@ -39,7 +39,7 @@ const ViewTrip = () => {
          driverName: "Driver 1",
          customerName: "Customer 1",
          action: (
-            <button className="btn btn-info mx-2" onClick={()=>navigate('/trip/trip-details')}>
+            <button className="btn btn-info mx-2" onClick={()=>navigate('/trip/adhoc/add')}>
                View
             </button>
          ),
@@ -55,7 +55,7 @@ const ViewTrip = () => {
          driverName: "Driver 2",
          customerName: "Customer 2",
          action: (
-            <button className="btn btn-info mx-2" onClick={()=>navigate('/trip/trip-details')}>
+            <button className="btn btn-info mx-2" onClick={()=>navigate('/trip/adhoc/add')}>
                View
             </button>
          ),
@@ -72,7 +72,7 @@ const ViewTrip = () => {
          driverName: "Driver 3",
          customerName: "Customer 3",
          action: (
-            <button className="btn btn-info mx-2" onClick={()=>navigate('/trip/trip-details')}>
+            <button className="btn btn-info mx-2" onClick={()=>navigate('/trip/adhoc/add')}>
                View
             </button>
          ),
@@ -89,7 +89,7 @@ const ViewTrip = () => {
          driverName: "Driver 4",
          customerName: "Customer 4",
          action: (
-            <button className="btn btn-info mx-2" onClick={()=>navigate('/trip/trip-details')}>
+            <button className="btn btn-info mx-2" onClick={()=>navigate('/trip/adhoc/add')}>
                View
             </button>
          ),
@@ -106,7 +106,7 @@ const ViewTrip = () => {
          driverName: "Driver 5",
          customerName: "Customer 5",
          action: (
-            <button className="btn btn-info mx-2" onClick={()=>navigate('/trip/trip-details')}>
+            <button className="btn btn-info mx-2" onClick={()=>navigate('/trip/adhoc/add')}>
                View
             </button>
          ),
@@ -123,7 +123,7 @@ const ViewTrip = () => {
          driverName: "Driver 6",
          customerName: "Customer 6",
          action: (
-            <button className="btn btn-info mx-2" onClick={()=>navigate('/trip/trip-details')}>
+            <button className="btn btn-info mx-2" onClick={()=>navigate('/trip/adhoc/add')}>
                View
             </button>
          ),
@@ -182,6 +182,7 @@ const ViewTrip = () => {
       <div>
          <BodyHeader title="Trip List" />
 
+         <div className='px-3'>
          <div className=" d-flex justify-content-between">
             <h3>User's List</h3>
             <CustomInput inputType="text" placeholder="Search..." id="search" onChange={(e) => handleFilter(e)} />
@@ -197,6 +198,7 @@ const ViewTrip = () => {
             borderColor="#000000"
             customStyles={customStyles}>
          </DataTable>
+         </div>
       </div>
    )
 }

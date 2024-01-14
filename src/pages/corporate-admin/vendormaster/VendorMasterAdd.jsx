@@ -2,12 +2,9 @@ import React, { useState } from "react";
 import CustomInput from "../../../components/common/CustomInput/CustomInput";
 import CustomFileUpload from "../../../components/common/CustomFileUpload/CustomFileUpload";
 import MultipleFileUpload from "../../../components/common/MultipleFileUpload/MultipleFileUpload";
-import MultiSelectDropdown from "../../../components/common/MultiSelectDropdown/MultiSelectDropdown";
 import BodyHeader from "../../../components/common/CommonBodyHeader";
 import CustomDatePicker from "../../../components/common/CustomDatePicker/CustomDatePicker";
 import CustomDropdown from "../../../components/common/CustomDropdown/CustomDropdown";
-import { useFormik } from "formik";
-import { event } from "jquery";
 import { locationData } from "../../../constansts/LocalData";
 import CustomTextArea from "../../../components/common/CustomTextArea/CustomTextArea";
 const VendorMasterAdd = () => {

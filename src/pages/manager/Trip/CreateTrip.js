@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BodyHeader from "../../../components/common/CommonBodyHeader";
 import CustomInput from "../../../components/common/CustomInput/CustomInput";
-import CustomDatePicker from "../../../components/common/CustomDatePicker/CustomDatePicker";
+import CustomDateTimePicker from "../../../components/common/CustomDateTimePicker/CustomDateTimePicker";
 import CustomTextArea from "../../../components/common/CustomTextArea/CustomTextArea";
 import CustomDropdown from "../../../components/common/CustomDropdown/CustomDropdown";
 import selectOptionData, {
@@ -11,41 +11,58 @@ import selectOptionData, {
 import CustomFileUpload from "../../../components/common/CustomFileUpload/CustomFileUpload";
 import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { useFormik } from "formik";
+import CustomDatePicker from "../../../components/common/CustomDatePicker/CustomDatePicker";
 
 const CreateTrip = () => {
-  const formik =  useFormik({
-   initialValues: {
-    vehicleNo: ['123654'],
-    driverName: "",
-    driverNo: "",
-    customerName: ['Ram'],
-    laneName: "",
-    origin: "",
-    destination: "",
-    EWayBillNo: "",
-    EWayExpiry: "",
-    invoiceNo: "123654",
-    invoiceDate: "11/01/2024",
-    invoiceValue: "",
-    customer_eisakuLRNo: "",
-    vehicleReportedDate: "",
-    vehicleDispatchDate: "",
-    actualDiselProvided: "",
-    actualAdblueProvided: "",
-    actualDriverTripAdvance: "",
-    actualMiscExpence: "",
-    actualMiscExpenceRemarks: "",
-    destinationReportedTime: "",
-    destinationUnloadingTime: "",
-    pod: "",
-    podRemarks: "",
-  }});
- 
+  
+  const setFormData = {
+    customerName: ["test"]
+  }
+  const formik = useFormik({
+    initialValues: {
+      vehicleNo: ["123654"],
+      driverName: ["test"],
+      driverNo: ["6413"],
+      customerName: setFormData.customerName,
+      laneName: "lane one",
+      origin: "fgg",
+      destination: "test",
+      EWayBillNo: "#123654",
+      EWayExpiry: "25-05-2025",
+      invoiceNo: "123654",
+      invoiceDate: "11-01-2024",
+      invoiceValue: "258",
+      customer_eisakuLRNo: "EISAKU123",
+      vehicleReportedDate: "",
+      vehicleDispatchDate: "",
+      actualDiselProvided: "500",
+      actualAdblueProvided: "400",
+      actualDriverTripAdvance: "856200",
+      actualMiscExpence: "500",
+      actualMiscExpenceRemarks: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+      destinationReportedTime: "",
+      destinationUnloadingTime: "",
+      pod: "",
+      podRemarks: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    },
+    onSubmit: (values) => {
+      // Handle form submission
+      // console.log(values);
+    },
+  });
+  console.log(formik.values.customerName, '555');
+
+  // useEffect(() => {
+  //   const defaultValue = 'test'; // Set your default value here
+  //   formik.setFieldValue('customerName', defaultValue);
+  //   console.log(defaultValue);
+  // }, [formik.setFieldValue]);
+
   const [isDisabled, setIsdisabled] = useState(true);
   return (
     <div>
       <BodyHeader title="Add Trip Request" />
-      <form className="p-5 shadow-lg">
+      <form className="p-5 shadow-lg" onSubmit={formik.handleSubmit}>
         <div className="card card-primary">
           <div className="card-header">
             <h3 className="card-title">General Details</h3>
@@ -57,9 +74,10 @@ const CreateTrip = () => {
                 <CustomDropdown
                   disabled={isDisabled}
                   optionData={selectOptionData}
-                  values={formik.values.destination}
+                  name="customerName"
+                  values={formik.values.customerName}
                   onChange={(value) => {
-                    formik.setFieldValue("destination", value);
+                    formik.setFieldValue("customerName", value);
                   }}
                 />
               </div>
@@ -69,8 +87,10 @@ const CreateTrip = () => {
                   disabled={isDisabled}
                   optionData={selectOptionData}
                   name="vehicleNo"
-                  value={formik.values.vehicleNo}
-                  
+                  values={formik.values.vehicleNo}
+                  onChange={(value) => {
+                    formik.setFieldValue("vehicleNo", value);
+                  }}
                 />
               </div>
 
@@ -79,8 +99,11 @@ const CreateTrip = () => {
                 <CustomDropdown
                   disabled={isDisabled}
                   optionData={selectOptionData}
-                  value={formik.values.driverName}
-                  
+                  values={formik.values.driverName}
+                  name="driverName"
+                  onChange={(value) => {
+                    formik.setFieldValue("driverName", value);
+                  }}
                 />
               </div>
 
@@ -90,8 +113,11 @@ const CreateTrip = () => {
                 <CustomDropdown
                   disabled={isDisabled}
                   optionData={selectOptionData}
-                  value={formik.values.driverNo}
-                  
+                  values={formik.values.driverNo}
+                  name="driverNo"
+                  onChange={(value) => {
+                    formik.setFieldValue("driverNo", value);
+                  }}
                 />
               </div>
             </div>
@@ -111,7 +137,10 @@ const CreateTrip = () => {
                   disabled={isDisabled}
                   optionData={selectOptionData}
                   value={formik.values.laneName}
-                  
+                  name="laneName"
+                  onChange={(value) => {
+                    formik.setFieldValue("laneName", value);
+                  }}
                 />
               </div>
 
@@ -121,7 +150,10 @@ const CreateTrip = () => {
                   disabled={isDisabled}
                   optionData={originData}
                   value={formik.values.origin}
-                  
+                  name="origin"
+                  onChange={(value) => {
+                    formik.setFieldValue("origin", value);
+                  }}
                 />
               </div>
 
@@ -131,7 +163,10 @@ const CreateTrip = () => {
                   disabled={isDisabled}
                   optionData={destinationData}
                   value={formik.values.destination}
-                  
+                  name="destination"
+                  onChange={(value) => {
+                    formik.setFieldValue("destination", value);
+                  }}
                 />
               </div>
 
@@ -142,19 +177,23 @@ const CreateTrip = () => {
                   id="EWayBillNo"
                   placeholder="E waybill No."
                   value={formik.values.EWayBillNo}
-                  onChange={() => {}}
                   name="EWayBillNo"
+                  onChange={(value) => {
+                    formik.setFieldValue("EWayBillNo", value);
+                  }}
                 />
               </div>
 
               <div className="col-lg-4">
-                <CustomDatePicker
+                <CustomDateTimePicker
                   disabled={isDisabled}
                   label="E Waybill Expiry Date & Time"
                   name="EWayExpiry"
                   id="EWayExpiry"
                   value={formik.values.EWayExpiry}
-                  onChange={() => {}}
+                  onChange={(value) => {
+                    formik.setFieldValue("EWayExpiry", value);
+                  }}
                 />
               </div>
 
@@ -165,8 +204,10 @@ const CreateTrip = () => {
                   id="invoiceNo"
                   placeholder="Invoice No."
                   value={formik.values.invoiceNo}
-                  onChange={() => {}}
                   name="invoiceNo"
+                  onChange={(value) => {
+                    formik.setFieldValue("invoiceNo", value);
+                  }}
                 />
               </div>
 
@@ -177,7 +218,9 @@ const CreateTrip = () => {
                   name="invoiceDate"
                   id="invoiceDate"
                   value={formik.values.invoiceDate}
-                  onChange={() => {}}
+                  onChange={(value) => {
+                    formik.setFieldValue("invoiceDate", value);
+                  }}
                 />
               </div>
 
@@ -188,8 +231,10 @@ const CreateTrip = () => {
                   id="invoiceValue"
                   placeholder="Invoice value"
                   value={formik.values.invoiceValue}
-                  onChange={() => {}}
                   name="invoiceValue"
+                  onChange={(value) => {
+                    formik.setFieldValue("invoiceValue", value);
+                  }}
                 />
               </div>
 
@@ -200,30 +245,36 @@ const CreateTrip = () => {
                   id="customer_eisakuLRNo"
                   placeholder="Customer / Eisaku LR no."
                   value={formik.values.customer_eisakuLRNo}
-                  onChange={() => {}}
                   name="customer_eisakuLRNo"
+                  onChange={(value) => {
+                    formik.setFieldValue("invoiceValue", value);
+                  }}
                 />
               </div>
 
               <div className="col-lg-4">
-                <CustomDatePicker
+                <CustomDateTimePicker
                   disabled={isDisabled}
                   label="Vehicle reported date time"
                   name="vehicleReportedDate"
                   id="vehicleReportedDate"
                   value={formik.values.vehicleReportedDate}
-                  onChange={() => {}}
+                  onChange={(value) => {
+                    formik.setFieldValue("vehicleReportedDate", value);
+                  }}
                 />
               </div>
 
               <div className="col-lg-4">
-                <CustomDatePicker
+                <CustomDateTimePicker
                   disabled={isDisabled}
                   label="Vehicle disptch date time"
                   name="vehicleDispatchDate"
                   id="vehicleDispatchDate"
                   value={formik.values.vehicleDispatchDate}
-                  onChange={() => {}}
+                  onChange={(value) => {
+                    formik.setFieldValue("vehicleDispatchDate", value);
+                  }}
                 />
               </div>
 
@@ -235,7 +286,9 @@ const CreateTrip = () => {
                   inputType="number"
                   placeholder="E.g 100 Ltr."
                   value={formik.values.actualDiselProvided}
-                  onChange={() => {}}
+                  onChange={(value) => {
+                    formik.setFieldValue("actualDiselProvided", value);
+                  }}
                   name="actualDiselProvided"
                 />
               </div>
@@ -248,7 +301,9 @@ const CreateTrip = () => {
                   inputType="number"
                   placeholder="E.g 100 Ltr."
                   value={formik.values.actualAdblueProvided}
-                  onChange={() => {}}
+                  onChange={(value) => {
+                    formik.setFieldValue("actualAdblueProvided", value);
+                  }}
                   name="actualAdblueProvided"
                 />
               </div>
@@ -261,7 +316,9 @@ const CreateTrip = () => {
                   placeholder="E.g 100Rs"
                   inputType="number"
                   value={formik.values.actualDriverTripAdvance}
-                  onChange={() => {}}
+                  onChange={(value) => {
+                    formik.setFieldValue("actualDriverTripAdvance", value);
+                  }}
                   name="actualDriverTripAdvance"
                 />
               </div>
@@ -274,7 +331,9 @@ const CreateTrip = () => {
                   placeholder="E.g 100Rs"
                   inputType="number"
                   value={formik.values.actualMiscExpence}
-                  onChange={() => {}}
+                  onChange={(value) => {
+                    formik.setFieldValue("actualMiscExpence", value);
+                  }}
                   name="actualMiscExpence"
                 />
               </div>
@@ -287,29 +346,35 @@ const CreateTrip = () => {
                   name="actualMiscExpenceRemarks"
                   placeholder="Remarks"
                   value={formik.values.actualMiscExpenceRemarks}
-                  onChange={() => {}}
+                  onChange={(value) => {
+                    formik.setFieldValue("actualMiscExpenceRemarks", value);
+                  }}
                 />
               </div>
 
               <div className="col-lg-4">
-                <CustomDatePicker
+                <CustomDateTimePicker
                   disabled={isDisabled}
                   label="Destination Reported date time"
                   name="destinationReportedTime"
                   id="destinationReportedTime"
                   value={formik.values.destinationReportedTime}
-                  onChange={() => {}}
+                  onChange={(value) => {
+                    formik.setFieldValue("destinationReportedTime", value);
+                  }}
                 />
               </div>
 
               <div className="col-lg-4">
-                <CustomDatePicker
+                <CustomDateTimePicker
                   disabled={isDisabled}
                   label="Destination Unloading date time"
                   name="destinationUnloadingTime"
                   id="destinationUnloadingTime"
                   value={formik.values.destinationUnloadingTime}
-                  onChange={() => {}}
+                  onChange={(value) => {
+                    formik.setFieldValue("destinationUnloadingTime", value);
+                  }}
                 />
               </div>
 
@@ -319,7 +384,9 @@ const CreateTrip = () => {
                   label="DL Document"
                   id="pod"
                   name="pod"
-                  onChange={() => {}}
+                  onChange={(value) => {
+                    formik.setFieldValue("pod", value);
+                  }}
                 />
               </div>
 
@@ -331,7 +398,9 @@ const CreateTrip = () => {
                   name="podRemarks"
                   placeholder="Remarks"
                   value={formik.values.podRemarks}
-                  onChange={() => {}}
+                  onChange={(value) => {
+                    formik.setFieldValue("podRemarks", value);
+                  }}
                 />
               </div>
             </div>

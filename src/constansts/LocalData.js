@@ -153,14 +153,10 @@ export const SideBarDropdownData = [
         subMenuName: "Contractual",
         url: "/contractual",
         subDropdownList: [
-          // {
-          //    subMenuName: "Add",
-          //    url: "/add",
-          // },
-          // {
-          //    subMenuName: "View",
-          //    url: "/view",
-          // }
+          {
+             subMenuName: "view",
+             url: "/view",
+          }
         ],
       },
       {
