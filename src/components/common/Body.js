@@ -11,7 +11,7 @@ const Body = () => {
           <div className="col-lg-3 col-6">
             <div className="small-box bg-info">
               <div className="inner">
-                <h3>150</h3>
+                <h3>160</h3>
                 <p>New Orders</p>
               </div>
               <div className="icon">
