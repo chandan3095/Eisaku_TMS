@@ -5,10 +5,13 @@ import { Form, FormikProvider, useFormik } from 'formik'
 import * as yup from "yup";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loginUserAsync } from '../../redux/features/loginSlice';
 
 const Login = () => {
    // const [isLoading, setIsLoading]= useState(false)
-   const navigate= useNavigate()
+   const navigate = useNavigate()
+   const dispatch = useDispatch()
 
    const loginSchema = yup.object().shape({
       mobileNo: yup
@@ -25,20 +28,25 @@ const Login = () => {
    })
 
    const handleLogin = async (formData) => {
-      console.log(formData);
-      try{
-         const response = await axios.post('https://webideasolution.in/eisakutms/public/api/login',{
-            mobile: formData.mobileNo,
-            password: formData.password
-         })
-         if (response.data.statusCode === 200){
-            navigate('/')
-         }else{
-            console.log("ERROR LOGIN");
-         }
-      }catch(error){
-         console.log(error);
+      const data = {
+         mobile: formData.mobileNo, password: formData.password
       }
+      console.log(data);
+      dispatch(loginUserAsync(data))
+      // try{
+      //    const response = await axios.post('https://webideasolution.in/eisakutms/public/api/login',{
+      //       mobile: formData.mobileNo,
+      //       password: formData.password
+      //    })
+      //    if (response.data.statusCode === 200){
+      //       navigate('/')
+      //    }else{
+      //       console.log("ERROR LOGIN");
+      //    }
+      //    console.log(response);
+      // }catch(error){
+      //    console.log(error);
+      // }
    }
 
    const formik = useFormik({
@@ -67,7 +75,7 @@ const Login = () => {
                            <CustomInput label="Mobile Number"
                               name="mobileNo"
                               id="#mobileNo"
-                              inputType="number"
+                              inputType="text"
                               placeholder="E.g 9876541235"
                               {...getFieldProps('mobileNo')}
                               errors={errors.mobileNo && touched.mobileNo}

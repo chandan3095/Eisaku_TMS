@@ -54,8 +54,6 @@ function FleetMasterAddForm() {
       }
    }
 
-
-
    const handleFormData = () => {
       dispatch(addDriveMaster(formData))
       navigate('/driver-master/view')

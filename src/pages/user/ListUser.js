@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
 import DataTable from 'react-data-table-component'
 import CustomInput from '../../components/common/CustomInput/CustomInput'
+import { useSelector } from 'react-redux'
+
 
 function ListUser() {
+   const userFormData = useSelector((state) => state.userListData)
+   const [userRecords, setUserRecords] = useState(userFormData)
+   console.log(userRecords);
    const columns = [
       {
          name: 'User Name',

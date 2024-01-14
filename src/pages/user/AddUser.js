@@ -6,11 +6,15 @@ import { Form, Formik, FormikProvider, useFormik } from "formik";
 import * as yup from "yup";
 import {Roles} from '../../constansts/LocalData'
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addUser } from "../../reducer/AddUserReducer";
 
 function AddUser() {
    const [selectedOption, setSelectedOption] = useState(null);
    const [showManagerDropdown, setShowManagerDropdown] = useState(null);
    const [showManagementDropdown, setShowManagementDropdown] = useState(null);
+
+   const dispatch = useDispatch()
 
    const handleRolesDropdown = (value) => {
       setSelectedOption(value);
@@ -47,7 +51,8 @@ function AddUser() {
                Authorization: `Bearer 40|zQkwidEJm3RoSHb45HavI72UGViwXl8gsz4Fepgc395e36f3`
             }
          })
-         console.log(response);
+         dispatch(addUser(response.data))
+         console.log("Data dispatched to Redux store:", response.data);
       } catch (error) {
          console.log(error);
       }
