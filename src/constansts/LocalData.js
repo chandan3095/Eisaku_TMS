@@ -1,8 +1,10 @@
+import { ROLES } from "./Roles";
 export const SideBarDropdownData = [
   {
     menuName: "Fleet Master",
     url: "/fleet-master",
     icon: "fa-truck-moving",
+    roles: [ROLES.corporateAdmin],
     dropdownList: [
       {
         subMenuName: "Add",
@@ -20,6 +22,7 @@ export const SideBarDropdownData = [
     menuName: "Driver Master",
     url: "/driver-master",
     icon: "fa-universal-access",
+     roles: [ROLES.corporateAdmin],
     dropdownList: [
       {
         subMenuName: "Add",
@@ -37,6 +40,7 @@ export const SideBarDropdownData = [
     menuName: "Helper  Master",
     url: "/helper-master",
     icon: "fa-hands-helping",
+     roles: [ROLES.corporateAdmin],
     dropdownList: [
       {
         subMenuName: "Add",
@@ -54,6 +58,7 @@ export const SideBarDropdownData = [
     menuName: "Customer Master",
     url: "/customer-master",
     icon: "fa-user",
+     roles: [ROLES.corporateAdmin],
     dropdownList: [
       {
         subMenuName: "Add",
@@ -71,6 +76,7 @@ export const SideBarDropdownData = [
     menuName: "Vendor  Master",
     url: "/vendor-master",
     icon: "fa-tree",
+     roles: [ROLES.corporateAdmin],
     dropdownList: [
       {
         subMenuName: "Add",
@@ -88,6 +94,7 @@ export const SideBarDropdownData = [
     menuName: "Lane Master",
     url: "/lane-master",
     icon: "fa-arrows-alt-h",
+     roles: [ROLES.corporateAdmin],
     dropdownList: [
       {
         subMenuName: "Add",
@@ -105,6 +112,7 @@ export const SideBarDropdownData = [
     menuName: "Contractor Master",
     url: "/contractor-master",
     icon: "fa-address-card",
+     roles: [ROLES.corporateAdmin],
     dropdownList: [
       {
         subMenuName: "Add",
@@ -122,6 +130,7 @@ export const SideBarDropdownData = [
     menuName: "Location Master",
     url: "/location-master",
     icon: "fa-map-marker-alt",
+     roles: [ROLES.corporateAdmin],
     dropdownList: [
       {
         subMenuName: "Add",
@@ -148,6 +157,7 @@ export const SideBarDropdownData = [
     menuName: "Trip",
     url: "/trip",
     icon: "fa-truck",
+    roles: [ROLES.corporateAdmin, ROLES.supervisor, ROLES.manager],
     dropdownList: [
       {
         subMenuName: "Contractual",
@@ -179,6 +189,7 @@ export const SideBarDropdownData = [
     menuName: "Create Adhoc Lane",
     url: "/adhoc-lane",
     icon: "fa-map-marker-alt",
+    roles: [ROLES.management, ROLES.manager],
     dropdownList: [
       {
         subMenuName: "Add",
@@ -196,6 +207,7 @@ export const SideBarDropdownData = [
     menuName: "Create Adhoc Vendor",
     url: "/adhoc-vendor",
     icon: "fa-map-marker-alt",
+    roles: [ROLES.management, ROLES.manager],
     dropdownList: [
       {
         subMenuName: "Add",
