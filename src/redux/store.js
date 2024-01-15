@@ -1,18 +1,30 @@
 
 // store.js
 
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import addUserReducer from "../reducer/AddUserReducer";
 import loginReducer from "../redux/features/loginSlice";
 import DriveMasterReducer from "../reducer/DriveMasterReducer";
+import storage from "redux-persist/lib/storage";
+import {persistStore,persistReducer} from "redux-persist";
+import listUserSlice from "./features/listUserSlice";
 
+const rootReducer = combineReducers({
+   addUser: addUserReducer,
+   listUser: listUserSlice,
+   loginReducer: loginReducer,
+   driveMaster: DriveMasterReducer,
+})
+
+const persistConfig= {
+   key: 'root',
+   storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 const store = configureStore({
-   reducer: {
-      addUser: addUserReducer,
-      loginReducer: loginReducer,
-      driveMaster: DriveMasterReducer,
-      // Add other reducers here if you have more slices of state
-   },
+   reducer: persistedReducer
 });
+export const persistor = persistStore(store)
 
 export default store;

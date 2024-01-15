@@ -9,7 +9,6 @@ const CommonSideBar = () => {
    const role_name = useSelector((state)=> state?.loginReducer?.user?.data?.user?.role_name)
    console.log(role_name);
 
-
   return (
     <aside className="main-sidebar sidebar-dark-primary elevation-4">
       <a href="index3.html" className="brand-link">
@@ -33,7 +32,7 @@ const CommonSideBar = () => {
           <div className="info">
             <a href="#" className="d-block">
               Manager Name <br />
-                    <span style={{fontSize: '.8rem'}}> {role_name}</span>
+               <span style={{fontSize: '.8rem'}}> {role_name}</span>
             </a>
           </div>
         </div>
@@ -60,14 +59,7 @@ const CommonSideBar = () => {
                 <p>Dashboard</p>
               </a>
             </li>
-            {/* <li className="nav-item">
-                <a href="pages/widgets.html" className="nav-link">
-                   <i className="nav-icon fas fa-th" />
-                   <p>
-                      Widgets
-                   </p>
-                </a>
-             </li> */}
+
             {SideBarDropdownData.filter(item=> item.roles.includes(role_id)).map((item, index) => {
               return (
                //  console.log(item.dropdownList),
