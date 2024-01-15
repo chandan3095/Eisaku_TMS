@@ -7,8 +7,123 @@ import CustomDropdown from "../../../../components/common/CustomDropdown/CustomD
 import CustomMonthYear from "../../../../components/common/CustomMonthYear/CustomMonthYear";
 import BodyHeader from "../../../../components/common/CommonBodyHeader";
 import selectOptionData, {
-  fleetMasterFormTitle, makeData, tonnageData, vehicleCategoryData,
+  fleetMasterFormTitle,
+  makeData,
+  tonnageData,
+  vehicleCategoryData,
 } from "../../../../constansts/LocalData";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+
+const validationSchema = Yup.object().shape({
+  vehicleNo: Yup.string().required("vehicle No is required"),
+  chasisNo: Yup.string().required("Chasis No is required"),
+  engineNo: Yup.string().required("Engine No is required"),
+  vehicleOwnerName: Yup.string().required("Vehicle Owner Name is required"),
+  dimension: Yup.string().required("Dimension is required"),
+  fastagBankName: Yup.string().required("Fastag Bank Name is required"),
+  vehicleCategory: Yup.string().required("Vehicle Category is required"),
+  tonnage: Yup.number()
+    .required("Tonnage is required")
+    .positive("Tonnage must be a positive number"),
+  registrationCertificate: Yup.string().required(
+    "Registration Certificate is required"
+  ),
+  insuranceExpiryDate: Yup.date()
+    .required("Insurance Expiry Date is required")
+    .min(new Date(), "Must be a future date"),
+  insuranceAmount: Yup.number()
+    .required("Insurance Amount is required")
+    .min(0, "Must be a positive value"),
+  insuranceCertificate: Yup.string().required(
+    "Insurance Certificate is required"
+  ),
+  fitnessExpiryDate: Yup.date()
+    .required("Fitness Expiry Date is required")
+    .min(new Date(), "Must be a future date"),
+  fitnessAmount: Yup.number()
+    .required("Fitness Amount is required")
+    .min(0, "Must be a positive value"),
+  fitnessCertificate: Yup.string().required("Fitness Certificate is required"),
+  localPermitExpiryDate: Yup.date()
+    .required("Local Permit Expiry Date is required")
+    .min(new Date(), "Must be a future date"),
+  localPermitAmount: Yup.number()
+    .required("Local Permit Amount is required")
+    .min(0, "Must be a positive value"),
+  localPermitDocument: Yup.string().required(
+    "Local Permit Document is required"
+  ),
+  nationalPermitExpiryDate: Yup.date()
+    .required("National Permit Expiry Date is required")
+    .min(new Date(), "Must be a future date"),
+  nationalPermitAmount: Yup.number()
+    .required("National Permit Amount is required")
+    .min(0, "Must be a positive value"),
+  nationalPermitDocument: Yup.string().required(
+    "National Permit Document is required"
+  ),
+  pucExpiryDate: Yup.date()
+    .required("PUC Expiry Date is required")
+    .min(new Date(), "Must be a future date"),
+  pucAmount: Yup.number()
+    .required("PUC Amount is required")
+    .min(0, "Must be a positive value"),
+  pucDocument: Yup.string().required("PUC Document is required"),
+  mvTax: Yup.number()
+    .required("MV Tax is required")
+    .min(0, "Must be a positive value"),
+  mvTaxExpiryDate: Yup.date()
+    .required("MV Tax Expiry Date is required")
+    .min(new Date(), "Must be a future date"),
+  mvTaxAmount: Yup.number()
+    .required("MV Tax Amount is required")
+    .min(0, "Must be a positive value"),
+  gpsProviderName: Yup.string().required("GPS Provider Name is required"),
+  gpsAmount: Yup.number()
+    .required("GPS Amount is required")
+    .min(0, "Must be a positive value"),
+  fabricatorName: Yup.string().required("Fabricator Name is required"),
+  fabricatorLocation: Yup.string().required("Fabricator Location is required"),
+});
+const initialValues = {
+  initialValues: {
+    vehicleNo: "",
+    chasisNo: "",
+    engineNo: "",
+    vehicleOwnerName: "",
+    dimension: "",
+    fastagBankName: "",
+    vehicleCategory: "",
+    tonnage: "",
+    fuelType: "Petrol",
+    make: "",
+    model: "",
+    registrationCertificate: "",
+    insuranceExpiryDate: "",
+    insuranceAmount: 0,
+    insuranceCertificate: "",
+    fitnessExpiryDate: "",
+    fitnessAmount: 0,
+    fitnessCertificate: "",
+    localPermitExpiryDate: "",
+    localPermitAmount: 0,
+    localPermitDocument: "",
+    nationalPermitExpiryDate: "",
+    nationalPermitAmount: 0,
+    nationalPermitDocument: "",
+    pucExpiryDate: "",
+    pucAmount: 0,
+    pucDocument: "",
+    mvTax: 0,
+    mvTaxExpiryDate: "",
+    mvTaxAmount: 0,
+    gpsProviderName: "",
+    gpsAmount: 0,
+    fabricatorName: "",
+    fabricatorLocation: "",
+  },
+};
 
 function FleetMasterAddForm() {
   const [fuelType, setFuelType] = useState("Diesel");
@@ -23,7 +138,7 @@ function FleetMasterAddForm() {
   const [maintenanceBudget, setMaintenanceBudget] = useState([{}]);
 
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
-console.log(currentTabIndex, 'currentTabIndex');
+  // console.log(currentTabIndex, "currentTabIndex");
   const maintenanceBudgetAdd = () => {
     setMaintenanceBudget([
       ...maintenanceBudget,
@@ -56,10 +171,19 @@ console.log(currentTabIndex, 'currentTabIndex');
     setTyreAdd(updatedTyreAdd);
   };
 
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: (values) => {
+      // Handle form submission logic here
+      console.log(values);
+    },
+  });
+
   return (
     <div>
       <BodyHeader title="Add Fleet Master" />
-      <form className="">
+      {/* <form className="" onSubmit={formik.handleSubmit}> */}
         <div className="row">
           <div className="col-lg-12">
             <div className="card card-primary card-outline card-tabs">
@@ -86,14 +210,18 @@ console.log(currentTabIndex, 'currentTabIndex');
                     <li className="nav-item">
                       <a
                         className={
-                          item.value === currentTabIndex ? "nav-link active" : "nav-link"
+                          item.value === currentTabIndex
+                            ? "nav-link active"
+                            : "nav-link"
                         }
                         id={`${item.value}`}
                         data-toggle="pill"
                         href={`#${item.value}`}
                         role="tab"
                         aria-controls={`${item.value}`}
-                        aria-selected={item.value === currentTabIndex ? "true" : "false"}
+                        aria-selected={
+                          item.value === currentTabIndex ? "true" : "false"
+                        }
                         onClick={() => setCurrentTabIndex(item.value)}
                       >
                         {item.label}
@@ -123,6 +251,10 @@ console.log(currentTabIndex, 'currentTabIndex');
                               label="Vehicle No"
                               id="vehicleNo"
                               placeholder="Enter Vehicle No"
+                              onChange={formik.handleChange}
+                              value={formik.values.vehicleNo}
+                              errors={formik.errors.vehicleNo}
+                              message={formik.errors.vehicleNo}
                             />
                           </div>
                           <div className="col-lg-4">
@@ -131,6 +263,10 @@ console.log(currentTabIndex, 'currentTabIndex');
                               label="Chasis No"
                               id="chasisNo"
                               placeholder="Enter Chasis No"
+                              onChange={formik.handleChange}
+                              value={formik.values.chasisNo}
+                              errors={formik.errors.chasisNo}
+                              message={formik.errors.chasisNo}
                             />
                           </div>
                           <div className="col-lg-4">
@@ -139,22 +275,30 @@ console.log(currentTabIndex, 'currentTabIndex');
                               label="Engine No"
                               id="engineNo"
                               placeholder="Enter Engine No"
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              value={formik.values.engineNo}
+                              errors={formik.errors.engineNo}
+                              message={formik.errors.engineNo}
                             />
                           </div>
 
                           <div className="col-lg-4">
                             <CustomInput
                               label="Vehicle owner name"
-                              id="#vehicleOwner"
+                              id="vehicleOwner"
                               placeholder="Enter vehicle owner name"
+                              onChange={formik.handleChange}
+                              value={formik.values.vehicleOwnerName}
+                              errors={formik.errors.vehicleOwnerName}
+                              message={formik.errors.vehicleOwnerName}
                             />
                           </div>
 
                           {/* Dimension  */}
                           <div className="col-lg-4">
-                            
                             <label className="text-bold">
-                            Dimension(L B H (ft))
+                              Dimension(L B H (ft))
                             </label>
                             <CustomDropdown
                               optionData={selectOptionData}
@@ -166,8 +310,12 @@ console.log(currentTabIndex, 'currentTabIndex');
                           <div className="col-lg-4">
                             <CustomInput
                               label="Fastag bank name"
-                              id="fitnessAmount"
+                              id="fastagBankName"
                               placeholder="Enter Fastag bank name"
+                              onChange={formik.handleChange}
+                              value={formik.values.fastagBankName}
+                              errors={formik.errors.fastagBankName}
+                              message={formik.errors.fastagBankName}
                             />
                           </div>
                           {/* Vehicle Category Sec */}
@@ -745,7 +893,6 @@ console.log(currentTabIndex, 'currentTabIndex');
                                   <i className="fas fa-plus"></i> Add More
                                 </button>
                               </div>
-                              
                             </div>
                           </div>
                         </div>
@@ -754,34 +901,37 @@ console.log(currentTabIndex, 'currentTabIndex');
                   )}
                 </div>
                 <div className="col-12 mt-3 text-right">
-                {
-                    currentTabIndex !==0 &&                  
-                  <button className="btn btn-secondary px-4 py-3 mr-3" type="button" onClick={()=>setCurrentTabIndex(currentTabIndex - 1)}>
-                    <h6 className="mb-0 text-uppercase">Back</h6>
-                  </button>
-                  }
-                  {currentTabIndex !== fleetMasterFormTitle.length - 1 &&
-                  <button className="btn btn-primary px-4 py-3" type="button" onClick={()=>setCurrentTabIndex(currentTabIndex + 1)}>
-                    <h6 className="mb-0 text-uppercase">Next</h6>
-                  </button>
-                  }
-                  
-                  {currentTabIndex === fleetMasterFormTitle.length - 1 &&
-                  <button
-                    className="btn btn-danger ml-3 px-4 py-3"
-                    type="button"
-                  >
-                    <h6 className="mb-0 text-uppercase">Submit</h6>
-                  </button>
-}
+                  {currentTabIndex !== 0 && (
+                    <button
+                      className="btn btn-secondary px-4 py-3 mr-3"
+                      type="button"
+                      onClick={() => setCurrentTabIndex(currentTabIndex - 1)}
+                    >
+                      <h6 className="mb-0 text-uppercase">Back</h6>
+                    </button>
+                  )}
+                  {currentTabIndex !== fleetMasterFormTitle.length - 1 && (
+                    <button
+                      className="btn btn-primary px-4 py-3"
+                      type="button"
+                      onClick={() => setCurrentTabIndex(currentTabIndex + 1)}
+                    >
+                      <h6 className="mb-0 text-uppercase">Next</h6>
+                    </button>
+                  )}
+
+                  {currentTabIndex === fleetMasterFormTitle.length - 1 && (
+                    <button className="btn btn-danger px-4 py-3" type="button" onClick={formik.handleSubmit}>
+                      <h6 className="mb-0 text-uppercase">Submit</h6>
+                    </button>
+                  )}
                 </div>
-                
               </div>
               {/* /.card */}
             </div>
           </div>
         </div>
-      </form>
+      {/* </form> */}
     </div>
   );
 }
