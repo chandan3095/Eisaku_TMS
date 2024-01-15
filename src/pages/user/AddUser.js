@@ -8,6 +8,7 @@ import {Roles} from '../../constansts/LocalData'
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../reducer/AddUserReducer";
+import { addUserAsync } from "../../redux/features/addUserSlice";
 
 function AddUser() {
    const [selectedOption, setSelectedOption] = useState(null);
@@ -35,27 +36,17 @@ function AddUser() {
 
    const handleUser=async(formData)=>{
       console.log(formData);
-
-      try {
-         const response = await axios.post(`${BASE_URL}user/add`, {
-            name: formData.userName,
-            mobile: formData.mobile,
-            password: 'Eisaku@123',
-            c_password: 'Eisaku@123',
-            role_id: formData.userType,
-            model_id: '1',
-            action_id: '1',
-            address: "kolkata, kolkata",
-         },{
-            headers: {
-               Authorization: `Bearer 40|zQkwidEJm3RoSHb45HavI72UGViwXl8gsz4Fepgc395e36f3`
-            }
-         })
-         dispatch(addUser(response.data))
-         console.log("Data dispatched to Redux store:", response.data);
-      } catch (error) {
-         console.log(error);
+      const data={
+         name: formData.userName,
+         mobile: formData.mobile,
+         role_id: formData.userType,
+         password: formData.password,
+         c_password: formData.c_password,
+         address: formData.address,
+         model_id: formData.model_id,
+         action_id: formData.action_id
       }
+      dispatch(addUserAsync(data))
    }  
 
    const userAddSchema = yup.object().shape({
@@ -78,7 +69,7 @@ function AddUser() {
       initialValues: {
          userName: "",
          mobile: "",
-         userType: "",
+         userType: ""
       },
       validationSchema: userAddSchema,
       onSubmit: handleUser

@@ -3,7 +3,6 @@ import CustomInput from '../../components/common/CustomInput/CustomInput'
 import logo from '../../assets/images/logo.png'
 import { Form, FormikProvider, useFormik } from 'formik'
 import * as yup from "yup";
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginUserAsync } from '../../redux/features/loginSlice';
@@ -33,20 +32,11 @@ const Login = () => {
       }
       console.log(data);
       dispatch(loginUserAsync(data))
-      // try{
-      //    const response = await axios.post('https://webideasolution.in/eisakutms/public/api/login',{
-      //       mobile: formData.mobileNo,
-      //       password: formData.password
-      //    })
-      //    if (response.data.statusCode === 200){
-      //       navigate('/')
-      //    }else{
-      //       console.log("ERROR LOGIN");
-      //    }
-      //    console.log(response);
-      // }catch(error){
-      //    console.log(error);
-      // }
+      .then((data)=>{
+         data?.payload?.statusCode === 200 && navigate('/')
+      })
+      .catch((error)=> console.log(error))
+      
    }
 
    const formik = useFormik({

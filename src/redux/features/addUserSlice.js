@@ -1,7 +1,7 @@
 // authSlice.js
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { handleLoginApiCall } from "../../Api/api";
+import { handleAdduserApiCall } from "../../Api/api";
 
 // Define an initial state for the slice
 const initialState = {
@@ -11,25 +11,18 @@ const initialState = {
 };
 
 // Create an async thunk for the login action
-export const loginUserAsync = createAsyncThunk(
-   "auth/login",
-   async (data,thunkAPI) => {
+export const addUserAsync = createAsyncThunk(
+   "auth/add/add-user",
+   async (data) => {
       try {
          console.log(data);
-         const response = await handleLoginApiCall(data);
-         console.log({response});
-         if(response.data.statusCode === 200){
-             localStorage.setItem('token', JSON.stringify(response.data.token))
-            return response.data;
-         }else{
-           return thunkAPI.rejectWithValue('Error')
-            // throw 'Error'
-         }
+         const response = await handleAdduserApiCall(data);
+         console.log({ response });
+         return response.data;
       } catch (error) {
          // You can customize the error handling here
          console.log(error);
-         return thunkAPI.rejectWithValue(error.response.data)
-         // throw error.response.data;
+         throw error.response.data;
       }
    }
 );
@@ -43,16 +36,16 @@ const authSlice = createSlice({
    },
    extraReducers: (builder) => {
       builder
-         .addCase(loginUserAsync.pending, (state) => {
+         .addCase(addUserAsync.pending, (state) => {
             state.loading = true;
             state.error = null;
          })
-         .addCase(loginUserAsync.fulfilled, (state, action) => {
+         .addCase(addUserAsync.fulfilled, (state, action) => {
             state.loading = false;
             state.user = action.payload;
             console.log(action.payload);
          })
-         .addCase(loginUserAsync.rejected, (state, action) => {
+         .addCase(addUserAsync.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload; // error message from the rejectWithValue call
          });

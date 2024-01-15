@@ -8,14 +8,11 @@ import Header from "./components/common/Header";
 import BodyHeader from "./components/common/CommonBodyHeader";
 import Login from "./pages/login/Login";
 import store from "./redux/store";
-import { Provider } from "react-redux";
 
 function App() {
    return (
       <>
-      <Provider store={store}>
          <AppRoutes /> 
-      </Provider>
          {/* <div className="wrapper">
             <Header />
             <CommonSideBar />
