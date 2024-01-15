@@ -2,8 +2,14 @@ import React from "react";
 import SideBarDropdown from "./SideBarDropdown";
 import { SideBarDropdownData } from "../../../constansts/LocalData";
 import Logo from "../../../assets/images/logo.png";
+import { useSelector } from "react-redux";
 
 const CommonSideBar = () => {
+   const role_id = useSelector((state) => state?.loginReducer?.user?.data?.user?.role_id);
+   const role_name = useSelector((state)=> state?.loginReducer?.user?.data?.user?.role_name)
+   console.log(role_name);
+
+
   return (
     <aside className="main-sidebar sidebar-dark-primary elevation-4">
       <a href="index3.html" className="brand-link">
@@ -26,7 +32,8 @@ const CommonSideBar = () => {
           </div>
           <div className="info">
             <a href="#" className="d-block">
-              Corporate Admin
+              Manager Name <br />
+                    <span style={{fontSize: '.8rem'}}> {role_name}</span>
             </a>
           </div>
         </div>
@@ -61,7 +68,7 @@ const CommonSideBar = () => {
                    </p>
                 </a>
              </li> */}
-            {SideBarDropdownData.map((item, index) => {
+            {SideBarDropdownData.filter(item=> item.roles.includes(role_id)).map((item, index) => {
               return (
                //  console.log(item.dropdownList),
                 <SideBarDropdown
