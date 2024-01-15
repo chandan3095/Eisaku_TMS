@@ -2,7 +2,7 @@ import React from "react";
 
 const CustomDatePicker = (props) => {
   const{label, id, onChange, name,value, disabled} = props 
-  console.log(value);
+  // console.log(value);
   return (
     <div className="form-group">
       {label && <label className="text-capitalize">{label}</label>} 
