@@ -38,7 +38,7 @@ function AppRoutes() {
          {/* for dashboard  */}
          <Route path="/" element={<Skeleton />} >
             <Route
-               path=""
+               path="dashboard"
                element={<HomeDashboard />}
             />
             
