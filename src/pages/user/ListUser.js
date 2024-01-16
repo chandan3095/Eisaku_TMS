@@ -133,8 +133,8 @@ function ListUser() {
    };
 
    useEffect(() => {
-      // dispatch(listUserAsync())
-   }, []);
+      dispatch(listUserAsync())
+   }, [dispatch]);
 
    const [records, setRecords] = useState(data)
 
