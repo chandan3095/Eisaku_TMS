@@ -83,7 +83,7 @@ const Login = () => {
                         </div>
                      </div>
                      <div className="mb-3 d-flex justify-content-center">
-                        <button type="button" className="btn btn-info btn-lg px-5" onClick={handleSubmit}>Submit</button>
+                        <button type="submit" className="btn btn-info btn-lg px-5" onClick={handleSubmit}>Submit</button>
                      </div>
                   </Form>
                </FormikProvider>

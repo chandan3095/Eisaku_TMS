@@ -42,8 +42,8 @@ const listUserSlice = createSlice({
          })
          .addCase(listUserAsync.fulfilled, (state, action) => {
             state.loading = false;
-            state.user = action.payload;
-            console.log(action.payload);
+            state.user = action.payload.res;
+            console.log(action.payload.res);
          })
          .addCase(listUserAsync.rejected, (state, action) => {
             state.loading = false;

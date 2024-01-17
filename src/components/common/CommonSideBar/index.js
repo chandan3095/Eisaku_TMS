@@ -3,8 +3,10 @@ import SideBarDropdown from "./SideBarDropdown";
 import { SideBarDropdownData } from "../../../constansts/LocalData";
 import Logo from "../../../assets/images/logo.png";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const CommonSideBar = () => {
+   const navigate=useNavigate()
    const role_id = useSelector((state) => state?.loginReducer?.user?.data?.user?.role_id);
    const role_name = useSelector((state)=> state?.loginReducer?.user?.data?.user?.role_name)
    console.log(role_name);
@@ -26,12 +28,12 @@ const CommonSideBar = () => {
             <img
               src="dist/img/user2-160x160.jpg"
               className="img-circle elevation-2"
-              alt="User Image"
+              alt="Image"
             />
           </div>
           <div className="info">
             <a href="#" className="d-block">
-              Manager Name <br />
+              User Name <br />
                <span style={{fontSize: '.8rem'}}> {role_name}</span>
             </a>
           </div>
@@ -54,7 +56,7 @@ const CommonSideBar = () => {
             data-accordion="false"
           >
             <li className="nav-item menu-open">
-              <a href="./index.html" className="nav-link active">
+                    <a className="nav-link" onClick={()=>navigate('/')}>
                 <i className="nav-icon fas fa-tachometer-alt" />
                 <p>Dashboard</p>
               </a>

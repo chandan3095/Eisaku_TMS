@@ -1,53 +1,46 @@
 import React, { useState } from "react";
 import CustomInput from "../../components/common/CustomInput/CustomInput";
 import CustomDropdown from "../../components/common/CustomDropdown/CustomDropdown";
-import MultiSelectDropdown from "../../components/common/MultiSelectDropdown/MultiSelectDropdown";
 import { Form, Formik, FormikProvider, useFormik } from "formik";
 import * as yup from "yup";
-import {Roles} from '../../constansts/LocalData'
-import axios from "axios";
-import { useDispatch } from "react-redux";
-import { addUser } from "../../reducer/AddUserReducer";
+import { Roles } from '../../constansts/LocalData'
+import { useDispatch, useSelector } from "react-redux";
 import { addUserAsync } from "../../redux/features/addUserSlice";
+import axios from "axios";
+import { ROLES } from "../../constansts/Roles";
+import { useNavigate } from "react-router-dom";
 
 function AddUser() {
    const [selectedOption, setSelectedOption] = useState(null);
-   const [showManagerDropdown, setShowManagerDropdown] = useState(null);
-   const [showManagementDropdown, setShowManagementDropdown] = useState(null);
+   const [parentId, setParentId] = useState()
+   console.log('API Response',parentId);
 
    const dispatch = useDispatch()
+   console.log({ selectedOption });
+   const navigate = useNavigate()
 
-   const handleRolesDropdown = (value) => {
-      setSelectedOption(value);
-      console.log(value);
-      setShowManagerDropdown(null);
-      setShowManagementDropdown(null);
-   };
+   // const parent_ids = useSelector((state) => state?.getParentIdAsync)
+   // console.log(parent_ids);
 
-   const handlemanagerDropdown = (value) => {
-      setShowManagerDropdown(value);
-   };
 
-   const handlemanagementDropdown = (value) => {
-      setShowManagementDropdown(value);
-   };
+   // const BASE_URL = 'https://webideasolution.in/eisakutms/public/api/'
 
-   const BASE_URL = 'https://webideasolution.in/eisakutms/public/api/'
-
-   const handleUser=async(formData)=>{
+   const handleUser = async (formData) => {
       console.log(formData);
-      const data={
+      const data = {
          name: formData.userName,
          mobile: formData.mobile,
          role_id: formData.userType,
          password: formData.password,
          c_password: formData.c_password,
-         address: formData.address,
-         model_id: formData.model_id,
-         action_id: formData.action_id
+         address: "kolkata, kolkata",
+         model_id: 1,
+         action_id: 1,
+         parent_user_ids: [formData.parent_user_ids]
       }
       dispatch(addUserAsync(data))
-   }  
+      navigate('/user/user-List')
+   }
 
    const userAddSchema = yup.object().shape({
       userName: yup
@@ -69,13 +62,37 @@ function AddUser() {
       initialValues: {
          userName: "",
          mobile: "",
-         userType: ""
+         userType: "",
+         password: "",
+         c_password: "",
+         parentId: ""
       },
       validationSchema: userAddSchema,
       onSubmit: handleUser
    });
 
    const { errors, touched, getFieldProps, handleSubmit, resetForm } = formik;
+   const parentApiUrl = (slug) => `https://webideasolution.in/eisakutms/public/api/user/parent_user/${slug}?model_id=1&action_id=3`;
+
+
+   const handleParentId = (e) => {
+      formik.setFieldValue("userType", e[0].value)
+      setSelectedOption(e[0].value)
+      const slug = e[0].value === ROLES.manager ? 'manager' : e[0].value === ROLES.supervisor ? 'supervisor' : null;
+      console.log('slug', slug);
+      axios.get(parentApiUrl(slug),{
+         headers: {
+            Authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`
+         }
+      })
+         .then(response => {
+            console.log('API Response in axios:', response.data.res);
+            setParentId(response.data.res)
+         })
+         .catch(error => {
+            console.error('API Error:', error);
+         });
+   }
 
    return (
       <>
@@ -122,52 +139,54 @@ function AddUser() {
                               <CustomDropdown
                                  selected=""
                                  name="userType"
-                                 //  optionData={[
-                                 //    "Select",
-                                 //    "supervisor",
-                                 //    "corporate admin",
-                                 //    "management",
-                                 //    "manager",
-                                 //  ]}
                                  optionData={Roles}
                                  {...getFieldProps("userType")}
-                                 onChange={(e)=>{
-                                    console.log(e)
-                                    formik.setFieldValue("userType",e[0].value)
-                                 }}
+                                 onChange={(e) => handleParentId (e)}
                               />
                            </div>
 
+                           {(selectedOption === 2 || selectedOption === 4) && (
+                              <div className="form-group">
+                                 <label className="text-bold">{selectedOption === 1 ? 'Management' : 'Manager'}</label>
+                                 <CustomDropdown
+                                    selected=""
+                                    name="parentId"
+                                    optionData={parentId?.map?.((key,index)=>{
+                                       return {
+                                          label: key.name,
+                                          value: key.id
+                                       }
+                                    })}
+                                    {...getFieldProps("parentId")}
+                                    onChange={(e) => {
+                                       formik.setFieldValue("parentId", e[0].value)
+                                       setSelectedOption(e[0].value)
+                                    }}
+                                 />
+                              </div>
+                           )}
+
                            <div className="form-group">
-                              <CustomInput label="Default Password"
+                              <CustomInput label="Password"
                                  name="password"
                                  id="#password"
                                  inputType="text"
                                  placeholder="********"
-                                 value={"Eisaku@123"}
-                                 disabled={true} />
+                                 {...getFieldProps("password")}
+                                 errors={errors.password && touched.password}
+                              />
                            </div>
 
-                           {/* {getFieldProps("userType").value === "supervisor" && (
-                              <div className="form-group">
-                                 <label className="text-bold">Reporting Manager</label>
-                                 <MultiSelectDropdown />
-                              </div>
-                           )}
-
-                           {getFieldProps("userType").value === "manager" && (
-                              <div className="form-group">
-                                 <label className="text-bold">Management</label>
-                                 <MultiSelectDropdown
-                                    options={[
-                                       { value: "1", label: "Management1" },
-                                       { value: "2", label: "Management2" },
-                                       { value: "3", label: "Management3" },
-                                       { value: "4", label: "Management4" },
-                                    ]}
-                                 />
-                              </div>
-                           )} */}
+                           <div className="form-group">
+                              <CustomInput label="Confirm Password"
+                                 name="c_password"
+                                 id="#c_password"
+                                 inputType="text"
+                                 placeholder="********"
+                                 {...getFieldProps("c_password")}
+                                 errors={errors.c_password && touched.c_password}
+                              />
+                           </div>
                         </div>
                         <div className="card-footer d-flex justify-content-center">
                            <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
