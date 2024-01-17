@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import DataTable from 'react-data-table-component'
 import CustomInput from '../../components/common/CustomInput/CustomInput'
-import { useSelector } from 'react-redux'
-
+import { useDispatch,useSelector } from 'react-redux'
+import listUserAsync from '../../redux/features/listUserSlice';
 
 function ListUser() {
-   const userFormData = useSelector((state) => state.userListData)
+   const dispatch= useDispatch();
+   const userFormData = useSelector((state) => state.listUser)
    const [userRecords, setUserRecords] = useState(userFormData)
-   console.log(userRecords);
+   console.log(userFormData);
    const columns = [
       {
          name: 'User Name',
@@ -47,7 +48,7 @@ function ListUser() {
          </>
       },
       {
-         id: 1,
+         id: 2,
          userName: 'aaa',
          mobileNo: '9874563214',
          userType: 'manager',
@@ -58,7 +59,7 @@ function ListUser() {
          </>
       },
       {
-         id: 2,
+         id: 3,
          userName: 'bbb',
          mobileNo: '9874563214',
          userType: 'admin',
@@ -69,7 +70,7 @@ function ListUser() {
          </>
       },
       {
-         id: 3,
+         id: 4,
          userName: 'ccc',
          mobileNo: '9874563214',
          userType: 'user',
@@ -80,7 +81,7 @@ function ListUser() {
          </>
       },
       {
-         id: 4,
+         id: 5,
          userName: 'ddd',
          mobileNo: '9874563214',
          userType: 'management',
@@ -91,7 +92,7 @@ function ListUser() {
          </>
       },
       {
-         id: 5,
+         id: 6,
          userName: 'eee',
          mobileNo: '9874563214',
          userType: 'manager',
@@ -131,6 +132,10 @@ function ListUser() {
       },
    };
 
+   useEffect(() => {
+      // dispatch(listUserAsync())
+   }, []);
+
    const [records, setRecords] = useState(data)
 
    const handleFilter = (e) => {
@@ -159,7 +164,6 @@ function ListUser() {
             responsive
             striped={true}
             borderColor="#000000"
-            selectableRows
             customStyles={customStyles}>
          </DataTable>
       </div>

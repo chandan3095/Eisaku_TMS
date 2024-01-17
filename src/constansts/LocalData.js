@@ -1,5 +1,23 @@
 import { ROLES } from "./Roles";
 export const SideBarDropdownData = [
+   {
+      menuName: "User",
+      url: "/user",
+      icon: "fa-user",
+      roles: [ROLES.corporateAdmin, ROLES.manager],
+      dropdownList: [
+         {
+            subMenuName: "Add",
+            url: "/add-user",
+            subDropdownList :[]
+         },
+         {
+            subMenuName: "List",
+            url: "/user-List",
+            subDropdownList: []
+         },
+      ]
+   },
   {
     menuName: "Fleet Master",
     url: "/fleet-master",

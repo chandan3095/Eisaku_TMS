@@ -26,6 +26,10 @@ const validationSchema = Yup.object().shape({
   tonnage: Yup.number()
     .required("Tonnage is required")
     .positive("Tonnage must be a positive number"),
+  make: Yup.string().required("Make Name is required"),
+  model: Yup.date()
+  .required("Model Month Year is required")
+  .min(new Date(), "Must be a future date"),
   registrationCertificate: Yup.string().required(
     "Registration Certificate is required"
   ),
@@ -69,7 +73,7 @@ const validationSchema = Yup.object().shape({
   pucAmount: Yup.number()
     .required("PUC Amount is required")
     .min(0, "Must be a positive value"),
-  pucDocument: Yup.string().required("PUC Document is required"),
+  pucDocument: Yup.mixed().required('File is required'),
   mvTax: Yup.number()
     .required("MV Tax is required")
     .min(0, "Must be a positive value"),
@@ -79,12 +83,11 @@ const validationSchema = Yup.object().shape({
   mvTaxAmount: Yup.number()
     .required("MV Tax Amount is required")
     .min(0, "Must be a positive value"),
-  gpsProviderName: Yup.string().required("GPS Provider Name is required"),
+  gpsProviderName: Yup.string(),
   gpsAmount: Yup.number()
-    .required("GPS Amount is required")
     .min(0, "Must be a positive value"),
-  fabricatorName: Yup.string().required("Fabricator Name is required"),
-  fabricatorLocation: Yup.string().required("Fabricator Location is required"),
+  fabricatorName: Yup.string(),
+  fabricatorLocation: Yup.string(),
 });
 const initialValues = {
   initialValues: {
@@ -92,7 +95,7 @@ const initialValues = {
     chasisNo: "",
     engineNo: "",
     vehicleOwnerName: "",
-    dimension: "",
+    dimension: [],
     fastagBankName: "",
     vehicleCategory: "",
     tonnage: "",
@@ -102,7 +105,7 @@ const initialValues = {
     registrationCertificate: "",
     insuranceExpiryDate: "",
     insuranceAmount: 0,
-    insuranceCertificate: "",
+    insuranceCertificate: null,
     fitnessExpiryDate: "",
     fitnessAmount: 0,
     fitnessCertificate: "",
@@ -122,9 +125,68 @@ const initialValues = {
     gpsAmount: 0,
     fabricatorName: "",
     fabricatorLocation: "",
+
+    // EMI 
+    emiStartDate: "",
+    emiEndDate: "",
+    emiAmount: "",
+    emiCertificate: "",
+    financedBy: "",
+
+    // Service Record 
+    odometerReading: "",
+    serviceDate: "",
+    serviceAmount: "",
+    serviceStationName: "",
+    serviceBill: "",
+
+    // tyre 
+    tyreType: "",
+    tyreChangeDate: "",
+    tyreAmount: "",
+    tyreStationName: "",
+    tyreBillUpload: "",
   },
 };
-
+// const emiDetailsValues = {
+//   initialValues: {
+//     // EMI 
+//     emiStartDate: "",
+//     emiEndDate: "",
+//     emiAmount: "",
+//     emiCertificate: "",
+//     financedBy: "",
+//   },
+// };
+// const serviceRecordValues = {
+//   initialValues: {
+//     // Service Record 
+//     odometerReading: "",
+//     serviceDate: "",
+//     serviceAmount: "",
+//     serviceStationName: "",
+//     serviceBill: "",
+//   },
+// };
+// const tyreDetailsValues = {
+//   initialValues: {
+//     // tyre 
+//     odometerReading: "",
+//     tyreType: "",
+//     tyreChangeDate: "",
+//     tyreAmount: "",
+//     tyreStationName: "",
+//     tyreBillUpload: "",
+//   },
+// };
+// const monthlyMaintenanceBudgetValues = {
+//   initialValues: {
+//     // Monthly Maintenance Budget 
+//     maintenanceBudgetAmount: "",
+//     maintenanceBudgetToDate: "",
+//     maintenanceBudgetFromDate: "",
+//   },
+// };
 function FleetMasterAddForm() {
   const [fuelType, setFuelType] = useState("Diesel");
   const [tyreType, setTyreType] = useState("");
@@ -179,7 +241,10 @@ function FleetMasterAddForm() {
       console.log(values);
     },
   });
-
+  const handleFileChange = (event, setFieldValue) => {
+    const file = event.currentTarget.files[0];
+    setFieldValue('file', file);
+  };
   return (
     <div>
       <BodyHeader title="Add Fleet Master" />
@@ -192,20 +257,7 @@ function FleetMasterAddForm() {
                   className="nav nav-tabs"
                   id="custom-tabs-three-tab"
                   role="tablist"
-                >
-                  {/* <li className="nav-item">
-                    <a
-                      className="nav-link active"
-                      id="custom-tabs-three-home-tab"
-                      data-toggle="pill"
-                      href="#custom-tabs-three-home"
-                      role="tab"
-                      aria-controls="custom-tabs-three-home"
-                      aria-selected="true"
-                    >
-                      Vehicle Details
-                    </a>
-                  </li> */}
+                >                  
                   {fleetMasterFormTitle.map((item) => (
                     <li className="nav-item">
                       <a
@@ -302,7 +354,12 @@ function FleetMasterAddForm() {
                             </label>
                             <CustomDropdown
                               optionData={selectOptionData}
-                              value={vehicleSelect}
+                              value={formik.values.dimension}
+                              onChange={(value) => {
+                                formik.setFieldValue("dimension", value);
+                              }}
+                              errors={formik.errors.dimension}
+                              message={formik.errors.dimension}
                             />
                           </div>
 
@@ -325,10 +382,12 @@ function FleetMasterAddForm() {
                             </label>
                             <CustomDropdown
                               optionData={vehicleCategoryData}
-                              value={vehicleSelect}
-                              // onChange={(event) =>
-                              //   setVehicleCategory(event.target.value)
-                              // }
+                              value={formik.values.vehicleCategory}
+                              onChange={(value) => {
+                                formik.setFieldValue("vehicleCategory", value);
+                              }}
+                              errors={formik.errors.vehicleCategory}
+                              message={formik.errors.vehicleCategory}
                             />
                           </div>
                           {/* Tonnage Sec */}
@@ -336,8 +395,12 @@ function FleetMasterAddForm() {
                             <label className="text-bold">Tonnage(T)</label>
                             <CustomDropdown
                               optionData={tonnageData}
-                              value={tonnageSelect}
-                              // onChange={(event) => setTonnage(event.target.value)}
+                              value={formik.values.tonnage}
+                              onChange={(value) => {
+                                formik.setFieldValue("tonnage", value);
+                              }}
+                              errors={formik.errors.tonnage}
+                              message={formik.errors.tonnage}
                             />
                           </div>
 
@@ -371,26 +434,41 @@ function FleetMasterAddForm() {
                             <label className="text-bold">Make</label>
                             <CustomDropdown
                               optionData={makeData}
-                              value={makeSelect}
-                              // onChange={(event) => setMake(event.target.value)}
+                              value={formik.values.make}
+                              onChange={(value) => {
+                                formik.setFieldValue("make", value);
+                              }}
+                              errors={formik.errors.make}
+                              message={formik.errors.make}
                             />
                           </div>
                           <div className="col-lg-4">
                             <label className="text-bold">
-                              Model(Month Year)
+                              Model (Month Year)
                             </label>
-                            <CustomMonthYear />
+                            <CustomMonthYear 
+                            values={formik.values.model}
+                            errors={formik.errors.model}
+                            message={formik.errors.model}/>
                           </div>
                           <div className="col-lg-4">
                             <label className="text-bold">
                               Registration Certificate{" "}
                             </label>
-                            <CustomFileUpload />
+                            <CustomFileUpload 
+                            accept=".pdf, .doc, .docx"
+                            onChange={(event) => handleFileChange(event)}
+                            errors={formik.errors.insuranceAmount}
+                            message={formik.errors.insuranceAmount}
+                            />
                           </div>
                           <div className="col-lg-4">
                             <CustomDatePicker
                               label="Insurance Expiry Date"
                               placeholder="Enter Insurance Expiry Date"
+                              values={formik.values.insuranceExpiryDate}
+                              errors={formik.errors.insuranceExpiryDate}
+                              message={formik.errors.insuranceExpiryDate}
                             />
                           </div>
                           <div className="col-lg-4">
@@ -398,18 +476,29 @@ function FleetMasterAddForm() {
                               label="Insurance Amount"
                               id="fitnessAmount"
                               placeholder="Enter Insurance Amount"
+                              onChange={formik.handleChange}
+                              value={formik.values.insuranceAmount}
+                              errors={formik.errors.insuranceAmount}
+                              message={formik.errors.insuranceAmount}
                             />
                           </div>
                           <div className="col-lg-4">
                             <label className="text-bold">
                               Insurance Certificate
                             </label>
-                            <CustomFileUpload />
+                            <CustomFileUpload 
+                            accept=".pdf, .doc, .docx"
+                            onChange={(event) => handleFileChange(event)}
+                            errors={formik.errors.insuranceAmount}
+                            message={formik.errors.insuranceAmount}/>
                           </div>
                           <div className="col-lg-4">
                             <CustomDatePicker
                               label="Fitness Expiry Date"
                               placeholder="Enter Fitness Expiry Date"
+                              values={formik.values.fitnessExpiryDate}
+                              errors={formik.errors.fitnessExpiryDate}
+                              message={formik.errors.fitnessExpiryDate}
                             />
                           </div>
                           <div className="col-lg-4">
@@ -417,18 +506,31 @@ function FleetMasterAddForm() {
                               label="Fitness Amount"
                               id="fitnessAmount"
                               placeholder="Enter Fitness Amount"
+                              onChange={formik.handleChange}
+                              value={formik.values.fitnessAmount}
+                              errors={formik.errors.fitnessAmount}
+                              message={formik.errors.fitnessAmount}
                             />
                           </div>
                           <div className="col-lg-4">
                             <label className="text-bold">
                               Fitness Certificate
                             </label>
-                            <CustomFileUpload />
+                            <CustomFileUpload 
+                            accept=".pdf, .doc, .docx"
+                            onChange={(event) => handleFileChange(event)}
+                            errors={formik.errors.insuranceAmount}
+                            message={formik.errors.insuranceAmount}
+                            />
                           </div>
                           <div className="col-lg-4">
                             <CustomDatePicker
                               label="Local Permit Expiry Date"
                               placeholder="Enter Local Permit Expiry Date"
+                              name="localPermitExpiryDate"
+                              values={formik.values.localPermitExpiryDate}
+                              errors={formik.errors.localPermitExpiryDate}
+                              message={formik.errors.localPermitExpiryDate}
                             />
                           </div>
                           <div className="col-lg-4">
@@ -436,18 +538,30 @@ function FleetMasterAddForm() {
                               label="Local Permit Amount"
                               id="fitnessAmount"
                               placeholder="Enter Local Permit Amount"
+                              onChange={formik.handleChange}
+                              value={formik.values.fitnessAmount}
+                              errors={formik.errors.fitnessAmount}
+                              message={formik.errors.fitnessAmount}
                             />
                           </div>
                           <div className="col-lg-4">
                             <label className="text-bold">
                               Local Permit Document
                             </label>
-                            <CustomFileUpload />
+                            <CustomFileUpload 
+                            accept=".pdf, .doc, .docx"
+                            onChange={(event) => handleFileChange(event)}
+                            errors={formik.errors.insuranceAmount}
+                            message={formik.errors.insuranceAmount}
+                            />
                           </div>
                           <div className="col-lg-4">
                             <CustomDatePicker
                               label="National Permit Expiry Date"
                               placeholder="Enter National Permit Expiry Date"
+                              values={formik.values.nationalPermitExpiryDate}
+                              errors={formik.errors.nationalPermitExpiryDate}
+                              message={formik.errors.nationalPermitExpiryDate}
                             />
                           </div>
                           <div className="col-lg-4">
@@ -455,18 +569,30 @@ function FleetMasterAddForm() {
                               label="National Permit Amount"
                               id="fitnessAmount"
                               placeholder="Enter National Permit Amount"
+                              onChange={formik.handleChange}
+                              value={formik.values.nationalPermitAmount}
+                              errors={formik.errors.nationalPermitAmount}
+                              message={formik.errors.nationalPermitAmount}
                             />
                           </div>
                           <div className="col-lg-4">
                             <label className="text-bold">
                               National Permit Document
                             </label>
-                            <CustomFileUpload />
+                            <CustomFileUpload 
+                            accept=".pdf, .doc, .docx"
+                            onChange={(event) => handleFileChange(event)}
+                            errors={formik.errors.insuranceAmount}
+                            message={formik.errors.insuranceAmount}
+                            />
                           </div>
                           <div className="col-lg-4">
                             <CustomDatePicker
                               label="PUC Expiry Date"
                               placeholder="Enter PUC Expiry Date"
+                              values={formik.values.pucExpiryDate}
+                              errors={formik.errors.pucExpiryDate}
+                              message={formik.errors.pucExpiryDate}
                             />
                           </div>
                           <div className="col-lg-4">
@@ -474,20 +600,37 @@ function FleetMasterAddForm() {
                               label="PUC Amount"
                               id="fitnessAmount"
                               placeholder="Enter PUC Amount"
+                              onChange={formik.handleChange}
+                              value={formik.values.pucAmount}
+                              errors={formik.errors.pucAmount}
+                              message={formik.errors.pucAmount}
                             />
                           </div>
                           <div className="col-lg-4">
                             <label className="text-bold">PUC Document</label>
-                            <CustomFileUpload />
+                            <CustomFileUpload 
+                            accept=".pdf, .doc, .docx"
+                            onChange={(event) => handleFileChange(event)}
+                            errors={formik.errors.insuranceAmount}
+                            message={formik.errors.insuranceAmount}
+                            />
                           </div>
                           <div className="col-lg-4">
                             <label className="text-bold">MV Tax</label>
-                            <CustomFileUpload />
+                            <CustomFileUpload 
+                            accept=".pdf, .doc, .docx"
+                            onChange={(event) => handleFileChange(event)}
+                            errors={formik.errors.insuranceAmount}
+                            message={formik.errors.insuranceAmount}
+                            />
                           </div>
                           <div className="col-lg-4">
                             <CustomDatePicker
                               label="MV Tax Expiry Date"
                               placeholder="Enter MV Tax Expiry Date"
+                              values={formik.values.mvTaxExpiryDate}
+                              errors={formik.errors.mvTaxExpiryDate}
+                              message={formik.errors.mvTaxExpiryDate}
                             />
                           </div>
                           <div className="col-lg-4">
@@ -495,13 +638,21 @@ function FleetMasterAddForm() {
                               label="MV Tax Amount"
                               id="fitnessAmount"
                               placeholder="Enter MV Tax Amount"
+                              onChange={formik.handleChange}
+                              value={formik.values.mvTaxAmount}
+                              errors={formik.errors.mvTaxAmount}
+                              message={formik.errors.mvTaxAmount}
                             />
                           </div>
                           <div className="col-lg-6">
                             <CustomInput
                               label="GPS Provider Name"
-                              id="#gpsProvider"
+                              id="gpsProvider"
                               placeholder="Enter GPS Provider Name"
+                              onChange={formik.handleChange}
+                              value={formik.values.gpsProviderName}
+                              errors={formik.errors.gpsProviderName}
+                              message={formik.errors.gpsProviderName}
                             />
                           </div>
                           <div className="col-lg-6">
@@ -509,6 +660,10 @@ function FleetMasterAddForm() {
                               label="GPS Amount"
                               id="fitnessAmount"
                               placeholder="Enter GPS Amount"
+                              onChange={formik.handleChange}
+                              value={formik.values.gpsAmount}
+                              errors={formik.errors.gpsAmount}
+                              message={formik.errors.gpsAmount}
                             />
                           </div>
                           <div className="col-lg-6">
@@ -516,6 +671,10 @@ function FleetMasterAddForm() {
                               label="Fabricator Name"
                               id="fitnessAmount"
                               placeholder="Enter Fabricator Name"
+                              onChange={formik.handleChange}
+                              value={formik.values.fabricatorName}
+                              errors={formik.errors.fabricatorName}
+                              message={formik.errors.fabricatorName}
                             />
                           </div>
 
@@ -524,22 +683,12 @@ function FleetMasterAddForm() {
                               label="Fabricator Location"
                               id="fitnessAmount"
                               placeholder="Enter Fabricator Location"
+                              onChange={formik.handleChange}
+                              value={formik.values.fabricatorLocation}
+                              errors={formik.errors.fabricatorLocation}
+                              message={formik.errors.fabricatorLocation}
                             />
-                          </div>
-                          {/* <div className="col-12 mt-3 text-right">
-                            <button
-                              className="btn btn-primary px-4 py-3"
-                              type="submit"
-                            >
-                              <h6 className="mb-0 text-uppercase">Next</h6>
-                            </button>
-                            <button
-                              className="btn btn-danger ml-3 px-4 py-3"
-                              type="submit"
-                            >
-                              <h6 className="mb-0 text-uppercase">reset</h6>
-                            </button>
-                          </div> */}
+                          </div>                          
                         </div>
                       </div>
                     </div>
@@ -582,7 +731,12 @@ function FleetMasterAddForm() {
                               <label className="text-bold">
                                 EMI Certificate{" "}
                               </label>
-                              <CustomFileUpload />
+                              <CustomFileUpload 
+                              accept=".pdf, .doc, .docx"
+                            onChange={(event) => handleFileChange(event)}
+                            errors={formik.errors.insuranceAmount}
+                            message={formik.errors.insuranceAmount}
+                            />
                             </div>
                             {/* Financed by sec */}
                             <div className="col-lg-4">
@@ -591,21 +745,7 @@ function FleetMasterAddForm() {
                                 id="#financedBy"
                                 placeholder="Enter name"
                               />
-                            </div>
-                            {/* <div className="col-12 mt-3 text-right">
-                            <button
-                              className="btn btn-primary px-4 py-3"
-                              type="submit"
-                            >
-                              <h6 className="mb-0 text-uppercase">Next</h6>
-                            </button>
-                            <button
-                              className="btn btn-danger ml-3 px-4 py-3"
-                              type="submit"
-                            >
-                              <h6 className="mb-0 text-uppercase">reset</h6>
-                            </button>
-                          </div> */}
+                            </div>                            
                           </div>
                         </div>
                       </div>
@@ -637,7 +777,7 @@ function FleetMasterAddForm() {
                                 <div className="col-lg-4">
                                   <CustomInput
                                     label="Odometer reading"
-                                    id="odometerReeding"
+                                    id="odometerReading"
                                     placeholder="Enter Amount"
                                   />
                                 </div>
@@ -666,7 +806,12 @@ function FleetMasterAddForm() {
                                   <label className="text-bold">
                                     Service bill upload
                                   </label>
-                                  <CustomFileUpload />
+                                  <CustomFileUpload 
+                                  accept=".pdf, .doc, .docx"
+                            onChange={(event) => handleFileChange(event)}
+                            errors={formik.errors.insuranceAmount}
+                            message={formik.errors.insuranceAmount}
+                            />
                                 </div>
                                 <div className="col-lg-4 mt-4 pt-2">
                                   {index > 0 && (
@@ -692,20 +837,7 @@ function FleetMasterAddForm() {
                                   <i className="fas fa-plus"></i> Add More
                                 </button>
                               </div>
-                              {/* <div className="col-6 mt-3 text-right">
-                              <button
-                                className="btn btn-primary px-4 py-3"
-                                type="submit"
-                              >
-                                <h6 className="mb-0 text-uppercase">Next</h6>
-                              </button>
-                              <button
-                                className="btn btn-danger ml-3 px-4 py-3"
-                                type="submit"
-                              >
-                                <h6 className="mb-0 text-uppercase">reset</h6>
-                              </button>
-                            </div> */}
+                              
                             </div>
                           </div>
                         </div>
@@ -777,7 +909,12 @@ function FleetMasterAddForm() {
                                   <label className="text-bold">
                                     Bill upload along with warranty status
                                   </label>
-                                  <CustomFileUpload />
+                                  <CustomFileUpload 
+                                  accept=".pdf, .doc, .docx"
+                            onChange={(event) => handleFileChange(event)}
+                            errors={formik.errors.insuranceAmount}
+                            message={formik.errors.insuranceAmount}
+                            />
                                 </div>
                                 <div className="col-12 mb-3">
                                   {index > 0 && (

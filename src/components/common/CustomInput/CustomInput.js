@@ -14,7 +14,7 @@ const CustomInput = ({
     ...rest
 }) => {
     // const { label, id, inputType, placeholder, onChange, errors, message } = props
-    console.log(errors);
+    // console.log(errors);
     return (
         <div className="form-group">
             {label && (
