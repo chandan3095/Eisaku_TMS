@@ -8,6 +8,7 @@ import BodyHeader from "../../../../components/common/CommonBodyHeader";
 
 function FleetMasterAddForm() {
   const [payRollType, setpayRollType] = useState("Eisaku Pay roll");
+  console.log(payRollType);
   const [formData, setFormData] = useState({
     name: "",
     dob: "",
@@ -43,7 +44,7 @@ function FleetMasterAddForm() {
   return (
     <div>
       <BodyHeader title="Add Helper Master" />
-      <form className="p-5 shadow-lg" onSubmit={handleSubmit}>
+      <form className="p-3 shadow-lg" onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-lg-12">
             <div className="card card-primary">
@@ -53,6 +54,7 @@ function FleetMasterAddForm() {
               <div className="card-body row">
                 <div className="col-lg-4">
                   <CustomInput
+                  require={require}
                     label="Name"
                     id="driverName"
                     placeholder="Enter Name"
@@ -63,6 +65,7 @@ function FleetMasterAddForm() {
                 </div>
                 <div className="col-lg-4">
                   <CustomDatePicker 
+                  require={require}
                     label="DOB"
                     placeholder="Select DOB" 
                     name="dob"
@@ -74,6 +77,7 @@ function FleetMasterAddForm() {
                 {/* Date of Joining */}
                 <div className="col-lg-4">
                   <CustomDatePicker
+                  require={require}
                     label="Date of Joining"
                     placeholder="Select Date of Joining"
                     name="dateOfJoining"
@@ -94,6 +98,7 @@ function FleetMasterAddForm() {
 
                 <div className="col-lg-4">
                   <CustomInput
+                  require={require}
                     label="Aadhar Card"
                     id="aadharCard"
                     placeholder="Enter Aadhar Card"
@@ -103,7 +108,7 @@ function FleetMasterAddForm() {
                   />
                 </div>
                 <div className="col-lg-4">
-                  <label className="text-bold">Aadhar Document</label>
+                  <label className="text-bold">Aadhar Document<span className="text-danger">*</span></label>
                   <CustomFileUpload 
                   name="aadharDocument"
                   value={formData.aadharDocument}
@@ -112,6 +117,7 @@ function FleetMasterAddForm() {
                 </div>
                 <div className="col-lg-4">
                   <CustomInput
+                  require={require}
                     label="Pan Card"
                     id="panCard"
                     placeholder="Enter Pan Card"
@@ -121,7 +127,9 @@ function FleetMasterAddForm() {
                   />
                 </div>
                 <div className="col-lg-4">
-                  <label className="text-bold">Pan Card Document</label>
+                  <label className="text-bold">Pan Card Document
+                  <span className="text-danger">*</span>
+                  </label>
                   <CustomFileUpload 
                   name="panDocument"
                   value={formData.panDocument}
@@ -129,7 +137,9 @@ function FleetMasterAddForm() {
                   />
                 </div>
                 <div className="col-lg-4">
-                  <label className="text-bold">Helper Image</label>
+                  <label className="text-bold">Helper Image
+                  <span className="text-danger">*</span>
+                  </label>
                   <CustomFileUpload
                     label="helper Image"
                     id="helperImage"
@@ -174,7 +184,7 @@ function FleetMasterAddForm() {
                   <CustomRadio
                     label="Contractor"
                     id="contractor"
-                    value=" "
+                    value="Contractor"
                     name="payRollType"
                     onChange={(event) => setpayRollType(event.target.value)}
                   />
@@ -183,6 +193,7 @@ function FleetMasterAddForm() {
                   <div className="row">
                     <div className="col-lg-6">
                       <CustomInput
+                      require={require}
                         label="Contractor Name"
                         id="contractorName"
                         placeholder="Enter contractor Name"
@@ -193,6 +204,7 @@ function FleetMasterAddForm() {
                     </div>
                     <div className="col-lg-6">
                       <CustomInput
+                      require={require}
                         label="Monthly salary & Commission Amount"
                         id="monthlyCommAmount"
                         placeholder="Enter monthly commission amount"
@@ -208,6 +220,7 @@ function FleetMasterAddForm() {
                   <div className="row">
                     <div className="col-lg-4">
                       <CustomInput
+                      require={require}
                         label="Account Number"
                         id="AccountNumber"
                         placeholder="Enter Account Number"
@@ -218,6 +231,7 @@ function FleetMasterAddForm() {
                     </div>
                     <div className="col-lg-4">
                       <CustomInput
+                      require={require}
                         label="Bank name"
                         id="bankName"
                         placeholder="Enter Bank Name"
@@ -228,6 +242,7 @@ function FleetMasterAddForm() {
                     </div>
                     <div className="col-lg-4">
                       <CustomInput
+                      require={require}
                         label="IFSC Code"
                         id="ifscCode"
                         placeholder="Enter IFSC Code"
@@ -239,6 +254,7 @@ function FleetMasterAddForm() {
 
                     <div className="col-lg-4">
                       <CustomInput
+                      require={require}
                         label="Account Holder Name"
                         id="accountHolderName"
                         placeholder="Enter Account Holder name"
@@ -249,6 +265,7 @@ function FleetMasterAddForm() {
                     </div>
                     <div className="col-lg-4">
                       <CustomInput
+                      require={require}
                         label="Monthly salary amount"
                         id="monthlyAmount"
                         placeholder="Enter Monthly salary amount"

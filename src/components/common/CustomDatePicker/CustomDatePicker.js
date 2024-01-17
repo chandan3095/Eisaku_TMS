@@ -1,11 +1,14 @@
 import React from "react";
 
 const CustomDatePicker = (props) => {
-  const { label, id, onChange, name, value, disabled, errors, message } = props;
+  const { label, id, onChange, name, value, disabled, require, errors, message } = props;
   // console.log(value);
   return (
     <div className="form-group">
-      {label && <label className="text-capitalize">{label}</label>}
+      {label && 
+        <label className="text-capitalize">{label}
+          {require && <span className="text-danger">*</span>}
+      </label>}
       <input
         type="date"
         className="form-control"

@@ -4,6 +4,7 @@ import CustomFileUpload from '../../../components/common/CustomFileUpload/Custom
 import MultipleFileUpload from '../../../components/common/MultipleFileUpload/MultipleFileUpload';
 import MultiSelectDropdown from '../../../components/common/MultiSelectDropdown/MultiSelectDropdown';
 import BodyHeader from '../../../components/common/CommonBodyHeader';
+import CustomTextArea from '../../../components/common/CustomTextArea/CustomTextArea';
 
 const ContractorMasterAdd = () => {
    const [addContact, setAddContact] = useState([""]);
@@ -24,7 +25,7 @@ const ContractorMasterAdd = () => {
    return (
       <div>
          <BodyHeader title="Add Contractor Master" />
-         <form className="p-5 shadow-lg">
+         <form className="p-3 shadow-lg">
             <div className="row">
                <div className="col-lg-12">
                   <div className="card card-primary">
@@ -35,6 +36,7 @@ const ContractorMasterAdd = () => {
                         <div className="row">
                            <div className="col-12 col-sm-12 col-md-4 col-lg-4">
                               <CustomInput
+                              require={require}
                                  label="Contractor Name"
                                  id="#ContractorName"
                                  name="ContractorName"
@@ -44,6 +46,7 @@ const ContractorMasterAdd = () => {
 
                            <div className="col-12 col-sm-12 col-md-4 col-lg-4">
                               <CustomInput
+                              require={require}
                                  label="Location"
                                  id="#location"
                                  name="location"
@@ -53,6 +56,7 @@ const ContractorMasterAdd = () => {
 
                            <div className="col-lg-4">
                               <CustomInput
+                              require={require}
                                  label="GST Number"
                                  id="gstNumber"
                                  placeholder="Enter GST Number"
@@ -60,20 +64,15 @@ const ContractorMasterAdd = () => {
                            </div>
 
                            <div className="col-lg-4">
-                              <label className="text-bold">GST Document</label>
+                              <label className="text-bold">GST Document <span className='text-danger'>*</span></label>
                               <CustomFileUpload label="GST Details" id="gst" name="gst" />
                            </div>
 
                            <div className="col-12 col-sm-12 col-md-12 col-lg- mb-3">
-                              <label htmlFor="address">Address</label>
-                              <textarea
-                                 name="address"
-                                 id="address"
-                                 cols="30"
-                                 rows="2"
-                                 className="form-control"
-                                 placeholder="Enter Address"
-                              ></textarea>
+                              <CustomTextArea
+                              label="Address"
+                              placeholder="Enter Address"
+                              />
                            </div>
 
                            <div className="col-12">
@@ -88,6 +87,7 @@ const ContractorMasterAdd = () => {
                                      }>
                                        <div className="col-12 col-sm-12 col-md- col-lg-4">
                                           <CustomInput
+                                          require={require}
                                              label="Contact Person Name"
                                              inputType="number"
                                              id="#vendorMobile"
@@ -98,6 +98,7 @@ const ContractorMasterAdd = () => {
                                        </div>
                                        <div className="col-12 col-sm-12 col-md- col-lg-4">
                                           <CustomInput
+                                          require={require}
                                              label="Mobile No"
                                              inputType="number"
                                              id="#vendorMobile"
@@ -108,6 +109,7 @@ const ContractorMasterAdd = () => {
                                        </div>
                                        <div className="col-12 col-sm-12 col-md- col-lg-4">
                                           <CustomInput
+                                          require={require}
                                              label="Email Id"
                                              inputType="text"
                                              id="#vendorEmail"
@@ -154,6 +156,7 @@ const ContractorMasterAdd = () => {
                   <div className="row">
                      <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                            label="Account Number"
                            id="AccountNumber"
                            placeholder="Enter Account Number"
@@ -161,6 +164,7 @@ const ContractorMasterAdd = () => {
                      </div>
                      <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                            label="Bank name"
                            id="bankName"
                            placeholder="Enter Bank Name"
@@ -168,6 +172,7 @@ const ContractorMasterAdd = () => {
                      </div>
                      <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                            label="IFSC Code"
                            id="ifscCode"
                            placeholder="Enter IFSC Code"
@@ -176,13 +181,14 @@ const ContractorMasterAdd = () => {
 
                      <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                            label="Account Holder Name"
                            id="accountHolderName"
                            placeholder="Enter Account Holder name"
                         />
                      </div>
                      <div className="col-lg-4">
-                        <label className="text-bold">Bank Document</label>
+                        <label className="text-bold">Bank Document<span className='text-danger'>*</span></label>
                         <CustomFileUpload
                            label="Bank Details"
                            id="bankDetails"

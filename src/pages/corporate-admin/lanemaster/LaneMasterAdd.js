@@ -25,7 +25,7 @@ const LaneMasterAdd = () => {
    return (
       <div>
          <BodyHeader title="Add Lane Master" />
-         <form className="p-5 shadow-lg">
+         <form className="p-3 shadow-lg">
             <div className="card card-primary">
                <div className="card-header">
                   <h3 className="card-title">Personal Details</h3>
@@ -74,6 +74,7 @@ const LaneMasterAdd = () => {
 
                      <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                            label="Driver Trip Advance"
                            id="#tripadvance"
                            disabled={isDisabled}
@@ -83,6 +84,7 @@ const LaneMasterAdd = () => {
 
                      <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                            label="Trip Diesel budget (ltr)"
                            id="#dieselBudget"
                            disabled={isDisabled}
@@ -92,6 +94,7 @@ const LaneMasterAdd = () => {
 
                      <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                            label="Trip Adblue budget (ltr)"
                            id="#adblueBudget"
                            disabled={isDisabled}
@@ -101,6 +104,7 @@ const LaneMasterAdd = () => {
 
                      <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                            label="Trip Toll"
                            id="#tripToll"
                            disabled={isDisabled}
@@ -132,6 +136,7 @@ const LaneMasterAdd = () => {
 
                      <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                            label="Customer Name (Including broker)"
                            id="#nameBroker"
                            disabled={isDisabled}
@@ -141,6 +146,7 @@ const LaneMasterAdd = () => {
 
                      <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                            label="TAT (in Hrs)"
                            id="#tat"
                            disabled={isDisabled}

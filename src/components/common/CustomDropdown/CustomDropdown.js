@@ -5,7 +5,7 @@ const CustomDropdown = (props) => {
 // console.log('name', name, 'value', values);
   return (
     <div className="form-group">
-      {label && <label className="text-capitalize">{label}</label>}
+      {label && <label className="text-capitalize">{label}<span className="text-danger">*</span></label>}
       <Select
         options={optionData}
         labelField="label"

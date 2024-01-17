@@ -168,7 +168,7 @@ function FleetMasterAddForm() {
   return (
     <div>
       <BodyHeader title="Add Customer Master" />
-      {/* <form className="p-5 shadow-lg" onSubmit={formik.handleSubmit}> */}
+      {/* <form className="p-3 shadow-lg" onSubmit={formik.handleSubmit}> */}
       <div className="p-5 shadow-lg">
         <div className="card card-primary">
           <div className="card-header">
@@ -178,6 +178,7 @@ function FleetMasterAddForm() {
             <div className="row">
               <div className="col-lg-6">
                 <CustomInput
+                require={require}
                   label="Customer Name"
                   id="customerName"
                   placeholder="Enter Customer Name"
@@ -195,7 +196,9 @@ function FleetMasterAddForm() {
                 {agreementAdd.map((item, index) => (
                   <div className="row">
                     <div className="col-lg-6" key={index}>
-                      <label className="text-bold">Agreement Document</label>
+                      <label className="text-bold">Agreement Document
+                      <span className="text-danger">*</span>
+                      </label>
                       <CustomFileUpload
                         label="Agreement Details"
                         onChange={(event) =>
@@ -238,6 +241,7 @@ function FleetMasterAddForm() {
                   >
                     <div className="col-lg-4">
                       <CustomInput
+                      require={require}
                         label="Contact Person Name"
                         id="contactPersonName"
                         placeholder="Enter Contact Person Name"
@@ -252,6 +256,7 @@ function FleetMasterAddForm() {
                     </div>
                     <div className="col-lg-4">
                       <CustomInput
+                      require={require}
                         label="Customer Mobile No"
                         id="customerMobileNo"
                         placeholder="Enter Customer Mobile No"
@@ -266,6 +271,7 @@ function FleetMasterAddForm() {
                     </div>
                     <div className="col-lg-4">
                       <CustomInput
+                      require={require}
                         label="Customer Email Id"
                         id="customerEmailId"
                         placeholder="Enter Customer Email Id"
@@ -400,6 +406,7 @@ function FleetMasterAddForm() {
                     <>
                       <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                           label="Customer Name"
                           id="laneCustomerName"
                           placeholder="Customer Name"
@@ -409,8 +416,9 @@ function FleetMasterAddForm() {
                         />
                       </div>
                       <div className="col-lg-4">
-                        <label className="text-bold">Origin</label>
                         <CustomDropdown
+                        label="Origin"
+                        require={require}
                           optionData={destinationData}
                           values={formik.values.origin}
                           onChange={(value) => {
@@ -419,8 +427,9 @@ function FleetMasterAddForm() {
                         />
                       </div>
                       <div className="col-lg-4">
-                        <label className="text-bold">Destination</label>
                         <CustomDropdown
+                        label="Destination"
+                        require={require}
                           optionData={destinationData}
                           values={formik.values.destination}
                           onChange={(value) => {
@@ -430,8 +439,9 @@ function FleetMasterAddForm() {
                       </div>
                       {/* Vehicle Category Sec */}
                       <div className="col-lg-6">
-                        <label className="text-bold">Vehicle Type</label>
                         <CustomDropdown
+                        label="Vehicle Type"
+                        require={require}
                           optionData={vehicleCategoryData}
                           values={formik.values.vehicleCategory}
                           onChange={(value) => {
@@ -441,8 +451,9 @@ function FleetMasterAddForm() {
                       </div>
                       {/* Tonnage Sec */}
                       <div className="col-lg-6">
-                        <label className="text-bold">Tonnage</label>
                         <CustomDropdown
+                        label="Tonnage(T)"
+                        require={require}
                           optionData={tonnageData}
                           values={formik.values.tonnage}
                           onChange={(value) => {
@@ -479,6 +490,7 @@ function FleetMasterAddForm() {
                       </div>
                       <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                           label="Express mode rate additional"
                           id="expressModeRateAdditional"
                           placeholder="Enter Amount"
@@ -489,6 +501,7 @@ function FleetMasterAddForm() {
                       </div>
                       <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                           label="Super express mode rate additional"
                           id="superExpressModeRateAdditional"
                           placeholder="Enter amount"
@@ -499,6 +512,7 @@ function FleetMasterAddForm() {
                       </div>
                       <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                           label="Detention rate additional"
                           id="detentionRateAdditional"
                           placeholder="Enter amount"
@@ -509,6 +523,7 @@ function FleetMasterAddForm() {
                       </div>
                       <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                           label="Multiple loading location rate additional"
                           id="multipleLoadingLocationRateAdditional"
                           placeholder="Enter amount"
@@ -522,6 +537,7 @@ function FleetMasterAddForm() {
 
                       <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                           label="Multiple unloading location rate additional"
                           id="multipleUnloadingLocationRateAdditional"
                           placeholder="Enter amount"
@@ -535,6 +551,7 @@ function FleetMasterAddForm() {
                       </div>
                       <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                           label="Loading charges"
                           id="loadingCharges"
                           placeholder="Enter amount"
@@ -545,6 +562,7 @@ function FleetMasterAddForm() {
                       </div>
                       <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                           label="Unloading charge"
                           id="unloadingCharge"
                           placeholder="Enter amount"
@@ -555,6 +573,7 @@ function FleetMasterAddForm() {
                       </div>
                       <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                           label="miscellaneous charges"
                           id="miscellaneousCharges"
                           placeholder="Enter amount"
@@ -565,6 +584,7 @@ function FleetMasterAddForm() {
                       </div>
                       <div className="col-lg-4">
                         <CustomInput
+                        require={require}
                           label="miscellaneous Remarks"
                           id="miscellaneousRemarks"
                           placeholder="Enter remarks"
