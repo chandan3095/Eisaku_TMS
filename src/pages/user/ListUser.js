@@ -3,6 +3,7 @@ import DataTable from 'react-data-table-component'
 import CustomInput from '../../components/common/CustomInput/CustomInput'
 import { useDispatch,useSelector } from 'react-redux'
 import listUserAsync from '../../redux/features/listUserSlice';
+import CustomToggle from '../../components/common/CustomToggle'
 
 function ListUser() {
    const dispatch= useDispatch();
@@ -44,7 +45,7 @@ function ListUser() {
          supervisor: 'aab',
          action: <>
             <button className="btn btn-primary mx-2">Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggle/>
          </>
       },
       {
@@ -55,7 +56,7 @@ function ListUser() {
          supervisor: 'aba',
          action: <>
             <button className="btn btn-primary mx-2">Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggle/>
          </>
       },
       {
@@ -66,7 +67,7 @@ function ListUser() {
          supervisor: 'abb',
          action: <>
             <button className="btn btn-primary mx-2">Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggle/>
          </>
       },
       {
@@ -77,7 +78,7 @@ function ListUser() {
          supervisor: 'acb',
          action: <>
             <button className="btn btn-primary mx-2">Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggle/>
          </>
       },
       {
@@ -88,7 +89,7 @@ function ListUser() {
          supervisor: 'dab',
          action: <>
             <button className="btn btn-primary mx-2">Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggle/>
          </>
       },
       {
@@ -99,7 +100,7 @@ function ListUser() {
          supervisor: 'bcb',
          action: <>
             <button className="btn btn-primary mx-2">Edit</button>
-            <button className="btn btn-danger mx-2"> Delete</button>
+            <CustomToggle/>
          </>
       },
    ]

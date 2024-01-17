@@ -21,7 +21,7 @@ const MultipleFileUpload = ({label}) => {
             maxFileSize={1000000}
             minFileSize={0}
             clickable>
-            <label htmlFor="AgreementDetails">{label}</label>
+            <label htmlFor="AgreementDetails">{label}<span className="text-danger">*</span></label>
             <div className="drop-files form-control h-100">
                <button type='button' className='mr-1'>Choose File</button>
                {uploadFile.length === 1 ?

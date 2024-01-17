@@ -11,6 +11,7 @@ const CustomInput = ({
     name,
     value,
     disabled,
+    require,
     ...rest
 }) => {
     // const { label, id, inputType, placeholder, onChange, errors, message } = props
@@ -19,7 +20,7 @@ const CustomInput = ({
         <div className="form-group">
             {label && (
                 <label className="text-capitalize" htmlFor={id}>
-                    {label}
+                    {label}{require && <span className="text-danger">*</span>}
                 </label>
             )}
             <input

@@ -6,7 +6,7 @@ const LocationMasterAdd = () => {
   return (
     <div>
       <BodyHeader title="Add Location Master" />
-      <form className="p-5 shadow-lg">
+      <form className="p-3 shadow-lg">
         <div className="row">
           <div className="col-lg-12">
             <div className="card card-primary">
@@ -15,8 +15,9 @@ const LocationMasterAdd = () => {
               </div>
               <div className="card-body">
                 <div className="row">
-                  <div className="col-12 col-sm-12 col-md-4 col-lg-4">
+                  <div className="col-12 col-sm-12 col-md-6">
                     <CustomInput
+                    require={require}
                       label="Name"
                       id="personName"
                       name="personName"

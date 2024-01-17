@@ -12,6 +12,14 @@ import CustomDropdown from "../../../components/common/CustomDropdown/CustomDrop
 import selectOptionData, {
   fleetMasterFormTitle,
 } from "../../../constansts/LocalData";
+import CustomModal from "../../../components/common/Modal";
+import EmiForm from "./FleetMasterAddForm/EmiForm";
+import ServiceRecord from "./FleetMasterAddForm/ServiceRecord";
+import Tyre from "./FleetMasterAddForm/Tyre";
+import MonthlyMaintenanceBudget from "./FleetMasterAddForm/MonthlyMaintenanceBudget";
+import VehicleDetails from "./FleetMasterAddForm/VehicleDetails";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const FleetMasterView = () => {
   const [fuelType, setFuelType] = useState("Diesel");
@@ -23,8 +31,15 @@ const FleetMasterView = () => {
 
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
   const toggleSwitch = () => {
-    setIsChecked(!isChecked); // Toggle the state 
+    setIsChecked(!isChecked); // Toggle the state
     // console.log(isChecked);
+  };
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleShowModal = () => {
+    setIsModalVisible(true);
+  };
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
   };
   const columns = [
     {
@@ -56,11 +71,16 @@ const FleetMasterView = () => {
         <>
           <button
             className="btn btn-primary mx-2"
-            onClick={() => navigate("/fleet-master/add-form")}
+            onClick={handleShowModal}
+            type="button"
           >
             Edit
           </button>
-          <CustomToggleSwitch id="dataOne" checked={isChecked} onChange={toggleSwitch} />
+          <CustomToggleSwitch
+            id="dataOne"
+            checked={isChecked}
+            onChange={toggleSwitch}
+          />
         </>
       ),
     },
@@ -73,11 +93,16 @@ const FleetMasterView = () => {
         <>
           <button
             className="btn btn-primary mx-2"
-            onClick={() => navigate("/fleet-master/add-form")}
+            onClick={handleShowModal}
+            type="button"
           >
             Edit
           </button>
-          <CustomToggleSwitch id="dataTwo" checked={isChecked} onChange={toggleSwitch} />
+          <CustomToggleSwitch
+            id="dataTwo"
+            checked={isChecked}
+            onChange={toggleSwitch}
+          />
         </>
       ),
     },
@@ -90,11 +115,16 @@ const FleetMasterView = () => {
         <>
           <button
             className="btn btn-primary mx-2"
-            onClick={() => navigate("/fleet-master/add-form")}
+            onClick={handleShowModal}
+            type="button"
           >
             Edit
           </button>
-          <CustomToggleSwitch id="dataThree" checked={isChecked} onChange={toggleSwitch} />
+          <CustomToggleSwitch
+            id="dataThree"
+            checked={isChecked}
+            onChange={toggleSwitch}
+          />
         </>
       ),
     },
@@ -107,11 +137,16 @@ const FleetMasterView = () => {
         <>
           <button
             className="btn btn-primary mx-2"
-            onClick={() => navigate("/fleet-master/add-form")}
+            onClick={handleShowModal}
+            type="button"
           >
             Edit
           </button>
-          <CustomToggleSwitch id="dataFour" checked={isChecked} onChange={toggleSwitch} />
+          <CustomToggleSwitch
+            id="dataFour"
+            checked={isChecked}
+            onChange={toggleSwitch}
+          />
         </>
       ),
     },
@@ -124,11 +159,16 @@ const FleetMasterView = () => {
         <>
           <button
             className="btn btn-primary mx-2"
-            onClick={() => navigate("/fleet-master/add-form")}
+            onClick={handleShowModal}
+            type="button"
           >
             Edit
           </button>
-          <CustomToggleSwitch id="dataFive" checked={isChecked} onChange={toggleSwitch} />
+          <CustomToggleSwitch
+            id="dataFive"
+            checked={isChecked}
+            onChange={toggleSwitch}
+          />
         </>
       ),
     },
@@ -141,11 +181,16 @@ const FleetMasterView = () => {
         <>
           <button
             className="btn btn-primary mx-2"
-            onClick={() => navigate("/fleet-master/add-form")}
+            onClick={handleShowModal}
+            type="button"
           >
             Edit
           </button>
-          <CustomToggleSwitch id="dataSix" checked={isChecked} onChange={toggleSwitch} />
+          <CustomToggleSwitch
+            id="dataSix"
+            checked={isChecked}
+            onChange={toggleSwitch}
+          />
         </>
       ),
     },
@@ -190,9 +235,168 @@ const FleetMasterView = () => {
     });
     setRecords(newData);
   };
+  const validationSchema = Yup.object().shape({
+    vehicleNo: Yup.string().required("vehicle No is required"),
+    chasisNo: Yup.string().required("Chasis No is required"),
+    engineNo: Yup.string().required("Engine No is required"),
+    vehicleOwnerName: Yup.string().required("Vehicle Owner Name is required"),
+    dimension: Yup.string().required("Dimension is required"),
+    fastagBankName: Yup.string().required("Fastag Bank Name is required"),
+    vehicleCategory: Yup.string().required("Vehicle Category is required"),
+    tonnage: Yup.number()
+      .required("Tonnage is required")
+      .positive("Tonnage must be a positive number"),
+    make: Yup.string().required("Make Name is required"),
+    model: Yup.date()
+      .required("Model Month Year is required")
+      .min(new Date(), "Must be a future date"),
+    registrationCertificate: Yup.string().required(
+      "Registration Certificate is required"
+    ),
+    insuranceExpiryDate: Yup.date()
+      .required("Insurance Expiry Date is required")
+      .min(new Date(), "Must be a future date"),
+    insuranceAmount: Yup.number()
+      .required("Insurance Amount is required")
+      .min(0, "Must be a positive value"),
+    insuranceCertificate: Yup.string().required(
+      "Insurance Certificate is required"
+    ),
+    fitnessExpiryDate: Yup.date()
+      .required("Fitness Expiry Date is required")
+      .min(new Date(), "Must be a future date"),
+    fitnessAmount: Yup.number()
+      .required("Fitness Amount is required")
+      .min(0, "Must be a positive value"),
+    fitnessCertificate: Yup.string().required("Fitness Certificate is required"),
+    localPermitExpiryDate: Yup.date()
+      .required("Local Permit Expiry Date is required")
+      .min(new Date(), "Must be a future date"),
+    localPermitAmount: Yup.number()
+      .required("Local Permit Amount is required")
+      .min(0, "Must be a positive value"),
+    localPermitDocument: Yup.string().required(
+      "Local Permit Document is required"
+    ),
+    nationalPermitExpiryDate: Yup.date()
+      .required("National Permit Expiry Date is required")
+      .min(new Date(), "Must be a future date"),
+    nationalPermitAmount: Yup.number()
+      .required("National Permit Amount is required")
+      .min(0, "Must be a positive value"),
+    nationalPermitDocument: Yup.string().required(
+      "National Permit Document is required"
+    ),
+    pucExpiryDate: Yup.date()
+      .required("PUC Expiry Date is required")
+      .min(new Date(), "Must be a future date"),
+    pucAmount: Yup.number()
+      .required("PUC Amount is required")
+      .min(0, "Must be a positive value"),
+    pucDocument: Yup.mixed().required("File is required"),
+    mvTax: Yup.number()
+      .required("MV Tax is required")
+      .min(0, "Must be a positive value"),
+    mvTaxExpiryDate: Yup.date()
+      .required("MV Tax Expiry Date is required")
+      .min(new Date(), "Must be a future date"),
+    mvTaxAmount: Yup.number()
+      .required("MV Tax Amount is required")
+      .min(0, "Must be a positive value"),
+    gpsProviderName: Yup.string(),
+    gpsAmount: Yup.number().min(0, "Must be a positive value"),
+    fabricatorName: Yup.string(),
+    fabricatorLocation: Yup.string(),
+  });
+  const initialValues = {
+    initialValues: {
+      vehicleNo: "",
+      chasisNo: "",
+      engineNo: "",
+      vehicleOwnerName: "",
+      dimension: [],
+      fastagBankName: "",
+      vehicleCategory: "",
+      tonnage: "",
+      fuelType: "Petrol",
+      make: "",
+      model: "",
+      registrationCertificate: "",
+      insuranceExpiryDate: "",
+      insuranceAmount: 0,
+      insuranceCertificate: null,
+      fitnessExpiryDate: "",
+      fitnessAmount: 0,
+      fitnessCertificate: "",
+      localPermitExpiryDate: "",
+      localPermitAmount: 0,
+      localPermitDocument: "",
+      nationalPermitExpiryDate: "",
+      nationalPermitAmount: 0,
+      nationalPermitDocument: "",
+      pucExpiryDate: "",
+      pucAmount: 0,
+      pucDocument: "",
+      mvTax: 0,
+      mvTaxExpiryDate: "",
+      mvTaxAmount: 0,
+      gpsProviderName: "",
+      gpsAmount: 0,
+      fabricatorName: "",
+      fabricatorLocation: "",
+  
+      // EMI
+      emiStartDate: "",
+      emiEndDate: "",
+      emiAmount: "",
+      emiCertificate: "",
+      financedBy: "",
+  
+      // Service Record
+      odometerReading: "",
+      serviceDate: "",
+      serviceAmount: "",
+      serviceStationName: "",
+      serviceBill: "",
+  
+      // tyre
+      tyreType: "",
+      tyreChangeDate: "",
+      tyreAmount: "",
+      tyreStationName: "",
+      tyreBillUpload: "",
+    },
+  };
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: (values) => {
+      // Handle form submission logic here
+      console.log(values);
+    },
+  });
+  const handleCheckEditForm = () => {
+    switch (currentTabIndex) {
+      case 1:
+        return <EmiForm />;
+      case 2:
+        return <ServiceRecord />;
+      case 3:
+        return <Tyre />;
+      case 4:
+        return <MonthlyMaintenanceBudget />;
+      default:
+        return <VehicleDetails/>
+    }
+  };
   return (
     <div>
       <BodyHeader title="Edit Fleet Master" />
+      <CustomModal
+        showModal={isModalVisible}
+        handleCloseModal={handleCloseModal}
+        child={<EmiForm formik={formik} />}
+      />
       <form className="">
         <div className="row">
           <div className="col-lg-12">
@@ -612,28 +816,25 @@ const FleetMasterView = () => {
                           </div>
 
                           <div className="card-body">
-                            <div className="px-3">
-                              <div className=" d-flex justify-content-between">
-                                <h3>User's List</h3>
-                                <CustomInput
-                                  inputType="text"
-                                  placeholder="Search..."
-                                  id="search"
-                                  onChange={(e) => handleFilter(e)}
-                                />
-                              </div>
-                              <DataTable
-                                columns={columns}
-                                data={records}
-                                sortable
-                                fixedHeader
-                                pagination
-                                responsive
-                                striped={true}
-                                borderColor="#000000"
-                                customStyles={customStyles}
-                              ></DataTable>
+                            <div className="d-flex justify-content-end">
+                              <CustomInput
+                                inputType="text"
+                                placeholder="Search..."
+                                id="search"
+                                onChange={(e) => handleFilter(e)}
+                              />
                             </div>
+                            <DataTable
+                              columns={columns}
+                              data={records}
+                              sortable
+                              fixedHeader
+                              pagination
+                              responsive
+                              striped={true}
+                              borderColor="#000000"
+                              customStyles={customStyles}
+                            ></DataTable>
                           </div>
                         </div>
                       </div>
@@ -652,28 +853,25 @@ const FleetMasterView = () => {
                             <h3 className="card-title">Tyre</h3>
                           </div>
                           <div className="card-body">
-                            <div className="px-3">
-                              <div className=" d-flex justify-content-between">
-                                <h3>User's List</h3>
-                                <CustomInput
-                                  inputType="text"
-                                  placeholder="Search..."
-                                  id="search"
-                                  onChange={(e) => handleFilter(e)}
-                                />
-                              </div>
-                              <DataTable
-                                columns={columns}
-                                data={records}
-                                sortable
-                                fixedHeader
-                                pagination
-                                responsive
-                                striped={true}
-                                borderColor="#000000"
-                                customStyles={customStyles}
-                              ></DataTable>
+                            <div className="d-flex justify-content-end">
+                              <CustomInput
+                                inputType="text"
+                                placeholder="Search..."
+                                id="search"
+                                onChange={(e) => handleFilter(e)}
+                              />
                             </div>
+                            <DataTable
+                              columns={columns}
+                              data={records}
+                              sortable
+                              fixedHeader
+                              pagination
+                              responsive
+                              striped={true}
+                              borderColor="#000000"
+                              customStyles={customStyles}
+                            ></DataTable>
                           </div>
                         </div>
                       </div>
@@ -695,28 +893,25 @@ const FleetMasterView = () => {
                           </div>
 
                           <div className="card-body">
-                            <div className="px-3">
-                              <div className=" d-flex justify-content-between">
-                                <h3>User's List</h3>
-                                <CustomInput
-                                  inputType="text"
-                                  placeholder="Search..."
-                                  id="search"
-                                  onChange={(e) => handleFilter(e)}
-                                />
-                              </div>
-                              <DataTable
-                                columns={columns}
-                                data={records}
-                                sortable
-                                fixedHeader
-                                pagination
-                                responsive
-                                striped={true}
-                                borderColor="#000000"
-                                customStyles={customStyles}
-                              ></DataTable>
+                            <div className="d-flex justify-content-end">
+                              <CustomInput
+                                inputType="text"
+                                placeholder="Search..."
+                                id="search"
+                                onChange={(e) => handleFilter(e)}
+                              />
                             </div>
+                            <DataTable
+                              columns={columns}
+                              data={records}
+                              sortable
+                              fixedHeader
+                              pagination
+                              responsive
+                              striped={true}
+                              borderColor="#000000"
+                              customStyles={customStyles}
+                            ></DataTable>
                           </div>
                         </div>
                       </div>
