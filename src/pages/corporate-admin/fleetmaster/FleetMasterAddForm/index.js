@@ -83,12 +83,11 @@ const validationSchema = Yup.object().shape({
   mvTaxAmount: Yup.number()
     .required("MV Tax Amount is required")
     .min(0, "Must be a positive value"),
-  gpsProviderName: Yup.string().required("GPS Provider Name is required"),
+  gpsProviderName: Yup.string(),
   gpsAmount: Yup.number()
-    .required("GPS Amount is required")
     .min(0, "Must be a positive value"),
-  fabricatorName: Yup.string().required("Fabricator Name is required"),
-  fabricatorLocation: Yup.string().required("Fabricator Location is required"),
+  fabricatorName: Yup.string(),
+  fabricatorLocation: Yup.string(),
 });
 const initialValues = {
   initialValues: {
@@ -258,20 +257,7 @@ function FleetMasterAddForm() {
                   className="nav nav-tabs"
                   id="custom-tabs-three-tab"
                   role="tablist"
-                >
-                  {/* <li className="nav-item">
-                    <a
-                      className="nav-link active"
-                      id="custom-tabs-three-home-tab"
-                      data-toggle="pill"
-                      href="#custom-tabs-three-home"
-                      role="tab"
-                      aria-controls="custom-tabs-three-home"
-                      aria-selected="true"
-                    >
-                      Vehicle Details
-                    </a>
-                  </li> */}
+                >                  
                   {fleetMasterFormTitle.map((item) => (
                     <li className="nav-item">
                       <a
@@ -661,7 +647,7 @@ function FleetMasterAddForm() {
                           <div className="col-lg-6">
                             <CustomInput
                               label="GPS Provider Name"
-                              id="#gpsProvider"
+                              id="gpsProvider"
                               placeholder="Enter GPS Provider Name"
                               onChange={formik.handleChange}
                               value={formik.values.gpsProviderName}
