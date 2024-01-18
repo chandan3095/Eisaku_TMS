@@ -4,7 +4,7 @@ export const SideBarDropdownData = [
       menuName: "User",
       url: "/user",
       icon: "fa-user",
-      roles: [ROLES.corporateAdmin, ROLES.manager],
+      roles: [ROLES.corporateAdmin, ROLES.management],
       dropdownList: [
          {
             subMenuName: "Add",
@@ -191,10 +191,10 @@ export const SideBarDropdownData = [
         subMenuName: "Adhoc",
         url: "/adhoc",
         subDropdownList: [
-          {
-            subMenuName: "Add",
-            url: "/add",
-          },
+         //  {
+         //    subMenuName: "Add",
+         //    url: "/add",
+         //  },
           {
             subMenuName: "View",
             url: "/view",
@@ -242,10 +242,6 @@ export const SideBarDropdownData = [
 ];
 
 export const Roles= [
-   {
-      value: 1,
-      label: 'Management'
-   },
    {
       value: 2,
       label: 'Manager'

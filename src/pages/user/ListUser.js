@@ -1,109 +1,50 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import DataTable from 'react-data-table-component'
 import CustomInput from '../../components/common/CustomInput/CustomInput'
-import { useDispatch,useSelector } from 'react-redux'
-import listUserAsync from '../../redux/features/listUserSlice';
+import { useDispatch, useSelector } from 'react-redux'
+import { listUserAsync } from '../../redux/features/listUserSlice'
 import CustomToggle from '../../components/common/CustomToggle'
 
 function ListUser() {
-   const dispatch= useDispatch();
-   const userFormData = useSelector((state) => state.listUser)
-   const [userRecords, setUserRecords] = useState(userFormData)
-   console.log(userFormData);
+   const dispatch = useDispatch();
+   const userList = useSelector((state) => state.listUser)
+   const [userRecords, setUserRecords] = useState(userList)
+   console.log(userList);
    const columns = [
       {
          name: 'User Name',
-         selector: row => row.userName,
+         selector: row => row.name,
          sortable: true
       },
       {
          name: 'Mobile No',
-         selector: row => row.mobileNo
+         selector: row => row.mobile
       },
       {
          name: 'User Type',
-         selector: row => row.userType,
+         selector: row => row.role_name,
          sortable: true
       },
-      {
-         name: 'Supervisor Name',
-         selector: row => row.supervisor,
-         sortable: true
-      },
+      // {
+      //    name: 'Supervisor Name',
+      //    selector: row => row.supervisor,
+      //    sortable: true
+      // },
       {
          name: 'Action',
          selector: row => row.action,
       }
    ]
 
-   const data = [
-      {
-         id: 1,
-         userName: 'aaa',
-         mobileNo: '9874563214',
-         userType: 'manager',
-         supervisor: 'aab',
-         action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
-            <CustomToggle/>
-         </>
-      },
-      {
-         id: 2,
-         userName: 'aaa',
-         mobileNo: '9874563214',
-         userType: 'manager',
-         supervisor: 'aba',
-         action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
-            <CustomToggle/>
-         </>
-      },
-      {
-         id: 3,
-         userName: 'bbb',
-         mobileNo: '9874563214',
-         userType: 'admin',
-         supervisor: 'abb',
-         action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
-            <CustomToggle/>
-         </>
-      },
-      {
-         id: 4,
-         userName: 'ccc',
-         mobileNo: '9874563214',
-         userType: 'user',
-         supervisor: 'acb',
-         action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
-            <CustomToggle/>
-         </>
-      },
-      {
-         id: 5,
-         userName: 'ddd',
-         mobileNo: '9874563214',
-         userType: 'management',
-         supervisor: 'dab',
-         action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
-            <CustomToggle/>
-         </>
-      },
-      {
-         id: 6,
-         userName: 'eee',
-         mobileNo: '9874563214',
-         userType: 'manager',
-         supervisor: 'bcb',
-         action: <>
-            <button className="btn btn-primary mx-2">Edit</button>
-            <CustomToggle/>
-         </>
-      },
-   ]
+   const data = userList?.user?.map?.((item) => {
+      return {
+         ...item, action:
+            <>
+               <button className="btn btn-primary mx-2">Edit</button>
+               <CustomToggle/>
+            </>
+      }
+   })
 
    const customStyles = {
       table: {
@@ -134,7 +75,7 @@ function ListUser() {
    };
 
    useEffect(() => {
-      // dispatch(listUserAsync())
+      dispatch(listUserAsync())
    }, []);
 
    const [records, setRecords] = useState(data)
@@ -158,7 +99,7 @@ function ListUser() {
          </div>
          <DataTable
             columns={columns}
-            data={records}
+            data={data}
             sortable
             fixedHeader
             pagination
