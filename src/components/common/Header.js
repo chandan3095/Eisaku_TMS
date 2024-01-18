@@ -1,6 +1,11 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 const Header = () => {
+   const isLoggedOut = useSelector((state)=>state.loginReducer.isLoggedIn)
+   const handleLogout =(e)=>{
+  
+   }
    return (
       <div>
          <nav className="main-header navbar navbar-expand navbar-white navbar-light">
@@ -119,8 +124,8 @@ const Header = () => {
                   </a>
                </li>
                <li className="nav-item">
-                  <a className="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
-                     <i className="fas fa-th-large" />
+                  <a className="nav-link" href="#" role="button" onClick={(e)=>handleLogout(e)}>
+                     <i class="fas fa-power-off"></i>
                   </a>
                </li>
             </ul>

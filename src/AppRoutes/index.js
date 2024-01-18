@@ -31,16 +31,14 @@ import Skeleton from './Skeleton'
 
 import VendorCreateForm from '../pages/manager/vendor/VendorCreateForm'
 import Profile from '../components/Profile'
+import ViewUser from '../pages/user/ViewUser'
 
 function AppRoutes() {
    return (
       <Routes>
          {/* for dashboard  */}
          <Route path="/" element={<Skeleton />} >
-            <Route
-               path=""
-               element={<Navigate to={'login'} />}
-            />
+            
             <Route
                path="dashboard"
                element={<HomeDashboard />}
@@ -128,11 +126,16 @@ function AppRoutes() {
             {/* <Route path="/Signup" element={<SignUp />} /> */}
             <Route path={RouteNames.addUser} element={<AddUser />} />
             <Route path={RouteNames.listUser} element={<ListUser />} />
+            <Route path={RouteNames.updateUser} element={<ViewUser />} />
+            {/* <Route
+               path=""
+               element={<Navigate to={'Login'} />}
+            /> */}
          </Route>
           
          <Route path="/Login" element={<Login />} />
 
-
+         
       </Routes>
    );
 
