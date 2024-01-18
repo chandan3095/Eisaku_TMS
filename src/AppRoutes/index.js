@@ -39,7 +39,7 @@ function AppRoutes() {
          <Route path="/" element={<Skeleton />} >
             <Route
                path=""
-               element={<Navigate to={'login'} />}
+               element={<login/>}
             />
             <Route
                path="dashboard"

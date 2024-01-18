@@ -8,12 +8,16 @@ import DriveMasterReducer from "../reducer/DriveMasterReducer";
 import storage from "redux-persist/lib/storage";
 import {persistStore,persistReducer} from "redux-persist";
 import listUserSlice from "./features/listUserSlice";
+import locationMasterReducer from "../redux/features/location-master/addLocationMasterSlice";
+import locationMasterListSlice from "../redux/features/location-master/listLocationMasterSlice";
 
 const rootReducer = combineReducers({
    addUser: addUserReducer,
    listUser: listUserSlice,
    loginReducer: loginReducer,
    driveMaster: DriveMasterReducer,
+   locationMasterReducer: locationMasterReducer,
+   locationMasterListSlice: locationMasterListSlice
 })
 
 const persistConfig= {
