@@ -395,6 +395,7 @@ const FleetMasterView = () => {
       <CustomModal
         showModal={isModalVisible}
         handleCloseModal={handleCloseModal}
+        modalSize="modal-xl"
         child={<EmiForm formik={formik} />}
       />
       <form className="">
