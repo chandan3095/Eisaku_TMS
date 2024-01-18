@@ -12,12 +12,12 @@ import CustomFileUpload from "../../../components/common/CustomFileUpload/Custom
 import { isDisabled } from "@testing-library/user-event/dist/utils";
 import { useFormik } from "formik";
 import CustomDatePicker from "../../../components/common/CustomDatePicker/CustomDatePicker";
+import CustomModal from "../../../components/common/Modal";
 
 const CreateTrip = () => {
-  
   const setFormData = {
-    customerName: ["test"]
-  }
+    customerName: ["test"],
+  };
   const formik = useFormik({
     initialValues: {
       vehicleNo: ["123654"],
@@ -39,18 +39,20 @@ const CreateTrip = () => {
       actualAdblueProvided: "400",
       actualDriverTripAdvance: "856200",
       actualMiscExpence: "500",
-      actualMiscExpenceRemarks: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+      actualMiscExpenceRemarks:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
       destinationReportedTime: "",
       destinationUnloadingTime: "",
       pod: "",
-      podRemarks: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      podRemarks:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     },
     onSubmit: (values) => {
       // Handle form submission
       // console.log(values);
     },
   });
-  console.log(formik.values.customerName, '555');
+  console.log(formik.values.customerName, "555");
 
   // useEffect(() => {
   //   const defaultValue = 'test'; // Set your default value here
@@ -59,10 +61,18 @@ const CreateTrip = () => {
   // }, [formik.setFieldValue]);
 
   const [isDisabled, setIsdisabled] = useState(true);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleShowModal = () => {
+    setIsModalVisible(true);
+  };
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
   return (
     <div>
       <BodyHeader title="Add Trip Request" />
-      <form className="p-5 shadow-lg" onSubmit={formik.handleSubmit}>
+      <form className="p-3 shadow-lg" onSubmit={formik.handleSubmit}>
         <div className="card card-primary">
           <div className="card-header">
             <h3 className="card-title">General Details</h3>
@@ -449,10 +459,19 @@ const CreateTrip = () => {
           >
             <h6 className="mb-0 text-uppercase">Approve</h6>
           </button>
-          <button className="btn btn-danger ml-3 px-4 py-3" type="submit">
+          <button
+            className="btn btn-danger ml-3 px-4 py-3"
+            type="button"
+            onClick={handleShowModal}
+          >
             <h6 className="mb-0 text-uppercase">Reject</h6>
           </button>
         </div>
+        <CustomModal
+          showModal={isModalVisible}
+          handleCloseModal={handleCloseModal}
+          child={<CustomTextArea />}
+        />
       </form>
     </div>
   );

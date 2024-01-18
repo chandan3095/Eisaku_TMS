@@ -60,7 +60,7 @@ const VendorCreateForm = () => {
     return (
         <div>
             <BodyHeader title="Manager Add Vendor" />
-            <form className="p-5 shadow-lg">
+            <form className="p-3 shadow-lg">
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="card card-primary">
@@ -71,6 +71,7 @@ const VendorCreateForm = () => {
                                 <div className="row">
                                     <div className="col-12 col-sm-12 col-md-4 col-lg-4">
                                         <CustomInput
+                                        require={require}
                                             label="Vendor Name"
                                             id="#vendorName"
                                             name="vendorName"
@@ -79,6 +80,7 @@ const VendorCreateForm = () => {
                                     </div>
                                     <div className="col-lg-4">
                                         <CustomInput
+                                        require={require}
                                             label="Account Number"
                                             id="AccountNumber"
                                             placeholder="Enter Account Number"
@@ -86,6 +88,7 @@ const VendorCreateForm = () => {
                                     </div>
                                     <div className="col-lg-4">
                                         <CustomInput
+                                        require={require}
                                             label="Bank name"
                                             id="bankName"
                                             placeholder="Enter Bank Name"
@@ -93,6 +96,7 @@ const VendorCreateForm = () => {
                                     </div>
                                     <div className="col-lg-4">
                                         <CustomInput
+                                        require={require}
                                             label="IFSC Code"
                                             id="ifscCode"
                                             placeholder="Enter IFSC Code"
@@ -101,6 +105,7 @@ const VendorCreateForm = () => {
 
                                     <div className="col-lg-4">
                                         <CustomInput
+                                        require={require}
                                             label="Account Holder Name"
                                             id="accountHolderName"
                                             placeholder="Enter Account Holder name"
@@ -116,6 +121,7 @@ const VendorCreateForm = () => {
                                     </div>
                                     <div className="col-lg-4">
                                         <CustomInput
+                                        require={require}
                                             label="GST Number"
                                             id="gstNumber"
                                             placeholder="Enter GST Number"
@@ -155,6 +161,7 @@ const VendorCreateForm = () => {
                                                 >
                                                     <div className="col-12 col-sm-12 col-md-6 col-lg-4">
                                                         <CustomInput
+                                                        require={require}
                                                             label="Contact Person Name"
                                                             inputType="number"
                                                             id="#vendorMobile"
@@ -165,6 +172,7 @@ const VendorCreateForm = () => {
                                                     </div>
                                                     <div className="col-12 col-sm-12 col-md-6 col-lg-4">
                                                         <CustomInput
+                                                        require={require}
                                                             label="Mobile No"
                                                             inputType="number"
                                                             id="#vendorMobile"
@@ -175,6 +183,7 @@ const VendorCreateForm = () => {
                                                     </div>
                                                     <div className="col-12 col-sm-12 col-md-6 col-lg-4">
                                                         <CustomInput
+                                                        require={require}
                                                             label="Email Id"
                                                             inputType="text"
                                                             id="#vendorEmail"
@@ -263,6 +272,7 @@ const VendorCreateForm = () => {
                                     <div className="row mt-3">
                                         <div className="col-lg-4">
                                             <CustomInput
+                                            require={require}
                                                 label="Express mode rate additional"
                                                 id="expressModeRateAdditional"
                                                 placeholder="Enter Amount"
@@ -273,6 +283,7 @@ const VendorCreateForm = () => {
                                         </div>
                                         <div className="col-lg-4">
                                             <CustomInput
+                                            require={require}
                                                 label="Super express mode rate additional"
                                                 id="superExpressModeRateAdditional"
                                                 placeholder="Enter amount"
@@ -285,6 +296,7 @@ const VendorCreateForm = () => {
                                         </div>
                                         <div className="col-lg-4">
                                             <CustomInput
+                                            require={require}
                                                 label="Detention rate additional"
                                                 id="detentionRateAdditional"
                                                 placeholder="Enter amount"
@@ -295,6 +307,7 @@ const VendorCreateForm = () => {
                                         </div>
                                         <div className="col-lg-4">
                                             <CustomInput
+                                            require={require}
                                                 label="Multiple loading location rate additional"
                                                 id="multipleLoadingLocationRateAdditional"
                                                 placeholder="Enter amount"
@@ -309,6 +322,7 @@ const VendorCreateForm = () => {
 
                                         <div className="col-lg-4">
                                             <CustomInput
+                                            require={require}
                                                 label="Multiple unloading location rate additional"
                                                 id="multipleUnloadingLocationRateAdditional"
                                                 placeholder="Enter amount"
@@ -322,6 +336,7 @@ const VendorCreateForm = () => {
                                         </div>
                                         <div className="col-lg-4">
                                             <CustomInput
+                                            require={require}
                                                 label="Loading charges"
                                                 id="loadingCharges"
                                                 placeholder="Enter amount"
@@ -332,6 +347,7 @@ const VendorCreateForm = () => {
                                         </div>
                                         <div className="col-lg-4">
                                             <CustomInput
+                                            require={require}
                                                 label="Unloading charge"
                                                 id="unloadingCharge"
                                                 placeholder="Enter amount"
@@ -342,6 +358,7 @@ const VendorCreateForm = () => {
                                         </div>
                                         <div className="col-lg-4">
                                             <CustomInput
+                                            require={require}
                                                 label="miscellaneous charges"
                                                 id="miscellaneousCharges"
                                                 placeholder="Enter amount"
@@ -352,6 +369,7 @@ const VendorCreateForm = () => {
                                         </div>
                                         <div className="col-lg-4">
                                             <CustomInput
+                                            require={require}
                                                 label="miscellaneous Remarks"
                                                 id="miscellaneousRemarks"
                                                 placeholder="Enter remarks"

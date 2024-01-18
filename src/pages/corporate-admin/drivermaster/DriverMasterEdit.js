@@ -68,7 +68,7 @@ const DriverMasterEdit = () => {
    return (
       <div>
          <BodyHeader title="Edit Driver Master" />
-         <form className="p-5 shadow-lg">
+         <form className="p-3 shadow-lg">
             <div className="card card-primary">
                <div className="card-header">
                   <h3 className="card-title">Personal Details</h3>
