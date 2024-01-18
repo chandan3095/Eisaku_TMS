@@ -7,7 +7,7 @@ const Body = () => {
     <div>
       <BodyHeader/>
       <div className="container-fluid">
-        <div className="row">
+        {/* <div className="row">
           <div className="col-lg-3 col-6">
             <div className="small-box bg-info">
               <div className="inner">
@@ -66,7 +66,7 @@ const Body = () => {
               </a>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="row">
           <div className="col-lg-3 col-6">
             <div className="small-box bg-info">
