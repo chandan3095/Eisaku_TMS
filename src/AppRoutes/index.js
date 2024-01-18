@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes,Navigate } from 'react-router-dom'
 import HomeDashboard from '../pages/HomeDashboard'
 import RouteNames from './RouteName'
 import Login from '../pages/login/Login'
@@ -37,6 +37,10 @@ function AppRoutes() {
       <Routes>
          {/* for dashboard  */}
          <Route path="/" element={<Skeleton />} >
+            <Route
+               path=""
+               element={<Navigate to={'login'} />}
+            />
             <Route
                path="dashboard"
                element={<HomeDashboard />}
