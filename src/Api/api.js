@@ -31,10 +31,18 @@ export const handleAddLocationMaster = async (data) =>
     headers: {
       Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
     },
-});
+  });
 export const handleLocationMasterList = async (data) =>
   await client.get(EndUrls.locationMasterList, {
     headers: {
       Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
     },
-});
+  });
+// export const handleGetParentRoleApiCall= async (data)=> await client.get(EndUrls.parentRole, {headers:{Authorization : `Bearer ${JSON.parse(localStorage.getItem('token'))}`}})
+
+export const handleEdituserApiCall = async (data) =>
+  await client.patch(EndUrls.editUser, data, {
+    headers: {
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+    },
+  });

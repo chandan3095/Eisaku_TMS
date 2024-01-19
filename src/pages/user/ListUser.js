@@ -4,9 +4,11 @@ import CustomInput from '../../components/common/CustomInput/CustomInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { listUserAsync } from '../../redux/features/listUserSlice'
 import CustomToggle from '../../components/common/CustomToggle'
+import { useNavigate } from 'react-router-dom'
 
 function ListUser() {
    const dispatch = useDispatch();
+   const navigate = useNavigate()
    const userList = useSelector((state) => state.listUser)
    const [userRecords, setUserRecords] = useState(userList)
    console.log(userList);
@@ -40,7 +42,7 @@ function ListUser() {
       return {
          ...item, action:
             <>
-               <button className="btn btn-primary mx-2">Edit</button>
+               <button className="btn btn-primary mx-2" onClick={() => navigate(`/user/update-user/${item?.id}`)}>Edit</button>
                <CustomToggle/>
             </>
       }

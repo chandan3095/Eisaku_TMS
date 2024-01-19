@@ -33,10 +33,9 @@ const Login = () => {
       console.log(data);
       dispatch(loginUserAsync(data))
       .then((data)=>{
-         data?.payload?.statusCode === 200 && navigate('/')
+         data?.payload?.statusCode === 200 && navigate('/dashboard')
       })
       .catch((error)=> console.log(error))
-      
    }
 
    const formik = useFormik({

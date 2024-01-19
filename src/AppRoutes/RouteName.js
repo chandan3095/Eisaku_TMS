@@ -1,6 +1,7 @@
 const RouteNames = {
    addUser: '/user/add-user',
    listUser: '/user/user-List',
+   updateUser: '/user/update-user/:id',
 
 
    // add forms 

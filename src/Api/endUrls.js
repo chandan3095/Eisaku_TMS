@@ -5,7 +5,8 @@ const EndUrls={
 
    // Location Master 
    addLocationMaster: 'location/add',
-   locationMasterList: '/location?&model_id=10&action_id=3'
+   locationMasterList: '/location?&model_id=10&action_id=3',
+   editUser: '/user/update',
 }
 
 export default EndUrls
