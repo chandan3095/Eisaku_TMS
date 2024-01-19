@@ -32,8 +32,30 @@ export const handleAddLocationMaster = async (data) =>
       Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
     },
   });
-export const handleLocationMasterList = async (data) =>
+export const handleLocationMasterList = async () =>
   await client.get(EndUrls.locationMasterList, {
+    headers: {
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+    },
+  });
+export const handleLocationMasterSingleList = async (
+  id,
+  model_id,
+  action_id
+) => {
+  // console.log(EndUrls.locationMasterSingleList(id, model_id, action_id));
+  return await client.get(
+    EndUrls.locationMasterSingleList(id, model_id, action_id),
+    {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      },
+    }
+  );
+};
+
+export const handleLocationMasterUpdate = async (data) =>
+  await client.patch(EndUrls.locationMasterUpdate, data, {
     headers: {
       Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
     },

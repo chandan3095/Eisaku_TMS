@@ -10,24 +10,32 @@ import { locationMasterListAsync } from "../../../redux/features/location-master
 
 function LocationMasterView() {
   const dispatch = useDispatch();
-  const locationMasterList = useSelector((state) => state.locationMasterListSlice);
+  const locationMasterList = useSelector(
+    (state) => state.locationMasterListSlice
+  );
   // const [userRecords, setUserRecords] = useState(userList)
-//   console.log(locationMasterList, "000");
+  //   console.log(locationMasterList, "000");
 
-  //   const navigate = useNavigate();
-
+  const navigate = useNavigate();
+  const [records, setRecords] = useState([]);
   useEffect(() => {
     dispatch(locationMasterListAsync());
   }, []);
 
-  const [isChecked, setIsChecked] = useState(true); // State to manage toggle
-  const toggleSwitch = () => {
+  useEffect(() => {
+    setRecords(data);
+    return ()=>{setRecords([])};
+  }, [locationMasterList]);
+console.log(records, 'records');
+  const [isChecked, setIsChecked] = useState(); // State to manage toggle
+  const toggleSwitch = (index) => {
     setIsChecked(!isChecked);
     console.log(isChecked);
   };
+
   const columns = [
     {
-      name: "Contact Person Name",
+      name: "Location Person Name",
       selector: (row) => row.name,
       sortable: true,
     },
@@ -37,19 +45,36 @@ function LocationMasterView() {
       selector: (row) => row.action,
     },
   ];
+  const data =
+    locationMasterList?.user?.res?.length > 0
+      ? locationMasterList.user.res.map?.((item, index) => {
+          const isChecked = parseInt(item.is_active);
+          let editUserId = item.id;
+          let formType = "Edit";
+          // console.log(item, "85858");
 
-  const data = locationMasterList.user.res.map?.((item) => {
-   console.log(item, 'item');
-    return {
-      ...item,
-      action: (
-        <>
-          <button className="btn btn-primary mx-2">Edit</button>
-          <CustomToggleSwitch />
-        </>
-      ),
-    };
-  });
+          return {
+            ...item,
+            action: (
+              <>
+                <button
+                  className="btn btn-primary mx-2"
+                  onClick={() =>
+                    navigate(`/location-master/${formType}/${editUserId}`)
+                  }
+                >
+                  Edit
+                </button>
+                <CustomToggleSwitch
+                  checked={isChecked}
+                  onChange={() => toggleSwitch(index)}
+                  id={index}
+                />
+              </>
+            ),
+          };
+        })
+      : [];
 
   const customStyles = {
     table: {
@@ -80,24 +105,19 @@ function LocationMasterView() {
     },
   };
 
-  const [records, setRecords] = useState(data);
-
   const handleFilter = (e) => {
     const searchText = e.target.value.toLowerCase();
     const newData = data.filter((row) => {
-      return (
-        row.vendorName.toLowerCase().includes(searchText) ||
-        row.contactPersonName.toLowerCase().includes(searchText) ||
-        row.location.toLowerCase().includes(searchText)
-      );
+      return row.name.toLowerCase().includes(searchText);
     });
     setRecords(newData);
   };
+
   return (
     <div>
       <BodyHeader title="Location Master List" />
       <div className="px-3">
-        <div className="d-flex justify-content-end">          
+        <div className="d-flex justify-content-end">
           <CustomInput
             inputType="text"
             placeholder="Search..."
@@ -107,7 +127,7 @@ function LocationMasterView() {
         </div>
         <DataTable
           columns={columns}
-          data={records}
+          data={data}
           sortable
           fixedHeader
           pagination
@@ -116,11 +136,6 @@ function LocationMasterView() {
           borderColor="#000000"
           customStyles={customStyles}
         ></DataTable>
-        <CustomToggleSwitch
-          checked={isChecked}
-          onChange={toggleSwitch}
-          id="helper6"
-        />
       </div>
     </div>
   );

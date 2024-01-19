@@ -1,7 +1,7 @@
 // authSlice.js
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { handleLocationMasterList } from "../../../Api/api";
+import { handleLocationMasterSingleList } from "../../../Api/api";
 
 // Define an initial state for the slice
 const initialState = {
@@ -11,13 +11,17 @@ const initialState = {
 };
 
 // Create an async thunk for the login action
-export const locationMasterListAsync = createAsyncThunk(
-  "locationMaster/add",
+export const locationMasterSingleListAsync = createAsyncThunk(
+  "locationMaster/getList",
   async (data) => {
+    // console.log(data);
     try {
-      // console.log(data);
-      const response = await handleLocationMasterList(data);
-      // console.log({ response });
+      const { id, modelId, actionId } = data;
+      const response = await handleLocationMasterSingleList(
+        id,
+        modelId,
+        actionId
+      );
       return response.data;
     } catch (error) {
       // You can customize the error handling here
@@ -28,7 +32,7 @@ export const locationMasterListAsync = createAsyncThunk(
 );
 
 // Create a slice of the Redux store
-const locationMasterListSlice = createSlice({
+const locationMasterSingleListSlice = createSlice({
   name: "locationMaster",
   initialState,
   reducers: {
@@ -36,16 +40,16 @@ const locationMasterListSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(locationMasterListAsync.pending, (state) => {
+      .addCase(locationMasterSingleListAsync.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(locationMasterListAsync.fulfilled, (state, action) => {
+      .addCase(locationMasterSingleListAsync.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
         // console.log(action.payload);
       })
-      .addCase(locationMasterListAsync.rejected, (state, action) => {
+      .addCase(locationMasterSingleListAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload; // error message from the rejectWithValue call
       });
@@ -53,4 +57,4 @@ const locationMasterListSlice = createSlice({
 });
 
 // Export the reducer
-export default locationMasterListSlice.reducer;
+export default locationMasterSingleListSlice.reducer;

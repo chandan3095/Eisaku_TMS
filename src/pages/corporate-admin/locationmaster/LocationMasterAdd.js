@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CustomInput from "../../../components/common/CustomInput/CustomInput";
 import BodyHeader from "../../../components/common/CommonBodyHeader";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addLocationMasterAsync } from "../../../redux/features/location-master/addLocationMasterSlice";
+import { locationMasterSingleListAsync } from "../../../redux/features/location-master/singleListLocationMasterSlice";
+import { locationMasterUpdateAsync } from "../../../redux/features/location-master/updateLocationMasterSlice";
+import { useParams } from "react-router-dom";
 
 const LocationSchema = Yup.object().shape({
   personName: Yup.string()
@@ -14,30 +17,63 @@ const LocationSchema = Yup.object().shape({
 });
 
 const LocationMasterAdd = () => {
-  const dispatch = useDispatch()
+  const { id, formType } = useParams();
 
-const addLocationMasterData = async(data) => {
-  const bodyData = {
-    name : data.personName,
-    model_id :  "10" ,
-    action_id :   "1"
-  }
-  dispatch(addLocationMasterAsync(bodyData))
-}
+  // console.log(`${id}`, 'formType');
+  // console.log(`${formType}`, 'formType');
+
+  const dispatch = useDispatch();
+  const locationMasterList = useSelector(
+    (state) => state.locationMasterSingleListSlice
+  );
+  // console.log(locationMasterList.data?.res?.name, "000");
+
+  // const navigate = useNavigate();
+
+  useEffect(() => {
+    if (id) {
+      dispatch(
+        locationMasterSingleListAsync({ id: id, modelId: 1, actionId: 3 })
+      );
+    }
+  }, []);
+
+  const addLocationMasterData = async (data) => {
+    const bodyData = {
+      name: data.personName,
+      model_id: "10",
+      action_id: "1",
+    };
+    dispatch(addLocationMasterAsync(bodyData));
+  };
+  const updateLocationMasterData = async (data) => {
+    const updateData = {
+      name: data.personName,
+      model_id: "10",
+      action_id: "2",
+      id: id,
+    };
+    dispatch(locationMasterUpdateAsync(updateData));
+  };
   const formik = useFormik({
     initialValues: {
-      personName: "",
+      personName: locationMasterList?.data?.res?.name
+        ? locationMasterList?.data?.res?.name
+        : "",
     },
     validationSchema: LocationSchema,
     onSubmit: (values) => {
-      addLocationMasterData(values)
+      if (formType === "Add") {
+        addLocationMasterData(values);
+      } else {
+        updateLocationMasterData(values);
+      }
       console.log(values);
     },
   });
   return (
     <div>
-      <BodyHeader title="Add Location Master" />
-
+      <BodyHeader title={`${formType} Location Master`} />
       <form className="p-3 shadow-lg" onSubmit={formik.handleSubmit}>
         <div className="row">
           <div className="col-lg-12">

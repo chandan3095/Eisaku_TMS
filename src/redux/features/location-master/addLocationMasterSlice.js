@@ -42,7 +42,7 @@ const locationMasterSlice = createSlice({
       })
       .addCase(addLocationMasterAsync.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload;
+        state.data = action.payload;
         console.log(action.payload);
       })
       .addCase(addLocationMasterAsync.rejected, (state, action) => {
