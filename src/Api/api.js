@@ -13,3 +13,4 @@ export const handleListuserApiCall = async(data)=> await client.get(EndUrls.list
 
 export const handleEdituserApiCall = async(data)=> await client.patch(EndUrls.editUser, data, {headers: {Authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`}})
 
+export const handleContractorMasterApiCall = async (data) => await client.post(EndUrls.contractorAdd, data, { headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}` } });

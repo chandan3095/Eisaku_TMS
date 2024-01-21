@@ -1,7 +1,17 @@
 import React from "react";
 
 const CustomFileUpload = (props) => {
-  const { id, name, onchange, disabled, errors, message } = props;
+  const { id, name, onChange, disabled, errors, message } = props;
+
+   const handleFileChange=(e)=>{
+      const uploadedFile= e.target.files[0]
+
+      console.log(uploadedFile);
+
+      if(onChange){
+         onChange(e)
+      }
+   }
   return (
     <div class="form-group w-100">
       <input
@@ -9,7 +19,7 @@ const CustomFileUpload = (props) => {
         id={id}
         name={name}
         className="form-control h-auto"
-        onChange={onchange}
+        onChange={handleFileChange}
         disabled={disabled}
       />
      {errors && (
