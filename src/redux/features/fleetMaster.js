@@ -33,8 +33,8 @@ export const getFleetMasterDropdownDataAsync = createAsyncThunk(
         } catch (error) {
             // You can customize the error handling here
             console.log(error);
-            thunkAPI.rejectWithValue(error.response.data);
-            throw error.response.data;
+            thunkAPI.rejectWithValue(error?.response?.data);
+            throw error?.response?.data;
         }
     }
 );
