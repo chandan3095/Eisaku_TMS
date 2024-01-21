@@ -17,7 +17,6 @@ function VehicleDetails({
   setFuelType,
   vehicleCategoryData
 }) {
-  console.log({sssssssssss:formik.getFieldProps('vehicleNo')});
   return (
     <FormikProvider value={formik}>
       <Form noValidate>
@@ -85,6 +84,7 @@ function VehicleDetails({
               label="Vehicle owner name"
               id="vehicleOwner"
               placeholder="Enter vehicle owner name"
+              name='vehicleOwnerName'
               onChange={formik.handleChange}
               value={formik.values.vehicleOwnerName}
               errors={formik.errors.vehicleOwnerName}
