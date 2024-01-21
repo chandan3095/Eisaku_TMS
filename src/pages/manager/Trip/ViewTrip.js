@@ -183,8 +183,12 @@ const ViewTrip = () => {
          <BodyHeader title="Trip List" />
 
          <div className='px-3'>
-         <div className=" d-flex justify-content-between">
-            <h3>User's List</h3>
+         <div className="d-flex justify-content-between align-items-center mb-2">
+            <div>
+            <button className='btn btn-primary mr-2'>All Trip</button>
+            <button className='btn btn-secondary mx-2'>Open Trip</button>
+            <button className='btn btn-secondary mx-2'>Close Trip</button>
+            </div>
             <CustomInput inputType="text" placeholder="Search..." id="search" onChange={(e) => handleFilter(e)} />
          </div>
          <DataTable

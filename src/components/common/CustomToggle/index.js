@@ -4,7 +4,6 @@ function CustomToggleSwitch(props) {
     const {checked, onChange, id} = props
   //  console.log(checked, "component");
   return (
-    <span className="form-group">
       <div className="custom-control custom-switch d-inline-block ml-2">
         <input
           type="checkbox"
@@ -17,7 +16,6 @@ function CustomToggleSwitch(props) {
           {/* Toggle this custom switch element */}
         </label>
       </div>
-    </span>
   );
 }
 
