@@ -1,11 +1,11 @@
 import React from "react";
 import CustomTextArea from "../CustomTextArea/CustomTextArea";
 
-const CustomModal = ({ showModal, handleCloseModal, child }) => {
+const CustomModal = ({ showModal, handleCloseModal, child, modalSize }) => {
   
   return (  
         <div className={`modal fade ${showModal ? 'show d-block' : ''}`} id="modal-default">
-          <div className="modal-dialog">
+          <div className={`modal-dialog ${modalSize}`}>
             <div className="modal-content">
               <div className="modal-header">
                 <h4 className="modal-title">Reject Remarks</h4>

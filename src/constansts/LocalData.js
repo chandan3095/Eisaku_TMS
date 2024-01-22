@@ -152,7 +152,7 @@ export const SideBarDropdownData = [
     dropdownList: [
       {
         subMenuName: "Add",
-        url: "/add-form",
+        url: "/Add",
         subDropdownList: [],
       },
       {
