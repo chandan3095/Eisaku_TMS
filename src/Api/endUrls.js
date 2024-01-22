@@ -1,8 +1,11 @@
-const EndUrls = {
-  login: "login",
-  addUser: "user/add",
-  listUser: "/user?model_id=1&action_id=3",
-  editUser: "/user/update",
+ 
+const EndUrls={
+   login: 'login',
+   addUser: 'user/add',
+   listUser: '/user?model_id=1&action_id=3',
+   editUser: '/user/update',
+   contractorAdd: '/contractor/add',
+ 
 
   // Location Master
   addLocationMaster: "location/add",
@@ -13,3 +16,4 @@ const EndUrls = {
 };
 
 export default EndUrls;
+ 
