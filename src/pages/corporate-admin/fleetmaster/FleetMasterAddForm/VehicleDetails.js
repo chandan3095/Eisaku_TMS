@@ -1,477 +1,575 @@
 import React from "react";
+import * as Yup from "yup";
 import CustomInput from "../../../../components/common/CustomInput/CustomInput";
 import CustomDropdown from "../../../../components/common/CustomDropdown/CustomDropdown";
 import CustomRadio from "../../../../components/common/CustomRadio/CustomRadio";
 import CustomMonthYear from "../../../../components/common/CustomMonthYear/CustomMonthYear";
 import CustomFileUpload from "../../../../components/common/CustomFileUpload/CustomFileUpload";
 import CustomDatePicker from "../../../../components/common/CustomDatePicker/CustomDatePicker";
-import { Form, FormikProvider } from "formik";
+import { Form, FormikProvider, useFormik } from "formik";
+
+const validationSchema = Yup.object().shape({
+    vehicleNo: Yup.string().required("vehicle No is required"),
+    chasisNo: Yup.string().required("Chasis No is required"),
+    engineNo: Yup.string().required("Engine No is required"),
+    vehicleOwnerName: Yup.string().required("Vehicle Owner Name is required"),
+    dimension: Yup.string().required("Dimension is required"),
+    fastagBankName: Yup.string().required("Fastag Bank Name is required"),
+    vehicleCategory: Yup.string().required("Vehicle Category is required"),
+    tonnage: Yup.number()
+        .required("Tonnage is required")
+        .positive("Tonnage must be a positive number"),
+    make: Yup.string().required("Make Name is required"),
+    model: Yup.date()
+        .required("Model Month Year is required")
+        .min(new Date(), "Must be a future date"),
+    registrationCertificate: Yup.string().required(
+        "Registration Certificate is required"
+    ),
+    insuranceExpiryDate: Yup.date()
+        .required("Insurance Expiry Date is required")
+        .min(new Date(), "Must be a future date"),
+    insuranceAmount: Yup.number()
+        .required("Insurance Amount is required")
+        .min(0, "Must be a positive value"),
+    insuranceCertificate: Yup.string().required("Insurance Certificate is required"),
+    fitnessExpiryDate: Yup.date()
+        .required("Fitness Expiry Date is required")
+        .min(new Date(), "Must be a future date"),
+    fitnessAmount: Yup.number()
+        .required("Fitness Amount is required")
+        .min(0, "Must be a positive value"),
+    fitnessCertificate: Yup.string().required("Fitness Certificate is required"),
+    localPermitExpiryDate: Yup.date()
+        .required("Local Permit Expiry Date is required")
+        .min(new Date(), "Must be a future date"),
+    localPermitAmount: Yup.number()
+        .required("Local Permit Amount is required")
+        .min(0, "Must be a positive value"),
+    localPermitDocument: Yup.string().required("Local Permit Document is required"),
+    nationalPermitExpiryDate: Yup.date()
+        .required("National Permit Expiry Date is required")
+        .min(new Date(), "Must be a future date"),
+    nationalPermitAmount: Yup.number()
+        .required("National Permit Amount is required")
+        .min(0, "Must be a positive value"),
+    nationalPermitDocument: Yup.string().required("National Permit Document is required"),
+    pucExpiryDate: Yup.date()
+        .required("PUC Expiry Date is required")
+        .min(new Date(), "Must be a future date"),
+    pucAmount: Yup.number()
+        .required("PUC Amount is required")
+        .min(0, "Must be a positive value"),
+    pucDocument: Yup.mixed().required("File is required"),
+    mvTax: Yup.number().required("MV Tax is required").min(0, "Must be a positive value"),
+    mvTaxExpiryDate: Yup.date()
+        .required("MV Tax Expiry Date is required")
+        .min(new Date(), "Must be a future date"),
+    mvTaxAmount: Yup.number()
+        .required("MV Tax Amount is required")
+        .min(0, "Must be a positive value"),
+    gpsProviderName: Yup.string(),
+    gpsAmount: Yup.number().min(0, "Must be a positive value"),
+    fabricatorName: Yup.string(),
+    fabricatorLocation: Yup.string(),
+});
+
+const initialValues = {
+    vehicleNo: "",
+    chasisNo: "",
+    engineNo: "",
+    vehicleOwnerName: "",
+    dimension: [],
+    fastagBankName: "",
+    vehicleCategory: "",
+    tonnage: "",
+    fuelType: "Petrol",
+    make: "",
+    model: "",
+    registrationCertificate: "",
+    insuranceExpiryDate: "",
+    insuranceAmount: 0,
+    insuranceCertificate: null,
+    fitnessExpiryDate: "",
+    fitnessAmount: 0,
+    fitnessCertificate: "",
+    localPermitExpiryDate: "",
+    localPermitAmount: 0,
+    localPermitDocument: "",
+    nationalPermitExpiryDate: "",
+    nationalPermitAmount: 0,
+    nationalPermitDocument: "",
+    pucExpiryDate: "",
+    pucAmount: 0,
+    pucDocument: "",
+    mvTax: 0,
+    mvTaxExpiryDate: "",
+    mvTaxAmount: 0,
+    gpsProviderName: "",
+    gpsAmount: 0,
+    fabricatorName: "",
+    fabricatorLocation: "",
+};
 
 function VehicleDetails({
-   formik,
-   makeData,
-   handleFileChange,
-   selectOptionData,
-   fuelType,
-   tonnageData,
-   setFuelType,
-   vehicleCategoryData
+    // formik,
+    makeData,
+    handleFileChange,
+    selectOptionData,
+    fuelType,
+    tonnageData,
+    setFuelType,
+    vehicleCategoryData,
 }) {
-   console.log({ sssssssssss: formik.getFieldProps('vehicleNo') });
-   return (
-      <FormikProvider value={formik}>
-         <Form className="needs-validation" noValidate>
-            <div
-               className="tab-pane fade show active"
-               id="0"
-               role="tabpanel"
-               aria-labelledby="0"
-            >
-               <div className="card card-primary">
-                  <div className="card-header">
-                     <h3 className="card-title">Vehicle Details</h3>
-                  </div>
+    const formik = useFormik({
+        initialValues: initialValues,
+        validationSchema: validationSchema,
+        onSubmit: () => {},
+    });
 
-                  <div className="row card-body">
-                     {/* Vehicle No Sec */}
-                     <div className="col-lg-4">
-                        <CustomInput
-                           require={require}
-                           label="Vehicle No"
-                           id="vehicleNo"
-                           name="vehicleNo"
-                           placeholder="Enter Vehicle No"
-                           // onChange={formik.handleChange}
-                           // value={formik.values.vehicleNo}
-                           {...formik.getFieldProps('vehicleNo')}
-                           errors={formik.errors.vehicleNo}
-                           message={formik.errors.vehicleNo}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        {/* Vehicle No Sec */}
-                        <CustomInput
-                           require={require}
-                           label="Chasis No"
-                           id="chasisNo"
-                           name="chasisNo"
-                           placeholder="Enter Chasis No"
-                           {...formik.getFieldProps('chasisNo')}
+    const { errors, touched, getFieldProps, handleSubmit, setFieldValue } = formik;
 
-                           // onChange={formik.handleChange}
-                           // value={formik.values.chasisNo}
-                           errors={formik.errors.chasisNo}
-                           message={formik.errors.chasisNo}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        {/* Vehicle No Sec */}
-                        <CustomInput
-                           require={require}
-                           label="Engine No"
-                           id="engineNo"
-                           name="engineNo"
-                           placeholder="Enter Engine No"
-                           onChange={formik.handleChange}
-                           // onBlur={formik.handleBlur}
-                           value={formik.values.engineNo}
-                           errors={formik.errors.engineNo}
-                           message={formik.errors.engineNo}
-                        />
-                     </div>
-
-                     <div className="col-lg-4">
-                        <CustomInput
-                           require={require}
-                           label="Vehicle owner name"
-                           id="vehicleOwner"
-                           name="vehicleOwner"
-                           placeholder="Enter vehicle owner name"
-                           onChange={formik.handleChange}
-                           value={formik.values.vehicleOwnerName}
-                           errors={formik.errors.vehicleOwnerName}
-                           message={formik.errors.vehicleOwnerName}
-                        />
-                     </div>
-
-                     {/* Dimension  */}
-                     <div className="col-lg-4">
-                        <CustomDropdown
-                           label="Dimension(L B H (ft))"
-                           optionData={selectOptionData}
-                           value={formik.values.dimension}
-                           onChange={(value) => {
-                              formik.setFieldValue("dimension", value);
-                           }}
-                           errors={formik.errors.dimension}
-                           message={formik.errors.dimension}
-                        />
-                     </div>
-
-                     {/* Fastag bank name Sec */}
-                     <div className="col-lg-4">
-                        <CustomInput
-                           require={require}
-                           label="Fastag bank name"
-                           id="fastagBankName"
-                           name="fastagBankName"
-                           placeholder="Enter Fastag bank name"
-                           onChange={formik.handleChange}
-                           value={formik.values.fastagBankName}
-                           errors={formik.errors.fastagBankName}
-                           message={formik.errors.fastagBankName}
-                        />
-                     </div>
-                     {/* Vehicle Category Sec */}
-                     <div className="col-lg-4">
-                        <CustomDropdown
-                           label="Vehicle Category"
-                           optionData={vehicleCategoryData}
-                           value={formik.values.vehicleCategory}
-                           onChange={(value) => {
-                              formik.setFieldValue("vehicleCategory", value);
-                           }}
-                           errors={formik.errors.vehicleCategory}
-                           message={formik.errors.vehicleCategory}
-                        />
-                     </div>
-                     {/* Tonnage Sec */}
-                     <div className="col-lg-4">
-                        <CustomDropdown
-                           label="Tonnage(T)"
-                           optionData={tonnageData}
-                           value={formik.values.tonnage}
-                           onChange={(value) => {
-                              formik.setFieldValue("tonnage", value);
-                           }}
-                           errors={formik.errors.tonnage}
-                           message={formik.errors.tonnage}
-                        />
-                     </div>
-
-                     <div className="col-lg-4">
-                        <label className="text-bold">
-                           Fuel Type
-                           <span className="text-danger">*</span>
-                        </label>
-                        <div className="form-group mt-2">
-                           <CustomRadio
-                              label="Diesel"
-                              id="diesel"
-                              value="Diesel"
-                              name="fuelType"
-                              defaultChecked={fuelType}
-                              onChange={(event) => setFuelType(event.target.value)}
-                           />
-
-                           <CustomRadio
-                              label="CNG"
-                              id="cng"
-                              value="CNG"
-                              name="fuelType"
-                              onChange={(event) => setFuelType(event.target.value)}
-                           />
+    return (
+        <FormikProvider value={formik}>
+            <Form noValidate>
+                <div
+                    className="tab-pane fade show active"
+                    id="0"
+                    role="tabpanel"
+                    aria-labelledby="0"
+                >
+                    <div className="card card-primary">
+                        <div className="card-header">
+                            <h3 className="card-title">Vehicle Details</h3>
                         </div>
-                     </div>
 
-                     <div className="col-lg-4">
-                        <CustomDropdown
-                           label="Make"
-                           optionData={makeData}
-                           value={formik.values.make}
-                           onChange={(value) => {
-                              formik.setFieldValue("make", value);
-                           }}
-                           errors={formik.errors.make}
-                           message={formik.errors.make}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <CustomMonthYear
-                           label="Model (Month Year)"
-                           values={formik.values.model}
-                           errors={formik.errors.model}
-                           message={formik.errors.model}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <label className="text-bold">
-                           Registration emiCertificate
-                           <span className="text-danger">*</span>
-                        </label>
-                        <CustomFileUpload
-                           accept=".pdf, .doc, .docx"
-                           onChange={(event) => handleFileChange(event)}
-                           errors={formik.errors.insuranceAmount}
-                           message={formik.errors.insuranceAmount}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <CustomDatePicker
-                           require={require}
-                           label="Insurance Expiry Date"
-                           placeholder="Enter Insurance Expiry Date"
-                           values={formik.values.insuranceExpiryDate}
-                           errors={formik.errors.insuranceExpiryDate}
-                           message={formik.errors.insuranceExpiryDate}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <CustomInput
-                           require={require}
-                           label="Insurance Amount"
-                           id="fitnessAmount"
-                           name="fitnessAmount"
-                           placeholder="Enter Insurance Amount"
-                           onChange={formik.handleChange}
-                           value={formik.values.insuranceAmount}
-                           errors={formik.errors.insuranceAmount}
-                           message={formik.errors.insuranceAmount}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <label className="text-bold">
-                           Insurance Certificate
-                           <span className="text-danger">*</span>
-                        </label>
-                        <CustomFileUpload
-                           accept=".pdf, .doc, .docx"
-                           onChange={(event) => handleFileChange(event)}
-                           errors={formik.errors.insuranceAmount}
-                           message={formik.errors.insuranceAmount}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <CustomDatePicker
-                           require={require}
-                           label="Fitness Expiry Date"
-                           placeholder="Enter Fitness Expiry Date"
-                           values={formik.values.fitnessExpiryDate}
-                           errors={formik.errors.fitnessExpiryDate}
-                           message={formik.errors.fitnessExpiryDate}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <CustomInput
-                           require={require}
-                           label="Fitness Amount"
-                           id="fitnessAmount"
-                           name="fitnessAmount"
-                           placeholder="Enter Fitness Amount"
-                           onChange={formik.handleChange}
-                           value={formik.values.fitnessAmount}
-                           errors={formik.errors.fitnessAmount}
-                           message={formik.errors.fitnessAmount}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <label className="text-bold">
-                           Fitness Certificate
-                           <span className="text-danger">*</span>
-                        </label>
-                        <CustomFileUpload
-                           accept=".pdf, .doc, .docx"
-                           onChange={(event) => handleFileChange(event)}
-                           errors={formik.errors.insuranceAmount}
-                           message={formik.errors.insuranceAmount}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <CustomDatePicker
-                           require={require}
-                           label="Local Permit Expiry Date"
-                           placeholder="Enter Local Permit Expiry Date"
-                           name="localPermitExpiryDate"
-                           values={formik.values.localPermitExpiryDate}
-                           errors={formik.errors.localPermitExpiryDate}
-                           message={formik.errors.localPermitExpiryDate}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <CustomInput
-                           require={require}
-                           label="Local Permit Amount"
-                           id="fitnessAmount"
-                           name="fitnessAmount"
-                           placeholder="Enter Local Permit Amount"
-                           onChange={formik.handleChange}
-                           value={formik.values.fitnessAmount}
-                           errors={formik.errors.fitnessAmount}
-                           message={formik.errors.fitnessAmount}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <label className="text-bold">
-                           Local Permit Document
-                           <span className="text-danger">*</span>
-                        </label>
-                        <CustomFileUpload
-                           accept=".pdf, .doc, .docx"
-                           onChange={(event) => handleFileChange(event)}
-                           errors={formik.errors.insuranceAmount}
-                           message={formik.errors.insuranceAmount}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <CustomDatePicker
-                           require={require}
-                           label="National Permit Expiry Date"
-                           placeholder="Enter National Permit Expiry Date"
-                           values={formik.values.nationalPermitExpiryDate}
-                           errors={formik.errors.nationalPermitExpiryDate}
-                           message={formik.errors.nationalPermitExpiryDate}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <CustomInput
-                           require={require}
-                           label="National Permit Amount"
-                           id="fitnessAmount"
-                           name="fitnessAmount"
-                           placeholder="Enter National Permit Amount"
-                           onChange={formik.handleChange}
-                           value={formik.values.nationalPermitAmount}
-                           errors={formik.errors.nationalPermitAmount}
-                           message={formik.errors.nationalPermitAmount}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <label className="text-bold">
-                           National Permit Document
-                           <span className="text-danger">*</span>
-                        </label>
-                        <CustomFileUpload
-                           accept=".pdf, .doc, .docx"
-                           onChange={(event) => handleFileChange(event)}
-                           errors={formik.errors.insuranceAmount}
-                           message={formik.errors.insuranceAmount}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <CustomDatePicker
-                           require={require}
-                           label="PUC Expiry Date"
-                           placeholder="Enter PUC Expiry Date"
-                           values={formik.values.pucExpiryDate}
-                           errors={formik.errors.pucExpiryDate}
-                           message={formik.errors.pucExpiryDate}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <CustomInput
-                           require={require}
-                           label="PUC Amount"
-                           id="fitnessAmount"
-                           name="fitnessAmount"
-                           placeholder="Enter PUC Amount"
-                           onChange={formik.handleChange}
-                           value={formik.values.pucAmount}
-                           errors={formik.errors.pucAmount}
-                           message={formik.errors.pucAmount}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <label className="text-bold">
-                           PUC Document
-                           <span className="text-danger">*</span>
-                        </label>
-                        <CustomFileUpload
-                           accept=".pdf, .doc, .docx"
-                           onChange={(event) => handleFileChange(event)}
-                           errors={formik.errors.insuranceAmount}
-                           message={formik.errors.insuranceAmount}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <label className="text-bold">
-                           MV Tax
-                           <span className="text-danger">*</span>
-                        </label>
-                        <CustomFileUpload
-                           accept=".pdf, .doc, .docx"
-                           onChange={(event) => handleFileChange(event)}
-                           errors={formik.errors.insuranceAmount}
-                           message={formik.errors.insuranceAmount}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <CustomDatePicker
-                           require={require}
-                           label="MV Tax Expiry Date"
-                           placeholder="Enter MV Tax Expiry Date"
-                           values={formik.values.mvTaxExpiryDate}
-                           errors={formik.errors.mvTaxExpiryDate}
-                           message={formik.errors.mvTaxExpiryDate}
-                        />
-                     </div>
-                     <div className="col-lg-4">
-                        <CustomInput
-                           require={require}
-                           label="MV Tax Amount"
-                           id="fitnessAmount"
-                           name="fitnessAmount"
-                           placeholder="Enter MV Tax Amount"
-                           onChange={formik.handleChange}
-                           value={formik.values.mvTaxAmount}
-                           errors={formik.errors.mvTaxAmount}
-                           message={formik.errors.mvTaxAmount}
-                        />
-                     </div>
-                     <div className="col-lg-6">
-                        <CustomInput
-                           label="GPS Provider Name"
-                           id="gpsProvider"
-                           name="gpsProvider"
-                           placeholder="Enter GPS Provider Name"
-                           onChange={formik.handleChange}
-                           value={formik.values.gpsProviderName}
-                           errors={formik.errors.gpsProviderName}
-                           message={formik.errors.gpsProviderName}
-                        />
-                     </div>
-                     <div className="col-lg-6">
-                        <CustomInput
-                           label="GPS Amount"
-                           id="fitnessAmount"
-                           name="fitnessAmount"
-                           placeholder="Enter GPS Amount"
-                           onChange={formik.handleChange}
-                           value={formik.values.gpsAmount}
-                           errors={formik.errors.gpsAmount}
-                           message={formik.errors.gpsAmount}
-                        />
-                     </div>
-                     <div className="col-lg-6">
-                        <CustomInput
-                           label="Fabricator Name"
-                           id="fitnessAmount"
-                           name="fitnessAmount"
-                           placeholder="Enter Fabricator Name"
-                           onChange={formik.handleChange}
-                           value={formik.values.fabricatorName}
-                           errors={formik.errors.fabricatorName}
-                           message={formik.errors.fabricatorName}
-                        />
-                     </div>
+                        <div className="row card-body">
+                            {/* Vehicle No Sec */}
+                            <div className="col-lg-4">
+                                <CustomInput
+                                    require={require}
+                                    label="Vehicle No"
+                                    id="vehicleNo"
+                                    placeholder="Enter Vehicle No"
+                                    // onChange={formik.handleChange}
+                                    // value={formik.values.vehicleNo}
+                                    {...getFieldProps("vehicleNo")}
+                                    errors={errors.vehicleNo}
+                                    message={errors.vehicleNo}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                {/* Vehicle No Sec */}
+                                <CustomInput
+                                    require={require}
+                                    label="Chasis No"
+                                    id="chasisNo"
+                                    placeholder="Enter Chasis No"
+                                    {...getFieldProps("chasisNo")}
+                                    // onChange={formik.handleChange}
+                                    // value={formik.values.chasisNo}
+                                    errors={errors.chasisNo}
+                                    message={errors.chasisNo}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                {/* Vehicle No Sec */}
+                                <CustomInput
+                                    require={require}
+                                    label="Engine No"
+                                    id="engineNo"
+                                    placeholder="Enter Engine No"
+                                    onChange={formik.handleChange}
+                                    // onBlur={formik.handleBlur}
+                                    {...getFieldProps("engineNo")}
+                                    errors={errors.engineNo}
+                                    message={errors.engineNo}
+                                />
+                            </div>
 
-                     <div className="col-lg-6">
-                        <CustomInput
-                           label="Fabricator Location"
-                           id="fitnessAmount"
-                           name="fitnessAmount"
-                           placeholder="Enter Fabricator Location"
-                           onChange={formik.handleChange}
-                           value={formik.values.fabricatorLocation}
-                           errors={formik.errors.fabricatorLocation}
-                           message={formik.errors.fabricatorLocation}
-                        />
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </Form>
-      </FormikProvider>
-   );
+                            <div className="col-lg-4">
+                                <CustomInput
+                                    require={require}
+                                    label="Vehicle owner name"
+                                    id="vehicleOwner"
+                                    placeholder="Enter vehicle owner name"
+                                    {...getFieldProps("vehicleOwnerName")}
+                                    errors={errors.vehicleOwnerName}
+                                    message={errors.vehicleOwnerName}
+                                />
+                            </div>
+
+                            {/* Dimension  */}
+                            <div className="col-lg-4">
+                                <CustomDropdown
+                                    label="Dimension(L B H (ft))"
+                                    optionData={selectOptionData}
+                                    {...getFieldProps("dimension")}
+                                    onChange={(value) => {
+                                        setFieldValue("dimension", value);
+                                    }}
+                                    errors={errors.dimension}
+                                    message={errors.dimension}
+                                />
+                            </div>
+
+                            {/* Fastag bank name Sec */}
+                            <div className="col-lg-4">
+                                <CustomInput
+                                    require={require}
+                                    label="Fastag bank name"
+                                    id="fastagBankName"
+                                    placeholder="Enter Fastag bank name"
+                                    {...getFieldProps("fastagBankName")}
+                                    errors={errors.fastagBankName}
+                                    message={errors.fastagBankName}
+                                />
+                            </div>
+                            {/* Vehicle Category Sec */}
+                            <div className="col-lg-4">
+                                <CustomDropdown
+                                    label="Vehicle Category"
+                                    optionData={vehicleCategoryData}
+                                    {...getFieldProps("vehicleCategory")}
+                                    onChange={(value) => {
+                                        setFieldValue("vehicleCategory", value);
+                                    }}
+                                    errors={errors.vehicleCategory}
+                                    message={errors.vehicleCategory}
+                                />
+                            </div>
+                            {/* Tonnage Sec */}
+                            <div className="col-lg-4">
+                                <CustomDropdown
+                                    label="Tonnage(T)"
+                                    optionData={tonnageData}
+                                    {...getFieldProps("tonnage")}
+                                    onChange={(value) => {
+                                        setFieldValue("tonnage", value);
+                                    }}
+                                    errors={errors.tonnage}
+                                    message={errors.tonnage}
+                                />
+                            </div>
+
+                            <div className="col-lg-4">
+                                <label className="text-bold">
+                                    Fuel Type
+                                    <span className="text-danger">*</span>
+                                </label>
+                                <div className="form-group mt-2">
+                                    <CustomRadio
+                                        label="Diesel"
+                                        id="diesel"
+                                        value="Diesel"
+                                        name="fuelType"
+                                        defaultChecked={fuelType}
+                                        onChange={(event) =>
+                                            setFuelType(event.target.value)
+                                        }
+                                    />
+
+                                    <CustomRadio
+                                        label="CNG"
+                                        id="cng"
+                                        value="CNG"
+                                        name="fuelType"
+                                        onChange={(event) =>
+                                            setFuelType(event.target.value)
+                                        }
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="col-lg-4">
+                                <CustomDropdown
+                                    label="Make"
+                                    optionData={makeData}
+                                    {...getFieldProps("make")}
+                                    onChange={(value) => {
+                                        setFieldValue("make", value);
+                                    }}
+                                    errors={errors.make}
+                                    message={errors.make}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <CustomMonthYear
+                                    label="Model (Month Year)"
+                                    {...getFieldProps("model")}
+                                    errors={errors.model}
+                                    message={errors.model}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <label className="text-bold">
+                                    Registration emiCertificate
+                                    <span className="text-danger">*</span>
+                                </label>
+                                <CustomFileUpload
+                                    accept=".pdf, .doc, .docx"
+                                    onChange={(event) => handleFileChange(event)}
+                                    errors={formik.errors.insuranceAmount}
+                                    message={formik.errors.insuranceAmount}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <CustomDatePicker
+                                    require={require}
+                                    label="Insurance Expiry Date"
+                                    placeholder="Enter Insurance Expiry Date"
+                                    values={formik.values.insuranceExpiryDate}
+                                    errors={formik.errors.insuranceExpiryDate}
+                                    message={formik.errors.insuranceExpiryDate}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <CustomInput
+                                    require={require}
+                                    label="Insurance Amount"
+                                    id="fitnessAmount"
+                                    placeholder="Enter Insurance Amount"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.insuranceAmount}
+                                    errors={formik.errors.insuranceAmount}
+                                    message={formik.errors.insuranceAmount}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <label className="text-bold">
+                                    Insurance Certificate
+                                    <span className="text-danger">*</span>
+                                </label>
+                                <CustomFileUpload
+                                    accept=".pdf, .doc, .docx"
+                                    onChange={(event) => handleFileChange(event)}
+                                    errors={formik.errors.insuranceAmount}
+                                    message={formik.errors.insuranceAmount}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <CustomDatePicker
+                                    require={require}
+                                    label="Fitness Expiry Date"
+                                    placeholder="Enter Fitness Expiry Date"
+                                    values={formik.values.fitnessExpiryDate}
+                                    errors={formik.errors.fitnessExpiryDate}
+                                    message={formik.errors.fitnessExpiryDate}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <CustomInput
+                                    require={require}
+                                    label="Fitness Amount"
+                                    id="fitnessAmount"
+                                    placeholder="Enter Fitness Amount"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.fitnessAmount}
+                                    errors={formik.errors.fitnessAmount}
+                                    message={formik.errors.fitnessAmount}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <label className="text-bold">
+                                    Fitness Certificate
+                                    <span className="text-danger">*</span>
+                                </label>
+                                <CustomFileUpload
+                                    accept=".pdf, .doc, .docx"
+                                    onChange={(event) => handleFileChange(event)}
+                                    errors={formik.errors.insuranceAmount}
+                                    message={formik.errors.insuranceAmount}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <CustomDatePicker
+                                    require={require}
+                                    label="Local Permit Expiry Date"
+                                    placeholder="Enter Local Permit Expiry Date"
+                                    name="localPermitExpiryDate"
+                                    values={formik.values.localPermitExpiryDate}
+                                    errors={formik.errors.localPermitExpiryDate}
+                                    message={formik.errors.localPermitExpiryDate}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <CustomInput
+                                    require={require}
+                                    label="Local Permit Amount"
+                                    id="fitnessAmount"
+                                    placeholder="Enter Local Permit Amount"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.fitnessAmount}
+                                    errors={formik.errors.fitnessAmount}
+                                    message={formik.errors.fitnessAmount}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <label className="text-bold">
+                                    Local Permit Document
+                                    <span className="text-danger">*</span>
+                                </label>
+                                <CustomFileUpload
+                                    accept=".pdf, .doc, .docx"
+                                    onChange={(event) => handleFileChange(event)}
+                                    errors={formik.errors.insuranceAmount}
+                                    message={formik.errors.insuranceAmount}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <CustomDatePicker
+                                    require={require}
+                                    label="National Permit Expiry Date"
+                                    placeholder="Enter National Permit Expiry Date"
+                                    values={formik.values.nationalPermitExpiryDate}
+                                    errors={formik.errors.nationalPermitExpiryDate}
+                                    message={formik.errors.nationalPermitExpiryDate}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <CustomInput
+                                    require={require}
+                                    label="National Permit Amount"
+                                    id="fitnessAmount"
+                                    placeholder="Enter National Permit Amount"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.nationalPermitAmount}
+                                    errors={formik.errors.nationalPermitAmount}
+                                    message={formik.errors.nationalPermitAmount}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <label className="text-bold">
+                                    National Permit Document
+                                    <span className="text-danger">*</span>
+                                </label>
+                                <CustomFileUpload
+                                    accept=".pdf, .doc, .docx"
+                                    onChange={(event) => handleFileChange(event)}
+                                    errors={formik.errors.insuranceAmount}
+                                    message={formik.errors.insuranceAmount}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <CustomDatePicker
+                                    require={require}
+                                    label="PUC Expiry Date"
+                                    placeholder="Enter PUC Expiry Date"
+                                    values={formik.values.pucExpiryDate}
+                                    errors={formik.errors.pucExpiryDate}
+                                    message={formik.errors.pucExpiryDate}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <CustomInput
+                                    require={require}
+                                    label="PUC Amount"
+                                    id="fitnessAmount"
+                                    placeholder="Enter PUC Amount"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.pucAmount}
+                                    errors={formik.errors.pucAmount}
+                                    message={formik.errors.pucAmount}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <label className="text-bold">
+                                    PUC Document
+                                    <span className="text-danger">*</span>
+                                </label>
+                                <CustomFileUpload
+                                    accept=".pdf, .doc, .docx"
+                                    onChange={(event) => handleFileChange(event)}
+                                    errors={formik.errors.insuranceAmount}
+                                    message={formik.errors.insuranceAmount}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <label className="text-bold">
+                                    MV Tax
+                                    <span className="text-danger">*</span>
+                                </label>
+                                <CustomFileUpload
+                                    accept=".pdf, .doc, .docx"
+                                    onChange={(event) => handleFileChange(event)}
+                                    errors={formik.errors.insuranceAmount}
+                                    message={formik.errors.insuranceAmount}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <CustomDatePicker
+                                    require={require}
+                                    createdBy
+                                    label="MV Tax Expiry Date"
+                                    placeholder="Enter MV Tax Expiry Date"
+                                    values={formik.values.mvTaxExpiryDate}
+                                    errors={formik.errors.mvTaxExpiryDate}
+                                    message={formik.errors.mvTaxExpiryDate}
+                                />
+                            </div>
+                            <div className="col-lg-4">
+                                <CustomInput
+                                    require={require}
+                                    label="MV Tax Amount"
+                                    id="fitnessAmount"
+                                    placeholder="Enter MV Tax Amount"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.mvTaxAmount}
+                                    errors={formik.errors.mvTaxAmount}
+                                    message={formik.errors.mvTaxAmount}
+                                />
+                            </div>
+                            <div className="col-lg-6">
+                                <CustomInput
+                                    label="GPS Provider Name"
+                                    id="gpsProvider"
+                                    placeholder="Enter GPS Provider Name"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.gpsProviderName}
+                                    errors={formik.errors.gpsProviderName}
+                                    message={formik.errors.gpsProviderName}
+                                />
+                            </div>
+                            <div className="col-lg-6">
+                                <CustomInput
+                                    label="GPS Amount"
+                                    id="fitnessAmount"
+                                    placeholder="Enter GPS Amount"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.gpsAmount}
+                                    errors={formik.errors.gpsAmount}
+                                    message={formik.errors.gpsAmount}
+                                />
+                            </div>
+                            <div className="col-lg-6">
+                                <CustomInput
+                                    label="Fabricator Name"
+                                    id="fitnessAmount"
+                                    placeholder="Enter Fabricator Name"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.fabricatorName}
+                                    errors={formik.errors.fabricatorName}
+                                    message={formik.errors.fabricatorName}
+                                />
+                            </div>
+
+                            <div className="col-lg-6">
+                                <CustomInput
+                                    label="Fabricator Location"
+                                    id="fitnessAmount"
+                                    placeholder="Enter Fabricator Location"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.fabricatorLocation}
+                                    errors={formik.errors.fabricatorLocation}
+                                    message={formik.errors.fabricatorLocation}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Form>
+        </FormikProvider>
+    );
 }
 
 export default VehicleDetails;
