@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 
 const Skeleton = () => {
    const isLoggedIn = useSelector((state) => state.loginReducer.isLoggedIn)
-   console.log(isLoggedIn);
+   // console.log(isLoggedIn);
 
    if(!isLoggedIn){
       return <Navigate to={'/Login'}/>

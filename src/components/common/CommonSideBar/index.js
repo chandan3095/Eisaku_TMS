@@ -9,7 +9,7 @@ const CommonSideBar = () => {
    const navigate=useNavigate()
    const role_id = useSelector((state) => state?.loginReducer?.user?.data?.user?.role_id);
    const role_name = useSelector((state)=> state?.loginReducer?.user?.data?.user?.role_name)
-   console.log(role_name);
+  //  console.log(role_name);
 
   return (
     <aside className="main-sidebar sidebar-dark-primary elevation-4">

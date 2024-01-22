@@ -12,7 +12,7 @@ const RouteNames = {
     vendorMasterAddForm: '/vendor-master/add-form',
     LaneMasterAddForm: '/lane-master/add-form',
     ContractorMasterAddForm: '/contractor-master/add-form',
-    LocationMasterAddForm: '/location-master/add-form',
+    LocationMasterAddForm: '/location-master/:formType',
 
    // list 
     fleetMasterList: '/fleet-master/list',
@@ -35,6 +35,7 @@ const RouteNames = {
    vendorMasterEdit: '/vendor-master/edit',
    laneMasterEdit: '/lane-master/edit',
    contractorMasterEdit: '/contractor-master/edit',
+   LocationMasterEdit: '/location-master/:formType/:id',
 
    // manager Trip view
    tripCreate: '/trip/adhoc/add',

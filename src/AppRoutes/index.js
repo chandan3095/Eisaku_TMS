@@ -38,6 +38,10 @@ function AppRoutes() {
       <Routes>
          {/* for dashboard  */}
          <Route path="/" element={<Skeleton />} >
+            <Route
+               path=""
+               element={<login/>}
+            />
             
             <Route
                path="dashboard"
@@ -77,7 +81,12 @@ function AppRoutes() {
             <Route
                path={RouteNames.LocationMasterAddForm}
                element={<LocationMasterAdd />}
+               
             />
+            <Route
+               path={RouteNames.LocationMasterEdit}
+               element={<LocationMasterAdd />}
+            />            
 
             {/* for list  */}
             <Route path={RouteNames.fleetMasterList} element={<FleetMasterList />} />
