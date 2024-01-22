@@ -87,6 +87,7 @@ const validationSchema = Yup.object().shape({
     fabricatorName: Yup.string(),
     fabricatorLocation: Yup.string(),
 });
+
 const initialValues = {
     initialValues: {
         vehicleNo: "",
