@@ -204,9 +204,17 @@ function VehicleDetails({
                                 <CustomDropdown
                                     label="Dimension(L B H (ft))"
                                     optionData={selectOptionData}
+                                    multiple={true}
                                     {...getFieldProps("dimension")}
                                     onChange={(value) => {
-                                        setFieldValue("dimension", value);
+                                        console.log({
+                                            value: value?.map?.((item) => item?.value),
+                                        });
+                                        setFieldValue(
+                                            "dimension",
+                                            value?.map?.((item) => item?.value),
+                                            true
+                                        );
                                     }}
                                     errors={errors.dimension}
                                     message={errors.dimension}
@@ -309,8 +317,8 @@ function VehicleDetails({
                                 <CustomFileUpload
                                     accept=".pdf, .doc, .docx"
                                     onChange={(event) => handleFileChange(event)}
-                                    errors={formik.errors.insuranceAmount}
-                                    message={formik.errors.insuranceAmount}
+                                    errors={errors.insuranceAmount}
+                                    message={errors.insuranceAmount}
                                 />
                             </div>
                             <div className="col-lg-4">
@@ -318,9 +326,9 @@ function VehicleDetails({
                                     require={require}
                                     label="Insurance Expiry Date"
                                     placeholder="Enter Insurance Expiry Date"
-                                    values={formik.values.insuranceExpiryDate}
-                                    errors={formik.errors.insuranceExpiryDate}
-                                    message={formik.errors.insuranceExpiryDate}
+                                    {...getFieldProps("insuranceExpiryDate")}
+                                    errors={errors.insuranceExpiryDate}
+                                    message={errors.insuranceExpiryDate}
                                 />
                             </div>
                             <div className="col-lg-4">
@@ -329,10 +337,9 @@ function VehicleDetails({
                                     label="Insurance Amount"
                                     id="fitnessAmount"
                                     placeholder="Enter Insurance Amount"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.insuranceAmount}
-                                    errors={formik.errors.insuranceAmount}
-                                    message={formik.errors.insuranceAmount}
+                                    {...getFieldProps("insuranceAmount")}
+                                    errors={errors.insuranceAmount}
+                                    message={errors.insuranceAmount}
                                 />
                             </div>
                             <div className="col-lg-4">
@@ -352,7 +359,7 @@ function VehicleDetails({
                                     require={require}
                                     label="Fitness Expiry Date"
                                     placeholder="Enter Fitness Expiry Date"
-                                    values={formik.values.fitnessExpiryDate}
+                                    {...getFieldProps("fitnessExpiryDate")}
                                     errors={formik.errors.fitnessExpiryDate}
                                     message={formik.errors.fitnessExpiryDate}
                                 />
@@ -363,8 +370,7 @@ function VehicleDetails({
                                     label="Fitness Amount"
                                     id="fitnessAmount"
                                     placeholder="Enter Fitness Amount"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.fitnessAmount}
+                                    {...getFieldProps("fitnessAmount")}
                                     errors={formik.errors.fitnessAmount}
                                     message={formik.errors.fitnessAmount}
                                 />
@@ -386,8 +392,7 @@ function VehicleDetails({
                                     require={require}
                                     label="Local Permit Expiry Date"
                                     placeholder="Enter Local Permit Expiry Date"
-                                    name="localPermitExpiryDate"
-                                    values={formik.values.localPermitExpiryDate}
+                                    {...getFieldProps("localPermitExpiryDate")}
                                     errors={formik.errors.localPermitExpiryDate}
                                     message={formik.errors.localPermitExpiryDate}
                                 />
@@ -398,8 +403,7 @@ function VehicleDetails({
                                     label="Local Permit Amount"
                                     id="fitnessAmount"
                                     placeholder="Enter Local Permit Amount"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.fitnessAmount}
+                                    {...getFieldProps("fitnessAmount")}
                                     errors={formik.errors.fitnessAmount}
                                     message={formik.errors.fitnessAmount}
                                 />
@@ -421,7 +425,7 @@ function VehicleDetails({
                                     require={require}
                                     label="National Permit Expiry Date"
                                     placeholder="Enter National Permit Expiry Date"
-                                    values={formik.values.nationalPermitExpiryDate}
+                                    {...getFieldProps("nationalPermitExpiryDate")}
                                     errors={formik.errors.nationalPermitExpiryDate}
                                     message={formik.errors.nationalPermitExpiryDate}
                                 />
@@ -432,8 +436,7 @@ function VehicleDetails({
                                     label="National Permit Amount"
                                     id="fitnessAmount"
                                     placeholder="Enter National Permit Amount"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.nationalPermitAmount}
+                                    {...getFieldProps("nationalPermitAmount")}
                                     errors={formik.errors.nationalPermitAmount}
                                     message={formik.errors.nationalPermitAmount}
                                 />
@@ -455,7 +458,7 @@ function VehicleDetails({
                                     require={require}
                                     label="PUC Expiry Date"
                                     placeholder="Enter PUC Expiry Date"
-                                    values={formik.values.pucExpiryDate}
+                                    {...getFieldProps("pucExpiryDate")}
                                     errors={formik.errors.pucExpiryDate}
                                     message={formik.errors.pucExpiryDate}
                                 />
@@ -466,8 +469,7 @@ function VehicleDetails({
                                     label="PUC Amount"
                                     id="fitnessAmount"
                                     placeholder="Enter PUC Amount"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.pucAmount}
+                                    {...getFieldProps("pucAmount")}
                                     errors={formik.errors.pucAmount}
                                     message={formik.errors.pucAmount}
                                 />
@@ -502,7 +504,7 @@ function VehicleDetails({
                                     createdBy
                                     label="MV Tax Expiry Date"
                                     placeholder="Enter MV Tax Expiry Date"
-                                    values={formik.values.mvTaxExpiryDate}
+                                    {...getFieldProps("mvTaxExpiryDate")}
                                     errors={formik.errors.mvTaxExpiryDate}
                                     message={formik.errors.mvTaxExpiryDate}
                                 />
@@ -513,8 +515,7 @@ function VehicleDetails({
                                     label="MV Tax Amount"
                                     id="fitnessAmount"
                                     placeholder="Enter MV Tax Amount"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.mvTaxAmount}
+                                    {...getFieldProps("mvTaxAmount")}
                                     errors={formik.errors.mvTaxAmount}
                                     message={formik.errors.mvTaxAmount}
                                 />
@@ -524,8 +525,7 @@ function VehicleDetails({
                                     label="GPS Provider Name"
                                     id="gpsProvider"
                                     placeholder="Enter GPS Provider Name"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.gpsProviderName}
+                                    {...getFieldProps("gpsProviderName")}
                                     errors={formik.errors.gpsProviderName}
                                     message={formik.errors.gpsProviderName}
                                 />
@@ -535,8 +535,7 @@ function VehicleDetails({
                                     label="GPS Amount"
                                     id="fitnessAmount"
                                     placeholder="Enter GPS Amount"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.gpsAmount}
+                                    {...getFieldProps("gpsAmount")}
                                     errors={formik.errors.gpsAmount}
                                     message={formik.errors.gpsAmount}
                                 />
@@ -546,8 +545,7 @@ function VehicleDetails({
                                     label="Fabricator Name"
                                     id="fitnessAmount"
                                     placeholder="Enter Fabricator Name"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.fabricatorName}
+                                    {...getFieldProps("fabricatorName")}
                                     errors={formik.errors.fabricatorName}
                                     message={formik.errors.fabricatorName}
                                 />
@@ -558,8 +556,7 @@ function VehicleDetails({
                                     label="Fabricator Location"
                                     id="fitnessAmount"
                                     placeholder="Enter Fabricator Location"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.fabricatorLocation}
+                                    {...getFieldProps("fabricatorLocation")}
                                     errors={formik.errors.fabricatorLocation}
                                     message={formik.errors.fabricatorLocation}
                                 />
