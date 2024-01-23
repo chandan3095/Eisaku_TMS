@@ -20,7 +20,13 @@ import Tyre from "./Tyre";
 import ServiceRecord from "./ServiceRecord";
 import EmiForm from "./EmiForm";
 import { useDispatch } from "react-redux";
-import { getFleetMasterDropdownDataAsync } from "../../../../redux/features/fleetMaster";
+import {
+    addFleetAsync,
+    getFleetMasterDropdownDataAsync,
+    listFleetAsync,
+} from "../../../../redux/features/fleetMaster";
+import { useNavigate } from "react-router-dom";
+import RouteNames from "../../../../AppRoutes/RouteName";
 
 const validationSchema = Yup.object().shape({
     vehicleNo: Yup.string().required("vehicle No is required"),
@@ -187,8 +193,11 @@ const initialValues = {
 //   },
 // };
 function FleetMasterAddForm() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const [file, setFile] = useState(null);
+    console.log({ file });
     const [fuelType, setFuelType] = useState("Diesel");
     const [tyreType, setTyreType] = useState("");
     const [makeSelect, setMake] = useState("");
@@ -234,20 +243,125 @@ function FleetMasterAddForm() {
         setTyreAdd(updatedTyreAdd);
     };
 
+    const addFleetMaster = (formData) => {
+        console.log({ formData });
+        const data = {
+            vehicle_no: "sadfcswef", //formData.vehicleNo,
+            chasis_no: "sadfcswef", //formData.chasisNo,
+            engine_no: "sadfcswef", //formData.engineNo,
+            vehicle_owner_name: "sadfcswef", //formData.vehicleOwnerName,
+            dimension_id: 2, // formData.dimension,
+            fastag_bank_name: "sadfcswef", //formData.fastagBankName,
+            vehicle_category_id: 1, //formData.vehicleCategory,
+            tonnage_id: 1, //formData.tonnage,
+            make_id: 1, // formData.make,
+            model: "1,2024", //formData.model,
+            insurance_expiry_date: "2024-01-06", // formData.insuranceExpiryDate,
+            insurance_amount: 10, //formData.insuranceAmount,
+            fitness_expiry_date: "2024-01-06", // formData.fitnessExpiryDate,
+            fitness_amount: 10, // formData.fitnessAmount,
+            local_permit_expiry_date: "2024-01-06", // formData.localPermitExpiryDate,
+            local_permit_amount: 10, //formData.localPermitAmount,
+            national_permit_expiry_date: "2024-01-06", //formData.nationalPermitExpiryDate,
+            national_permit_amount: 10, //formData.nationalPermitAmount,
+            puc_expiry_date: "2024-01-06", //formData.pucExpiryDate,
+            puc_amount: 10, //formData.pucAmount,
+            mv_tax_expiry_date: "2024-01-06", // formData.mvTaxExpiryDate,
+            mv_tax_amount: 10, //formData.mvTaxAmount,
+            gps_provider_name: "sadfcswef", //formData.gpsProviderName,
+            gps_amount: 10, //formData.gpsAmount,
+            fabricator_name: "sadfcswef", //formData.fabricatorName,
+            fabricator_location: "sadfcswef", //formData.fabricatorLocation,
+            emi_start_date: "2024-01-06", //formData.emiStartDate,
+            emi_end_date: "2024-01-06", //formData.emiEndDate ,
+            emi_amount: formData.emiAmount || 100,
+            financed_by: formData.financedBy || "lasdjkfcnkjn",
+            model_id: 3,
+            action_id: 1,
+            registration_certificate: file,
+            insurance_certificate: file,
+            local_permit_document: file,
+            national_permit_document: file,
+            puc_document: file,
+            mv_tax_document: file,
+            emi_certificate: file,
+            fitness_certificate: file,
+        };
+
+        const ard = {
+            tyre_type_id: `[1, 2]`,
+            odometer_reading: `[11, 22]`,
+            tyre_change_date: `[2024-02-02, 2024-02-03]`,
+            tyre_amount: `[33, 44]`,
+            tyre_station_name: `["test1", "test2"]`,
+            service_record_odometer_reading: `[77, 88]`,
+            service_date: `[2024-02-02, 2024-02-03]`,
+            service_amount: `[99, 11]`,
+            service_station_name: `[name1, name2]`,
+            monthly_maintenance_budget_amount: `[44, 77.88]`,
+            to_date: `[2024-02-02, 2024-02-03]`,
+            from_date: `[2024-02-02, 2024-02-03]`,
+            // tyre_type_id: 1,
+            // odometer_reading: 11,
+            // tyre_change_date: "2024-02-02",
+            // tyre_amount: 33,
+            // tyre_station_name: "test2",
+            // service_record_odometer_reading: 88,
+            // service_date: "2024-02-02",
+            // service_amount: 99,
+            // service_station_name: "name2",
+            // monthly_maintenance_budget_amount: 44,
+            // to_date: "2024-02-02",
+            // from_date: "2024-02-03",
+        };
+
+        // const db = {
+        //     bill_upload_along_with_warranty_status: [file],
+        //     service_bill_upload: [file],
+        // };
+
+        const newData = new FormData();
+
+        Object.keys(data).forEach((key) => {
+            newData.append(key, data[key]);
+        });
+        Object.keys(ard).forEach((key, index) => {
+            newData.append(`${key}[]`, ard[key]);
+        });
+        // Object.keys(db).forEach((key) => {
+        //     newData.append(key, db[key]);
+        // });
+        newData.append("bill_upload_along_with_warranty_status[]", file);
+        newData.append("bill_upload_along_with_warranty_status[]", file);
+        newData.append("service_bill_upload[]", file);
+
+        console.log(file);
+
+        for (let i of newData.entries()) {
+            console.log(i);
+        }
+
+        // newData.entries().forEach((item) => {
+        //     console.log(item);
+        // });
+
+        dispatch(addFleetAsync(newData));
+
+        // navigate(RouteNames.fleetMasterList);
+    };
+
     const formik = useFormik({
         initialValues: initialValues.initialValues,
-        validationSchema,
+        // validationSchema,
         enableReinitialize: true,
-        onSubmit: (values) => {
-            // Handle form submission logic here
-            console.log(values);
-        },
+        onSubmit: addFleetMaster,
     });
 
     // const {getFieldP} = formik
     const handleFileChange = (event, setFieldValue) => {
         const file = event.currentTarget.files[0];
-        setFieldValue("file", file);
+        // setFieldValue("file", file);
+        setFile(file);
     };
 
     useEffect(() => {
@@ -300,6 +414,7 @@ function FleetMasterAddForm() {
                             >
                                 {currentTabIndex === 0 && (
                                     <VehicleDetails
+                                        setFile={setFile}
                                         formik={formik}
                                         handleFileChange={handleFileChange}
                                         makeData={makeData}

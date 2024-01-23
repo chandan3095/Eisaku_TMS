@@ -1,6 +1,15 @@
 import React from "react";
 
-const CustomMonthYear = ({ label, id, placeholder, errors, message, value }) => {
+const CustomMonthYear = ({
+    label,
+    id,
+    placeholder,
+    errors,
+    message,
+    value,
+    onChange,
+    name,
+}) => {
     return (
         <div className="form-group">
             {label && (
@@ -15,6 +24,8 @@ const CustomMonthYear = ({ label, id, placeholder, errors, message, value }) => 
                 id={id}
                 placeholder={placeholder}
                 value={value}
+                name={name}
+                onChange={onChange}
             />
             {errors && (
                 <div className="text-danger" style={{ fontSize: ".8rem" }}>

@@ -57,6 +57,17 @@ export const handleEdituserApiCall = async (data) =>
 export const getDropdownDataApiCall = async () =>
     await client.get(EndUrls.getDropdownData, config);
 
+export const addFleetApiCall = async (data) =>
+    await client.post(EndUrls.addFleet, data, {
+        headers: {
+            Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+            // "Content-Type": "content type multipart/form-data",
+            "Custom-Header": "value",
+        },
+    });
+
+export const listFleetApiCall = async () => await client.get(EndUrls.listFleet, config);
+
 export const handleContractorMasterApiCall = async (data) =>
     await client.post(EndUrls.contractorAdd, data, {
         headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}` },

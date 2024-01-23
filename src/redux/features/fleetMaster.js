@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getDropdownDataApiCall } from "../../Api/api";
+import { addFleetApiCall, getDropdownDataApiCall, listFleetApiCall } from "../../Api/api";
 
 // initial state
 const initialState = {
@@ -23,6 +23,52 @@ export const getFleetMasterDropdownDataAsync = createAsyncThunk(
         try {
             console.log(data);
             const response = await getDropdownDataApiCall();
+            console.log({ response });
+
+            if (response.data?.statusCode === 200) {
+                return thunkAPI.fulfillWithValue(response.data?.res);
+            } else {
+                throw response;
+            }
+        } catch (error) {
+            // You can customize the error handling here
+            console.log(error);
+            thunkAPI.rejectWithValue(error?.response?.data);
+            throw error?.response?.data;
+        }
+    }
+);
+
+// add fleet
+export const addFleetAsync = createAsyncThunk(
+    "fleetmaster/add-fleet",
+    async (data, thunkAPI) => {
+        try {
+            console.log(data);
+            const response = await addFleetApiCall(data);
+            console.log({ response });
+
+            if (response.data?.statusCode === 200) {
+                return thunkAPI.fulfillWithValue(response.data?.res);
+            } else {
+                throw response;
+            }
+        } catch (error) {
+            // You can customize the error handling here
+            console.log(error);
+            thunkAPI.rejectWithValue(error?.response?.data);
+            throw error?.response?.data;
+        }
+    }
+);
+
+// add fleet
+export const listFleetAsync = createAsyncThunk(
+    "fleetmaster/list-fleet",
+    async (data, thunkAPI) => {
+        try {
+            console.log(data);
+            const response = await listFleetApiCall();
             console.log({ response });
 
             if (response.data?.statusCode === 200) {
@@ -66,6 +112,18 @@ const fleetMasterSlice = createSlice({
             state.vehicleCategory = action.payload?.vehicle_category;
         });
         builder.addCase(getFleetMasterDropdownDataAsync.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        builder.addCase(listFleetAsync.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(listFleetAsync.fulfilled, (state, action) => {
+            console.log({ ful: action.payload });
+            state.isLoading = false;
+            state.dataList = action.payload?.res;
+        });
+        builder.addCase(listFleetAsync.rejected, (state, action) => {
             state.isLoading = false;
         });
     },

@@ -7,6 +7,8 @@ const EndUrls = {
 
     // Fleet Master
     getDropdownData: "fleet/get_dropdowns?&model_id=3&action_id=3",
+    addFleet: "fleet/add",
+    listFleet: "fleet?&model_id=3&action_id=3",
 
     // Location Master
     addLocationMaster: "location/add",

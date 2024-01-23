@@ -1,8 +1,14 @@
 import React from "react";
 
-const CustomFileUpload = (props) => {
-    const { id, name, onChange, disabled, errors, message } = props;
-
+const CustomFileUpload = ({
+    id,
+    name,
+    onChange,
+    disabled,
+    errors,
+    message,
+    multiple,
+}) => {
     const handleFileChange = (e) => {
         const uploadedFile = e.target.files[0];
 
@@ -21,6 +27,7 @@ const CustomFileUpload = (props) => {
                 className="form-control h-auto"
                 onChange={handleFileChange}
                 disabled={disabled}
+                multiple={multiple}
             />
             {errors && (
                 <div className="text-danger" style={{ fontSize: ".8rem" }}>
