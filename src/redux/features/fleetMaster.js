@@ -121,7 +121,7 @@ const fleetMasterSlice = createSlice({
         builder.addCase(listFleetAsync.fulfilled, (state, action) => {
             console.log({ ful: action.payload });
             state.isLoading = false;
-            state.dataList = action.payload?.res;
+            state.dataList = action.payload;
         });
         builder.addCase(listFleetAsync.rejected, (state, action) => {
             state.isLoading = false;

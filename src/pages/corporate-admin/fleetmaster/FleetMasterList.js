@@ -5,11 +5,15 @@ import BodyHeader from "../../../components/common/CommonBodyHeader";
 import CustomInput from "../../../components/common/CustomInput/CustomInput";
 import DataTable from "react-data-table-component";
 import { listFleetAsync } from "../../../redux/features/fleetMaster";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function FleetMasterList() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const fleetMaster = useSelector((state) => state.fleetMaster);
+
+    console.log({ fleetMaster: fleetMaster?.dataList });
 
     const [isChecked, setIsChecked] = useState({}); // State to manage toggle
 
@@ -25,20 +29,20 @@ function FleetMasterList() {
     const columns = [
         {
             name: "Vehicle No",
-            selector: (row) => row.vehicleNo,
+            selector: (row) => row.vehicle_no,
             sortable: true,
         },
         {
             name: "Chasis No",
-            selector: (row) => row.chasisNo,
+            selector: (row) => row.chasis_no,
         },
         {
             name: "Engine No",
-            selector: (row) => row.engineNo,
+            selector: (row) => row.engine_no,
         },
         {
             name: "Vehicle Owner Name",
-            selector: (row) => row.vehicleOwnerName,
+            selector: (row) => row.vehicle_owner_name,
         },
         {
             name: "Action",
@@ -46,7 +50,7 @@ function FleetMasterList() {
         },
     ];
 
-    const data = [
+    const data_ = [
         {
             id: 1,
             vehicleNo: "ABC123",
@@ -209,7 +213,30 @@ function FleetMasterList() {
         },
     };
 
-    const [records, setRecords] = useState(data);
+    const [records, setRecords] = useState([]);
+    const data = fleetMaster?.dataList;
+
+    useEffect(() => {
+        const newData = data?.map?.((item) => ({
+            ...item,
+            action: (
+                <>
+                    <button
+                        className="btn btn-primary mx-2"
+                        onClick={() => navigate(`/fleet-master/view/${item?.id}`)}
+                    >
+                        Edit
+                    </button>
+                    <CustomToggleSwitch
+                        checked={isChecked}
+                        // onChange={toggleSwitch}
+                        id="helper1"
+                    />
+                </>
+            ),
+        }));
+        setRecords(newData);
+    }, [data, isChecked, navigate]);
 
     const handleFilter = (e) => {
         const searchText = e.target.value.toLowerCase();

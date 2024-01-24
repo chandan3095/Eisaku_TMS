@@ -7,6 +7,7 @@ import CustomMonthYear from "../../../../components/common/CustomMonthYear/Custo
 import CustomFileUpload from "../../../../components/common/CustomFileUpload/CustomFileUpload";
 import CustomDatePicker from "../../../../components/common/CustomDatePicker/CustomDatePicker";
 import { Form, FormikProvider, useFormik } from "formik";
+import { useSelector } from "react-redux";
 
 // const validationSchema = Yup.object().shape({
 //     vehicleNo: Yup.string().required("vehicle No is required"),
@@ -113,19 +114,38 @@ import { Form, FormikProvider, useFormik } from "formik";
 
 function VehicleDetails({
     formik,
-    makeData,
+    // makeData,
     handleFileChange,
     selectOptionData,
     fuelType,
-    tonnageData,
+    // tonnageData,
     setFuelType,
-    vehicleCategoryData,
+    // vehicleCategoryData,
 }) {
     // const formik = useFormik({
     //     initialValues: initialValues,
     //     validationSchema: validationSchema,
     //     onSubmit: () => {},
     // });
+
+    const fleetMaster = useSelector((state) => state.fleetMaster);
+
+    const tonnageData = fleetMaster?.tonnage?.map?.((item) => ({
+        label: item?.tonnage,
+        value: item?.id,
+    }));
+    const makeData = fleetMaster?.make?.map?.((item) => ({
+        label: item?.make,
+        value: item?.id,
+    }));
+    const dimensionData = fleetMaster?.dimension?.map?.((item) => ({
+        label: item?.dimension,
+        value: item?.id,
+    }));
+    const vehicleCategoryData = fleetMaster?.vehicleCategory?.map?.((item) => ({
+        label: item?.category_name,
+        value: item?.id,
+    }));
 
     const { errors, touched, getFieldProps, handleSubmit, setFieldValue } = formik;
 
@@ -203,16 +223,12 @@ function VehicleDetails({
                             <div className="col-lg-4">
                                 <CustomDropdown
                                     label="Dimension(L B H (ft))"
-                                    optionData={selectOptionData}
-                                    multiple={true}
+                                    optionData={dimensionData}
                                     {...getFieldProps("dimension")}
                                     onChange={(value) => {
-                                        console.log({
-                                            value: value?.map?.((item) => item?.value),
-                                        });
                                         setFieldValue(
                                             "dimension",
-                                            value?.map?.((item) => item?.value),
+                                            value?.[0]?.value,
                                             true
                                         );
                                     }}
@@ -240,7 +256,10 @@ function VehicleDetails({
                                     optionData={vehicleCategoryData}
                                     {...getFieldProps("vehicleCategory")}
                                     onChange={(value) => {
-                                        setFieldValue("vehicleCategory", value);
+                                        setFieldValue(
+                                            "vehicleCategory",
+                                            value?.[0]?.value
+                                        );
                                     }}
                                     errors={errors.vehicleCategory}
                                     message={errors.vehicleCategory}
@@ -253,7 +272,7 @@ function VehicleDetails({
                                     optionData={tonnageData}
                                     {...getFieldProps("tonnage")}
                                     onChange={(value) => {
-                                        setFieldValue("tonnage", value);
+                                        setFieldValue("tonnage", value?.[0]?.value);
                                     }}
                                     errors={errors.tonnage}
                                     message={errors.tonnage}
@@ -295,7 +314,7 @@ function VehicleDetails({
                                     optionData={makeData}
                                     {...getFieldProps("make")}
                                     onChange={(value) => {
-                                        setFieldValue("make", value);
+                                        setFieldValue("make", value?.[0]?.value);
                                     }}
                                     errors={errors.make}
                                     message={errors.make}
@@ -307,9 +326,9 @@ function VehicleDetails({
                                     {...getFieldProps("model")}
                                     errors={errors.model}
                                     message={errors.model}
-                                    // onChange={(val) => {
-                                    //     console.log({ val: val.target?.value });
-                                    // }}
+                                    onChange={(value) => {
+                                        setFieldValue("model", value?.[0]?.value);
+                                    }}
                                 />
                             </div>
                             <div className="col-lg-4">
@@ -319,9 +338,14 @@ function VehicleDetails({
                                 </label>
                                 <CustomFileUpload
                                     accept=".pdf, .doc, .docx"
-                                    onChange={(event) => handleFileChange(event)}
-                                    errors={errors.insuranceAmount}
-                                    message={errors.insuranceAmount}
+                                    onChange={(event) => {
+                                        setFieldValue(
+                                            "registrationCertificate",
+                                            event?.target?.files?.[0]
+                                        );
+                                    }}
+                                    // errors={errors.insuranceAmount}
+                                    // message={errors.insuranceAmount}
                                 />
                             </div>
                             <div className="col-lg-4">
@@ -338,6 +362,7 @@ function VehicleDetails({
                                 <CustomInput
                                     require={require}
                                     label="Insurance Amount"
+                                    // inputType={"number"}
                                     id="fitnessAmount"
                                     placeholder="Enter Insurance Amount"
                                     {...getFieldProps("insuranceAmount")}
@@ -352,9 +377,15 @@ function VehicleDetails({
                                 </label>
                                 <CustomFileUpload
                                     accept=".pdf, .doc, .docx"
-                                    onChange={(event) => handleFileChange(event)}
-                                    errors={formik.errors.insuranceAmount}
-                                    message={formik.errors.insuranceAmount}
+                                    // onChange={(event) => handleFileChange(event)}
+                                    onChange={(event) => {
+                                        setFieldValue(
+                                            "insuranceCertificate",
+                                            event?.target?.files?.[0]
+                                        );
+                                    }}
+                                    // errors={formik.errors.insuranceAmount}
+                                    // message={formik.errors.insuranceAmount}
                                 />
                             </div>
                             <div className="col-lg-4">
@@ -385,9 +416,15 @@ function VehicleDetails({
                                 </label>
                                 <CustomFileUpload
                                     accept=".pdf, .doc, .docx"
-                                    onChange={(event) => handleFileChange(event)}
-                                    errors={formik.errors.insuranceAmount}
-                                    message={formik.errors.insuranceAmount}
+                                    onChange={(event) => {
+                                        setFieldValue(
+                                            "fitnessCertificate",
+                                            event?.target?.files?.[0]
+                                        );
+                                    }}
+                                    // onChange={(event) => handleFileChange(event)}
+                                    // errors={formik.errors.insuranceAmount}
+                                    // message={formik.errors.insuranceAmount}
                                 />
                             </div>
                             <div className="col-lg-4">
@@ -406,9 +443,9 @@ function VehicleDetails({
                                     label="Local Permit Amount"
                                     id="fitnessAmount"
                                     placeholder="Enter Local Permit Amount"
-                                    {...getFieldProps("fitnessAmount")}
-                                    errors={formik.errors.fitnessAmount}
-                                    message={formik.errors.fitnessAmount}
+                                    {...getFieldProps("localPermitAmount")}
+                                    errors={formik.errors.localPermitAmount}
+                                    message={formik.errors.localPermitAmount}
                                 />
                             </div>
                             <div className="col-lg-4">
@@ -418,9 +455,15 @@ function VehicleDetails({
                                 </label>
                                 <CustomFileUpload
                                     accept=".pdf, .doc, .docx"
-                                    onChange={(event) => handleFileChange(event)}
-                                    errors={formik.errors.insuranceAmount}
-                                    message={formik.errors.insuranceAmount}
+                                    onChange={(event) => {
+                                        setFieldValue(
+                                            "localPermitDocument",
+                                            event?.target?.files?.[0]
+                                        );
+                                    }}
+                                    // onChange={(event) => handleFileChange(event)}
+                                    // errors={formik.errors.insuranceAmount}
+                                    // message={formik.errors.insuranceAmount}
                                 />
                             </div>
                             <div className="col-lg-4">
@@ -451,9 +494,15 @@ function VehicleDetails({
                                 </label>
                                 <CustomFileUpload
                                     accept=".pdf, .doc, .docx"
-                                    onChange={(event) => handleFileChange(event)}
-                                    errors={formik.errors.insuranceAmount}
-                                    message={formik.errors.insuranceAmount}
+                                    onChange={(event) => {
+                                        setFieldValue(
+                                            "nationalPermitDocument",
+                                            event?.target?.files?.[0]
+                                        );
+                                    }}
+                                    // onChange={(event) => handleFileChange(event)}
+                                    // errors={formik.errors.insuranceAmount}
+                                    // message={formik.errors.insuranceAmount}
                                 />
                             </div>
                             <div className="col-lg-4">
@@ -484,9 +533,15 @@ function VehicleDetails({
                                 </label>
                                 <CustomFileUpload
                                     accept=".pdf, .doc, .docx"
-                                    onChange={(event) => handleFileChange(event)}
-                                    errors={formik.errors.insuranceAmount}
-                                    message={formik.errors.insuranceAmount}
+                                    onChange={(event) => {
+                                        setFieldValue(
+                                            "pucDocument",
+                                            event?.target?.files?.[0]
+                                        );
+                                    }}
+                                    // onChange={(event) => handleFileChange(event)}
+                                    // errors={formik.errors.insuranceAmount}
+                                    // message={formik.errors.insuranceAmount}
                                 />
                             </div>
                             <div className="col-lg-4">
@@ -496,9 +551,12 @@ function VehicleDetails({
                                 </label>
                                 <CustomFileUpload
                                     accept=".pdf, .doc, .docx"
-                                    onChange={(event) => handleFileChange(event)}
-                                    errors={formik.errors.insuranceAmount}
-                                    message={formik.errors.insuranceAmount}
+                                    onChange={(event) => {
+                                        setFieldValue("mvTax", event?.target?.files?.[0]);
+                                    }}
+                                    // onChange={(event) => handleFileChange(event)}
+                                    // errors={formik.errors.insuranceAmount}
+                                    // message={formik.errors.insuranceAmount}
                                 />
                             </div>
                             <div className="col-lg-4">

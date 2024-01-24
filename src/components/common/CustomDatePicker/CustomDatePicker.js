@@ -12,6 +12,7 @@ const CustomDatePicker = ({
     message,
 }) => {
     // console.log(value);
+    const handleChange = () => {};
     return (
         <div className="form-group">
             {label && (

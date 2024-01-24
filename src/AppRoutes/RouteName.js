@@ -25,7 +25,7 @@ const RouteNames = {
     LocationMasterView: '/location-master/view',
 
     // list view 
-    fleetMasterView: '/fleet-master/view',
+    fleetMasterView: '/fleet-master/view/:id',
 
    // edit 
    fleetMasterEdit: '/fleet-master/edit',

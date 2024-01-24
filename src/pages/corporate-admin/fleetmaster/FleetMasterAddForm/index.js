@@ -100,30 +100,30 @@ const initialValues = {
         chasisNo: "",
         engineNo: "",
         vehicleOwnerName: "",
-        dimension: [],
+        dimension: "",
         fastagBankName: "",
         vehicleCategory: "",
         tonnage: "",
         fuelType: "Petrol",
         make: "",
         model: "",
-        registrationCertificate: "",
+        registrationCertificate: null,
         insuranceExpiryDate: "",
         insuranceAmount: 0,
         insuranceCertificate: null,
         fitnessExpiryDate: "",
         fitnessAmount: 0,
-        fitnessCertificate: "",
+        fitnessCertificate: null,
         localPermitExpiryDate: "",
         localPermitAmount: 0,
-        localPermitDocument: "",
+        localPermitDocument: null,
         nationalPermitExpiryDate: "",
         nationalPermitAmount: 0,
         nationalPermitDocument: "",
         pucExpiryDate: "",
         pucAmount: 0,
         pucDocument: "",
-        mvTax: 0,
+        mvTax: null,
         mvTaxExpiryDate: "",
         mvTaxAmount: 0,
         gpsProviderName: "",
@@ -139,18 +139,18 @@ const initialValues = {
         financedBy: "",
 
         // Service Record
-        odometerReading: "",
-        serviceDate: "",
-        serviceAmount: "",
-        serviceStationName: "",
-        serviceBill: "",
+        // odometerReading: "",
+        // serviceDate: "",
+        // serviceAmount: "",
+        // serviceStationName: "",
+        // serviceBill: "",
 
         // tyre
-        tyreType: "",
-        tyreChangeDate: "",
-        tyreAmount: "",
-        tyreStationName: "",
-        tyreBillUpload: "",
+        // tyreType: "",
+        // tyreChangeDate: "",
+        // tyreAmount: "",
+        // tyreStationName: "",
+        // tyreBillUpload: "",
     },
 };
 // const emiDetailsValues = {
@@ -203,39 +203,43 @@ function FleetMasterAddForm() {
     const [makeSelect, setMake] = useState("");
     const [tonnageSelect, setTonnage] = useState("");
     const [vehicleSelect, setVehicleCategory] = useState("");
-    const [tyreAdd, setTyreAdd] = useState([{ selectedFile: "", tyreType: "" }]);
-    const [serviceBillAdd, setServiceBillAdd] = useState([
-        { selectedBillFile: "", serviceRecord: "" },
+
+    const [tyreAdd, setTyreAdd] = useState([
+        {
+            id: 1,
+            odometerReading: "",
+            tyreType: "",
+            tyreChangeDate: "",
+            tyreAmount: "",
+            tyreStationName: "",
+            tyreBillUpload: "",
+        },
     ]);
-    const [maintenanceBudget, setMaintenanceBudget] = useState([{}]);
-
-    const [currentTabIndex, setCurrentTabIndex] = useState(0);
-    // console.log(currentTabIndex, "currentTabIndex");
-    const maintenanceBudgetAdd = () => {
-        setMaintenanceBudget([
-            ...maintenanceBudget,
-            { selectedBillFile: "", serviceRecord: "" },
-        ]);
-    };
-    const maintenanceBudgetDelete = (index) => {
-        const updatedMaintenanceBudget = [...maintenanceBudget];
-        updatedMaintenanceBudget.splice(index, 1);
-        setMaintenanceBudget(updatedMaintenanceBudget);
-    };
-
-    const handleServiceBill = () => {
-        setServiceBillAdd([
-            ...serviceBillAdd,
-            { selectedBillFile: "", serviceRecord: "" },
-        ]);
-    };
-    const handleServiceBillDelete = (index) => {
-        const updatedServiceBill = [...serviceBillAdd];
-        updatedServiceBill.splice(index, 1);
-        setServiceBillAdd(updatedServiceBill);
-    };
     const handleTyreAdd = () => {
-        setTyreAdd([...tyreAdd, { selectedFile: "", tyreType: "" }]);
+        setTyreAdd((prev) => [
+            ...prev,
+            {
+                id: prev.length + 1,
+                odometerReading: "",
+                tyreType: "",
+                tyreChangeDate: "",
+                tyreAmount: "",
+                tyreStationName: "",
+                tyreBillUpload: "",
+            },
+        ]);
+    };
+    const handleTyreChange = (id, e, file) => {
+        const { name, value } = e.target;
+        console.log({ value: e.target?.files?.[0] });
+        const changedData = tyreAdd.map((item) => {
+            if (item.id === id) {
+                return { ...item, [name]: file ? e.target?.files?.[0] : value };
+            } else {
+                return item;
+            }
+        });
+        setTyreAdd(changedData);
     };
     const handleTyreDelete = (index) => {
         const updatedTyreAdd = [...tyreAdd];
@@ -243,64 +247,154 @@ function FleetMasterAddForm() {
         setTyreAdd(updatedTyreAdd);
     };
 
+    const [serviceBillAdd, setServiceBillAdd] = useState([
+        {
+            id: 1,
+            odometerReading: "",
+            serviceDate: "",
+            serviceAmount: "",
+            serviceStationName: "",
+            serviceBillUpload: null,
+        },
+    ]);
+    const handleServiceBill = () => {
+        setServiceBillAdd((prev) => [
+            ...prev,
+            {
+                id: prev.length + 1,
+                odometerReading: "",
+                serviceDate: "",
+                serviceAmount: "",
+                serviceStationName: "",
+                serviceBillUpload: null,
+            },
+        ]);
+    };
+    const handleServiceBillDelete = (index) => {
+        const updatedServiceBill = [...serviceBillAdd];
+        updatedServiceBill.splice(index, 1);
+        setServiceBillAdd(updatedServiceBill);
+    };
+    const handleServiceBillChange = (id, e, file) => {
+        const { name, value } = e.target;
+        console.log({ value: e.target?.files?.[0] });
+        const changedData = serviceBillAdd.map((item) => {
+            if (item.id === id) {
+                return { ...item, [name]: file ? e.target?.files?.[0] : value };
+            } else {
+                return item;
+            }
+        });
+        setServiceBillAdd(changedData);
+    };
+
+    const [maintenanceBudget, setMaintenanceBudget] = useState([
+        {
+            id: 1,
+            amount: "",
+            toDate: "",
+            fromDate: "",
+        },
+    ]);
+    console.log({ maintenanceBudget });
+    const maintenanceBudgetAdd = () => {
+        setMaintenanceBudget((prev) => [
+            ...prev,
+            {
+                id: prev.length + 1,
+                amount: "",
+                toDate: "",
+                fromDate: "",
+            },
+        ]);
+    };
+    const maintenanceBudgetDelete = (index) => {
+        const updatedMaintenanceBudget = [...maintenanceBudget];
+        updatedMaintenanceBudget.splice(index, 1);
+        setMaintenanceBudget(updatedMaintenanceBudget);
+    };
+    const handleMaintenanceBudgetChange = (id, e, file) => {
+        const { name, value } = e.target;
+        console.log({ value: e.target?.files?.[0] });
+        const changedData = maintenanceBudget.map((item) => {
+            if (item.id === id) {
+                return { ...item, [name]: file ? e.target?.files?.[0] : value };
+            } else {
+                return item;
+            }
+        });
+        setMaintenanceBudget(changedData);
+    };
+
+    const [currentTabIndex, setCurrentTabIndex] = useState(0);
+    // console.log(currentTabIndex, "currentTabIndex");
+
     const addFleetMaster = (formData) => {
         console.log({ formData });
+        console.log({ tyreAdd });
+        console.log({ serviceBillAdd });
+        console.log({ maintenanceBudget });
+        // return;
         const data = {
-            vehicle_no: "sadfcswef", //formData.vehicleNo,
-            chasis_no: "sadfcswef", //formData.chasisNo,
-            engine_no: "sadfcswef", //formData.engineNo,
-            vehicle_owner_name: "sadfcswef", //formData.vehicleOwnerName,
-            dimension_id: 2, // formData.dimension,
-            fastag_bank_name: "sadfcswef", //formData.fastagBankName,
-            vehicle_category_id: 1, //formData.vehicleCategory,
-            tonnage_id: 1, //formData.tonnage,
-            make_id: 1, // formData.make,
-            model: "1,2024", //formData.model,
-            insurance_expiry_date: "2024-01-06", // formData.insuranceExpiryDate,
-            insurance_amount: 10, //formData.insuranceAmount,
-            fitness_expiry_date: "2024-01-06", // formData.fitnessExpiryDate,
-            fitness_amount: 10, // formData.fitnessAmount,
-            local_permit_expiry_date: "2024-01-06", // formData.localPermitExpiryDate,
-            local_permit_amount: 10, //formData.localPermitAmount,
-            national_permit_expiry_date: "2024-01-06", //formData.nationalPermitExpiryDate,
-            national_permit_amount: 10, //formData.nationalPermitAmount,
-            puc_expiry_date: "2024-01-06", //formData.pucExpiryDate,
-            puc_amount: 10, //formData.pucAmount,
-            mv_tax_expiry_date: "2024-01-06", // formData.mvTaxExpiryDate,
-            mv_tax_amount: 10, //formData.mvTaxAmount,
-            gps_provider_name: "sadfcswef", //formData.gpsProviderName,
-            gps_amount: 10, //formData.gpsAmount,
-            fabricator_name: "sadfcswef", //formData.fabricatorName,
-            fabricator_location: "sadfcswef", //formData.fabricatorLocation,
-            emi_start_date: "2024-01-06", //formData.emiStartDate,
-            emi_end_date: "2024-01-06", //formData.emiEndDate ,
-            emi_amount: formData.emiAmount || 100,
-            financed_by: formData.financedBy || "lasdjkfcnkjn",
+            vehicle_no: formData.vehicleNo,
+            chasis_no: formData.chasisNo,
+            engine_no: formData.engineNo,
+            vehicle_owner_name: formData.vehicleOwnerName,
+            dimension_id: formData.dimension,
+            fastag_bank_name: formData.fastagBankName,
+            vehicle_category_id: formData.vehicleCategory,
+            tonnage_id: formData.tonnage,
+            make_id: formData.make,
+            model: formData.model,
+            insurance_expiry_date: formData.insuranceExpiryDate,
+            insurance_amount: formData.insuranceAmount,
+            fitness_expiry_date: formData.fitnessExpiryDate,
+            fitness_amount: formData.fitnessAmount,
+            local_permit_expiry_date: formData.localPermitExpiryDate,
+            local_permit_amount: formData.localPermitAmount,
+            national_permit_expiry_date: formData.nationalPermitExpiryDate,
+            national_permit_amount: formData.nationalPermitAmount,
+            puc_expiry_date: formData.pucExpiryDate,
+            puc_amount: formData.pucAmount,
+            mv_tax_expiry_date: formData.mvTaxExpiryDate,
+            mv_tax_amount: formData.mvTaxAmount,
+            gps_provider_name: formData.gpsProviderName,
+            gps_amount: formData.gpsAmount,
+            fabricator_name: formData.fabricatorName,
+            fabricator_location: formData.fabricatorLocation,
+            emi_start_date: formData.emiStartDate,
+            emi_end_date: formData.emiEndDate,
+            emi_amount: formData.emiAmount,
+            financed_by: formData.financedBy,
             model_id: 3,
             action_id: 1,
-            registration_certificate: file,
-            insurance_certificate: file,
-            local_permit_document: file,
-            national_permit_document: file,
-            puc_document: file,
-            mv_tax_document: file,
-            emi_certificate: file,
-            fitness_certificate: file,
+            registration_certificate: formData?.registrationCertificate,
+            insurance_certificate: formData.insuranceCertificate,
+            local_permit_document: formData.localPermitDocument,
+            national_permit_document: formData.nationalPermitDocument,
+            puc_document: formData.pucDocument,
+            mv_tax_document: formData.mvTax,
+            emi_certificate: formData.insuranceCertificate,
+            fitness_certificate: formData.fitnessCertificate,
         };
 
         const ard = {
-            tyre_type_id: `[1, 2]`,
-            odometer_reading: `[11, 22]`,
-            tyre_change_date: `[2024-02-02, 2024-02-03]`,
-            tyre_amount: `[33, 44]`,
-            tyre_station_name: `["test1", "test2"]`,
-            service_record_odometer_reading: `[77, 88]`,
-            service_date: `[2024-02-02, 2024-02-03]`,
-            service_amount: `[99, 11]`,
-            service_station_name: `[name1, name2]`,
-            monthly_maintenance_budget_amount: `[44, 77.88]`,
-            to_date: `[2024-02-02, 2024-02-03]`,
-            from_date: `[2024-02-02, 2024-02-03]`,
+            tyre_type_id: tyreAdd.map((item) => item.tyreType),
+            odometer_reading: tyreAdd.map((item) => item.odometerReading),
+            tyre_change_date: tyreAdd.map((item) => item.tyreChangeDate),
+            tyre_amount: tyreAdd.map((item) => item.tyreAmount),
+            tyre_station_name: tyreAdd.map((item) => item.tyreStationName),
+            service_record_odometer_reading: serviceBillAdd.map(
+                (item) => item.odometerReading
+            ),
+            service_date: serviceBillAdd.map((item) => item.serviceDate),
+            service_amount: serviceBillAdd.map((item) => item.serviceAmount),
+            service_station_name: serviceBillAdd.map((item) => item.serviceStationName),
+            monthly_maintenance_budget_amount: maintenanceBudget.map(
+                (item) => item.amount
+            ),
+            to_date: maintenanceBudget.map((item) => item.toDate),
+            from_date: maintenanceBudget.map((item) => item.fromDate),
             // tyre_type_id: 1,
             // odometer_reading: 11,
             // tyre_change_date: "2024-02-02",
@@ -326,14 +420,23 @@ function FleetMasterAddForm() {
             newData.append(key, data[key]);
         });
         Object.keys(ard).forEach((key, index) => {
-            newData.append(`${key}[]`, ard[key]);
+            newData.append(`${key}[]`, JSON.stringify(ard[key]));
         });
         // Object.keys(db).forEach((key) => {
         //     newData.append(key, db[key]);
         // });
-        newData.append("bill_upload_along_with_warranty_status[]", file);
-        newData.append("bill_upload_along_with_warranty_status[]", file);
-        newData.append("service_bill_upload[]", file);
+        serviceBillAdd.forEach((item) => {
+            newData.append("service_bill_upload[]", item.serviceBillUpload);
+        });
+        tyreAdd.forEach((item) => {
+            newData.append(
+                "bill_upload_along_with_warranty_status[]",
+                item.tyreBillUpload
+            );
+        });
+        // newData.append("bill_upload_along_with_warranty_status[]", file);
+        // newData.append("bill_upload_along_with_warranty_status[]", file);
+        // newData.append("service_bill_upload[]", file);
 
         console.log(file);
 
@@ -439,6 +542,7 @@ function FleetMasterAddForm() {
                                         handleFileChange={handleFileChange}
                                         handleServiceBill={handleServiceBill}
                                         handleServiceBillDelete={handleServiceBillDelete}
+                                        handleServiceBillChange={handleServiceBillChange}
                                         formik={formik}
                                     />
                                 )}
@@ -451,6 +555,7 @@ function FleetMasterAddForm() {
                                         handleFileChange={handleFileChange}
                                         handleTyreDelete={handleTyreDelete}
                                         handleTyreAdd={handleTyreAdd}
+                                        handleTyreChange={handleTyreChange}
                                         formik={formik}
                                     />
                                 )}
@@ -461,6 +566,9 @@ function FleetMasterAddForm() {
                                         maintenanceBudgetAdd={maintenanceBudgetAdd}
                                         maintenanceBudget={maintenanceBudget}
                                         formik={formik}
+                                        handleMaintenanceBudgetChange={
+                                            handleMaintenanceBudgetChange
+                                        }
                                     />
                                 )}
                             </div>
