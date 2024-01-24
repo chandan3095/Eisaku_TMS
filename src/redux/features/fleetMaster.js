@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { addFleetApiCall, getDropdownDataApiCall, listFleetApiCall } from "../../Api/api";
+import client from "../../Api/client";
 
 // initial state
 const initialState = {
@@ -85,6 +86,30 @@ export const listFleetAsync = createAsyncThunk(
     }
 );
 
+// add fleet
+export const fetchSingleFleetAsync = createAsyncThunk(
+    "fleetmaster/fetch-single-fleet",
+    async (id, thunkAPI) => {
+        try {
+            const response = await client.get(
+                `api/fleet/fetch/${id}?&model_id=3&action_id=3`
+            );
+            console.log({ response });
+
+            if (response.data?.statusCode === 200) {
+                return thunkAPI.fulfillWithValue(response.data?.res);
+            } else {
+                throw response;
+            }
+        } catch (error) {
+            // You can customize the error handling here
+            console.log(error);
+            thunkAPI.rejectWithValue(error?.response?.data);
+            throw error?.response?.data;
+        }
+    }
+);
+
 // fleet master slice
 const fleetMasterSlice = createSlice({
     name: "fleetMaster",
@@ -115,6 +140,7 @@ const fleetMasterSlice = createSlice({
             state.isLoading = false;
         });
 
+        //
         builder.addCase(listFleetAsync.pending, (state, action) => {
             state.isLoading = true;
         });
@@ -124,6 +150,19 @@ const fleetMasterSlice = createSlice({
             state.dataList = action.payload;
         });
         builder.addCase(listFleetAsync.rejected, (state, action) => {
+            state.isLoading = false;
+        });
+
+        //
+        builder.addCase(fetchSingleFleetAsync.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(fetchSingleFleetAsync.fulfilled, (state, action) => {
+            console.log({ ful: action.payload });
+            state.isLoading = false;
+            state.dataList = action.payload;
+        });
+        builder.addCase(fetchSingleFleetAsync.rejected, (state, action) => {
             state.isLoading = false;
         });
     },

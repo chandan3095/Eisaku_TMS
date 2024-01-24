@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import BodyHeader from "../../../components/common/CommonBodyHeader";
 import CustomInput from "../../../components/common/CustomInput/CustomInput";
 import DataTable from "react-data-table-component";
@@ -18,8 +19,140 @@ import MonthlyMaintenanceBudget from "./FleetMasterAddForm/MonthlyMaintenanceBud
 import VehicleDetails from "./FleetMasterAddForm/VehicleDetails";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { fetchSingleFleetAsync } from "../../../redux/features/fleetMaster";
+
+const validationSchema = Yup.object().shape({
+    vehicleNo: Yup.string().required("vehicle No is required"),
+    chasisNo: Yup.string().required("Chasis No is required"),
+    engineNo: Yup.string().required("Engine No is required"),
+    vehicleOwnerName: Yup.string().required("Vehicle Owner Name is required"),
+    dimension: Yup.string().required("Dimension is required"),
+    fastagBankName: Yup.string().required("Fastag Bank Name is required"),
+    vehicleCategory: Yup.string().required("Vehicle Category is required"),
+    tonnage: Yup.number()
+        .required("Tonnage is required")
+        .positive("Tonnage must be a positive number"),
+    make: Yup.string().required("Make Name is required"),
+    model: Yup.date()
+        .required("Model Month Year is required")
+        .min(new Date(), "Must be a future date"),
+    registrationCertificate: Yup.string().required(
+        "Registration Certificate is required"
+    ),
+    insuranceExpiryDate: Yup.date()
+        .required("Insurance Expiry Date is required")
+        .min(new Date(), "Must be a future date"),
+    insuranceAmount: Yup.number()
+        .required("Insurance Amount is required")
+        .min(0, "Must be a positive value"),
+    insuranceCertificate: Yup.string().required("Insurance Certificate is required"),
+    fitnessExpiryDate: Yup.date()
+        .required("Fitness Expiry Date is required")
+        .min(new Date(), "Must be a future date"),
+    fitnessAmount: Yup.number()
+        .required("Fitness Amount is required")
+        .min(0, "Must be a positive value"),
+    fitnessCertificate: Yup.string().required("Fitness Certificate is required"),
+    localPermitExpiryDate: Yup.date()
+        .required("Local Permit Expiry Date is required")
+        .min(new Date(), "Must be a future date"),
+    localPermitAmount: Yup.number()
+        .required("Local Permit Amount is required")
+        .min(0, "Must be a positive value"),
+    localPermitDocument: Yup.string().required("Local Permit Document is required"),
+    nationalPermitExpiryDate: Yup.date()
+        .required("National Permit Expiry Date is required")
+        .min(new Date(), "Must be a future date"),
+    nationalPermitAmount: Yup.number()
+        .required("National Permit Amount is required")
+        .min(0, "Must be a positive value"),
+    nationalPermitDocument: Yup.string().required("National Permit Document is required"),
+    pucExpiryDate: Yup.date()
+        .required("PUC Expiry Date is required")
+        .min(new Date(), "Must be a future date"),
+    pucAmount: Yup.number()
+        .required("PUC Amount is required")
+        .min(0, "Must be a positive value"),
+    pucDocument: Yup.mixed().required("File is required"),
+    mvTax: Yup.number().required("MV Tax is required").min(0, "Must be a positive value"),
+    mvTaxExpiryDate: Yup.date()
+        .required("MV Tax Expiry Date is required")
+        .min(new Date(), "Must be a future date"),
+    mvTaxAmount: Yup.number()
+        .required("MV Tax Amount is required")
+        .min(0, "Must be a positive value"),
+    gpsProviderName: Yup.string(),
+    gpsAmount: Yup.number().min(0, "Must be a positive value"),
+    fabricatorName: Yup.string(),
+    fabricatorLocation: Yup.string(),
+});
+const initialValues = {
+    initialValues: {
+        vehicleNo: "",
+        chasisNo: "",
+        engineNo: "",
+        vehicleOwnerName: "",
+        dimension: [],
+        fastagBankName: "",
+        vehicleCategory: "",
+        tonnage: "",
+        fuelType: "Petrol",
+        make: "",
+        model: "",
+        registrationCertificate: "",
+        insuranceExpiryDate: "",
+        insuranceAmount: 0,
+        insuranceCertificate: null,
+        fitnessExpiryDate: "",
+        fitnessAmount: 0,
+        fitnessCertificate: "",
+        localPermitExpiryDate: "",
+        localPermitAmount: 0,
+        localPermitDocument: "",
+        nationalPermitExpiryDate: "",
+        nationalPermitAmount: 0,
+        nationalPermitDocument: "",
+        pucExpiryDate: "",
+        pucAmount: 0,
+        pucDocument: "",
+        mvTax: 0,
+        mvTaxExpiryDate: "",
+        mvTaxAmount: 0,
+        gpsProviderName: "",
+        gpsAmount: 0,
+        fabricatorName: "",
+        fabricatorLocation: "",
+
+        // EMI
+        emiStartDate: "",
+        emiEndDate: "",
+        emiAmount: "",
+        emiCertificate: "",
+        financedBy: "",
+
+        // Service Record
+        odometerReading: "",
+        serviceDate: "",
+        serviceAmount: "",
+        serviceStationName: "",
+        serviceBill: "",
+
+        // tyre
+        tyreType: "",
+        tyreChangeDate: "",
+        tyreAmount: "",
+        tyreStationName: "",
+        tyreBillUpload: "",
+    },
+};
 
 const FleetMasterView = () => {
+    const params = useParams();
+    const dispatch = useDispatch();
+
+    console.log({ params });
+
     const [fuelType, setFuelType] = useState("Diesel");
     const [makeSelect, setMake] = useState("");
     const [tonnageSelect, setTonnage] = useState("");
@@ -233,134 +366,7 @@ const FleetMasterView = () => {
         });
         setRecords(newData);
     };
-    const validationSchema = Yup.object().shape({
-        vehicleNo: Yup.string().required("vehicle No is required"),
-        chasisNo: Yup.string().required("Chasis No is required"),
-        engineNo: Yup.string().required("Engine No is required"),
-        vehicleOwnerName: Yup.string().required("Vehicle Owner Name is required"),
-        dimension: Yup.string().required("Dimension is required"),
-        fastagBankName: Yup.string().required("Fastag Bank Name is required"),
-        vehicleCategory: Yup.string().required("Vehicle Category is required"),
-        tonnage: Yup.number()
-            .required("Tonnage is required")
-            .positive("Tonnage must be a positive number"),
-        make: Yup.string().required("Make Name is required"),
-        model: Yup.date()
-            .required("Model Month Year is required")
-            .min(new Date(), "Must be a future date"),
-        registrationCertificate: Yup.string().required(
-            "Registration Certificate is required"
-        ),
-        insuranceExpiryDate: Yup.date()
-            .required("Insurance Expiry Date is required")
-            .min(new Date(), "Must be a future date"),
-        insuranceAmount: Yup.number()
-            .required("Insurance Amount is required")
-            .min(0, "Must be a positive value"),
-        insuranceCertificate: Yup.string().required("Insurance Certificate is required"),
-        fitnessExpiryDate: Yup.date()
-            .required("Fitness Expiry Date is required")
-            .min(new Date(), "Must be a future date"),
-        fitnessAmount: Yup.number()
-            .required("Fitness Amount is required")
-            .min(0, "Must be a positive value"),
-        fitnessCertificate: Yup.string().required("Fitness Certificate is required"),
-        localPermitExpiryDate: Yup.date()
-            .required("Local Permit Expiry Date is required")
-            .min(new Date(), "Must be a future date"),
-        localPermitAmount: Yup.number()
-            .required("Local Permit Amount is required")
-            .min(0, "Must be a positive value"),
-        localPermitDocument: Yup.string().required("Local Permit Document is required"),
-        nationalPermitExpiryDate: Yup.date()
-            .required("National Permit Expiry Date is required")
-            .min(new Date(), "Must be a future date"),
-        nationalPermitAmount: Yup.number()
-            .required("National Permit Amount is required")
-            .min(0, "Must be a positive value"),
-        nationalPermitDocument: Yup.string().required(
-            "National Permit Document is required"
-        ),
-        pucExpiryDate: Yup.date()
-            .required("PUC Expiry Date is required")
-            .min(new Date(), "Must be a future date"),
-        pucAmount: Yup.number()
-            .required("PUC Amount is required")
-            .min(0, "Must be a positive value"),
-        pucDocument: Yup.mixed().required("File is required"),
-        mvTax: Yup.number()
-            .required("MV Tax is required")
-            .min(0, "Must be a positive value"),
-        mvTaxExpiryDate: Yup.date()
-            .required("MV Tax Expiry Date is required")
-            .min(new Date(), "Must be a future date"),
-        mvTaxAmount: Yup.number()
-            .required("MV Tax Amount is required")
-            .min(0, "Must be a positive value"),
-        gpsProviderName: Yup.string(),
-        gpsAmount: Yup.number().min(0, "Must be a positive value"),
-        fabricatorName: Yup.string(),
-        fabricatorLocation: Yup.string(),
-    });
-    const initialValues = {
-        initialValues: {
-            vehicleNo: "",
-            chasisNo: "",
-            engineNo: "",
-            vehicleOwnerName: "",
-            dimension: [],
-            fastagBankName: "",
-            vehicleCategory: "",
-            tonnage: "",
-            fuelType: "Petrol",
-            make: "",
-            model: "",
-            registrationCertificate: "",
-            insuranceExpiryDate: "",
-            insuranceAmount: 0,
-            insuranceCertificate: null,
-            fitnessExpiryDate: "",
-            fitnessAmount: 0,
-            fitnessCertificate: "",
-            localPermitExpiryDate: "",
-            localPermitAmount: 0,
-            localPermitDocument: "",
-            nationalPermitExpiryDate: "",
-            nationalPermitAmount: 0,
-            nationalPermitDocument: "",
-            pucExpiryDate: "",
-            pucAmount: 0,
-            pucDocument: "",
-            mvTax: 0,
-            mvTaxExpiryDate: "",
-            mvTaxAmount: 0,
-            gpsProviderName: "",
-            gpsAmount: 0,
-            fabricatorName: "",
-            fabricatorLocation: "",
 
-            // EMI
-            emiStartDate: "",
-            emiEndDate: "",
-            emiAmount: "",
-            emiCertificate: "",
-            financedBy: "",
-
-            // Service Record
-            odometerReading: "",
-            serviceDate: "",
-            serviceAmount: "",
-            serviceStationName: "",
-            serviceBill: "",
-
-            // tyre
-            tyreType: "",
-            tyreChangeDate: "",
-            tyreAmount: "",
-            tyreStationName: "",
-            tyreBillUpload: "",
-        },
-    };
     const formik = useFormik({
         initialValues,
         validationSchema,
@@ -383,6 +389,10 @@ const FleetMasterView = () => {
                 return <VehicleDetails />;
         }
     };
+
+    useEffect(() => {
+        dispatch(fetchSingleFleetAsync(params?.id));
+    }, []);
     return (
         <div>
             <BodyHeader title="Edit Fleet Master" />
@@ -838,7 +848,7 @@ const FleetMasterView = () => {
                                                     </div>
 
                                                     <div className="card-body">
-                                                        <ServiceRecord />
+                                                        {/* <ServiceRecord /> */}
                                                     </div>
                                                 </div>
                                             </div>
