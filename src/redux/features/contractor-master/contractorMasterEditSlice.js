@@ -1,7 +1,7 @@
 // authSlice.js
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { handleContractorMasterApiCall } from "../../Api/api";
+import { handleContractorMasterEditApiCall } from "../../../Api/api";
 
 // Define an initial state for the slice
 const initialState = {
@@ -11,12 +11,12 @@ const initialState = {
 };
 
 // Create an async thunk for the login action
-export const addContractorMasterAsync = createAsyncThunk(
-   "auth/add/add-user",
+export const editContractorMasterAsync = createAsyncThunk(
+   "auth/contractor/add-contractor",
    async (data) => {
       try {
          console.log(data);
-         const response = await handleContractorMasterApiCall(data);
+         const response = await handleContractorMasterEditApiCall(data);
          console.log({ response });
          return response.data;
       } catch (error) {
@@ -28,24 +28,24 @@ export const addContractorMasterAsync = createAsyncThunk(
 );
 
 // Create a slice of the Redux store
-const authSlice = createSlice({
-   name: "auth",
+const contractorMasterEditSlice = createSlice({
+   name: "editcontractormaster",
    initialState,
    reducers: {
       // You can define additional synchronous actions here if needed
    },
    extraReducers: (builder) => {
       builder
-         .addCase(addContractorMasterAsync.pending, (state) => {
+         .addCase(editContractorMasterAsync.pending, (state) => {
             state.loading = true;
             state.error = null;
          })
-         .addCase(addContractorMasterAsync.fulfilled, (state, action) => {
+         .addCase(editContractorMasterAsync.fulfilled, (state, action) => {
             state.loading = false;
             state.user = action.payload;
             console.log(action.payload);
          })
-         .addCase(addContractorMasterAsync.rejected, (state, action) => {
+         .addCase(editContractorMasterAsync.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload; // error message from the rejectWithValue call
          });
@@ -54,4 +54,4 @@ const authSlice = createSlice({
 
 
 // Export the reducer
-export default authSlice.reducer;
+export default contractorMasterEditSlice.reducer;

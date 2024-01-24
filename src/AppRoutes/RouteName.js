@@ -34,7 +34,7 @@ const RouteNames = {
    customerMasterEdit: '/customer-master/edit',
    vendorMasterEdit: '/vendor-master/edit',
    laneMasterEdit: '/lane-master/edit',
-   contractorMasterEdit: '/contractor-master/edit',
+   contractorMasterEdit: '/contractor-master/edit/:id',
    LocationMasterEdit: '/location-master/:formType/:id',
 
    // manager Trip view

@@ -1,29 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import BodyHeader from '../../../components/common/CommonBodyHeader';
 import CustomInput from '../../../components/common/CustomInput/CustomInput';
 import DataTable from 'react-data-table-component';
 import { useNavigate } from 'react-router-dom';
 import CustomToggleSwitch from '../../../components/common/CustomToggle';
+import { useDispatch, useSelector } from 'react-redux';
+import { listContractorMasterAsync } from '../../../redux/features/contractor-master/contractorMasterListSlice';
 
 const ContractorMasterView = () => {
 
    const navigate = useNavigate()
+   const dispatch = useDispatch()
+   const contractorsList = useSelector((state) => state.contractorMasterListSlice)
+   // console.log(contractorsList);
+   const [isChecked, setIsChecked] = useState(false); // State to manage toggle
 
-   const [isChecked, setIsChecked] = useState({}); // State to manage toggle
-
-     const toggleSwitch = () => {
-        setIsChecked(isChecked ? isChecked = true : isChecked = false); // Toggle the state
-       console.log(isChecked);
-     };
+   const toggleSwitch = () => {
+      setIsChecked((prev) => !prev); // Toggle the state
+      // console.log(isChecked);
+   };
    const columns = [
       {
          name: 'Contractor Name',
-         selector: row => row.contractorName,
+         selector: row => row.name,
          sortable: true
       },
       {
          name: 'Mobile Number',
-         selector: row => row.mobileNumber,
+         selector: row => {
+            return row.mobile
+         },
       },
       {
          name: 'Location',
@@ -31,72 +37,28 @@ const ContractorMasterView = () => {
       },
       {
          name: 'Action',
-         selector: row => row.action,
+         selector: row => {
+            return row.action
+         },
       }
    ]
 
-   const data = [
-      {
-         id: 1,
-         contractorName: 'A Contractor',
-         mobileNumber: '811344934',
-         location: 'Kolkata',
-         action: <>
-            <button className="btn btn-primary mx-2" onClick={()=>navigate('/contractor-master/add-form')}>Edit</button>
-            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="contractor1" />
-         </>
-      },
-      {
-         id: 2,
-         contractorName: 'A Contractor',
-         mobileNumber: '811344934',
-         location: 'Kolkata',
-         action: <>
-            <button className="btn btn-primary mx-2" onClick={()=>navigate('/contractor-master/add-form')}>Edit</button>
-            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="contractor2" />
-         </>
-      },
-      {
-         id: 3,
-         contractorName: 'A Contractor',
-         mobileNumber: '811344934',
-         location: 'Kolkata',
-         action: <>
-            <button className="btn btn-primary mx-2" onClick={()=>navigate('/contractor-master/add-form')}>Edit</button>
-            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="contractor3" />
-         </>
-      },
-      {
-         id: 4,
-         contractorName: 'A Contractor',
-         mobileNumber: '811344934',
-         location: 'Kolkata',
-         action: <>
-            <button className="btn btn-primary mx-2" onClick={()=>navigate('/contractor-master/add-form')}>Edit</button>
-            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="contractor4" />
-         </>
-      },
-      {
-         id: 5,
-         contractorName: 'A Contractor',
-         mobileNumber: '811344934',
-         location: 'Kolkata',
-         action: <>
-            <button className="btn btn-primary mx-2" onClick={()=>navigate('/contractor-master/add-form')}>Edit</button>
-            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="contractor5" />
-         </>
-      },
-      {
-         id: 6,
-         contractorName: 'A Contractor',
-         mobileNumber: '811344934',
-         location: 'Kolkata',
-         action: <>
-            <button className="btn btn-primary mx-2" onClick={()=>navigate('/contractor-master/add-form')}>Edit</button>
-            <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="contractor6" />
-         </>
-      },
-   ]
+   const data = contractorsList?.user?.res?.map?.((item, index) => {
+      console.log({ item });
+      return {
+         ...item, action:
+            <>
+               <button className="btn btn-primary mx-2" onClick={() => navigate(`/contractor-master/edit/${item?.id}`)}>Edit</button>
+
+               <CustomToggleSwitch onChange={toggleSwitch} id={index} />
+            </>
+         , mobile: item.contact_personal_details.map((mobileNo) => {
+            return <div>
+               {mobileNo.mobile},
+            </div>
+         })
+      }
+   })
 
    const customStyles = {
       table: {
@@ -126,6 +88,10 @@ const ContractorMasterView = () => {
       },
    };
 
+   useEffect(() => {
+      dispatch(listContractorMasterAsync())
+   }, []);
+
    const [records, setRecords] = useState(data)
 
    const handleFilter = (e) => {
@@ -140,21 +106,21 @@ const ContractorMasterView = () => {
          <BodyHeader title="Contractor Master List" />
 
          <div className='px-3'>
-         <div className=" d-flex justify-content-between">
-            <h3>User's List</h3>
-            <CustomInput inputType="text" placeholder="Search..." id="search" onChange={(e) => handleFilter(e)} />
-         </div>
-         <DataTable
-            columns={columns}
-            data={records}
-            sortable
-            fixedHeader
-            pagination
-            responsive
-            striped={true}
-            borderColor="#000000"
-            customStyles={customStyles}>
-         </DataTable>
+            <div className=" d-flex justify-content-between">
+               <h3>User's List</h3>
+               <CustomInput inputType="text" placeholder="Search..." id="search" onChange={(e) => handleFilter(e)} />
+            </div>
+            <DataTable
+               columns={columns}
+               data={data}
+               sortable
+               fixedHeader
+               pagination
+               responsive
+               striped={true}
+               borderColor="#000000"
+               customStyles={customStyles}>
+            </DataTable>
          </div>
       </div>
    )

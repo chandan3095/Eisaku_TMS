@@ -9,14 +9,13 @@ const client = axios.create({
 });
 
 client.interceptors.request.use(async config => {
-   config.headers['Content-Type'] = 'application/json';
-   config.headers['Accept'] = 'application/json';
-
-   // if (response) {
-   //    const { token } = response;
-   //    // config.headers['Authorization'] = `Bearer ${token}`;
-   // }
-   // console.log(config);
+   if (config.data instanceof FormData) {
+      config.headers['Content-Type'] = 'multipart/form-data';
+      config.headers['Accept'] = 'multipart/form-data';
+   } else {
+      config.headers['Content-Type'] = 'application/json';
+      config.headers['Accept'] = 'application/json';
+   }
    return config;
 });
 

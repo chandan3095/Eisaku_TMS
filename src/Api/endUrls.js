@@ -4,6 +4,8 @@ const EndUrls = {
     listUser: "/user?model_id=1&action_id=3",
     editUser: "/user/update",
     contractorAdd: "/contractor/add",
+   contractorList: "/contractor?&model_id=9&action_id=3",
+   contractorUpdate: "/contractor/update",
 
     // Fleet Master
     getDropdownData: "fleet/get_dropdowns?&model_id=3&action_id=3",
