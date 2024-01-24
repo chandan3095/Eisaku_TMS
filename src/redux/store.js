@@ -11,26 +11,28 @@ import locationMasterReducer from "../redux/features/location-master/addLocation
 import locationMasterListSlice from "../redux/features/location-master/listLocationMasterSlice";
 import locationMasterSingleListSlice from "../redux/features/location-master/singleListLocationMasterSlice";
 import fleetMasterReducer from "./features/fleetMaster";
+import driverMasterReducer from "./features/driverMaster";
 
 const rootReducer = combineReducers({
-    addUser: addUserReducer,
-    listUser: listUserSlice,
-    loginReducer: loginReducer,
-    driveMaster: DriveMasterReducer,
-    locationMasterReducer: locationMasterReducer,
-    locationMasterListSlice: locationMasterListSlice,
-    locationMasterSingleListSlice: locationMasterSingleListSlice,
-    fleetMaster: fleetMasterReducer,
+  addUser: addUserReducer,
+  listUser: listUserSlice,
+  loginReducer: loginReducer,
+  driveMaster: DriveMasterReducer,
+  locationMasterReducer: locationMasterReducer,
+  locationMasterListSlice: locationMasterListSlice,
+  locationMasterSingleListSlice: locationMasterSingleListSlice,
+  fleetMaster: fleetMasterReducer,
+  driverMaster: driverMasterReducer,
 });
 
 const persistConfig = {
-    key: "root",
-    storage,
+  key: "root",
+  storage,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({
-    reducer: persistedReducer,
+  reducer: persistedReducer,
 });
 export const persistor = persistStore(store);
 

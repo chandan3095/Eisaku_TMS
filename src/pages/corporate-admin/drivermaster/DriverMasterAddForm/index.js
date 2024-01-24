@@ -1,34 +1,57 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomInput from "../../../../components/common/CustomInput/CustomInput";
 import CustomDatePicker from "../../../../components/common/CustomDatePicker/CustomDatePicker";
 import CustomRadio from "../../../../components/common/CustomRadio/CustomRadio";
 import CustomFileUpload from "../../../../components/common/CustomFileUpload/CustomFileUpload";
 import CustomTextArea from "../../../../components/common/CustomTextArea/CustomTextArea";
 import BodyHeader from "../../../../components/common/CommonBodyHeader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addDriveMaster } from "../../../../reducer/DriveMasterReducer";
 import { useNavigate } from "react-router-dom";
+import {
+  addDriverMasterAsync,
+  fetchAllContractorsAsync,
+} from "../../../../redux/features/driverMaster";
+import CustomDropdown from "../../../../components/common/CustomDropdown/CustomDropdown";
 
 function FleetMasterAddForm() {
   // const [payRollType, setpayRollType] = useState("Eisaku Pay roll");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const driverMaster = useSelector((state) => state.driverMaster);
+  const contractorsData = driverMaster?.contractors?.map?.((item) => ({
+    label: item?.name,
+    value: item?.id,
+  }));
+  console.log({ driverMaster });
 
   const [selectedFile, setSelectedFile] = useState(null);
 
   const [formData, setFormData] = useState({
-    Name: "",
+    name: "",
     dob: "",
     joiningDate: "",
     exitDate: "",
     expofyears: "",
+    driverImage: null,
     address: "",
+
     drivingLicense: "",
     licenseExp: "",
-    aadharCard: "",
-    panCard: "",
-    payRollType: "Eisaku Pay roll",
     dlUpload: "",
+
+    aadharCard: "",
+    aadharCardImg: null,
+    panCard: "",
+    panCardImg: null,
+
+    payRollType: "Eisaku Pay roll",
+
     contractorName: "",
-    monthlyCommAmount: "",
+    contractorId: 1,
+    monthlyCommAmount: 10,
+
     accountNumber: "",
     bankName: "",
     ifscCode: "",
@@ -36,8 +59,6 @@ function FleetMasterAddForm() {
     monthlyAmount: "",
   });
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   console.log(formData);
 
   const handleChange = (e) => {
@@ -45,6 +66,10 @@ function FleetMasterAddForm() {
 
     if (type === "file") {
       const file = e.target.files[0];
+      setFormData({
+        ...formData,
+        [name]: file,
+      });
       console.log(name, file);
     } else {
       setFormData({
@@ -55,9 +80,81 @@ function FleetMasterAddForm() {
   };
 
   const handleFormData = () => {
-    dispatch(addDriveMaster(formData));
-    navigate("/driver-master/view");
+    const data = {
+      contractor_master_id: formData.contractorId,
+
+      name: formData.name,
+      dob: formData.dob,
+      doj: formData.joiningDate,
+      doe: formData.exitDate,
+      experience: formData.expofyears,
+      driver_image: formData.driverImage,
+      address: formData.address,
+
+      driver_license: formData.drivingLicense,
+      license_expiry_date: formData.licenseExp,
+      dl_document: formData.dlUpload,
+
+      aadhar_card: formData.aadharCard,
+      aadhar_card_doc: formData.aadharCardImg,
+
+      pan_card: formData.panCard,
+      pan_card_doc: formData.panCardImg,
+
+      payroll: formData.payRollType,
+
+      account_number: formData.accountNumber,
+      bank_name: formData.bankName,
+      ifsc_code: formData.ifscCode,
+      account_holder_name: formData.accountHolderName,
+      monthly_salary_amount: formData.monthlyAmount,
+
+      contractor: formData.contractorName,
+      monthly_salary_commission_amount: formData.monthlyCommAmount,
+      // is_deleted: "0",
+      // is_active: "1",
+      // created_by: 3,
+      // updated_by: 3,
+      // created_at: "2024-01-23T08:48:13.000000Z",
+      // updated_at: "2024-01-23T08:48:13.000000Z",
+      model_id: 4,
+      action_id: 1,
+    };
+
+    if (data.payroll === "Eisaku Pay roll") {
+      // delete data.contractor_master_id;
+      delete data.contractor;
+      // delete data.monthly_salary_commission_amount;
+    }
+    if (data.payroll === "Contractor") {
+      delete data.account_number;
+      delete data.bank_name;
+      delete data.ifsc_code;
+      delete data.account_holder_name;
+      delete data.monthly_salary_amount;
+    }
+    if (!data.pan_card) {
+      delete data.pan_card;
+      delete data.pan_card_doc;
+    }
+    if (!data.aadhar_card) {
+      delete data.aadhar_card;
+      delete data.aadhar_card_doc;
+    }
+
+    const newData = new FormData();
+    Object.keys(data).forEach((key) => {
+      newData.append(key, data[key]);
+    });
+
+    dispatch(addDriverMasterAsync(newData));
+
+    // navigate("/driver-master/view");
   };
+
+  useEffect(() => {
+    dispatch(fetchAllContractorsAsync());
+  }, []);
 
   return (
     <div>
@@ -75,9 +172,9 @@ function FleetMasterAddForm() {
                   label="Name"
                   id="driverName"
                   placeholder="Enter Name"
-                  value={formData.Name}
+                  value={formData.name}
                   onChange={handleChange}
-                  name="Name"
+                  name="name"
                 />
               </div>
 
@@ -120,14 +217,23 @@ function FleetMasterAddForm() {
 
               {/* Expierence (Years) */}
               <div className="col-lg-4">
-                <CustomDatePicker
+                <CustomDropdown
                   require={require}
+                  optionData={[...Array.from(Array(20).keys())].map((item) => ({
+                    label: `${item + 1} ${item + 1 === 1 ? "Year" : "Years"}`,
+                    value: item + 1,
+                  }))}
                   label="Expierence (Years)"
                   placeholder="Select Expierence (Years)"
                   id="expofyears"
                   name="expofyears"
                   value={formData.expofyears}
-                  onChange={handleChange}
+                  onChange={(values) => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      expofyears: values?.[0]?.value,
+                    }));
+                  }}
                 />
               </div>
               <div className="col-lg-4">
@@ -139,6 +245,7 @@ function FleetMasterAddForm() {
                   label="Driver Image"
                   id="driverImage"
                   name="driverImage"
+                  onChange={handleChange}
                 />
               </div>
 
@@ -226,7 +333,7 @@ function FleetMasterAddForm() {
                 </label>
                 <CustomFileUpload
                   label="Aadhar card"
-                  name="adharCard"
+                  name="aadharCardImg"
                   onChange={handleChange}
                 />
               </div>
@@ -244,7 +351,11 @@ function FleetMasterAddForm() {
 
               <div className="col-lg-6">
                 <label className="text-bold">Pan Card</label>
-                <CustomFileUpload label="Pan Card" />
+                <CustomFileUpload
+                  label="Pan Card"
+                  name="panCardImg"
+                  onChange={handleChange}
+                />
               </div>
             </div>
           </div>
@@ -289,13 +400,20 @@ function FleetMasterAddForm() {
             {formData.payRollType === "Contractor" && (
               <div className="row">
                 <div className="col-lg-6">
-                  <CustomInput
+                  <CustomDropdown
                     require={require}
                     label="Contractor Name"
                     id="contractorName"
+                    optionData={contractorsData}
                     placeholder="Enter contractor Name"
                     value={formData.contractorName}
-                    onChange={handleChange}
+                    onChange={(values) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        contractorName: values?.[0]?.label,
+                        contractorId: values?.[0]?.value,
+                      }))
+                    }
                     name="contractorName"
                   />
                 </div>

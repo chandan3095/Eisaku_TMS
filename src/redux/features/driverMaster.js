@@ -1,8 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
+  addDriverMasterApiCall,
   addFleetApiCall,
+  fetchAllContractorsApiCall,
   getDropdownDataApiCall,
+  listDriverMasterApiCall,
   listFleetApiCall,
+  updateDriverMasterApiCall,
   updateFleetApiCall,
 } from "../../Api/api";
 import client from "../../Api/client";
@@ -10,25 +14,22 @@ import client from "../../Api/client";
 // initial state
 const initialState = {
   dataList: [],
-  singleFleetMaster: null,
+  singleDriverMaster: null,
 
-  tonnage: [],
-  dimension: [],
-  make: [],
-  vehicleCategory: [],
+  contractors: [],
 
   isLoading: false,
   isError: false,
   isSuccess: false,
 };
 
-// get dropdown datas
-export const getFleetMasterDropdownDataAsync = createAsyncThunk(
-  "fleetmaster/get-dropdown-data",
-  async (data, thunkAPI) => {
+// add fleet
+export const fetchAllContractorsAsync = createAsyncThunk(
+  "driverMaster/fetch-contractors-driver",
+  async (_, thunkAPI) => {
     try {
-      console.log(data);
-      const response = await getDropdownDataApiCall();
+      console.log();
+      const response = await fetchAllContractorsApiCall();
       console.log({ response });
 
       if (response.data?.statusCode === 200) {
@@ -46,12 +47,12 @@ export const getFleetMasterDropdownDataAsync = createAsyncThunk(
 );
 
 // add fleet
-export const addFleetAsync = createAsyncThunk(
-  "fleetmaster/add-fleet",
+export const addDriverMasterAsync = createAsyncThunk(
+  "driverMaster/add-driver-master",
   async (data, thunkAPI) => {
     try {
       console.log(data);
-      const response = await addFleetApiCall(data);
+      const response = await addDriverMasterApiCall(data);
       console.log({ response });
 
       if (response.data?.statusCode === 200) {
@@ -69,12 +70,12 @@ export const addFleetAsync = createAsyncThunk(
 );
 
 // update fleet
-export const updateFleetAsync = createAsyncThunk(
-  "fleetmaster/update-fleet",
+export const updateDriverMasterAsync = createAsyncThunk(
+  "driverMaster/update-driver-master",
   async (data, thunkAPI) => {
     try {
       console.log(data);
-      const response = await updateFleetApiCall(data);
+      const response = await updateDriverMasterApiCall(data);
       console.log({ response });
 
       if (response.data?.statusCode === 200) {
@@ -92,12 +93,12 @@ export const updateFleetAsync = createAsyncThunk(
 );
 
 // add fleet
-export const listFleetAsync = createAsyncThunk(
-  "fleetmaster/list-fleet",
+export const listDriverMasterAsync = createAsyncThunk(
+  "driverMaster/list-driver-master",
   async (data, thunkAPI) => {
     try {
       console.log(data);
-      const response = await listFleetApiCall();
+      const response = await listDriverMasterApiCall();
       console.log({ response });
 
       if (response.data?.statusCode === 200) {
@@ -115,12 +116,12 @@ export const listFleetAsync = createAsyncThunk(
 );
 
 // fetch single fleet
-export const fetchSingleFleetAsync = createAsyncThunk(
-  "fleetmaster/fetch-single-fleet",
+export const fetchSingleDriveMasterAsync = createAsyncThunk(
+  "driverMaster/fetch-single-fleet",
   async (id, thunkAPI) => {
     try {
       const response = await client.get(
-        `fleet/fetch/${id}?&model_id=3&action_id=3`,
+        `driver/fetch/${id}?&model_id=4&action_id=3`,
         {
           headers: {
             Authorization: `Bearer ${JSON.parse(
@@ -146,13 +147,13 @@ export const fetchSingleFleetAsync = createAsyncThunk(
 );
 
 // fleet master slice
-const fleetMasterSlice = createSlice({
-  name: "fleetMaster",
+const driverMasterSlice = createSlice({
+  name: "driverMaster",
 
   initialState: initialState,
 
   reducers: {
-    clearFleetMasterState: (state, action) => {
+    clearDriverMasterState: (state, action) => {
       state.isLoading = false;
       state.isError = false;
       state.isSuccess = false;
@@ -160,59 +161,48 @@ const fleetMasterSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(
-      getFleetMasterDropdownDataAsync.pending,
-      (state, action) => {
-        state.isLoading = true;
-      }
-    );
-    builder.addCase(
-      getFleetMasterDropdownDataAsync.fulfilled,
-      (state, action) => {
-        console.log({ ful: action.payload });
-        state.isLoading = false;
-        state.dimension = action.payload?.dimension;
-        state.make = action.payload?.make;
-        state.tonnage = action.payload?.tonnage;
-        state.vehicleCategory = action.payload?.vehicle_category;
-      }
-    );
-    builder.addCase(
-      getFleetMasterDropdownDataAsync.rejected,
-      (state, action) => {
-        state.isLoading = false;
-      }
-    );
-
     //
-    builder.addCase(listFleetAsync.pending, (state, action) => {
+    builder.addCase(fetchAllContractorsAsync.pending, (state, action) => {
       state.isLoading = true;
     });
-    builder.addCase(listFleetAsync.fulfilled, (state, action) => {
+    builder.addCase(fetchAllContractorsAsync.fulfilled, (state, action) => {
+      console.log({ ful: action.payload });
+      state.isLoading = false;
+      state.contractors = action.payload;
+    });
+    builder.addCase(fetchAllContractorsAsync.rejected, (state, action) => {
+      state.isLoading = false;
+    });
+
+    //
+    builder.addCase(listDriverMasterAsync.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(listDriverMasterAsync.fulfilled, (state, action) => {
       console.log({ ful: action.payload });
       state.isLoading = false;
       state.dataList = action.payload;
     });
-    builder.addCase(listFleetAsync.rejected, (state, action) => {
+    builder.addCase(listDriverMasterAsync.rejected, (state, action) => {
       state.isLoading = false;
     });
 
     //
-    builder.addCase(fetchSingleFleetAsync.pending, (state, action) => {
+    builder.addCase(fetchSingleDriveMasterAsync.pending, (state, action) => {
       state.isLoading = true;
     });
-    builder.addCase(fetchSingleFleetAsync.fulfilled, (state, action) => {
+    builder.addCase(fetchSingleDriveMasterAsync.fulfilled, (state, action) => {
       console.log({ ful: action.payload });
       state.isLoading = false;
-      state.singleFleetMaster = action.payload;
+      state.singleDriverMaster = action.payload;
     });
-    builder.addCase(fetchSingleFleetAsync.rejected, (state, action) => {
+    builder.addCase(fetchSingleDriveMasterAsync.rejected, (state, action) => {
       state.isLoading = false;
     });
   },
 });
 
-export const { clearFleetMasterState } = fleetMasterSlice.actions;
+export const { clearDriverMasterState } = driverMasterSlice.actions;
 
-const fleetMasterReducer = fleetMasterSlice.reducer;
-export default fleetMasterReducer;
+const driverMasterReducer = driverMasterSlice.reducer;
+export default driverMasterReducer;
