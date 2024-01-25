@@ -10,16 +10,19 @@ import { listHelperMasterAsync } from "../../../redux/features/helperMaster";
 const HelperMasterView = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isChecked, setIsChecked] = useState({}); // State to manage toggle
+  const [isChecked, setIsChecked] = useState(true); // State to manage toggle
+
+  const listFormData = useSelector((state) => state.helperMaster.dataList);
   const helperMaster = useSelector((state) => state.helperMaster);
   const helperMasterList = helperMaster?.dataList;
+  const [records, setRecords] = useState(listFormData);
 
   useEffect(() => {
     dispatch(listHelperMasterAsync());
   }, []);
 
   const toggleSwitch = () => {
-    setIsChecked(isChecked ? (isChecked = true) : (isChecked = false)); // Toggle the state
+    setIsChecked((prev) => !prev); // Toggle the state
     console.log(isChecked);
   };
   const columns = [
@@ -217,14 +220,12 @@ const HelperMasterView = () => {
     },
   };
 
-  const [records, setRecords] = useState(data);
-
   const handleFilter = (e) => {
     const searchText = e.target.value.toLowerCase();
-    const newData = data.filter((row) => {
+    const newData = listFormData.filter((row) => {
       return (
-        row.helperName.toLowerCase().includes(searchText) ||
-        row.payrollType.toLowerCase().includes(searchText)
+        row.name.toLowerCase().includes(searchText) ||
+        row.payroll.toLowerCase().includes(searchText)
       );
     });
     setRecords(newData);

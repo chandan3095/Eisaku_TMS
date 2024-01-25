@@ -105,6 +105,7 @@ export const handleContractorMasterApiCall = async (data) =>
   });
 
 //Helper master
+// Add Helper-master
 export const addHelperMasterApiCall = async (data) =>
   await client.post(EndUrls.addHelperMaster, data, {
     headers: {
@@ -113,5 +114,18 @@ export const addHelperMasterApiCall = async (data) =>
     },
   });
 
+// Get Helper-master
 export const listHelperMasterApiCall = async (data) =>
   await client.get(EndUrls.listHelperMaster, config);
+
+// Get single Helper-master
+export const fetchSingleHelperMasterApiCall = async (id) =>
+  await client.get(
+    `/helper/fetch/${id}?&model_id=5&action_id=3
+  `,
+    config
+  );
+
+// Update Helper Master
+export const updateHelperMasterApiCall = async (data) =>
+  await client.post(EndUrls.updateHelperMaster, data, config);

@@ -30,6 +30,7 @@ const EndUrls = {
   // Helper Master
   addHelperMaster: "/helper/add",
   listHelperMaster: "/helper?&model_id=5&action_id=3",
+  updateHelperMaster: "/helper/update",
 };
 
 export default EndUrls;
