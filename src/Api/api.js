@@ -103,3 +103,12 @@ export const handleContractorMasterApiCall = async (data) =>
       Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
     },
   });
+
+//Helper master
+export const addHelperMasterApiCall = async (data) =>
+  await client.post(EndUrls.addHelperMaster, data, {
+    headers: {
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      "Custom-Header": "value",
+    },
+  });

@@ -26,6 +26,9 @@ const EndUrls = {
   locationMasterSingleList: (id, model_id, action_id) =>
     `/location/fetch/${id}?model_id=${model_id}&action_id=${action_id}`,
   locationMasterUpdate: "/location/update",
+
+  // Helper Master
+  addHelperMaster: "/helper/add",
 };
 
 export default EndUrls;
