@@ -73,7 +73,7 @@ function HelperMasterEdit() {
     // console.log(formData, 'helper Data');
 
     const data = {
-      id: params.id,
+      id: params?.id,
       name: formData.name,
       dob: formData.dob,
       doj: formData.dateOfJoining,
