@@ -27,6 +27,9 @@ const RouteNames = {
     // list view 
     fleetMasterView: '/fleet-master/view',
 
+    //contractor Contact details
+    contractorMasterContacts: '/contractor-master/:id/contact-details',
+
    // edit 
    fleetMasterEdit: '/fleet-master/edit',
    driverMasterEdit: '/driver-master/edit/:id',

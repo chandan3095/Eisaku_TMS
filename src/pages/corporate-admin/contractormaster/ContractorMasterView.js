@@ -26,9 +26,9 @@ const ContractorMasterView = () => {
          sortable: true
       },
       {
-         name: 'Mobile Number',
+         name: 'Account Holder Name',
          selector: row => {
-            return row.mobile
+            return row.account_holder_name
          },
       },
       {
@@ -50,13 +50,15 @@ const ContractorMasterView = () => {
             <>
                <button className="btn btn-primary mx-2" onClick={() => navigate(`/contractor-master/edit/${item?.id}`)}>Edit</button>
 
+               <button className="btn btn-primary mx-2" onClick={() => navigate(`/contractor-master/${item.id}/contact-details`)}>Contact Details</button>
+
                <CustomToggleSwitch onChange={toggleSwitch} id={index} />
             </>
-         , mobile: item.contact_personal_details.map((mobileNo) => {
-            return <div>
-               {mobileNo.mobile},
-            </div>
-         })
+         // , mobile: item.contact_personal_details.map((mobileNo) => {
+         //    return <div>
+         //       {mobileNo.mobile},
+         //    </div>
+         // })
       }
    })
 
@@ -106,8 +108,8 @@ const ContractorMasterView = () => {
          <BodyHeader title="Contractor Master List" />
 
          <div className='px-3'>
-            <div className=" d-flex justify-content-between">
-               <h3>User's List</h3>
+            <div className=" d-flex justify-content-end">
+               {/* <h3>User's List</h3> */}
                <CustomInput inputType="text" placeholder="Search..." id="search" onChange={(e) => handleFilter(e)} />
             </div>
             <DataTable
