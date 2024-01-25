@@ -112,3 +112,6 @@ export const addHelperMasterApiCall = async (data) =>
       "Custom-Header": "value",
     },
   });
+
+export const listHelperMasterApiCall = async (data) =>
+  await client.get(EndUrls.listHelperMaster, config);
