@@ -319,6 +319,29 @@ export const fleetMasterFormTitle = [
         value: 4,
     },
 ];
+
+export const fleetMasterFormEdit = [
+    {
+        label: "Vehicle Details",
+        value: 0,
+    },
+    // {
+    //     label: "EMI",
+    //     value: 1,
+    // },
+    {
+        label: "Service Record",
+        value: 1,
+    },
+    {
+        label: "Tyre",
+        value: 2,
+    },
+    {
+        label: "Monthly Maintenance Budget",
+        value: 3,
+    },
+];
 export const locationData = [
     {
         label: "Kolkata",

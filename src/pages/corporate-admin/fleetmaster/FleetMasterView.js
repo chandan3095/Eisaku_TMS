@@ -11,14 +11,15 @@ import CustomRadio from "../../../components/common/CustomRadio/CustomRadio";
 import CustomMonthYear from "../../../components/common/CustomMonthYear/CustomMonthYear";
 import CustomDropdown from "../../../components/common/CustomDropdown/CustomDropdown";
 import selectOptionData, {
+  fleetMasterFormEdit,
   fleetMasterFormTitle,
 } from "../../../constansts/LocalData";
 import CustomModal from "../../../components/common/Modal";
-import EmiForm from "./FleetMasterAddForm/EmiForm";
-import ServiceRecord from "./FleetMasterAddForm/ServiceRecord";
-import Tyre from "./FleetMasterAddForm/Tyre";
-import MonthlyMaintenanceBudget from "./FleetMasterAddForm/MonthlyMaintenanceBudget";
-import VehicleDetails from "./FleetMasterAddForm/VehicleDetails";
+import EmiForm from "./FleetMasterEditForm/EmiForm";
+import ServiceRecord from "./FleetMasterEditForm/ServiceRecord";
+import Tyre from "./FleetMasterEditForm/Tyre";
+import MonthlyMaintenanceBudget from "./FleetMasterEditForm/MonthlyMaintenanceBudget";
+import VehicleDetails from "./FleetMasterEditForm/VehicleDetails";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,18 +45,14 @@ const validationSchema = Yup.object().shape({
   model: Yup.date()
     .required("Model Month Year is required")
     .min(new Date(), "Must be a future date"),
-  registrationCertificate: Yup.string().required(
-    "Registration Certificate is required"
-  ),
+  registrationCertificate: Yup.string().required("Registration Certificate is required"),
   insuranceExpiryDate: Yup.date()
     .required("Insurance Expiry Date is required")
     .min(new Date(), "Must be a future date"),
   insuranceAmount: Yup.number()
     .required("Insurance Amount is required")
     .min(0, "Must be a positive value"),
-  insuranceCertificate: Yup.string().required(
-    "Insurance Certificate is required"
-  ),
+  insuranceCertificate: Yup.string().required("Insurance Certificate is required"),
   fitnessExpiryDate: Yup.date()
     .required("Fitness Expiry Date is required")
     .min(new Date(), "Must be a future date"),
@@ -69,18 +66,14 @@ const validationSchema = Yup.object().shape({
   localPermitAmount: Yup.number()
     .required("Local Permit Amount is required")
     .min(0, "Must be a positive value"),
-  localPermitDocument: Yup.string().required(
-    "Local Permit Document is required"
-  ),
+  localPermitDocument: Yup.string().required("Local Permit Document is required"),
   nationalPermitExpiryDate: Yup.date()
     .required("National Permit Expiry Date is required")
     .min(new Date(), "Must be a future date"),
   nationalPermitAmount: Yup.number()
     .required("National Permit Amount is required")
     .min(0, "Must be a positive value"),
-  nationalPermitDocument: Yup.string().required(
-    "National Permit Document is required"
-  ),
+  nationalPermitDocument: Yup.string().required("National Permit Document is required"),
   pucExpiryDate: Yup.date()
     .required("PUC Expiry Date is required")
     .min(new Date(), "Must be a future date"),
@@ -88,9 +81,7 @@ const validationSchema = Yup.object().shape({
     .required("PUC Amount is required")
     .min(0, "Must be a positive value"),
   pucDocument: Yup.mixed().required("File is required"),
-  mvTax: Yup.number()
-    .required("MV Tax is required")
-    .min(0, "Must be a positive value"),
+  mvTax: Yup.number().required("MV Tax is required").min(0, "Must be a positive value"),
   mvTaxExpiryDate: Yup.date()
     .required("MV Tax Expiry Date is required")
     .min(new Date(), "Must be a future date"),
@@ -403,10 +394,6 @@ const FleetMasterView = () => {
   console.log({ formDataState });
 
   const updateFleetMaster = (formData) => {
-    console.log({ formData });
-    console.log({ tyreAdd });
-    console.log({ serviceBillAdd });
-    console.log({ maintenanceBudget });
     // return;
     const data = {
       id: params?.id,
@@ -453,23 +440,31 @@ const FleetMasterView = () => {
       fitness_certificate: formData.fitnessCertificate,
     };
 
+    typeof data.registration_certificate !== "object" &&
+      delete data.registration_certificate;
+    typeof data.insurance_certificate !== "object" && delete data.insurance_certificate;
+    typeof data.local_permit_document !== "object" && delete data.local_permit_document;
+    typeof data.national_permit_document !== "object" &&
+      delete data.national_permit_document;
+    typeof data.puc_document !== "object" && delete data.puc_document;
+    typeof data.mv_tax_document !== "object" && delete data.mv_tax_document;
+    typeof data.emi_certificate !== "object" && delete data.emi_certificate;
+    typeof data.fitness_certificate !== "object" && delete data.fitness_certificate;
+
+    // console.log(typeof data.fitness_certificate, data.fitness_certificate);
+    // return;
+
     const ard = {
       tyre_type_id: tyreAdd.map((item) => item.tyreType),
       odometer_reading: tyreAdd.map((item) => item.odometerReading),
       tyre_change_date: tyreAdd.map((item) => item.tyreChangeDate),
       tyre_amount: tyreAdd.map((item) => item.tyreAmount),
       tyre_station_name: tyreAdd.map((item) => item.tyreStationName),
-      service_record_odometer_reading: serviceBillAdd.map(
-        (item) => item.odometerReading
-      ),
+      service_record_odometer_reading: serviceBillAdd.map((item) => item.odometerReading),
       service_date: serviceBillAdd.map((item) => item.serviceDate),
       service_amount: serviceBillAdd.map((item) => item.serviceAmount),
-      service_station_name: serviceBillAdd.map(
-        (item) => item.serviceStationName
-      ),
-      monthly_maintenance_budget_amount: maintenanceBudget.map(
-        (item) => item.amount
-      ),
+      service_station_name: serviceBillAdd.map((item) => item.serviceStationName),
+      monthly_maintenance_budget_amount: maintenanceBudget.map((item) => item.amount),
       to_date: maintenanceBudget.map((item) => item.toDate),
       from_date: maintenanceBudget.map((item) => item.fromDate),
       // tyre_type_id: 1,
@@ -506,10 +501,7 @@ const FleetMasterView = () => {
       newData.append("service_bill_upload[]", item.serviceBillUpload);
     });
     tyreAdd.forEach((item) => {
-      newData.append(
-        "bill_upload_along_with_warranty_status[]",
-        item.tyreBillUpload
-      );
+      newData.append("bill_upload_along_with_warranty_status[]", item.tyreBillUpload);
     });
     // newData.append("bill_upload_along_with_warranty_status[]", file);
     // newData.append("bill_upload_along_with_warranty_status[]", file);
@@ -568,11 +560,7 @@ const FleetMasterView = () => {
           <div className="col-lg-12">
             <div className="card card-primary card-outline card-tabs">
               <div className="card-header p-0 pt-1 border-bottom-0">
-                <ul
-                  className="nav nav-tabs"
-                  id="custom-tabs-three-tab"
-                  role="tablist"
-                >
+                <ul className="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                   {/* <li className="nav-item">
                     <a
                       className="nav-link active"
@@ -586,22 +574,18 @@ const FleetMasterView = () => {
                       Vehicle Details
                     </a>
                   </li> */}
-                  {fleetMasterFormTitle.map((item) => (
+                  {fleetMasterFormEdit.map((item) => (
                     <li className="nav-item">
                       <a
                         className={
-                          item.value === currentTabIndex
-                            ? "nav-link active"
-                            : "nav-link"
+                          item.value === currentTabIndex ? "nav-link active" : "nav-link"
                         }
                         id={`${item.value}`}
                         data-toggle="pill"
                         href={`#${item.value}`}
                         role="tab"
                         aria-controls={`${item.value}`}
-                        aria-selected={
-                          item.value === currentTabIndex ? "true" : "false"
-                        }
+                        aria-selected={item.value === currentTabIndex ? "true" : "false"}
                         onClick={() => setCurrentTabIndex(item.value)}
                       >
                         {item.label}
@@ -613,25 +597,22 @@ const FleetMasterView = () => {
               <div className="card-body">
                 <div className="tab-content" id="custom-tabs-three-tabContent">
                   {currentTabIndex === 0 && (
-                    <VehicleDetails
-                      //   setFile={setFile}
-                      formik={formik}
-                      //   handleFileChange={handleFileChange}
-                      //   makeData={makeData}
-                      selectOptionData={selectOptionData}
-                      fuelType={fuelType}
-                      //   tonnageData={tonnageData}
-                      setFuelType={setFuelType}
-                      //   vehicleCategoryData={vehicleCategoryData}
-                    />
+                    <>
+                      <VehicleDetails
+                        //   setFile={setFile}
+                        formik={formik}
+                        //   handleFileChange={handleFileChange}
+                        //   makeData={makeData}
+                        selectOptionData={selectOptionData}
+                        fuelType={fuelType}
+                        //   tonnageData={tonnageData}
+                        setFuelType={setFuelType}
+                        //   vehicleCategoryData={vehicleCategoryData}
+                      />
+                      <EmiForm handleFileChange={handleFileChange} formik={formik} />
+                    </>
                   )}
                   {currentTabIndex === 1 && (
-                    <EmiForm
-                      handleFileChange={handleFileChange}
-                      formik={formik}
-                    />
-                  )}
-                  {currentTabIndex === 2 && (
                     <ServiceRecord
                       serviceBillAdd={serviceBillAdd}
                       handleFileChange={handleFileChange}
@@ -641,7 +622,7 @@ const FleetMasterView = () => {
                       formik={formik}
                     />
                   )}
-                  {currentTabIndex === 3 && (
+                  {currentTabIndex === 2 && (
                     <Tyre
                       tyreAdd={tyreAdd}
                       selectOptionData={selectOptionData}
@@ -652,18 +633,43 @@ const FleetMasterView = () => {
                       handleTyreChange={handleTyreChange}
                       formik={formik}
                     />
+                    // <ServiceRecord
+                    //   serviceBillAdd={serviceBillAdd}
+                    //   handleFileChange={handleFileChange}
+                    //   handleServiceBill={handleServiceBill}
+                    //   handleServiceBillDelete={handleServiceBillDelete}
+                    //   handleServiceBillChange={handleServiceBillChange}
+                    //   formik={formik}
+                    // />
                   )}
-                  {currentTabIndex === 4 && (
+                  {currentTabIndex === 3 && (
                     <MonthlyMaintenanceBudget
                       maintenanceBudgetDelete={maintenanceBudgetDelete}
                       maintenanceBudgetAdd={maintenanceBudgetAdd}
                       maintenanceBudget={maintenanceBudget}
                       formik={formik}
-                      handleMaintenanceBudgetChange={
-                        handleMaintenanceBudgetChange
-                      }
+                      handleMaintenanceBudgetChange={handleMaintenanceBudgetChange}
                     />
+                    // <Tyre
+                    //   tyreAdd={tyreAdd}
+                    //   selectOptionData={selectOptionData}
+                    //   //   tyreType={tyreType}
+                    //   handleFileChange={handleFileChange}
+                    //   handleTyreDelete={handleTyreDelete}
+                    //   handleTyreAdd={handleTyreAdd}
+                    //   handleTyreChange={handleTyreChange}
+                    //   formik={formik}
+                    // />
                   )}
+                  {/* {currentTabIndex === 4 && (
+                    <MonthlyMaintenanceBudget
+                      maintenanceBudgetDelete={maintenanceBudgetDelete}
+                      maintenanceBudgetAdd={maintenanceBudgetAdd}
+                      maintenanceBudget={maintenanceBudget}
+                      formik={formik}
+                      handleMaintenanceBudgetChange={handleMaintenanceBudgetChange}
+                    />
+                  )} */}
                 </div>
                 <div className="col-12 mt-3 text-right">
                   {currentTabIndex !== 0 && (
@@ -679,9 +685,10 @@ const FleetMasterView = () => {
                     <button
                       className="btn btn-primary px-4 py-3"
                       type="button"
-                      onClick={() => setCurrentTabIndex(currentTabIndex + 1)}
+                      // onClick={() => {setCurrentTabIndex(currentTabIndex + 1)}}
+                      onClick={formik.handleSubmit}
                     >
-                      <h6 className="mb-0 text-uppercase">Next</h6>
+                      <h6 className="mb-0 text-uppercase">Save</h6>
                     </button>
                   )}
 
