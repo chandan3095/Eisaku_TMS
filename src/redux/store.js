@@ -12,6 +12,7 @@ import locationMasterListSlice from "../redux/features/location-master/listLocat
 import locationMasterSingleListSlice from "../redux/features/location-master/singleListLocationMasterSlice";
 import contractorMasterAddSlice from "./features/contractor-master/contractorMasterAddSlice";
 import contractorMasterListSlice from "./features/contractor-master/contractorMasterListSlice";
+import singleContractorContactDetailsSlice from "./features/contractor-master/singleContractorContactDetailsSlice";
 
 const rootReducer = combineReducers({
     addUser: addUserReducer,
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
     locationMasterSingleListSlice: locationMasterSingleListSlice,
     contractorMasterAddSlice: contractorMasterAddSlice,
     contractorMasterListSlice: contractorMasterListSlice,
+   singlecontractorContactDetailsSlice: singleContractorContactDetailsSlice,
 });
 
 const persistConfig = {

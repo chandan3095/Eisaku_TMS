@@ -1,20 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import CustomInput from '../../../components/common/CustomInput/CustomInput'
 import BodyHeader from '../../../components/common/CommonBodyHeader'
 import CustomToggleSwitch from '../../../components/common/CustomToggle'
-import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { singleContractorContactsAsync } from '../../../redux/features/contractor-master/singleContractorContactDetailsSlice'
+import CustomModal from '../../../components/common/Modal'
+import ContactDetailsAddFrom from '../../../components/common/contactDetailsAdd/ContactDetailsAddFrom'
+import { useFormik } from 'formik'
 
 const ContractorMasterContactDetails = () => {
-   const [isChecked, setIsChecked] = useState(false); // State to manage toggle
+   const [isChecked, setIsChecked] = useState(false);
    const navigate = useNavigate()
-   const contractorsContactsList = useSelector((state) => state.contractorMasterListSlice)
-   console.log("response", contractorsContactsList);
-   // contractorsContactsList.filter((item)=> item.id === 34)
+   const singleContactId = useParams()
+   console.log(singleContactId);
+   const dispatch = useDispatch()
+
+   const [isModalVisible, setIsModalVisible] = useState(false);
+   const handleShowModal = () => {
+      setIsModalVisible(true);
+   };
+   const handleCloseModal = () => {
+      setIsModalVisible(false);
+   };
+
    const toggleSwitch = () => {
-      setIsChecked((prev) => !prev); // Toggle the state
-      // console.log(isChecked);
+      setIsChecked((prev) => !prev);
+
    };
    const columns = [
       {
@@ -39,7 +52,15 @@ const ContractorMasterContactDetails = () => {
          },
       }
    ]
-   const data = contractorsContactsList?.user?.res?.map?.((item, index) => {
+
+   useEffect(() => {
+      dispatch(singleContractorContactsAsync(singleContactId.id))
+   }, [dispatch, singleContactId.id])
+
+   const contactres = useSelector((state) => state.singlecontractorContactDetailsSlice)
+   console.log(contactres);
+
+   const data = contactres?.user?.res?.contact_personal_details?.map?.((item, index) => {
       return {
          ...item, action:
             <>
@@ -47,120 +68,99 @@ const ContractorMasterContactDetails = () => {
 
                <CustomToggleSwitch onChange={toggleSwitch} id={index} />
             </>,
-         // if(item.id === 34){
-         //    mobileNumber: item.contact_personal_details.map((mobileNumber) => {
-         //       return <div>
-         //          {mobileNumber.mobile},
-         //       </div>
-         //    }),
-         //       contactPersonName: item.contact_personal_details.map((contactPersonName) => {
-         //          return <>
-         //             {contactPersonName.name}
-         //          </>
-         //       }),
-         //          emailId: item.contact_personal_details.map((emailId) => {
-         //             return <>
-         //                {emailId.email}
-         //             </>
-         //          }),
-         //    }
+         mobileNumber: item.mobile,
+         contactPersonName: item.name,
+         emailId: item.email,
       }
-      })
-
-console.log(data);
-// {
-//    id: 1,
-//    contactPersonName: 'A customer',
-//    mobileNumber: '811344934',
-//    emailId: 'aaa@gmail.com',
-//    action: <>
-//       <button className="btn btn-primary mx-2" onClick={() => navigate('/customer-master/add-form')}>Edit</button>
-//       <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="csutomer1" />
-//    </>
-// },
-// {
-//    id: 2,
-//    contactPersonName: 'B customer',
-//    mobileNumber: '811347834',
-//    emailId: 'bbb@gmail.com',
-//    action: <>
-//       <button className="btn btn-primary mx-2" onClick={() => navigate('/customer-master/add-form')}>Edit</button>
-//       <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="csutomer2" />
-//    </>
-// },
-// {
-//    id: 3,
-//    contactPersonName: 'C customer',
-//    mobileNumber: '822347834',
-//    emailId: 'ccc@gmail.com',
-//    action: <>
-//       <button className="btn btn-primary mx-2" onClick={() => navigate('/customer-master/add-form')}>Edit</button>
-//       <CustomToggleSwitch checked={isChecked} onChange={toggleSwitch} id="csutomer3" />
-//    </>
-// },
+   })
 
 
-const customStyles = {
-   table: {
-      style: {
-         border: '1px solid #0bc4f0', // Set border color
+   const customStyles = {
+      table: {
+         style: {
+            border: '1px solid #0bc4f0',
+         },
       },
-   },
-   rows: {
-      style: {
-         minHeight: '72px', // override the row height
-      }
-   },
-   headCells: {
-      style: {
-         paddingLeft: '8px', // override the cell padding for head cells
-         paddingRight: '8px',
-         backgroundColor: '#0bc4f0',
+      rows: {
+         style: {
+            minHeight: '72px',
+         }
       },
-   },
-   cells: {
-      style: {
-         paddingLeft: '8px', // override the cell padding for data cells
-         paddingRight: '8px',
-         fontSize: '14px', // Set font size for regular cells
-         border: '1px solid #0bc4f0',
+      headCells: {
+         style: {
+            paddingLeft: '8px',
+            paddingRight: '8px',
+            backgroundColor: '#0bc4f0',
+         },
       },
-   },
-};
+      cells: {
+         style: {
+            paddingLeft: '8px',
+            paddingRight: '8px',
+            fontSize: '14px',
+            border: '1px solid #0bc4f0',
+         },
+      },
+   };
 
-const [records, setRecords] = useState(data)
+   const [records, setRecords] = useState(data)
 
-const handleFilter = (e) => {
-   const searchText = e.target.value.toLowerCase();
-   const newData = data.filter(row => {
-      return row.contractorName.toLowerCase().includes(searchText)
-   });
-   setRecords(newData);
-};
+   const handleFilter = (e) => {
+      const searchText = e.target.value.toLowerCase();
+      const newData = data.filter(row => {
+         return row.contractorName.toLowerCase().includes(searchText)
+      });
+      setRecords(newData);
+   };
 
-return (
-   <div>
-      <BodyHeader title="Contractor Master Contacts List" />
 
-      <div className='px-3'>
-         <div className=" d-flex justify-content-end">
-            {/* <h3>User's List</h3> */}
-            <CustomInput inputType="text" placeholder="Search..." id="search" onChange={(e) => handleFilter(e)} />
+   // const formik = useFormik({
+   //    initialValues: {
+   //       mobile: '',
+   //       contact_person_name: '',
+   //       email: '',
+   //    },
+   //    // validationSchema,
+   //    onSubmit: (values) => {
+   //       // Handle form submission logic here
+   //       console.log(values);
+   //    },
+   // });
+   // const { errors, touched, getFieldProps, handleSubmit, resetForm } = formik;
+   return (
+      <div>
+         <BodyHeader title="Contractor Master Contacts List" />
+
+         <div className='px-3'>
+            <div className=" d-flex justify-content-end">
+               <CustomInput inputType="text" placeholder="Search..." id="search" onChange={(e) => handleFilter(e)} />
+            </div>
+            <DataTable
+               columns={columns}
+               data={records}
+               sortable
+               fixedHeader
+               pagination
+               responsive
+               striped={true}
+               borderColor="#000000"
+               customStyles={customStyles}>
+            </DataTable>
+
+            <div className='d-flex justify-content-end py-3'>
+               <button className='btn btn-primary' onClick={handleShowModal}>Add Contact</button>
+            </div>
+
+            {/* <CustomModal
+               showModal={isModalVisible}
+               handleCloseModal={handleCloseModal}
+               modalSize="modal-xl"
+               child={<ContactDetailsAddFrom />}
+               modalTitle={"Add Contact Details"}
+            /> */}
          </div>
-         <DataTable
-            columns={columns}
-            data={data}
-            sortable
-            fixedHeader
-            pagination
-            responsive
-            striped={true}
-            borderColor="#000000"
-            customStyles={customStyles}>
-         </DataTable>
       </div>
-   </div>
-)
+   )
 }
 
 export default ContractorMasterContactDetails

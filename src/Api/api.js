@@ -73,3 +73,5 @@ export const handleContractorMasterListApiCall = async (data) =>
 export const handleContractorMasterEditApiCall = async (data) =>
    await client.post(EndUrls.contractorUpdate, data, config);
 
+export const handleContractorcontactsdetailsApiCall = async (id) =>
+   await client.get(EndUrls.singleConractorContactDetails(id), config);

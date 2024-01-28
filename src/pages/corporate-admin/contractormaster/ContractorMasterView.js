@@ -2,22 +2,24 @@ import React, { useEffect, useState } from 'react'
 import BodyHeader from '../../../components/common/CommonBodyHeader';
 import CustomInput from '../../../components/common/CustomInput/CustomInput';
 import DataTable from 'react-data-table-component';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import CustomToggleSwitch from '../../../components/common/CustomToggle';
 import { useDispatch, useSelector } from 'react-redux';
 import { listContractorMasterAsync } from '../../../redux/features/contractor-master/contractorMasterListSlice';
+import axios from 'axios';
 
 const ContractorMasterView = () => {
 
    const navigate = useNavigate()
    const dispatch = useDispatch()
+   
    const contractorsList = useSelector((state) => state.contractorMasterListSlice)
    // console.log(contractorsList);
    const [isChecked, setIsChecked] = useState(false); // State to manage toggle
 
    const toggleSwitch = () => {
       setIsChecked((prev) => !prev); // Toggle the state
-      // console.log(isChecked);
+      console.log(isChecked);
    };
    const columns = [
       {
@@ -54,11 +56,6 @@ const ContractorMasterView = () => {
 
                <CustomToggleSwitch onChange={toggleSwitch} id={index} />
             </>
-         // , mobile: item.contact_personal_details.map((mobileNo) => {
-         //    return <div>
-         //       {mobileNo.mobile},
-         //    </div>
-         // })
       }
    })
 
@@ -103,6 +100,8 @@ const ContractorMasterView = () => {
       });
       setRecords(newData);
    };
+
+
    return (
       <div>
          <BodyHeader title="Contractor Master List" />
