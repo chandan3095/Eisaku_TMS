@@ -13,7 +13,6 @@ const ContractorMasterView = () => {
 
      const toggleSwitch = () => {
         setIsChecked(isChecked ? isChecked = true : isChecked = false); // Toggle the state
-       console.log(isChecked);
      };
    const columns = [
       {
