@@ -18,7 +18,7 @@ function HelperMasterAddForm() {
     value: item?.id,
   }));
 
-  const [payRollType, setpayRollType] = useState("Eisaku Pay roll");
+  const [payRollType, setpayRollType] = useState("Eisaku Pay Roll");
   console.log(payRollType);
   const [formData, setFormData] = useState({
     name: "",
@@ -255,9 +255,9 @@ function HelperMasterAddForm() {
                   <CustomRadio
                     label="Eisaku Pay roll"
                     id="eisakuPayRoll"
-                    value="Eisaku Pay roll"
+                    value="Eisaku Pay Roll"
                     name="payRollType"
-                    defaultChecked={payRollType === "Eisaku Pay roll"}
+                    defaultChecked={payRollType === "Eisaku Pay Roll"}
                     onChange={(event) => setpayRollType(event.target.value)}
                   />
                   <CustomRadio
@@ -302,7 +302,7 @@ function HelperMasterAddForm() {
                   </div>
                 )}
 
-                {payRollType === "Eisaku Pay roll" && (
+                {payRollType === "Eisaku Pay Roll" && (
                   <div className="row">
                     <div className="col-lg-4">
                       <CustomInput

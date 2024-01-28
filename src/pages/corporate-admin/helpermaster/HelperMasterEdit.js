@@ -100,7 +100,7 @@ function HelperMasterEdit() {
       _method: "PATCH",
     };
 
-    if (formData.payroll === "Eisaku Pay roll") {
+    if (formData.payroll === "Eisaku Pay Roll") {
       delete data.contractor;
       delete data.contractor_master_id;
       delete data.monthly_salary_commission_amount;
@@ -156,7 +156,7 @@ function HelperMasterEdit() {
 
   return (
     <div>
-      <BodyHeader title="Add Helper Master" />
+      <BodyHeader title="Edit Helper Master" />
       <form className="p-3 shadow-lg" onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-lg-12">
@@ -291,16 +291,20 @@ function HelperMasterEdit() {
               <div className="card-body">
                 <div className="form-group">
                   <CustomRadio
-                    label="Eisaku Pay roll"
+                    label="Eisaku Pay Roll"
                     id="eisakuPayRoll"
-                    name="payRollType"
-                    checked={formData.payroll === "Eisaku Pay roll"}
+                    name="payroll"
+                    value="Eisaku Pay Roll"
+                    checked={formData.payroll === "Eisaku Pay Roll"}
+                    onChange={handleChange}
                   />
                   <CustomRadio
                     label="Contractor"
+                    value="Contractor"
                     id="contractor"
-                    name="payRollType"
+                    name="payroll"
                     checked={formData.payroll === "Contractor"}
+                    onChange={handleChange}
                   />
                 </div>
                 {formData.payroll === "Contractor" && (
@@ -337,7 +341,7 @@ function HelperMasterEdit() {
                   </div>
                 )}
 
-                {formData.payroll === "Eisaku Pay roll" && (
+                {formData.payroll === "Eisaku Pay Roll" && (
                   <div className="row">
                     <div className="col-lg-4">
                       <CustomInput
