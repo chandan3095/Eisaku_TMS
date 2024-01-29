@@ -16,9 +16,16 @@ const EndUrls = {
   fetchAllContractors: "contractor/get_all_contractors?&model_id=9&action_id=3",
   addDriverMaster: "driver/add",
   listDriverMaster: "driver?&model_id=4&action_id=3",
-  fetchSingleDriverMaster: (id) =>
-    `api/driver/fetch/${id}?&model_id=4&action_id=3`,
+  fetchSingleDriverMaster: (id) => `api/driver/fetch/${id}?&model_id=4&action_id=3`,
   updateDriverMaster: "driver/update",
+
+  // customer master
+  // fetchAllContractors: "contractor/get_all_contractors?&model_id=9&action_id=3",
+  addCustomerMaster: "customer/add",
+  // listDriverMaster: "driver?&model_id=4&action_id=3",
+  // fetchSingleDriverMaster: (id) =>
+  //   `api/driver/fetch/${id}?&model_id=4&action_id=3`,
+  // updateDriverMaster: "driver/update",
 
   // Location Master
   addLocationMaster: "location/add",

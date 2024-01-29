@@ -7,8 +7,7 @@ const config = {
   },
 };
 
-export const handleLoginApiCall = async (data) =>
-  await client.post(EndUrls.login, data);
+export const handleLoginApiCall = async (data) => await client.post(EndUrls.login, data);
 
 export const handleAdduserApiCall = async (data) =>
   await client.post(EndUrls.addUser, data, config);
@@ -36,20 +35,13 @@ export const handleLocationMasterList = async () =>
       Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
     },
   });
-export const handleLocationMasterSingleList = async (
-  id,
-  model_id,
-  action_id
-) => {
+export const handleLocationMasterSingleList = async (id, model_id, action_id) => {
   // console.log(EndUrls.locationMasterSingleList(id, model_id, action_id));
-  return await client.get(
-    EndUrls.locationMasterSingleList(id, model_id, action_id),
-    {
-      headers: {
-        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-      },
-    }
-  );
+  return await client.get(EndUrls.locationMasterSingleList(id, model_id, action_id), {
+    headers: {
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+    },
+  });
 };
 
 export const handleLocationMasterUpdate = async (data) =>
@@ -76,8 +68,7 @@ export const addFleetApiCall = async (data) =>
     },
   });
 
-export const listFleetApiCall = async () =>
-  await client.get(EndUrls.listFleet, config);
+export const listFleetApiCall = async () => await client.get(EndUrls.listFleet, config);
 export const updateFleetApiCall = async (data) =>
   await client.post(EndUrls.updateFleet, data, config);
 
@@ -103,3 +94,26 @@ export const handleContractorMasterApiCall = async (data) =>
       Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
     },
   });
+
+// customer master
+// export const fetchAllContractorsApiCall = async () =>
+//   await client.get(EndUrls.fetchAllContractors, config);
+export const addCustomerMasterApiCall = async (data) =>
+  await client.post(EndUrls.addCustomerMaster, data, {
+    headers: {
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      // "Content-Type": "content type multipart/form-data",
+      "Custom-Header": "value",
+    },
+  });
+// export const listDriverMasterApiCall = async () =>
+//   await client.get(EndUrls.listDriverMaster, config);
+// export const updateDriverMasterApiCall = async (data) =>
+//   await client.post(EndUrls.updateDriverMaster, data, config);
+
+// export const handleContractorMasterApiCall = async (data) =>
+//   await client.post(EndUrls.contractorAdd, data, {
+//     headers: {
+//       Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+//     },
+//   });

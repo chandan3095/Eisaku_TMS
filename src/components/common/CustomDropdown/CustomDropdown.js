@@ -31,8 +31,8 @@ const CustomDropdown = ({
                 disabled={disabled}
                 style={{
                     backgroundColor: disabled ? "#e9ecef" : "#fff",
-                    zIndex: 999999999,
-                    width: "100%",
+                    // zIndex: 999999999,
+                    // width: "100%",
                 }}
             />
             {errors && (
