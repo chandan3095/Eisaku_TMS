@@ -13,6 +13,7 @@ import locationMasterSingleListSlice from "../redux/features/location-master/sin
 import fleetMasterReducer from "./features/fleetMaster";
 import driverMasterReducer from "./features/driverMaster";
 import helperMasterReducer from "./features/helperMaster";
+import vendorMasterReducer from "./features/vendorMaster";
 
 const rootReducer = combineReducers({
   addUser: addUserReducer,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   fleetMaster: fleetMasterReducer,
   driverMaster: driverMasterReducer,
   helperMaster: helperMasterReducer,
+  vendorMaster: vendorMasterReducer,
 });
 
 const persistConfig = {

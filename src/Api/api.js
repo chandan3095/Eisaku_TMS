@@ -129,3 +129,12 @@ export const fetchSingleHelperMasterApiCall = async (id) =>
 // Update Helper Master
 export const updateHelperMasterApiCall = async (data) =>
   await client.post(EndUrls.updateHelperMaster, data, config);
+
+// Get all lane
+export const getAllLaneApiCall = async () =>
+  await client.get(EndUrls.listLane, config);
+
+// Vendor Master
+//add vendor
+export const addVendorMasterApiCall = async (data) =>
+  await client.post(EndUrls.addVendorMaster, data, config);

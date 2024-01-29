@@ -31,6 +31,12 @@ const EndUrls = {
   addHelperMaster: "/helper/add",
   listHelperMaster: "/helper?&model_id=5&action_id=3",
   updateHelperMaster: "/helper/update",
+
+  // Get all lane
+  listLane: "/lane?&model_id=8&action_id=3",
+
+  // Vendor Master
+  addVendorMaster: "/vendor/add",
 };
 
 export default EndUrls;
