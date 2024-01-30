@@ -4,6 +4,7 @@ import {
   contactPersonDetailsApiCall,
   getAllLaneApiCall,
   handleLocationMasterList,
+  laneMasterDetailsApiCall,
   listVendorMasterApiCall,
   singleVendorMasterApiCall,
   updateContactApi,
@@ -14,7 +15,8 @@ const initialState = {
   dataList: [],
   laneData: [],
   locationData: [],
-  contactPersonData: {},
+  contactPersonData: [],
+  laneMasterData: [],
   singleVendorMaster: {},
   isLoading: false,
   isError: false,
@@ -130,6 +132,24 @@ export const fetchSingleVendorMasterAsync = createAsyncThunk(
   }
 );
 
+export const fetchLaneMasterDetailsAsync = createAsyncThunk(
+  "vendorMaster/fetchLaneMasterDetails",
+  async (data, thunkAPI) => {
+    try {
+      const response = await laneMasterDetailsApiCall(data);
+      if (response?.data?.statusCode === 200) {
+        return thunkAPI.fulfillWithValue(response?.data?.res);
+      } else {
+        throw response;
+      }
+    } catch (error) {
+      console.log(error);
+      thunkAPI.rejectWithValue(error?.response?.data);
+      throw error?.response?.data;
+    }
+  }
+);
+
 export const updateContactAsync = createAsyncThunk(
   "vendorMaster/updateContact",
   async (data, thunkAPI) => {
@@ -217,6 +237,19 @@ const vendorMasterSlice = createSlice({
         state.isLoading = false;
       }
     );
+
+    // Lane master data
+    builder.addCase(fetchLaneMasterDetailsAsync.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(fetchLaneMasterDetailsAsync.fulfilled, (state, action) => {
+      state.laneMasterData = action.payload;
+      state.isLoading = false;
+    });
+    builder.addCase(fetchLaneMasterDetailsAsync.rejected, (state, action) => {
+      state.isError = action.payload;
+      state.isLoading = false;
+    });
 
     // single Vendor master
     builder.addCase(fetchSingleVendorMasterAsync.pending, (state, action) => {

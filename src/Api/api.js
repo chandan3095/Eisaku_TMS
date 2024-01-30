@@ -156,3 +156,9 @@ export const singleVendorMasterApiCall = async (id) =>
 
 export const updateContactApi = async (data) =>
   await client.post("/vendor/add/child", data, config);
+
+export const laneMasterDetailsApiCall = async (id) =>
+  await client.get(
+    `/vendor/fetch/child/${id}?&table_name=lane_masters&model_id=7&action_id=3`,
+    config
+  );

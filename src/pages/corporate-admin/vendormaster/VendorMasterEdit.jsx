@@ -11,13 +11,27 @@ import {
   addVendorMasterAsync,
   fetchAllLaneAsync,
   fetchAllLocationAsync,
+  fetchLaneMasterDetailsAsync,
   fetchSingleVendorMasterAsync,
   updateContactAsync,
 } from "../../../redux/features/vendorMaster";
 import { useParams } from "react-router-dom";
 
 const VendorMasterEdit = () => {
-  const { id } = useParams();
+  const vendorMaster = useSelector((state) => state.vendorMaster);
+  const singleVendorMaster = vendorMaster.singleVendorMaster;
+  const contactPersonData = vendorMaster.contactPersonData;
+  const laneMasterData = vendorMaster.laneMasterData;
+  // For lane dropdown
+  const laneData = vendorMaster.laneData.map((item) => ({
+    label: item?.name,
+    value: item?.id,
+  }));
+  // For location dropdown
+  const locationData = vendorMaster.locationData.map((item) => ({
+    label: item?.name,
+    value: item?.id,
+  }));
 
   const [laneNameSelect, setlaneNameSelect] = useState([]);
   const [isDisabled, setIsdisabled] = useState(true);
@@ -62,54 +76,20 @@ const VendorMasterEdit = () => {
     },
   ]);
 
-  const vendorMaster = useSelector((state) => state.vendorMaster);
-  const laneData = vendorMaster.laneData.map((item) => ({
-    label: item?.name,
-    value: item?.id,
-  }));
-
-  const locationData = vendorMaster.locationData.map((item) => ({
-    label: item?.name,
-    value: item?.id,
-  }));
-  const contactPersonData = vendorMaster.contactPersonData;
-  const singleVendorMaster = vendorMaster.singleVendorMaster;
   const dispatch = useDispatch();
+  const { id } = useParams();
 
   useEffect(() => {
+    dispatch(fetchSingleVendorMasterAsync(id));
     dispatch(fetchAllLocationAsync());
     dispatch(fetchAllLaneAsync());
-    dispatch(fetchSingleVendorMasterAsync(id));
+    dispatch(fetchLaneMasterDetailsAsync(id));
   }, []);
-
-  useEffect(() => {
-    if (contactPersonData) {
-      let updatedData = {};
-      Object.keys(contactPersonData).forEach((item) => {
-        console.log("item==>", item);
-        switch (item) {
-          case "name":
-            updatedData.name = JSON.parse(contactPersonData[item]);
-            break;
-          case "email":
-            updatedData.email = JSON.parse(contactPersonData[item]);
-            break;
-          case "mobile":
-            updatedData.mobile = JSON.parse(contactPersonData[item]);
-            break;
-          default:
-            break;
-        }
-      });
-      setAddContact([updatedData]);
-    }
-  }, [contactPersonData]);
 
   useEffect(() => {
     if (singleVendorMaster) {
       setFormData((prev) => ({
         ...prev,
-
         vendorName: singleVendorMaster.name,
         accountNumber: singleVendorMaster.account_number,
         bankName: singleVendorMaster.bank_name,
@@ -144,6 +124,7 @@ const VendorMasterEdit = () => {
     // console.log(updatedContacts);
     setAddContact(updatedContacts);
   };
+
   // Lane Name Details
   const handleLaneNameSelect = (values, index) => {
     setIsdisabled(false);
@@ -164,6 +145,7 @@ const VendorMasterEdit = () => {
     updatedLandeDetails.splice(index, 1);
     setLaneDetails(updatedLandeDetails);
   };
+
   const handleLaneAdd = () => {
     setLaneDetails([
       ...laneDetails,
@@ -215,6 +197,7 @@ const VendorMasterEdit = () => {
     setState(updatedState);
   };
 
+  // Update contact api call
   const contactUpdateHandler = () => {
     const ard = {
       contact_person_name: addContact.map((item) => item.name),
@@ -226,6 +209,8 @@ const VendorMasterEdit = () => {
       newData.append(`${key}[]`, JSON.stringify(ard[key]));
     });
     newData.append("vendor_master_id", id);
+    newData.append("model_id", 7);
+    newData.append("action_id", 1);
     // newData.append("_method", "PATCH");
 
     dispatch(updateContactAsync(newData));
@@ -233,8 +218,6 @@ const VendorMasterEdit = () => {
 
   const updateHandler = (e) => {
     e.preventDefault();
-    console.log({ formData });
-    console.log({ laneNameSelect });
     const data = {
       name: formData.vendorName,
       account_number: formData.accountNumber,
@@ -300,7 +283,7 @@ const VendorMasterEdit = () => {
 
   return (
     <div>
-      <BodyHeader title="Add Vendor Master" />
+      <BodyHeader title="Edit Vendor Master" />
       <form className="p-3 shadow-lg" onSubmit={updateHandler}>
         <div className="row">
           <div className="col-lg-12">
