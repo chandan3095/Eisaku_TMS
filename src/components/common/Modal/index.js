@@ -10,14 +10,8 @@ const CustomModal = ({
   onSubmit,
 }) => {
   return (
-    <div
-      className={`modal fade ${showModal ? "show d-block" : ""}`}
-      id="modal-default"
-    >
-      <div
-        className={`modal-dialog ${modalSize}`}
-        style={{ maxHeight: "90%", overflowY: "auto" }}
-      >
+    <div className={`modal fade ${showModal ? "show d-block" : ""}`} id="modal-default">
+      <div className={`modal-dialog ${modalSize}`}>
         <div className="modal-content">
           <div className="modal-header">
             <h4 className="modal-title">{title}</h4>
@@ -31,7 +25,9 @@ const CustomModal = ({
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div className="modal-body">{child}</div>
+          <div className="modal-body" style={{ maxHeight: "70vh", overflowY: "auto" }}>
+            {child}
+          </div>
           <div className="modal-footer justify-content-center">
             <button
               type="button"

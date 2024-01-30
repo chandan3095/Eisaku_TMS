@@ -201,7 +201,7 @@ function CustomerMasterEditForm() {
       name: values.customerName,
       model_id: 6,
       action_id: 2,
-      _metdod: "PATCH",
+      _method: "PATCH",
     };
 
     Object.keys(data).forEach((key) => {

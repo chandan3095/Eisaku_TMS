@@ -156,7 +156,7 @@ const Lane = ({ laneList }) => {
         showModal={isModalVisible}
         handleCloseModal={handleCloseModal}
         modalSize="modal-xl"
-        title="Lne"
+        title="Lane"
         onSubmit={() => {}}
         child={
           <>
