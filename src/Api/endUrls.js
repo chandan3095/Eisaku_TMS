@@ -7,6 +7,8 @@ const EndUrls = {
    contractorList: "/contractor?&model_id=9&action_id=3",
    contractorUpdate: "/contractor/update",
    singleConractorContactDetails: (id) =>`/contractor/fetch/${id}?&model_id=9&action_id=3`,
+   singleConractorContactAdd: '/contractor/add/child',
+   singleConractorContactEdit: '/contractor/update/child',
 
     // Fleet Master
     getDropdownData: "fleet/get_dropdowns?&model_id=3&action_id=3",

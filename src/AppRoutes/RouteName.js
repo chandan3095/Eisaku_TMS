@@ -29,7 +29,7 @@ const RouteNames = {
 
     //contractor Contact details
     contractorMasterContacts: '/contractor-master/:id/contact-details',
-   contractorMasterContactsAdd: '/contractor-master/:id/add-contact',
+   // contractorMasterContactsAdd: '/contractor-master/:id/add-contact',
 
    // edit 
    fleetMasterEdit: '/fleet-master/edit',

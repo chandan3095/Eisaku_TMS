@@ -7,14 +7,24 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { singleContractorContactsAsync } from '../../../redux/features/contractor-master/singleContractorContactDetailsSlice'
 import CustomModal from '../../../components/common/Modal'
-import ContactDetailsAddFrom from '../../../components/common/contactDetailsAdd/ContactDetailsAddFrom'
-import { useFormik } from 'formik'
+import { FormikProvider, useFormik } from 'formik'
+import { singleContractorContactAddsAsync } from '../../../redux/features/contractor-master/singleContractorContactDetailsAddSlice'
+import { singleContractorContactEditsAsync } from '../../../redux/features/contractor-master/singleContractorContactDetailsEditSlice'
+
 
 const ContractorMasterContactDetails = () => {
    const [isChecked, setIsChecked] = useState(false);
+   const [action,setAction]= useState()
+   const [fetchedContractorContacts, setFetchedContractorContacts] = useState({
+      id: '',
+      mobile: '',
+      contact_person_name: '',
+      email: '',
+   })
+
    const navigate = useNavigate()
    const singleContactId = useParams()
-   console.log(singleContactId);
+
    const dispatch = useDispatch()
 
    const [isModalVisible, setIsModalVisible] = useState(false);
@@ -27,7 +37,6 @@ const ContractorMasterContactDetails = () => {
 
    const toggleSwitch = () => {
       setIsChecked((prev) => !prev);
-
    };
    const columns = [
       {
@@ -58,13 +67,22 @@ const ContractorMasterContactDetails = () => {
    }, [dispatch, singleContactId.id])
 
    const contactres = useSelector((state) => state.singlecontractorContactDetailsSlice)
-   console.log(contactres);
+
 
    const data = contactres?.user?.res?.contact_personal_details?.map?.((item, index) => {
       return {
          ...item, action:
             <>
-               <button className="btn btn-primary mx-2" onClick={() => navigate(`/contractor-master/${item.id}/contact-details`)}>Edit</button>
+               <button className="btn btn-primary mx-2" onClick={()=>{
+                  setAction("Edit")
+                  handleShowModal()
+                  setFetchedContractorContacts({
+                     id: item?.id,
+                     mobile: item?.mobile,
+                     contact_person_name: item?.name,
+                     email: item?.email
+                  })
+               }}>Edit</button>
 
                <CustomToggleSwitch onChange={toggleSwitch} id={index} />
             </>,
@@ -73,7 +91,6 @@ const ContractorMasterContactDetails = () => {
          emailId: item.email,
       }
    })
-
 
    const customStyles = {
       table: {
@@ -112,21 +129,63 @@ const ContractorMasterContactDetails = () => {
       });
       setRecords(newData);
    };
+  
+   const handleSingleContractorContact =async (formValue) => {
+      console.log(formValue);
+      handleShowModal()
+      const data = new FormData()
 
+      data.append('contractor_master_id', singleContactId.id)
+      data.append('contact_person_name[]', JSON.stringify([formValue.contact_person_name]))
+      data.append('mobile[]', JSON.stringify([formValue.mobile]))
+      data.append('email[]', JSON.stringify([formValue.email]))
 
-   // const formik = useFormik({
-   //    initialValues: {
-   //       mobile: '',
-   //       contact_person_name: '',
-   //       email: '',
-   //    },
-   //    // validationSchema,
-   //    onSubmit: (values) => {
-   //       // Handle form submission logic here
-   //       console.log(values);
-   //    },
-   // });
-   // const { errors, touched, getFieldProps, handleSubmit, resetForm } = formik;
+      data.append("model_id", 9);
+      data.append("action_id", 2)
+
+      dispatch(singleContractorContactAddsAsync(data))
+      dispatch(singleContractorContactsAsync(singleContactId.id))
+      handleCloseModal()
+   }
+
+   const formik = useFormik({
+      initialValues: {
+         mobile: '',
+         contact_person_name: '',
+         email: '',
+      },
+      // validationSchema,
+      onSubmit: (values)=>{
+         if(action === 'Add'){
+            return handleSingleContractorContact(values)
+         }else if(action === 'Edit'){
+            return handleContactUpdate(values)
+         }
+      } 
+   });
+   const { values,errors, touched, getFieldProps, handleSubmit, resetForm } = formik;
+
+   // for contact details update 
+   console.log(singleContactId.id);
+
+   const handleContactUpdate= async ()=>{
+      const updatedata = new FormData()
+     
+      updatedata.append('contact_person_details_id', fetchedContractorContacts.id)
+      updatedata.append('contractor_master_id', singleContactId.id)
+      updatedata.append('contact_person_name[]', JSON.stringify([fetchedContractorContacts.contact_person_name]))
+      updatedata.append('mobile[]', JSON.stringify([fetchedContractorContacts.mobile]))
+      updatedata.append('email[]', JSON.stringify([fetchedContractorContacts.email]))
+
+      updatedata.append("model_id", 9);
+      updatedata.append("action_id", 2)
+      updatedata.append("_method", "PATCH")
+
+      dispatch(singleContractorContactEditsAsync(updatedata))
+      dispatch(singleContractorContactsAsync(singleContactId.id))
+      handleCloseModal()
+   }
+
    return (
       <div>
          <BodyHeader title="Contractor Master Contacts List" />
@@ -137,7 +196,7 @@ const ContractorMasterContactDetails = () => {
             </div>
             <DataTable
                columns={columns}
-               data={records}
+               data={data}
                sortable
                fixedHeader
                pagination
@@ -148,16 +207,152 @@ const ContractorMasterContactDetails = () => {
             </DataTable>
 
             <div className='d-flex justify-content-end py-3'>
-               <button className='btn btn-primary' onClick={handleShowModal}>Add Contact</button>
+               <button className='btn btn-primary' onClick={()=>{
+                  setAction("Add")
+                  handleShowModal()
+                  }}>Add Contact</button>
             </div>
 
-            {/* <CustomModal
+            {action === 'Add' && 
+               <CustomModal
+                  showModal={isModalVisible}
+                  onSubmit={handleSubmit}
+                  modalSize="modal-xl"
+                  handleCloseModal={handleCloseModal}
+                  child={
+                     <FormikProvider >
+                        <form className="p-3 shadow-lg" onSubmit={handleSubmit}>
+                           <div className="row">
+                              <div className="col-lg-12">
+                                 <div className="card card-primary">
+                                    <div className="card-body">
+                                       <div className="row">
+                                          <div className="col-12 col-sm-12 col-md-4 col-lg-4">
+                                             <CustomInput
+                                                require={require}
+                                                label="Contact Person Name"
+                                                inputType="text"
+                                                id="#contact_person_name"
+                                                name="contact_person_name"
+                                                value={values.contact_person_name}
+                                                placeholder="Enter Contact Person Name."
+                                                {...getFieldProps("contact_person_name")}
+                                                errors={errors.contact_person_name && touched.contact_person_name}
+                                                message={"Error"}
+                                             />
+                                          </div>
+
+                                          <div className="col-12 col-sm-12 col-md-4 col-lg-4">
+                                             <CustomInput
+                                                require={require}
+                                                label="Mobile No"
+                                                inputType="number"
+                                                id="#mobile"
+                                                name="mobile"
+                                                value={values.mobile}
+                                                placeholder="Enter Contact Person Mobile No."
+                                                {...getFieldProps("mobile")}
+                                                errors={errors.mobile && touched.mobile}
+                                                message={"Error"}
+                                             />
+                                          </div>
+
+                                          <div className="col-12 col-sm-12 col-md-4 col-lg-4">
+                                             <CustomInput
+                                                require={require}
+                                                label="Email Id"
+                                                inputType="text"
+                                                id="#email"
+                                                name="email"
+                                                value={values.email}
+                                                placeholder="Enter Contact Person Email"
+                                                {...getFieldProps("email")}
+                                                errors={errors.email && touched.email}
+                                                message={"Error"}
+                                             />
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </form>
+                     </FormikProvider>
+                  }
+                  modalTitle={"Add Contact Details"}
+               />}
+
+            {action === 'Edit' && 
+            <CustomModal
                showModal={isModalVisible}
                handleCloseModal={handleCloseModal}
+               onSubmit={handleSubmit}
                modalSize="modal-xl"
-               child={<ContactDetailsAddFrom />}
-               modalTitle={"Add Contact Details"}
-            /> */}
+               child={
+                  <FormikProvider >
+                     <form className="p-3 shadow-lg" onSubmit={handleSubmit}>
+                        <div className="row">
+                           <div className="col-lg-12">
+                              <div className="card card-primary">
+                                 <div className="card-body">
+                                    <div className="row">
+                                       <div className="col-12 col-sm-12 col-md-4 col-lg-4">
+                                          <CustomInput
+                                             require={require}
+                                             label="Contact Person Name"
+                                             inputType="text"
+                                             id="#contact_person_name"
+                                             name="contact_person_name"
+                                             {...getFieldProps("contact_person_name")}
+                                             value={fetchedContractorContacts.contact_person_name}
+                                             onChange={(e) => setFetchedContractorContacts({ ...fetchedContractorContacts, contact_person_name: e.target.value })}
+                                             placeholder="Enter Contact Person Name."
+                                             errors={errors.contact_person_name && touched.contact_person_name}
+                                             message={"Error"}
+                                          />
+                                       </div>
+
+                                       <div className="col-12 col-sm-12 col-md-4 col-lg-4">
+                                          <CustomInput
+                                             require={require}
+                                             label="Mobile No"
+                                             inputType="text"
+                                             id="#mobile"
+                                             name="mobile"
+                                             {...getFieldProps("mobile")}
+                                             value={fetchedContractorContacts.mobile}
+                                             onChange={(e) => setFetchedContractorContacts({ ...fetchedContractorContacts, mobile: e.target.value })}
+                                             placeholder="Enter Contact Person Mobile No."
+                                             errors={errors.mobile && touched.mobile}
+                                             message={"Error"}
+                                          />
+                                       </div>
+
+                                       <div className="col-12 col-sm-12 col-md-4 col-lg-4">
+                                          <CustomInput
+                                             require={require}
+                                             label="Email Id"
+                                             inputType="text"
+                                             id="#email"
+                                             name="email"
+                                             {...getFieldProps("email")}
+                                             value={fetchedContractorContacts.email}
+                                             onChange={(e) => setFetchedContractorContacts({...fetchedContractorContacts,email:e.target.value})}
+                                             placeholder="Enter Contact Person Email"
+                                             errors={errors.email && touched.email}
+                                             message={"Error"}
+                                          />
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </form>
+                  </FormikProvider>
+               }
+               modalTitle={"Edit Contact Details"}
+            />}
          </div>
       </div>
    )

@@ -143,7 +143,7 @@ function AppRoutes() {
 
             <Route path={RouteNames.contractorMasterEdit} element={<ContractorMasterEdit />} />
             <Route path={RouteNames.contractorMasterContacts} element={<ContractorMasterContactDetails />} />
-            <Route path={RouteNames.contractorMasterContactsAdd} element={<ContactDetailsAddFrom />} />
+            {/* <Route path={RouteNames.contractorMasterContactsAdd} element={<ContactDetailsAddFrom />} /> */}
             {/* <Route
                path=""
                element={<Navigate to={'Login'} />}

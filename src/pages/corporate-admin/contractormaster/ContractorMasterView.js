@@ -6,7 +6,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import CustomToggleSwitch from '../../../components/common/CustomToggle';
 import { useDispatch, useSelector } from 'react-redux';
 import { listContractorMasterAsync } from '../../../redux/features/contractor-master/contractorMasterListSlice';
-import axios from 'axios';
 
 const ContractorMasterView = () => {
 
@@ -14,7 +13,7 @@ const ContractorMasterView = () => {
    const dispatch = useDispatch()
    
    const contractorsList = useSelector((state) => state.contractorMasterListSlice)
-   // console.log(contractorsList);
+   console.log(contractorsList);
    const [isChecked, setIsChecked] = useState(false); // State to manage toggle
 
    const toggleSwitch = () => {

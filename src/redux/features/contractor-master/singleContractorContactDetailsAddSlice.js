@@ -1,7 +1,7 @@
 // authSlice.js
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { handleContractorcontactsdetailsApiCall } from "../../../Api/api";
+import { handlesingleContractorcontactsdetailsAddApiCall } from "../../../Api/api";
 
 // Define an initial state for the slice
 const initialState = {
@@ -11,13 +11,13 @@ const initialState = {
 };
 
 // Create an async thunk for the login action
-export const singleContractorContactsAsync = createAsyncThunk(
-   "auth/contractor/contact-list",
+export const singleContractorContactAddsAsync = createAsyncThunk(
+   "auth/contractor/contacts/add",
    async (data) => {
       try {
          console.log(data);
-         const response = await handleContractorcontactsdetailsApiCall(data);
-         // console.log({ response });
+         const response = await handlesingleContractorcontactsdetailsAddApiCall(data);
+         console.log({ response });
          return response.data;
       } catch (error) {
          // You can customize the error handling here
@@ -28,7 +28,7 @@ export const singleContractorContactsAsync = createAsyncThunk(
 );
 
 // Create a slice of the Redux store
-const singlecontractorContactDetailsSlice = createSlice({
+const singlecontractorContactDetailsAddSlice = createSlice({
    name: "singlecontractormasterlist",
    initialState,
    reducers: {
@@ -36,16 +36,16 @@ const singlecontractorContactDetailsSlice = createSlice({
    },
    extraReducers: (builder) => {
       builder
-         .addCase(singleContractorContactsAsync.pending, (state) => {
+         .addCase(singleContractorContactAddsAsync.pending, (state) => {
             state.loading = true;
             state.error = null;
          })
-         .addCase(singleContractorContactsAsync.fulfilled, (state, action) => {
+         .addCase(singleContractorContactAddsAsync.fulfilled, (state, action) => {
             state.loading = false;
             state.user = action.payload;
-            // console.log(action.payload);
+            console.log(action.payload);
          })
-         .addCase(singleContractorContactsAsync.rejected, (state, action) => {
+         .addCase(singleContractorContactAddsAsync.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload; // error message from the rejectWithValue call
          });
@@ -54,4 +54,4 @@ const singlecontractorContactDetailsSlice = createSlice({
 
 
 // Export the reducer
-export default singlecontractorContactDetailsSlice.reducer;
+export default singlecontractorContactDetailsAddSlice.reducer;
