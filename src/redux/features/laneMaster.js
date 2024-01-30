@@ -3,11 +3,15 @@ import {
   addCustomerMasterApiCall,
   addDriverMasterApiCall,
   addFleetApiCall,
+  addLaneMasterApiCall,
   fetchAllContractorsApiCall,
+  getAllLaneApiCall,
+  getAllVendorsApiCall,
   getDropdownDataApiCall,
   listCustomerMasterApiCall,
   listDriverMasterApiCall,
   listFleetApiCall,
+  listLaneMasterApiCall,
   updateCustomerMasterApiCall,
   updateDriverMasterApiCall,
   updateFleetApiCall,
@@ -18,6 +22,9 @@ import client from "../../Api/client";
 const initialState = {
   dataList: [],
   singleCustomerMaster: null,
+
+  allLanes: [],
+  allVendors: [],
 
   contractors: [],
 
@@ -50,12 +57,12 @@ export const fetchAllContractorsAsync = createAsyncThunk(
 );
 
 // add fleet
-export const addCustomerMasterAsync = createAsyncThunk(
+export const addLaneMasterAsync = createAsyncThunk(
   "customerMaster/add-customer-master",
   async (data, thunkAPI) => {
     try {
       console.log(data);
-      const response = await addCustomerMasterApiCall(data);
+      const response = await addLaneMasterApiCall(data);
       console.log({ response });
 
       if (response.data?.statusCode === 200) {
@@ -96,12 +103,58 @@ export const updateCustomerMasterAsync = createAsyncThunk(
 );
 
 // add fleet
-export const listCustomerMasterAsync = createAsyncThunk(
+export const listLaneMasterAsync = createAsyncThunk(
   "driverMaster/list-driver-master",
   async (data, thunkAPI) => {
     try {
       console.log(data);
-      const response = await listCustomerMasterApiCall();
+      const response = await listLaneMasterApiCall();
+      console.log({ response });
+
+      if (response.data?.statusCode === 200) {
+        return thunkAPI.fulfillWithValue(response.data?.res);
+      } else {
+        throw response;
+      }
+    } catch (error) {
+      // You can customize the error handling here
+      console.log(error);
+      thunkAPI.rejectWithValue(error?.response?.data);
+      throw error?.response?.data;
+    }
+  }
+);
+
+// add fleet
+export const getAllLaneAsync = createAsyncThunk(
+  "driverMaster/getAllLaneAsync",
+  async (data, thunkAPI) => {
+    try {
+      console.log(data);
+      const response = await getAllLaneApiCall();
+      console.log({ response });
+
+      if (response.data?.statusCode === 200) {
+        return thunkAPI.fulfillWithValue(response.data?.res);
+      } else {
+        throw response;
+      }
+    } catch (error) {
+      // You can customize the error handling here
+      console.log(error);
+      thunkAPI.rejectWithValue(error?.response?.data);
+      throw error?.response?.data;
+    }
+  }
+);
+
+// add fleet
+export const getAllVendorAsync = createAsyncThunk(
+  "driverMaster/getAllVendorAsync",
+  async (data, thunkAPI) => {
+    try {
+      console.log(data);
+      const response = await getAllVendorsApiCall();
       console.log({ response });
 
       if (response.data?.statusCode === 200) {
@@ -197,8 +250,8 @@ export const addSingleCustomerChildAsync = createAsyncThunk(
 );
 
 // fleet master slice
-const customerMasterSlice = createSlice({
-  name: "customerMaster",
+const laneMasterSlice = createSlice({
+  name: "laneMaster",
 
   initialState: initialState,
 
@@ -225,15 +278,41 @@ const customerMasterSlice = createSlice({
     });
 
     //
-    builder.addCase(listCustomerMasterAsync.pending, (state, action) => {
+    builder.addCase(listLaneMasterAsync.pending, (state, action) => {
       state.isLoading = true;
     });
-    builder.addCase(listCustomerMasterAsync.fulfilled, (state, action) => {
+    builder.addCase(listLaneMasterAsync.fulfilled, (state, action) => {
       console.log({ ful: action.payload });
       state.isLoading = false;
       state.dataList = action.payload;
     });
-    builder.addCase(listCustomerMasterAsync.rejected, (state, action) => {
+    builder.addCase(listLaneMasterAsync.rejected, (state, action) => {
+      state.isLoading = false;
+    });
+
+    //
+    builder.addCase(getAllVendorAsync.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getAllVendorAsync.fulfilled, (state, action) => {
+      console.log({ ful: action.payload });
+      state.isLoading = false;
+      state.allVendors = action.payload;
+    });
+    builder.addCase(getAllVendorAsync.rejected, (state, action) => {
+      state.isLoading = false;
+    });
+
+    //
+    builder.addCase(getAllLaneAsync.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getAllLaneAsync.fulfilled, (state, action) => {
+      console.log({ ful: action.payload });
+      state.isLoading = false;
+      state.allLanes = action.payload;
+    });
+    builder.addCase(getAllLaneAsync.rejected, (state, action) => {
       state.isLoading = false;
     });
 
@@ -252,7 +331,7 @@ const customerMasterSlice = createSlice({
   },
 });
 
-export const { clearDriverMasterState } = customerMasterSlice.actions;
+export const { clearDriverMasterState } = laneMasterSlice.actions;
 
-const customerMasterReducer = customerMasterSlice.reducer;
-export default customerMasterReducer;
+const laneMasterReducer = laneMasterSlice.reducer;
+export default laneMasterReducer;

@@ -96,8 +96,9 @@ export const handleContractorMasterApiCall = async (data) =>
   });
 
 // customer master
-// export const fetchAllContractorsApiCall = async () =>
-//   await client.get(EndUrls.fetchAllContractors, config);
+// export const fetchAllCustomersApiCall = async () =>
+//   await client.get(EndUrls.fetchAllCustomers, config);
+
 export const addCustomerMasterApiCall = async (data) =>
   await client.post(EndUrls.addCustomerMaster, data, {
     headers: {
@@ -106,10 +107,11 @@ export const addCustomerMasterApiCall = async (data) =>
       "Custom-Header": "value",
     },
   });
-// export const listDriverMasterApiCall = async () =>
-//   await client.get(EndUrls.listDriverMaster, config);
-// export const updateDriverMasterApiCall = async (data) =>
-//   await client.post(EndUrls.updateDriverMaster, data, config);
+export const listCustomerMasterApiCall = async () =>
+  await client.get(EndUrls.listCustomerMaster, config);
+
+export const updateCustomerMasterApiCall = async (data) =>
+  await client.post(EndUrls.updateCustomerMaster, data, config);
 
 // export const handleContractorMasterApiCall = async (data) =>
 //   await client.post(EndUrls.contractorAdd, data, {
@@ -117,3 +119,24 @@ export const addCustomerMasterApiCall = async (data) =>
 //       Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
 //     },
 //   });
+
+// Lane Master
+
+export const addLaneMasterApiCall = async (data) =>
+  await client.post(EndUrls.addLaneMaster, data, {
+    headers: {
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      // "Content-Type": "content type multipart/form-data",
+      "Custom-Header": "value",
+    },
+  });
+
+export const getAllLaneApiCall = async () => await client.get(EndUrls.getAllLane, config);
+export const getAllVendorsApiCall = async () =>
+  await client.get(EndUrls.getAllVendors, config);
+
+export const listLaneMasterApiCall = async () =>
+  await client.get(EndUrls.listLaneMaster, config);
+
+// export const updateLaneMasterApiCall = async (data) =>
+//   await client.post(EndUrls.updateLaneMaster, data, config);

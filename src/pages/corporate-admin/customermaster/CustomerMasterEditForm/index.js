@@ -8,14 +8,27 @@ import { FieldArray, FormikProvider, useFormik } from "formik";
 import CustomerMasterSchema from "../../../../constansts/schema";
 import { destinationData, vehicleCategoryData } from "../../../../constansts/LocalData";
 import { useDispatch, useSelector } from "react-redux";
-import { addCustomerMasterAsync } from "../../../../redux/features/customerMaster";
+import {
+  addCustomerMasterAsync,
+  fetchSingleCustomerMasterAsync,
+  updateCustomerMasterAsync,
+} from "../../../../redux/features/customerMaster";
 import { getFleetMasterDropdownDataAsync } from "../../../../redux/features/fleetMaster";
+import { useParams } from "react-router-dom";
+import ContactPerson from "./ContactPerson";
+import { updateCustomerMasterApiCall } from "../../../../Api/api";
+import AgreementDocument from "./AgreementDocument";
+import Location from "./Location";
+import Lane from "./Lane";
+
+const TABLE_NAMES = {};
 
 const initialValues = {
   customerName: "",
   agreementDocument: [""],
   contactPerson: [
     {
+      id: "",
       name: "",
       mobile: "",
       email: "",
@@ -43,11 +56,17 @@ const initialValues = {
   ],
 };
 
-function FleetMasterAddForm() {
+function CustomerMasterEditForm() {
+  const params = useParams();
   const dispatch = useDispatch();
 
   const fleetMaster = useSelector((state) => state.fleetMaster);
-  console.log({ fleetMaster });
+  const customerMaster = useSelector((state) => state.customerMaster);
+
+  const singleCustomerMaster = customerMaster?.singleCustomerMaster;
+
+  console.log({ singleCustomerMaster });
+
   const locationData = fleetMaster?.location?.map?.((item) => ({
     label: item?.name,
     value: item?.id,
@@ -61,6 +80,7 @@ function FleetMasterAddForm() {
     value: item?.id,
   }));
 
+  const [initialState, setInitialState] = useState(initialValues);
   const [showLaneDetails, setShowLaneDetails] = useState("");
   const [showLaneNameTop, setShowLaneNameTop] = useState(0);
   const [showLaneTable, setShowLaneTable] = useState(false);
@@ -68,6 +88,17 @@ function FleetMasterAddForm() {
 
   useEffect(() => {
     dispatch(getFleetMasterDropdownDataAsync());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchSingleCustomerMasterAsync(params?.id));
+  }, [dispatch, params?.id]);
+
+  useEffect(() => {
+    setInitialState((prev) => ({
+      ...prev,
+      customerName: singleCustomerMaster?.name,
+    }));
   }, []);
 
   const handelLaneSave = (index) => {
@@ -147,11 +178,10 @@ function FleetMasterAddForm() {
   };
 
   const formik = useFormik({
-    initialValues: initialValues,
-    // CustomerMasterSchema, // Apply the validation schema
+    initialValues: initialState,
+    enableReinitialize: true,
     onSubmit: handleAddCustomerMaster,
   });
-  // console.log(newLaneDetails, "000");
 
   const {
     touched,
@@ -162,6 +192,24 @@ function FleetMasterAddForm() {
     resetForm,
     setFieldValue,
   } = formik;
+
+  const handleUpdate = () => {
+    const newData = new FormData();
+
+    const data = {
+      id: params?.id,
+      name: values.customerName,
+      model_id: 6,
+      action_id: 2,
+      _metdod: "PATCH",
+    };
+
+    Object.keys(data).forEach((key) => {
+      newData.append(key, data[key]);
+    });
+
+    dispatch(updateCustomerMasterAsync(newData));
+  };
 
   return (
     <FormikProvider value={formik}>
@@ -190,9 +238,20 @@ function FleetMasterAddForm() {
                   ) : null}
                 </div>
 
+                <button
+                  type="button"
+                  className="btn btn-success mr-2 ml-2 mb-5"
+                  onClick={handleUpdate}
+                >
+                  Update
+                </button>
+
                 {/* Agreement Details */}
                 <div className="col-lg-12">
-                  <FieldArray
+                  <AgreementDocument
+                    agreementDocumentList={singleCustomerMaster?.documents}
+                  />
+                  {/* <FieldArray
                     name="agreementDocument"
                     render={(arrayHelpers) => (
                       <div>
@@ -230,11 +289,14 @@ function FleetMasterAddForm() {
                         ))}
                       </div>
                     )}
-                  />
+                  /> */}
                 </div>
 
                 {/* Contact Person Details  */}
-                <div className="col-lg-12">
+                <ContactPerson
+                  contactPersonList={singleCustomerMaster?.contact_personal_details}
+                />
+                {/* <div className="col-lg-12">
                   <FieldArray
                     name="contactPerson"
                     render={(arrayHelpers) => (
@@ -293,11 +355,18 @@ function FleetMasterAddForm() {
                       </div>
                     )}
                   />
+                </div> */}
+
+                <div className="col-lg-12">
+                  <Location
+                    locationList={singleCustomerMaster?.locations}
+                    locationData={locationData}
+                  />
                 </div>
 
                 <div className="col-lg-6">
                   {/* Location  */}
-                  <div className="">
+                  {/* <div className="">
                     <FieldArray
                       name="location"
                       render={(arrayHelpers) => (
@@ -329,11 +398,11 @@ function FleetMasterAddForm() {
                         </div>
                       )}
                     />
-                  </div>
+                  </div> */}
                 </div>
 
-                <div className="col-lg-6">
-                  {/* Address  */}
+                {/* Address  */}
+                {/* <div className="col-lg-6">
                   <div className="d-block">
                     <FieldArray
                       name="address"
@@ -364,8 +433,9 @@ function FleetMasterAddForm() {
                       )}
                     />
                   </div>
-                </div>
-                <div className="col-12 mt-4">
+                </div> */}
+
+                {/* <div className="col-12 mt-4">
                   <button
                     type="button"
                     className="btn mx-1 btn-primary"
@@ -412,7 +482,7 @@ function FleetMasterAddForm() {
                   >
                     <i className="fas fa-plus"></i> Add Location
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -423,8 +493,11 @@ function FleetMasterAddForm() {
             </div>
 
             <div className="card-body">
+              <Lane laneList={singleCustomerMaster?.lane} />
+            </div>
+
+            {/* <div className="card-body">
               <div className="row">
-                {/* Lane name  */}
                 <div className="col-lg-12">
                   {showLaneTable &&
                     laneTable?.map?.((item) => {
@@ -528,7 +601,6 @@ function FleetMasterAddForm() {
                                     }}
                                   />
                                 </div>
-                                {/* Vehicle Category Sec */}
                                 <div className="col-lg-6">
                                   <CustomDropdown
                                     label="Vehicle Type"
@@ -543,7 +615,6 @@ function FleetMasterAddForm() {
                                     }}
                                   />
                                 </div>
-                                {/* Tonnage Sec */}
                                 <div className="col-lg-6">
                                   <CustomDropdown
                                     label="Tonnage(T)"
@@ -739,7 +810,7 @@ function FleetMasterAddForm() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="col-12 mt-3 text-center">
             <button
@@ -759,4 +830,4 @@ function FleetMasterAddForm() {
   );
 }
 
-export default FleetMasterAddForm;
+export default CustomerMasterEditForm;
