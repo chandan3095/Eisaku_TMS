@@ -31,7 +31,7 @@ const RouteNames = {
   driverMasterEdit: "/driver-master/edit/:id",
   helperMasterEdit: "/helper-master/edit/:id",
   customerMasterEdit: "/customer-master/edit",
-  vendorMasterEdit: "/vendor-master/edit",
+  vendorMasterEdit: "/vendor-master/edit/:id",
   laneMasterEdit: "/lane-master/edit",
   contractorMasterEdit: "/contractor-master/edit",
   LocationMasterEdit: "/location-master/:formType/:id",

@@ -33,6 +33,7 @@ import VendorCreateForm from "../pages/manager/vendor/VendorCreateForm";
 import Profile from "../components/Profile";
 import ViewUser from "../pages/user/ViewUser";
 import HelperMasterEdit from "../pages/corporate-admin/helpermaster/HelperMasterEdit";
+import VendorMasterEdit from "../pages/corporate-admin/vendormaster/VendorMasterEdit";
 
 function AppRoutes() {
   return (
@@ -106,6 +107,10 @@ function AppRoutes() {
         <Route
           path={RouteNames.vendorMasterView}
           element={<VendorMasterView />}
+        />
+        <Route
+          path={RouteNames.vendorMasterEdit}
+          element={<VendorMasterEdit />}
         />
         <Route path={RouteNames.laneMasterView} element={<LaneMasterView />} />
         <Route

@@ -37,6 +37,9 @@ const EndUrls = {
 
   // Vendor Master
   addVendorMaster: "/vendor/add",
+  listVendorMaster: "/vendor?&model_id=7&action_id=3",
+  contactPersonDetails:
+    "api/vendor/fetch/child/1?&table_name=contact_person_details&model_id=7&action_id=3",
 };
 
 export default EndUrls;

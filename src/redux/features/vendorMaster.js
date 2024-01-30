@@ -1,8 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   addVendorMasterApiCall,
+  contactPersonDetailsApiCall,
   getAllLaneApiCall,
   handleLocationMasterList,
+  listVendorMasterApiCall,
+  singleVendorMasterApiCall,
+  updateContactApi,
 } from "../../Api/api";
 
 // initial state
@@ -10,6 +14,8 @@ const initialState = {
   dataList: [],
   laneData: [],
   locationData: [],
+  contactPersonData: {},
+  singleVendorMaster: {},
   isLoading: false,
   isError: false,
   isSuccess: false,
@@ -70,6 +76,78 @@ export const addVendorMasterAsync = createAsyncThunk(
   }
 );
 
+export const listVendorMasterAsync = createAsyncThunk(
+  "vendorMaster/fetchVendorList",
+  async (data, thunkAPI) => {
+    try {
+      const response = await listVendorMasterApiCall();
+      if (response?.data?.statusCode === 200) {
+        return thunkAPI.fulfillWithValue(response?.data?.res);
+      } else {
+        throw response;
+      }
+    } catch (error) {
+      console.log(error);
+      thunkAPI.rejectWithValue(error?.response?.data);
+      throw error?.response?.data;
+    }
+  }
+);
+
+export const fetchContactPersonDetailsAsync = createAsyncThunk(
+  "vendorMaster/fetchContactPersonDetails",
+  async (data, thunkAPI) => {
+    try {
+      const response = await contactPersonDetailsApiCall(data);
+      if (response?.data?.statusCode === 200) {
+        return thunkAPI.fulfillWithValue(response?.data?.res);
+      } else {
+        throw response;
+      }
+    } catch (error) {
+      console.log(error);
+      thunkAPI.rejectWithValue(error?.response?.data);
+      throw error?.response?.data;
+    }
+  }
+);
+
+export const fetchSingleVendorMasterAsync = createAsyncThunk(
+  "vendorMaster/singleVendor",
+  async (data, thunkAPI) => {
+    try {
+      const response = await singleVendorMasterApiCall(data);
+      if (response?.data?.statusCode === 200) {
+        return thunkAPI.fulfillWithValue(response?.data?.res);
+      } else {
+        throw response;
+      }
+    } catch (error) {
+      console.log(error);
+      thunkAPI.rejectWithValue(error?.response?.data);
+      throw error?.response?.data;
+    }
+  }
+);
+
+export const updateContactAsync = createAsyncThunk(
+  "vendorMaster/updateContact",
+  async (data, thunkAPI) => {
+    try {
+      const response = await updateContactApi(data);
+      if (response?.data?.statusCode === 200) {
+        return thunkAPI.fulfillWithValue(response?.data?.res);
+      } else {
+        throw response;
+      }
+    } catch (error) {
+      console.log(error);
+      thunkAPI.rejectWithValue(error?.response?.data);
+      throw error?.response?.data;
+    }
+  }
+);
+
 const vendorMasterSlice = createSlice({
   name: "vendorMaster",
   initialState,
@@ -104,8 +182,53 @@ const vendorMasterSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(fetchAllLaneAsync.rejected, (state, action) => {
-      state.isLoading = false;
       state.isError = action.payload;
+      state.isLoading = false;
+    });
+
+    // List Vendor Master
+    builder.addCase(listVendorMasterAsync.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(listVendorMasterAsync.fulfilled, (state, action) => {
+      state.dataList = action.payload;
+      state.isLoading = false;
+    });
+    builder.addCase(listVendorMasterAsync.rejected, (state, action) => {
+      state.isError = action.payload;
+      state.isLoading = false;
+    });
+
+    // Contact person
+    builder.addCase(fetchContactPersonDetailsAsync.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(
+      fetchContactPersonDetailsAsync.fulfilled,
+      (state, action) => {
+        state.contactPersonData = action.payload;
+        state.isLoading = false;
+      }
+    );
+    builder.addCase(
+      fetchContactPersonDetailsAsync.rejected,
+      (state, action) => {
+        state.isError = action.payload;
+        state.isLoading = false;
+      }
+    );
+
+    // single Vendor master
+    builder.addCase(fetchSingleVendorMasterAsync.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(fetchSingleVendorMasterAsync.fulfilled, (state, action) => {
+      state.singleVendorMaster = action.payload;
+      state.isLoading = false;
+    });
+    builder.addCase(fetchSingleVendorMasterAsync.rejected, (state, action) => {
+      state.isError = action.payload;
+      state.isLoading = false;
     });
   },
 });

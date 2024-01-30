@@ -138,3 +138,21 @@ export const getAllLaneApiCall = async () =>
 //add vendor
 export const addVendorMasterApiCall = async (data) =>
   await client.post(EndUrls.addVendorMaster, data, config);
+
+// Vendor list
+export const listVendorMasterApiCall = async () =>
+  await client.get(EndUrls.listVendorMaster, config);
+
+// Contact person details
+export const contactPersonDetailsApiCall = async (id) =>
+  await client.get(
+    `/vendor/fetch/child/${id}?&table_name=contact_person_details&model_id=7&action_id=3`,
+    config
+  );
+
+// Get single vendorMaster
+export const singleVendorMasterApiCall = async (id) =>
+  await client.get(`/vendor/fetch/${id}?&model_id=7&action_id=3`, config);
+
+export const updateContactApi = async (data) =>
+  await client.post("/vendor/add/child", data, config);
