@@ -56,7 +56,7 @@ const CommonSideBar = () => {
             data-accordion="false"
           >
             <li className="nav-item menu-open">
-                    <a className="nav-link" onClick={()=>navigate('/')}>
+                    <a className="nav-link" onClick={()=>navigate('/dashboard')}>
                 <i className="nav-icon fas fa-tachometer-alt" />
                 <p>Dashboard</p>
               </a>

@@ -27,6 +27,10 @@ const RouteNames = {
     // list view 
     fleetMasterView: '/fleet-master/view',
 
+    //contractor Contact details
+    contractorMasterContacts: '/contractor-master/:id/contact-details',
+   // contractorMasterContactsAdd: '/contractor-master/:id/add-contact',
+
    // edit 
    fleetMasterEdit: '/fleet-master/edit',
    driverMasterEdit: '/driver-master/edit/:id',
@@ -34,7 +38,7 @@ const RouteNames = {
    customerMasterEdit: '/customer-master/edit',
    vendorMasterEdit: '/vendor-master/edit',
    laneMasterEdit: '/lane-master/edit',
-   contractorMasterEdit: '/contractor-master/edit',
+   contractorMasterEdit: '/contractor-master/edit/:id',
    LocationMasterEdit: '/location-master/:formType/:id',
 
    // manager Trip view

@@ -32,6 +32,9 @@ import Skeleton from './Skeleton'
 import VendorCreateForm from '../pages/manager/vendor/VendorCreateForm'
 import Profile from '../components/Profile'
 import ViewUser from '../pages/user/ViewUser'
+import ContractorMasterEdit from '../pages/corporate-admin/contractormaster/contractorMasterEdit'
+import ContractorMasterContactDetails from '../pages/corporate-admin/contractormaster/contractorMasterContactDetails'
+import ContactDetailsAddFrom from '../components/common/contactDetailsAdd/ContactDetailsAddFrom'
 
 function AppRoutes() {
    return (
@@ -40,11 +43,11 @@ function AppRoutes() {
          <Route path="/" element={<Skeleton />} >
             <Route
                path=""
-               element={<login/>}
+               element={<Login />}
             />
             
             <Route
-               path="dashboard"
+               path="/dashboard"
                element={<HomeDashboard />}
             />
             
@@ -136,6 +139,11 @@ function AppRoutes() {
             <Route path={RouteNames.addUser} element={<AddUser />} />
             <Route path={RouteNames.listUser} element={<ListUser />} />
             <Route path={RouteNames.updateUser} element={<ViewUser />} />
+
+
+            <Route path={RouteNames.contractorMasterEdit} element={<ContractorMasterEdit />} />
+            <Route path={RouteNames.contractorMasterContacts} element={<ContractorMasterContactDetails />} />
+            {/* <Route path={RouteNames.contractorMasterContactsAdd} element={<ContactDetailsAddFrom />} /> */}
             {/* <Route
                path=""
                element={<Navigate to={'Login'} />}
