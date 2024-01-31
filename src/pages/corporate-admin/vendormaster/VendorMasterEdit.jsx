@@ -4,8 +4,9 @@ import CustomFileUpload from "../../../components/common/CustomFileUpload/Custom
 import BodyHeader from "../../../components/common/CommonBodyHeader";
 import CustomDatePicker from "../../../components/common/CustomDatePicker/CustomDatePicker";
 import CustomDropdown from "../../../components/common/CustomDropdown/CustomDropdown";
-
+import CustomToggleSwitch from "../../../components/common/CustomToggle";
 import CustomTextArea from "../../../components/common/CustomTextArea/CustomTextArea";
+import DataTable from "react-data-table-component";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addVendorMasterAsync,
@@ -15,13 +16,12 @@ import {
   fetchSingleVendorMasterAsync,
   updateContactAsync,
 } from "../../../redux/features/vendorMaster";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const VendorMasterEdit = () => {
+  const navigate = useNavigate();
   const vendorMaster = useSelector((state) => state.vendorMaster);
   const singleVendorMaster = vendorMaster.singleVendorMaster;
-  const contactPersonData = vendorMaster.contactPersonData;
-  const laneMasterData = vendorMaster.laneMasterData;
   // For lane dropdown
   const laneData = vendorMaster.laneData.map((item) => ({
     label: item?.name,
@@ -33,6 +33,7 @@ const VendorMasterEdit = () => {
     value: item?.id,
   }));
 
+  const [isChecked, setIsChecked] = useState({}); // State to manage toggle
   const [laneNameSelect, setlaneNameSelect] = useState([]);
   const [isDisabled, setIsdisabled] = useState(true);
   const [selectedOption, setSelectedOption] = useState({
@@ -55,13 +56,6 @@ const VendorMasterEdit = () => {
     agreementDocument: "",
   });
 
-  const [addContact, setAddContact] = useState([
-    {
-      name: "",
-      mobile: "",
-      email: "",
-    },
-  ]);
   const [laneDetails, setLaneDetails] = useState([
     {
       expressRate: "",
@@ -75,6 +69,9 @@ const VendorMasterEdit = () => {
       miscellaneousRemarks: "",
     },
   ]);
+  const [addContact, setAddContact] = useState([]);
+  const [contactList, setContactList] = useState([]);
+  const [laneList, setLaneList] = useState([]);
 
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -98,12 +95,18 @@ const VendorMasterEdit = () => {
         bankDocument: singleVendorMaster.bank_document,
         gstNumber: singleVendorMaster.gst_number,
         gstDocument: singleVendorMaster.gst_document,
-        // location: singleVendorMaster.address
+        location: {
+          label: singleVendorMaster.location_master.name,
+          value: singleVendorMaster.location_master.id,
+        },
         address: singleVendorMaster.address,
         agreementStartDate: singleVendorMaster.agreement_start_date,
         agreementEndDate: singleVendorMaster.agreement_end_date,
         agreementDocument: singleVendorMaster.agreement_document,
       }));
+
+      setContactList(singleVendorMaster.contact_personal_details);
+      setLaneList(singleVendorMaster.lane);
     }
   }, [singleVendorMaster]);
 
@@ -116,6 +119,11 @@ const VendorMasterEdit = () => {
         email: "",
       },
     ]);
+  };
+
+  const toggleSwitch = () => {
+    setIsChecked(isChecked ? (isChecked = true) : (isChecked = false)); // Toggle the state
+    console.log(isChecked);
   };
 
   const handleRemoveContact = (index) => {
@@ -281,6 +289,110 @@ const VendorMasterEdit = () => {
     dispatch(addVendorMasterAsync(newData));
   };
 
+  const contactColumns = [
+    {
+      name: "Name",
+      selector: (row) => row.name,
+      sortable: true,
+    },
+    {
+      name: "Email",
+      selector: (row) => row.email,
+    },
+    {
+      name: "Mobile",
+      selector: (row) => row.mobile,
+    },
+    {
+      name: "Action",
+      selector: (row) => {
+        return (
+          <>
+            <button
+              className="btn btn-primary mx-2"
+              onClick={() => navigate("/vendor-master/edit/" + row.id)}
+            >
+              Edit
+            </button>
+            <CustomToggleSwitch
+              checked={isChecked}
+              onChange={toggleSwitch}
+              id="vendor1"
+            />
+          </>
+        );
+      },
+    },
+  ];
+
+  const laneColumns = [
+    {
+      name: "Express Mode Rate Additional",
+      selector: (row) => row.cust_express_mode_rate_additional,
+      sortable: true,
+    },
+    {
+      name: "Super Express Mode Rate Additional",
+      selector: (row) => row.cust_super_express_mode_rate_additional,
+    },
+    {
+      name: "Detention Rate Additional",
+      selector: (row) => row.cust_detention_rate_additional,
+    },
+    {
+      name: "Multiple Loading Location Rate Additional",
+      selector: (row) => row.cust_multiple_loading_location_rate_additional,
+    },
+    {
+      name: "Action",
+      selector: (row) => {
+        return (
+          <>
+            <button
+              className="btn btn-primary mx-2"
+              onClick={() => navigate("/vendor-master/edit/" + row.id)}
+            >
+              Edit
+            </button>
+            <CustomToggleSwitch
+              checked={isChecked}
+              onChange={toggleSwitch}
+              id="vendor1"
+            />
+          </>
+        );
+      },
+    },
+  ];
+
+  const customStyles = {
+    table: {
+      style: {
+        border: "1px solid #0bc4f0", // Set border color
+      },
+    },
+    rows: {
+      style: {
+        minHeight: "72px", // override the row height
+      },
+    },
+    headCells: {
+      style: {
+        paddingLeft: "8px", // override the cell padding for head cells
+        paddingRight: "8px",
+        backgroundColor: "#0bc4f0",
+      },
+    },
+    cells: {
+      style: {
+        paddingLeft: "8px", // override the cell padding for data cells
+        paddingRight: "8px",
+        fontSize: "14px", // Set font size for regular cells
+        border: "1px solid #0bc4f0",
+      },
+    },
+  };
+
   return (
     <div>
       <BodyHeader title="Edit Vendor Master" />
@@ -392,6 +504,7 @@ const VendorMasterEdit = () => {
                   <div className="col-lg-4">
                     <CustomDropdown
                       require={require}
+                      // values={formData.location}
                       label="location"
                       optionData={locationData}
                       onChange={(values) =>
@@ -411,101 +524,114 @@ const VendorMasterEdit = () => {
                     />
                   </div>
                   <div className="col-12">
-                    {addContact.map((item, index) => {
-                      const { name, mobile, email } = item;
-                      return (
-                        <div
-                          key={index}
-                          className={
-                            index < addContact.length - 1 &&
-                            addContact.length > 1
-                              ? "row border-bottom mb-4 pb-3"
-                              : "row"
-                          }
-                        >
-                          <div className="col-12 col-sm-12 col-md-6 col-lg-4">
-                            <CustomInput
-                              require={require}
-                              label="Contact Person Name"
-                              inputType="text"
-                              id="#vendorMobile"
-                              name="name"
-                              placeholder="Enter Contact Person Name."
-                              value={name}
-                              onChange={(e) =>
-                                multiChangeHandler(
-                                  e,
-                                  index,
-                                  addContact,
-                                  setAddContact
-                                )
-                              }
-                            />
-                          </div>
-                          <div className="col-12 col-sm-12 col-md-6 col-lg-4">
-                            <CustomInput
-                              inputType="number"
-                              require={require}
-                              label="Mobile No"
-                              id="#vendorMobile"
-                              name="mobile"
-                              placeholder="Enter Contact Person Mobile No."
-                              value={mobile}
-                              onChange={(e) =>
-                                multiChangeHandler(
-                                  e,
-                                  index,
-                                  addContact,
-                                  setAddContact
-                                )
-                              }
-                            />
-                          </div>
-                          <div className="col-12 col-sm-12 col-md-6 col-lg-4">
-                            <CustomInput
-                              require={require}
-                              label="Email Id"
-                              inputType="text"
-                              id="#vendorEmail"
-                              name="email"
-                              placeholder="Enter Contact Person Email"
-                              value={email}
-                              onChange={(e) =>
-                                multiChangeHandler(
-                                  e,
-                                  index,
-                                  addContact,
-                                  setAddContact
-                                )
-                              }
-                            />
-                          </div>
-                          {index === 0 && (
-                            <div className="col-12">
-                              <button
-                                type="button"
-                                className="btn btn-primary float-right ml-3 mb-3"
-                                onClick={contactUpdateHandler}
-                              >
-                                <i className="fas fa-edit"></i> Update item
-                              </button>
+                    <h6>Contact Person Details</h6>
+                    <DataTable
+                      columns={contactColumns}
+                      data={contactList}
+                      sortable
+                      fixedHeader
+                      pagination
+                      responsive
+                      striped={true}
+                      borderColor="#000000"
+                      customStyles={customStyles}
+                    ></DataTable>
+                    {addContact.length > 0 &&
+                      addContact.map((item, index) => {
+                        const { name, mobile, email } = item;
+                        return (
+                          <div
+                            key={index}
+                            className={
+                              index < addContact.length - 1 &&
+                              addContact.length > 1
+                                ? "row border-bottom mb-4 pb-3"
+                                : "row"
+                            }
+                          >
+                            <div className="col-12 col-sm-12 col-md-6 col-lg-4">
+                              <CustomInput
+                                require={require}
+                                label="Contact Person Name"
+                                inputType="text"
+                                id="#vendorMobile"
+                                name="name"
+                                placeholder="Enter Contact Person Name."
+                                value={name}
+                                onChange={(e) =>
+                                  multiChangeHandler(
+                                    e,
+                                    index,
+                                    addContact,
+                                    setAddContact
+                                  )
+                                }
+                              />
                             </div>
-                          )}
+                            <div className="col-12 col-sm-12 col-md-6 col-lg-4">
+                              <CustomInput
+                                inputType="number"
+                                require={require}
+                                label="Mobile No"
+                                id="#vendorMobile"
+                                name="mobile"
+                                placeholder="Enter Contact Person Mobile No."
+                                value={mobile}
+                                onChange={(e) =>
+                                  multiChangeHandler(
+                                    e,
+                                    index,
+                                    addContact,
+                                    setAddContact
+                                  )
+                                }
+                              />
+                            </div>
+                            <div className="col-12 col-sm-12 col-md-6 col-lg-4">
+                              <CustomInput
+                                require={require}
+                                label="Email Id"
+                                inputType="text"
+                                id="#vendorEmail"
+                                name="email"
+                                placeholder="Enter Contact Person Email"
+                                value={email}
+                                onChange={(e) =>
+                                  multiChangeHandler(
+                                    e,
+                                    index,
+                                    addContact,
+                                    setAddContact
+                                  )
+                                }
+                              />
+                            </div>
+                            {index === 0 && (
+                              <div className="col-12">
+                                <button
+                                  type="button"
+                                  className="btn btn-primary float-right ml-3 mb-3"
+                                  onClick={contactUpdateHandler}
+                                >
+                                  <i className="fas fa-edit"></i> Update item
+                                </button>
+                              </div>
+                            )}
 
-                          {index > 0 && (
-                            <div className="col-12">
-                              <button
-                                type="button"
-                                className="btn btn-danger float-right ml-3 mb-3"
-                                onClick={handleRemoveContact}
-                              >
-                                <i className="fas fa-trash"></i> Delete item
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
+                            {index > 0 && (
+                              <div className="col-12">
+                                <button
+                                  type="button"
+                                  className="btn btn-danger float-right ml-3 mb-3"
+                                  onClick={handleRemoveContact}
+                                >
+                                  <i className="fas fa-trash"></i> Delete item
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
                     <button
                       type="button"
                       className="btn btn-primary float-right"
@@ -567,7 +693,19 @@ const VendorMasterEdit = () => {
               <div className="card-header">
                 <h3 className="card-title">Lane Details</h3>
               </div>
+
               <div className="card-body">
+                <DataTable
+                  columns={laneColumns}
+                  data={laneList}
+                  sortable
+                  fixedHeader
+                  pagination
+                  responsive
+                  striped={true}
+                  borderColor="#000000"
+                  customStyles={customStyles}
+                ></DataTable>
                 {laneDetails.map((item, index) => {
                   const {
                     expressRate,

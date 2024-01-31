@@ -226,7 +226,7 @@ const vendorMasterSlice = createSlice({
     builder.addCase(
       fetchContactPersonDetailsAsync.fulfilled,
       (state, action) => {
-        state.contactPersonData = action.payload;
+        state.contactPersonData = [action.payload];
         state.isLoading = false;
       }
     );

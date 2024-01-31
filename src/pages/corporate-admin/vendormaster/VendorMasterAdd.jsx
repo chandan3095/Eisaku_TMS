@@ -102,31 +102,6 @@ const VendorMasterAdd = () => {
     ]);
   };
 
-  //   const destinationData = [
-  //     {
-  //       label: "Lane 1",
-  //       value: "Lane 1",
-  //     },
-  //     {
-  //       label: "Lane 2",
-  //       value: "Lane 2",
-  //     },
-  //     {
-  //       label: "Lane 3",
-  //       value: "Lane 3",
-  //     },
-  //     {
-  //       label: "Lane 4",
-  //       value: "Lane 4",
-  //     },
-  //   ];
-
-  //   const handleSelectChange = (index) => {
-  //     setSelectedOption({ index, expand: true });
-  //     setIsdisabled(false);
-  //     // console.log(selected[0].value);
-  //   };
-
   const handleLaneNameDelete = (index) => {
     // 1. Remove laneName
     const updatedLaneSelect = [...laneNameSelect];
@@ -249,7 +224,7 @@ const VendorMasterAdd = () => {
       newData.append(key, data[key]);
     });
     Object.keys(ard).forEach((key, index) => {
-      newData.append(`${key}[]`, JSON.stringify(ard[key]));
+      newData.append(`${key}[]`, ard[key]);
     });
 
     dispatch(addVendorMasterAsync(newData));

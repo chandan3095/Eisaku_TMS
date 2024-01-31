@@ -24,14 +24,6 @@ const VendorMasterView = () => {
     dispatch(listVendorMasterAsync());
   }, []);
 
-  useEffect(() => {
-    if (vendorMasterList) {
-      vendorMasterList.forEach((element) => {
-        dispatch(fetchContactPersonDetailsAsync(element.id));
-      });
-    }
-  }, [vendorMasterList]);
-
   const toggleSwitch = () => {
     setIsChecked(isChecked ? (isChecked = true) : (isChecked = false)); // Toggle the state
     console.log(isChecked);
