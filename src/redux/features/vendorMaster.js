@@ -15,7 +15,7 @@ const initialState = {
   dataList: [],
   laneData: [],
   locationData: [],
-  contactPersonData: [],
+  contactPersonData: {},
   laneMasterData: [],
   singleVendorMaster: {},
   isLoading: false,
@@ -150,6 +150,7 @@ export const fetchLaneMasterDetailsAsync = createAsyncThunk(
   }
 );
 
+// Update contact
 export const updateContactAsync = createAsyncThunk(
   "vendorMaster/updateContact",
   async (data, thunkAPI) => {
@@ -226,7 +227,7 @@ const vendorMasterSlice = createSlice({
     builder.addCase(
       fetchContactPersonDetailsAsync.fulfilled,
       (state, action) => {
-        state.contactPersonData = [action.payload];
+        state.contactPersonData = action.payload;
         state.isLoading = false;
       }
     );

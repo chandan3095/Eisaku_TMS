@@ -155,7 +155,7 @@ export const singleVendorMasterApiCall = async (id) =>
   await client.get(`/vendor/fetch/${id}?&model_id=7&action_id=3`, config);
 
 export const updateContactApi = async (data) =>
-  await client.post("/vendor/add/child", data, config);
+  await client.post("/vendor/update/child", data, config);
 
 export const laneMasterDetailsApiCall = async (id) =>
   await client.get(

@@ -17,6 +17,8 @@ import {
   updateContactAsync,
 } from "../../../redux/features/vendorMaster";
 import { useParams, useNavigate } from "react-router-dom";
+import EditContactPerson from "./EditContactPerson";
+import EditLaneDetails from "./EditLaneDetails";
 
 const VendorMasterEdit = () => {
   const navigate = useNavigate();
@@ -74,39 +76,39 @@ const VendorMasterEdit = () => {
   const [laneList, setLaneList] = useState([]);
 
   const dispatch = useDispatch();
-  const { id } = useParams();
+  const { id: vendorId } = useParams();
 
   useEffect(() => {
-    dispatch(fetchSingleVendorMasterAsync(id));
+    dispatch(fetchSingleVendorMasterAsync(vendorId));
     dispatch(fetchAllLocationAsync());
     dispatch(fetchAllLaneAsync());
-    dispatch(fetchLaneMasterDetailsAsync(id));
+    dispatch(fetchLaneMasterDetailsAsync(vendorId));
   }, []);
 
   useEffect(() => {
     if (singleVendorMaster) {
       setFormData((prev) => ({
         ...prev,
-        vendorName: singleVendorMaster.name,
-        accountNumber: singleVendorMaster.account_number,
-        bankName: singleVendorMaster.bank_name,
-        ifscCode: singleVendorMaster.ifsc_code,
-        accountHolderName: singleVendorMaster.account_holder_name,
-        bankDocument: singleVendorMaster.bank_document,
-        gstNumber: singleVendorMaster.gst_number,
-        gstDocument: singleVendorMaster.gst_document,
+        vendorName: singleVendorMaster?.name,
+        accountNumber: singleVendorMaster?.account_number,
+        bankName: singleVendorMaster?.bank_name,
+        ifscCode: singleVendorMaster?.ifsc_code,
+        accountHolderName: singleVendorMaster?.account_holder_name,
+        bankDocument: singleVendorMaster?.bank_document,
+        gstNumber: singleVendorMaster?.gst_number,
+        gstDocument: singleVendorMaster?.gst_document,
         location: {
-          label: singleVendorMaster.location_master.name,
-          value: singleVendorMaster.location_master.id,
+          label: singleVendorMaster?.location_master.name,
+          value: singleVendorMaster?.location_master.id,
         },
-        address: singleVendorMaster.address,
-        agreementStartDate: singleVendorMaster.agreement_start_date,
-        agreementEndDate: singleVendorMaster.agreement_end_date,
-        agreementDocument: singleVendorMaster.agreement_document,
+        address: singleVendorMaster?.address,
+        agreementStartDate: singleVendorMaster?.agreement_start_date,
+        agreementEndDate: singleVendorMaster?.agreement_end_date,
+        agreementDocument: singleVendorMaster?.agreement_document,
       }));
 
-      setContactList(singleVendorMaster.contact_personal_details);
-      setLaneList(singleVendorMaster.lane);
+      setContactList(singleVendorMaster?.contact_personal_details);
+      setLaneList(singleVendorMaster?.lane);
     }
   }, [singleVendorMaster]);
 
@@ -119,11 +121,6 @@ const VendorMasterEdit = () => {
         email: "",
       },
     ]);
-  };
-
-  const toggleSwitch = () => {
-    setIsChecked(isChecked ? (isChecked = true) : (isChecked = false)); // Toggle the state
-    console.log(isChecked);
   };
 
   const handleRemoveContact = (index) => {
@@ -216,15 +213,14 @@ const VendorMasterEdit = () => {
     Object.keys(ard).forEach((key, index) => {
       newData.append(`${key}[]`, JSON.stringify(ard[key]));
     });
-    newData.append("vendor_master_id", id);
+    newData.append("vendor_master_id", vendorId);
     newData.append("model_id", 7);
     newData.append("action_id", 1);
-    // newData.append("_method", "PATCH");
-
     dispatch(updateContactAsync(newData));
   };
 
   const updateHandler = (e) => {
+    console.log("submit called-===>");
     e.preventDefault();
     const data = {
       name: formData.vendorName,
@@ -287,110 +283,6 @@ const VendorMasterEdit = () => {
     });
 
     dispatch(addVendorMasterAsync(newData));
-  };
-
-  const contactColumns = [
-    {
-      name: "Name",
-      selector: (row) => row.name,
-      sortable: true,
-    },
-    {
-      name: "Email",
-      selector: (row) => row.email,
-    },
-    {
-      name: "Mobile",
-      selector: (row) => row.mobile,
-    },
-    {
-      name: "Action",
-      selector: (row) => {
-        return (
-          <>
-            <button
-              className="btn btn-primary mx-2"
-              onClick={() => navigate("/vendor-master/edit/" + row.id)}
-            >
-              Edit
-            </button>
-            <CustomToggleSwitch
-              checked={isChecked}
-              onChange={toggleSwitch}
-              id="vendor1"
-            />
-          </>
-        );
-      },
-    },
-  ];
-
-  const laneColumns = [
-    {
-      name: "Express Mode Rate Additional",
-      selector: (row) => row.cust_express_mode_rate_additional,
-      sortable: true,
-    },
-    {
-      name: "Super Express Mode Rate Additional",
-      selector: (row) => row.cust_super_express_mode_rate_additional,
-    },
-    {
-      name: "Detention Rate Additional",
-      selector: (row) => row.cust_detention_rate_additional,
-    },
-    {
-      name: "Multiple Loading Location Rate Additional",
-      selector: (row) => row.cust_multiple_loading_location_rate_additional,
-    },
-    {
-      name: "Action",
-      selector: (row) => {
-        return (
-          <>
-            <button
-              className="btn btn-primary mx-2"
-              onClick={() => navigate("/vendor-master/edit/" + row.id)}
-            >
-              Edit
-            </button>
-            <CustomToggleSwitch
-              checked={isChecked}
-              onChange={toggleSwitch}
-              id="vendor1"
-            />
-          </>
-        );
-      },
-    },
-  ];
-
-  const customStyles = {
-    table: {
-      style: {
-        border: "1px solid #0bc4f0", // Set border color
-      },
-    },
-    rows: {
-      style: {
-        minHeight: "72px", // override the row height
-      },
-    },
-    headCells: {
-      style: {
-        paddingLeft: "8px", // override the cell padding for head cells
-        paddingRight: "8px",
-        backgroundColor: "#0bc4f0",
-      },
-    },
-    cells: {
-      style: {
-        paddingLeft: "8px", // override the cell padding for data cells
-        paddingRight: "8px",
-        fontSize: "14px", // Set font size for regular cells
-        border: "1px solid #0bc4f0",
-      },
-    },
   };
 
   return (
@@ -525,17 +417,8 @@ const VendorMasterEdit = () => {
                   </div>
                   <div className="col-12">
                     <h6>Contact Person Details</h6>
-                    <DataTable
-                      columns={contactColumns}
-                      data={contactList}
-                      sortable
-                      fixedHeader
-                      pagination
-                      responsive
-                      striped={true}
-                      borderColor="#000000"
-                      customStyles={customStyles}
-                    ></DataTable>
+                    {/* Edit contact component */}
+                    <EditContactPerson data={contactList} vendorId={vendorId} />
                     {addContact.length > 0 &&
                       addContact.map((item, index) => {
                         const { name, mobile, email } = item;
@@ -695,17 +578,7 @@ const VendorMasterEdit = () => {
               </div>
 
               <div className="card-body">
-                <DataTable
-                  columns={laneColumns}
-                  data={laneList}
-                  sortable
-                  fixedHeader
-                  pagination
-                  responsive
-                  striped={true}
-                  borderColor="#000000"
-                  customStyles={customStyles}
-                ></DataTable>
+                <EditLaneDetails data={laneList} />
                 {laneDetails.map((item, index) => {
                   const {
                     expressRate,
