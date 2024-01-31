@@ -14,6 +14,7 @@ import fleetMasterReducer from "./features/fleetMaster";
 import driverMasterReducer from "./features/driverMaster";
 import customerMasterReducer from "./features/customerMaster";
 import laneMasterReducer from "./features/laneMaster";
+import helperReducer from "./features/helperSlice";
 
 const rootReducer = combineReducers({
   addUser: addUserReducer,
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   driverMaster: driverMasterReducer,
   customerMaster: customerMasterReducer,
   laneMaster: laneMasterReducer,
+  helper: helperReducer,
 });
 
 const persistConfig = {

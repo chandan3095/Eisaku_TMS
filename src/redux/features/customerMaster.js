@@ -1,16 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   addCustomerMasterApiCall,
-  addDriverMasterApiCall,
-  addFleetApiCall,
   fetchAllContractorsApiCall,
-  getDropdownDataApiCall,
   listCustomerMasterApiCall,
-  listDriverMasterApiCall,
-  listFleetApiCall,
   updateCustomerMasterApiCall,
-  updateDriverMasterApiCall,
-  updateFleetApiCall,
 } from "../../Api/api";
 import client from "../../Api/client";
 
@@ -52,19 +45,21 @@ export const fetchAllContractorsAsync = createAsyncThunk(
 // add fleet
 export const addCustomerMasterAsync = createAsyncThunk(
   "customerMaster/add-customer-master",
-  async (data, thunkAPI) => {
+  async ({ data, err, done }, thunkAPI) => {
     try {
       console.log(data);
       const response = await addCustomerMasterApiCall(data);
       console.log({ response });
 
       if (response.data?.statusCode === 200) {
+        done && done();
         return thunkAPI.fulfillWithValue(response.data?.res);
       } else {
         throw response;
       }
     } catch (error) {
       // You can customize the error handling here
+      err && err();
       console.log(error);
       thunkAPI.rejectWithValue(error?.response?.data);
       throw error?.response?.data;
@@ -98,19 +93,20 @@ export const updateCustomerMasterAsync = createAsyncThunk(
 // add fleet
 export const listCustomerMasterAsync = createAsyncThunk(
   "driverMaster/list-driver-master",
-  async (data, thunkAPI) => {
+  async ({ err, done }, thunkAPI) => {
     try {
-      console.log(data);
       const response = await listCustomerMasterApiCall();
       console.log({ response });
 
       if (response.data?.statusCode === 200) {
+        done && done();
         return thunkAPI.fulfillWithValue(response.data?.res);
       } else {
         throw response;
       }
     } catch (error) {
       // You can customize the error handling here
+      err && err();
       console.log(error);
       thunkAPI.rejectWithValue(error?.response?.data);
       throw error?.response?.data;
@@ -121,7 +117,7 @@ export const listCustomerMasterAsync = createAsyncThunk(
 // fetch single customer master
 export const fetchSingleCustomerMasterAsync = createAsyncThunk(
   "driverMaster/fetch-single-customer master",
-  async (id, thunkAPI) => {
+  async ({ id, err, done }, thunkAPI) => {
     try {
       const response = await client.get(`customer/fetch/${id}?&model_id=6&action_id=3`, {
         headers: {
@@ -131,12 +127,14 @@ export const fetchSingleCustomerMasterAsync = createAsyncThunk(
       console.log({ response });
 
       if (response.data?.statusCode === 200) {
+        done && done();
         return thunkAPI.fulfillWithValue(response.data?.res);
       } else {
         throw response;
       }
     } catch (error) {
       // You can customize the error handling here
+      err && err();
       console.log(error);
       thunkAPI.rejectWithValue(error?.response?.data);
       throw error?.response?.data;
@@ -147,7 +145,7 @@ export const fetchSingleCustomerMasterAsync = createAsyncThunk(
 // fetch single fleet child data
 export const updateSingleCustomerChildAsync = createAsyncThunk(
   "fleetmaster/update-single-customer-child",
-  async (data, thunkAPI) => {
+  async ({ data, err, done }, thunkAPI) => {
     try {
       const response = await client.post(`customer/update/child`, data, {
         headers: {
@@ -157,12 +155,14 @@ export const updateSingleCustomerChildAsync = createAsyncThunk(
       console.log({ response });
 
       if (response.data?.statusCode === 200) {
+        done && done();
         return thunkAPI.fulfillWithValue(response.data?.res);
       } else {
         throw response;
       }
     } catch (error) {
       // You can customize the error handling here
+      err && err();
       console.log(error);
       thunkAPI.rejectWithValue(error?.response?.data);
       throw error?.response?.data;

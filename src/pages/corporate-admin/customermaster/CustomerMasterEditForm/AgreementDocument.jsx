@@ -6,6 +6,15 @@ import CustomModal from "../../../../components/common/Modal";
 import { useToggleState } from "../../../../Hooks/useToggleState";
 import CustomInput from "../../../../components/common/CustomInput/CustomInput";
 import { BASE_URL_IMAGE } from "../../../../Api/client";
+import CustomFileUpload from "../../../../components/common/CustomFileUpload/CustomFileUpload";
+import { useDispatch } from "react-redux";
+import {
+  fetchSingleCustomerMasterAsync,
+  updateSingleCustomerChildAsync,
+} from "../../../../redux/features/customerMaster";
+import { backdropLoadingAction } from "../../../../redux/features/helperSlice";
+import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
 const customStyles = {
   table: {
@@ -36,12 +45,11 @@ const customStyles = {
 };
 
 const AgreementDocument = ({ agreementDocumentList }) => {
-  const [initialState, setInitialState] = useState({
-    id: "",
-    name: "",
-    mobile: "",
-    email: "",
-  });
+  const params = useParams();
+  const dispatch = useDispatch();
+
+  const [action, setAction] = useState("");
+  const [initialState, setInitialState] = useState({ id: "", document: null });
   const [isChecked, setIsChecked] = useState({}); // State to manage toggle
 
   const [isModalVisible, handleShowModal, handleCloseModal] = useToggleState();
@@ -86,7 +94,7 @@ const AgreementDocument = ({ agreementDocumentList }) => {
         <button
           className="btn btn-primary mx-2"
           onClick={() => {
-            // setInitialState({});
+            setInitialState({ id: item?.id });
             handleShowModal();
           }}
         >
@@ -96,6 +104,75 @@ const AgreementDocument = ({ agreementDocumentList }) => {
       </>
     ),
   }));
+
+  const handleAgreementDocumentUpdate = () => {
+    const newData = new FormData();
+
+    newData.append("customer_master_id", params?.id);
+    newData.append("document_id", initialState?.id);
+    newData.append("agreement_document[]", initialState?.document);
+    newData.append("_method", "PATCH");
+    newData.append("model_id", 6);
+    newData.append("action_id", 2);
+
+    dispatch(backdropLoadingAction(true));
+
+    dispatch(
+      updateSingleCustomerChildAsync({
+        data: newData,
+        err: () => {
+          toast.error("Something went wrong !");
+          dispatch(backdropLoadingAction(false));
+        },
+        done: () => {
+          toast.success("Record updated successfully !");
+          handleCloseModal();
+          dispatch(
+            fetchSingleCustomerMasterAsync({
+              id: params?.id,
+              err: () => {
+                dispatch(backdropLoadingAction(false));
+              },
+              done: () => {
+                dispatch(backdropLoadingAction(false));
+              },
+            })
+          );
+        },
+      })
+    );
+  };
+
+  //   "customer_master_id:1
+  // location_id:1
+  // address_id:1
+  // document_id:1
+  // contact_person_detail_id:1
+  // lane_master_id
+  // agreement_document[]:file upload
+  // location_master_id[]:[2]
+  // address[]:[aa]
+  // contact_person_name[]:[aaaa]
+  // mobile[]:[2222222222]
+  // email[]:[aa@dssd.com]
+  // lane_name[]:[aaa]
+  // origin[]:[2]
+  // destination[]:[3]
+  // vehicle_category_id[]:[2]
+  // tonnage_id[]:[2]
+  // cust_express_mode_rate_additional[]:[11.1]
+  // cust_super_express_mode_rate_additional[]:[11.1]
+  // cust_detention_rate_additional[]:[11.1]
+  // cust_multiple_loading_location_rate_additional[]:[11.1]
+  // cust_loading_charges[]:[11.1]
+  // cust_miscellaneous_charges[]:[11.1]
+  // cust_unloading_charge[]:[11.1]
+  // cust_miscellaneous_remarks[]:[aaa]
+  // cust_multiple_unloading_location_rate_additional[]:[11.22]
+
+  // _method:PATCH
+  // model_id:6,
+  // action_id:2"
 
   const formik = useFormik({
     initialValues: initialState,
@@ -120,7 +197,7 @@ const AgreementDocument = ({ agreementDocumentList }) => {
         handleCloseModal={handleCloseImageModal}
         modalSize="modal-xl"
         title="Agreement document"
-        onSubmit={handleCloseImageModal}
+        onSubmit={handleAgreementDocumentUpdate}
         child={
           <div>
             <img src={imageUrl} style={{ width: "100%", height: "100%" }} />
@@ -132,34 +209,18 @@ const AgreementDocument = ({ agreementDocumentList }) => {
         handleCloseModal={handleCloseModal}
         modalSize="modal-xl"
         title="Agreement document"
-        onSubmit={() => {}}
+        onSubmit={handleAgreementDocumentUpdate}
         child={
           <>
             <div className="col-lg-4">
-              <CustomInput
-                require={require}
-                label="Contact Person Name"
-                id="contactPersonName"
-                placeholder="Enter Contact Person Name"
-                {...getFieldProps(`name`)}
-              />
-            </div>
-            <div className="col-lg-4">
-              <CustomInput
-                require={require}
-                label="Customer Mobile No"
-                id="customerMobileNo"
-                placeholder="Enter Customer Mobile No"
-                {...getFieldProps(`mobile`)}
-              />
-            </div>
-            <div className="col-lg-4">
-              <CustomInput
-                require={require}
-                label="Customer Email Id"
-                id="customerEmailId"
-                placeholder="Enter Customer Email Id"
-                {...getFieldProps(`email`)}
+              <CustomFileUpload
+                label="Agreement Details"
+                onChange={(event) =>
+                  setInitialState((prev) => ({
+                    ...prev,
+                    document: event.currentTarget.files[0],
+                  }))
+                }
               />
             </div>
           </>
@@ -177,6 +238,25 @@ const AgreementDocument = ({ agreementDocumentList }) => {
         borderColor="#000000"
         customStyles={customStyles}
       ></DataTable>
+
+      <div className="row">
+        <div className="col-6">
+          <button
+            type="button"
+            className="btn btn-primary float-left"
+            onClick={() => {
+              setAction("add");
+              setInitialState({
+                id: "",
+                document: null,
+              });
+              handleShowModal();
+            }}
+          >
+            <i className="fas fa-plus"></i> Add More
+          </button>
+        </div>
+      </div>
     </>
   );
 };

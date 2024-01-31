@@ -10,6 +10,10 @@ import { destinationData, vehicleCategoryData } from "../../../../constansts/Loc
 import { useDispatch, useSelector } from "react-redux";
 import { addCustomerMasterAsync } from "../../../../redux/features/customerMaster";
 import { getFleetMasterDropdownDataAsync } from "../../../../redux/features/fleetMaster";
+import { backdropLoadingAction } from "../../../../redux/features/helperSlice";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import RouteNames from "../../../../AppRoutes/RouteName";
 
 const initialValues = {
   customerName: "",
@@ -44,6 +48,7 @@ const initialValues = {
 };
 
 function FleetMasterAddForm() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const fleetMaster = useSelector((state) => state.fleetMaster);
@@ -143,7 +148,22 @@ function FleetMasterAddForm() {
       newData.append(`${key}[]`, JSON.stringify(data[key]));
     });
 
-    dispatch(addCustomerMasterAsync(newData));
+    dispatch(backdropLoadingAction(true));
+    dispatch(
+      addCustomerMasterAsync({
+        data: newData,
+        err: () => {
+          toast.error("Something went wrong !");
+          console.log("ajsdcnjn");
+          dispatch(backdropLoadingAction(false));
+        },
+        done: () => {
+          toast.success("Customer master created successfully !");
+          dispatch(backdropLoadingAction(false));
+          navigate(RouteNames.customerMasterView);
+        },
+      })
+    );
   };
 
   const formik = useFormik({

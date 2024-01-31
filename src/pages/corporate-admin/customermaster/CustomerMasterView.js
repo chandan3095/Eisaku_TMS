@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import CustomToggleSwitch from "../../../components/common/CustomToggle";
 import { useDispatch, useSelector } from "react-redux";
 import { listCustomerMasterAsync } from "../../../redux/features/customerMaster";
+import { backdropLoadingAction } from "../../../redux/features/helperSlice";
 
 const CustomerMasterView = () => {
   const navigate = useNavigate();
@@ -23,7 +24,17 @@ const CustomerMasterView = () => {
   };
 
   useEffect(() => {
-    dispatch(listCustomerMasterAsync());
+    dispatch(backdropLoadingAction(true));
+    dispatch(
+      listCustomerMasterAsync({
+        err: () => {
+          dispatch(backdropLoadingAction(false));
+        },
+        done: () => {
+          dispatch(backdropLoadingAction(false));
+        },
+      })
+    );
   }, [dispatch]);
 
   const columns = [
@@ -127,7 +138,7 @@ const CustomerMasterView = () => {
 
       <div className="px-3">
         <div className=" d-flex justify-content-between">
-          <h3>User's List</h3>
+          <h3></h3>
           <CustomInput
             inputType="text"
             placeholder="Search..."

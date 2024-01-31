@@ -20,8 +20,8 @@ import { updateCustomerMasterApiCall } from "../../../../Api/api";
 import AgreementDocument from "./AgreementDocument";
 import Location from "./Location";
 import Lane from "./Lane";
-
-const TABLE_NAMES = {};
+import { backdropLoadingAction } from "../../../../redux/features/helperSlice";
+import { useToggleState } from "../../../../Hooks/useToggleState";
 
 const initialValues = {
   customerName: "",
@@ -62,59 +62,46 @@ function CustomerMasterEditForm() {
 
   const fleetMaster = useSelector((state) => state.fleetMaster);
   const customerMaster = useSelector((state) => state.customerMaster);
-
   const singleCustomerMaster = customerMaster?.singleCustomerMaster;
-
-  console.log({ singleCustomerMaster });
 
   const locationData = fleetMaster?.location?.map?.((item) => ({
     label: item?.name,
     value: item?.id,
   }));
-  const vehicleTypeData = fleetMaster?.vehicleCategory?.map?.((item) => ({
-    label: item?.category_name,
-    value: item?.id,
-  }));
-  const tonnageData = fleetMaster?.tonnage?.map?.((item) => ({
-    label: item?.tonnage,
-    value: item?.id,
-  }));
 
   const [initialState, setInitialState] = useState(initialValues);
-  const [showLaneDetails, setShowLaneDetails] = useState("");
-  const [showLaneNameTop, setShowLaneNameTop] = useState(0);
-  const [showLaneTable, setShowLaneTable] = useState(false);
-  const [laneTable, setLaneTable] = useState([]);
+  const [isLoading, startLoading, stopLoading] = useToggleState(true);
 
   useEffect(() => {
     dispatch(getFleetMasterDropdownDataAsync());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchSingleCustomerMasterAsync(params?.id));
+    dispatch(backdropLoadingAction(true));
+    startLoading();
+
+    dispatch(
+      fetchSingleCustomerMasterAsync({
+        id: params?.id,
+        err: () => {
+          stopLoading();
+          dispatch(backdropLoadingAction(false));
+        },
+        done: () => {
+          stopLoading();
+          dispatch(backdropLoadingAction(false));
+        },
+      })
+    );
   }, [dispatch, params?.id]);
 
   useEffect(() => {
-    setInitialState((prev) => ({
-      ...prev,
-      customerName: singleCustomerMaster?.name,
-    }));
-  }, []);
-
-  const handelLaneSave = (index) => {
-    setShowLaneNameTop(index);
-    setShowLaneDetails(index);
-  };
-  const handelSave = () => {
-    setShowLaneNameTop("");
-    setShowLaneDetails("");
-    setShowLaneTable(true);
-    setLaneTable(values.lane);
-  };
-  const handelLaneBack = () => {
-    setShowLaneDetails(false);
-    setShowLaneNameTop(true);
-  };
+    !isLoading &&
+      setInitialState((prev) => ({
+        ...prev,
+        customerName: singleCustomerMaster?.name,
+      }));
+  }, [singleCustomerMaster?.name, isLoading]);
 
   const handleAddCustomerMaster = (formData) => {
     console.log({ formData: formData?.contactPerson });
@@ -208,7 +195,10 @@ function CustomerMasterEditForm() {
       newData.append(key, data[key]);
     });
 
-    dispatch(updateCustomerMasterAsync(newData));
+    dispatch(backdropLoadingAction(true));
+    dispatch(updateCustomerMasterAsync(newData)).then(() => {
+      dispatch(backdropLoadingAction(false));
+    });
   };
 
   return (
@@ -251,111 +241,12 @@ function CustomerMasterEditForm() {
                   <AgreementDocument
                     agreementDocumentList={singleCustomerMaster?.documents}
                   />
-                  {/* <FieldArray
-                    name="agreementDocument"
-                    render={(arrayHelpers) => (
-                      <div>
-                        {values.agreementDocument.map((item, index) => (
-                          <div className="row">
-                            <div className="col-lg-6" key={index}>
-                              <label className="text-bold">
-                                Agreement Document
-                                <span className="text-danger">*</span>
-                              </label>
-                              <CustomFileUpload
-                                label="Agreement Details"
-                                onChange={(event) =>
-                                  formik.setFieldValue(
-                                    `agreementDocument[${index}]`,
-                                    event.currentTarget.files[0]
-                                  )
-                                }
-                              />
-                            </div>
-                            {values.agreementDocument.length > 1 && (
-                              <div className="col-lg-6 mt-4 pt-2">
-                                <button
-                                  type="button"
-                                  className="btn btn-danger"
-                                  onClick={() => {
-                                    arrayHelpers.remove(index);
-                                  }}
-                                >
-                                  <i className="fas fa-trash"></i> Delete File
-                                </button>
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  /> */}
                 </div>
 
                 {/* Contact Person Details  */}
                 <ContactPerson
                   contactPersonList={singleCustomerMaster?.contact_personal_details}
                 />
-                {/* <div className="col-lg-12">
-                  <FieldArray
-                    name="contactPerson"
-                    render={(arrayHelpers) => (
-                      <div>
-                        {values.contactPerson.map((item, index) => (
-                          <div
-                            className={
-                              index < values.contactPerson.length - 1 &&
-                              values.contactPerson.length > 1
-                                ? "row border-bottom mb-4 pb-3"
-                                : "row"
-                            }
-                          >
-                            <div className="col-lg-4">
-                              <CustomInput
-                                require={require}
-                                label="Contact Person Name"
-                                id="contactPersonName"
-                                placeholder="Enter Contact Person Name"
-                                {...getFieldProps(`contactPerson[${index}].name`)}
-                              />
-                            </div>
-                            <div className="col-lg-4">
-                              <CustomInput
-                                require={require}
-                                label="Customer Mobile No"
-                                id="customerMobileNo"
-                                placeholder="Enter Customer Mobile No"
-                                {...getFieldProps(`contactPerson[${index}].mobile`)}
-                              />
-                            </div>
-                            <div className="col-lg-4">
-                              <CustomInput
-                                require={require}
-                                label="Customer Email Id"
-                                id="customerEmailId"
-                                placeholder="Enter Customer Email Id"
-                                {...getFieldProps(`contactPerson[${index}].email`)}
-                              />
-                            </div>
-                            <div className="col-12">
-                              {values.contactPerson.length > 1 && (
-                                <button
-                                  type="button"
-                                  className="btn btn-danger float-right mr-3"
-                                  onClick={() => {
-                                    arrayHelpers.remove(index);
-                                  }}
-                                >
-                                  <i className="fas fa-trash"></i> Delete
-                                </button>
-                              )}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  />
-                </div> */}
 
                 <div className="col-lg-12">
                   <Location
@@ -363,126 +254,6 @@ function CustomerMasterEditForm() {
                     locationData={locationData}
                   />
                 </div>
-
-                <div className="col-lg-6">
-                  {/* Location  */}
-                  {/* <div className="">
-                    <FieldArray
-                      name="location"
-                      render={(arrayHelpers) => (
-                        <div>
-                          {values.location.map((item, index) => (
-                            <div>
-                              <CustomDropdown
-                                optionData={locationData}
-                                label="Location"
-                                id=""
-                                onChange={(values) => {
-                                  // console.log({ values });
-                                  setFieldValue(`location[${index}]`, values?.[0]?.value);
-                                }}
-                              />
-                              {values.location.length > 1 && (
-                                <button
-                                  type="button"
-                                  className="btn btn-danger float-right mb-3"
-                                  onClick={() => {
-                                    arrayHelpers.remove(index);
-                                  }}
-                                >
-                                  <i className="fas fa-trash"></i> Delete Location
-                                </button>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    />
-                  </div> */}
-                </div>
-
-                {/* Address  */}
-                {/* <div className="col-lg-6">
-                  <div className="d-block">
-                    <FieldArray
-                      name="address"
-                      render={(arrayHelpers) => (
-                        <div>
-                          {values.address.map((item, index) => (
-                            <>
-                              <CustomTextArea
-                                label="Address"
-                                id=""
-                                placeholder="Enter Address "
-                                {...getFieldProps(`address[${index}]`)}
-                              />
-                              {values.address.length > 1 && (
-                                <button
-                                  type="button"
-                                  className="btn btn-danger float-right mb-3"
-                                  onClick={() => {
-                                    arrayHelpers.remove(index);
-                                  }}
-                                >
-                                  <i className="fas fa-trash"></i> Delete Address
-                                </button>
-                              )}
-                            </>
-                          ))}
-                        </div>
-                      )}
-                    />
-                  </div>
-                </div> */}
-
-                {/* <div className="col-12 mt-4">
-                  <button
-                    type="button"
-                    className="btn mx-1 btn-primary"
-                    onClick={() => {
-                      setFieldValue("agreementDocument", [
-                        ...values.agreementDocument,
-                        "",
-                      ]);
-                    }}
-                  >
-                    <i className="fas fa-plus"></i> Add Agreement Document
-                  </button>
-                  <button
-                    type="button"
-                    className="btn mx-1 btn-primary"
-                    onClick={() => {
-                      setFieldValue("contactPerson", [
-                        ...values.contactPerson,
-                        {
-                          name: "",
-                          mobile: "",
-                          email: "",
-                        },
-                      ]);
-                    }}
-                  >
-                    <i className="fas fa-plus"></i> Add Contact Person
-                  </button>
-                  <button
-                    type="button"
-                    className="btn mx-1 btn-primary"
-                    onClick={() => {
-                      setFieldValue("address", [...values.address, ""]);
-                    }}
-                  >
-                    <i className="fas fa-plus"></i> Add Address
-                  </button>
-                  <button
-                    type="button"
-                    className="btn mx-1 btn-primary"
-                    onClick={() => {
-                      setFieldValue("location", [...values.location, ""]);
-                    }}
-                  >
-                    <i className="fas fa-plus"></i> Add Location
-                  </button>
-                </div> */}
               </div>
             </div>
           </div>
