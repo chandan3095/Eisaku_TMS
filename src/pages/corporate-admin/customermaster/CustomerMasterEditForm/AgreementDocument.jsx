@@ -239,23 +239,21 @@ const AgreementDocument = ({ agreementDocumentList }) => {
         customStyles={customStyles}
       ></DataTable>
 
-      <div className="row">
-        <div className="col-6">
-          <button
-            type="button"
-            className="btn btn-primary float-left"
-            onClick={() => {
-              setAction("add");
-              setInitialState({
-                id: "",
-                document: null,
-              });
-              handleShowModal();
-            }}
-          >
-            <i className="fas fa-plus"></i> Add More
-          </button>
-        </div>
+      <div className="col-6">
+        <button
+          type="button"
+          className="btn btn-primary float-left"
+          onClick={() => {
+            setAction("add");
+            setInitialState({
+              id: "",
+              document: null,
+            });
+            handleShowModal();
+          }}
+        >
+          <i className="fas fa-plus"></i> Add More
+        </button>
       </div>
     </>
   );
