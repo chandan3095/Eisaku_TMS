@@ -10,7 +10,7 @@ import {
 } from "../../../redux/features/vendorMaster";
 import CustomInput from "../../../components/common/CustomInput/CustomInput";
 
-const EditContactPerson = ({ data, vendorId }) => {
+const EditContactPerson = ({ data }) => {
   const [showModal, setshowModal] = useState(false);
   const [isChecked, setIsChecked] = useState(true);
   const [loading, setLoading] = useState(true);
@@ -24,9 +24,9 @@ const EditContactPerson = ({ data, vendorId }) => {
     email: "",
     mobile: "",
     id: "",
+    vendorId: "",
   });
 
-  console.log(contactPersonDetials);
   const dispatch = useDispatch();
 
   const handleCloseModal = () => {
@@ -37,6 +37,7 @@ const EditContactPerson = ({ data, vendorId }) => {
     setIsChecked((prev) => !prev); // Toggle the state
   };
 
+  // Edit button Handler
   const editHandler = (data) => {
     console.log({ data });
     setshowModal(true);
@@ -45,26 +46,34 @@ const EditContactPerson = ({ data, vendorId }) => {
       email: data?.email,
       mobile: data?.mobile,
       id: data?.id,
+      vendorId: data?.vendor_master_id,
     });
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setformData((prev) => ({ [name]: value }));
+    setformData((prev) => ({ ...prev, [name]: value }));
   };
-  const updateHandler = () => {
+
+  // for Update dispatch
+  const updateContact = () => {
+    const newData = new FormData();
+    newData.append("vendor_master_id", formData.vendorId);
+    newData.append("contact_person_detail_id", formData.id);
+    newData.append("_method", "PATCH");
+    newData.append("model_id", 7);
+    newData.append("action_id", 2);
+
+    // for array of elements
     const ard = {
       contact_person_name: formData.name,
       mobile: formData.mobile,
       email: formData.email,
     };
-    const newData = new FormData();
-    newData.append("vendor_master_id", vendorId);
-    newData.append("contact_person_detail_id", formData.id);
     Object.keys(ard).forEach((key, index) => {
       newData.append(`${key}[]`, ard[key]);
     });
-    console.log({ formData });
+
     dispatch(updateContactAsync(newData));
   };
 
@@ -138,7 +147,7 @@ const EditContactPerson = ({ data, vendorId }) => {
       <CustomModal
         showModal={showModal}
         handleCloseModal={handleCloseModal}
-        onSubmit={updateHandler}
+        onSubmit={updateContact}
         child={
           <>
             <div className="">

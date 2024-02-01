@@ -220,7 +220,6 @@ const VendorMasterEdit = () => {
   };
 
   const updateHandler = (e) => {
-    console.log("submit called-===>");
     e.preventDefault();
     const data = {
       name: formData.vendorName,
@@ -288,7 +287,7 @@ const VendorMasterEdit = () => {
   return (
     <div>
       <BodyHeader title="Edit Vendor Master" />
-      <form className="p-3 shadow-lg" onSubmit={updateHandler}>
+      <form className="p-3 shadow-lg">
         <div className="row">
           <div className="col-lg-12">
             <div className="card card-primary">
@@ -418,7 +417,7 @@ const VendorMasterEdit = () => {
                   <div className="col-12">
                     <h6>Contact Person Details</h6>
                     {/* Edit contact component */}
-                    <EditContactPerson data={contactList} vendorId={vendorId} />
+                    <EditContactPerson data={contactList} />
                     {addContact.length > 0 &&
                       addContact.map((item, index) => {
                         const { name, mobile, email } = item;
@@ -815,7 +814,11 @@ const VendorMasterEdit = () => {
           </div>
         </div>
         <div className="mt-3 text-center">
-          <button className="btn btn-primary px-4 py-3" type="submit">
+          <button
+            className="btn btn-primary px-4 py-3"
+            type="submit"
+            onClick={updateHandler}
+          >
             <h6 className="mb-0 text-uppercase">Submit</h6>
           </button>
           <button className="btn btn-danger ml-3 px-4 py-3" type="submit">
