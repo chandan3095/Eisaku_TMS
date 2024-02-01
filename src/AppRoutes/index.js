@@ -33,78 +33,103 @@ import VendorCreateForm from "../pages/manager/vendor/VendorCreateForm";
 import Profile from "../components/Profile";
 import ViewUser from "../pages/user/ViewUser";
 import CustomerMasterEditForm from "../pages/corporate-admin/customermaster/CustomerMasterEditForm";
+import HelperMasterEdit from "../pages/corporate-admin/helpermaster/HelperMasterEdit";
+import VendorMasterEdit from "../pages/corporate-admin/vendormaster/VendorMasterEdit";
 
 function AppRoutes() {
-  return (
-    <Routes>
-      {/* for dashboard  */}
-      <Route path="/" element={<Skeleton />}>
-        <Route path="" element={<Login />} />
+   return (
+      <Routes>
+         {/* for dashboard  */}
+         <Route path="/" element={<Skeleton />}>
+            <Route path="" element={<Login />} />
 
-        <Route path="dashboard" element={<HomeDashboard />} />
+            <Route path="dashboard" element={<HomeDashboard />} />
 
-        <Route path={RouteNames.profileView} element={<Profile />} />
+            <Route path={RouteNames.profileView} element={<Profile />} />
 
-        <Route path={RouteNames.fleetMasterAddForm} element={<FleetMasterAddForm />} />
-        <Route path={RouteNames.driverMasterAddForm} element={<DriverMasterAddForm />} />
-        <Route path={RouteNames.helperMasterAddForm} element={<HelperMasterAddForm />} />
-        <Route
-          path={RouteNames.customerMasterAddForm}
-          element={<CustomerMasterAddForm />}
-        />
-        <Route
-          path={RouteNames.customerMasterEdit}
-          element={<CustomerMasterEditForm />}
-        />
-        <Route path={RouteNames.vendorMasterAddForm} element={<VendorMasterAdd />} />
-        <Route path={RouteNames.LaneMasterAddForm} element={<LaneMasterAdd />} />
-        <Route
-          path={RouteNames.ContractorMasterAddForm}
-          element={<ContractorMasterAdd />}
-        />
-        <Route path={RouteNames.LocationMasterAddForm} element={<LocationMasterAdd />} />
-        <Route path={RouteNames.LocationMasterEdit} element={<LocationMasterAdd />} />
+            <Route
+               path={RouteNames.fleetMasterAddForm}
+               element={<FleetMasterAddForm />}
+            />
+            <Route
+               path={RouteNames.driverMasterAddForm}
+               element={<DriverMasterAddForm />}
+            />
+            <Route
+               path={RouteNames.helperMasterAddForm}
+               element={<HelperMasterAddForm />}
+            />
+            <Route
+               path={RouteNames.customerMasterAddForm}
+               element={<CustomerMasterAddForm />}
+            />
+            <Route
+               path={RouteNames.customerMasterEdit}
+               element={<CustomerMasterEditForm />}
+            />
+            <Route path={RouteNames.vendorMasterAddForm} element={<VendorMasterAdd />} />
+            <Route path={RouteNames.LaneMasterAddForm} element={<LaneMasterAdd />} />
+            <Route
+               path={RouteNames.ContractorMasterAddForm}
+               element={<ContractorMasterAdd />}
+            />
+            <Route
+               path={RouteNames.LocationMasterAddForm}
+               element={<LocationMasterAdd />}
+            />
+            <Route path={RouteNames.LocationMasterEdit} element={<LocationMasterAdd />} />
 
-        {/* for list  */}
-        <Route path={RouteNames.fleetMasterList} element={<FleetMasterList />} />
-        <Route path={RouteNames.driverMasterView} element={<DriverMasterList />} />
-        <Route path={RouteNames.helperMasterView} element={<HelperMasterView />} />
-        <Route path={RouteNames.customerMasterView} element={<CustomerMasterView />} />
-        <Route path={RouteNames.vendorMasterView} element={<VendorMasterView />} />
-        <Route path={RouteNames.laneMasterView} element={<LaneMasterView />} />
-        <Route
-          path={RouteNames.contractorMasterView}
-          element={<ContractorMasterView />}
-        />
-        <Route path={RouteNames.LocationMasterView} element={<LocationMasterView />} />
-        <Route path={RouteNames.driverMasterEdit} element={<DriverMasterEdit />} />
+            {/* for list  */}
+            <Route path={RouteNames.fleetMasterList} element={<FleetMasterList />} />
+            <Route path={RouteNames.driverMasterView} element={<DriverMasterList />} />
+            <Route path={RouteNames.helperMasterView} element={<HelperMasterView />} />
+            <Route
+               path={RouteNames.customerMasterView}
+               element={<CustomerMasterView />}
+            />
+            <Route path={RouteNames.vendorMasterView} element={<VendorMasterView />} />
 
-        {/* for view  */}
-        <Route path={RouteNames.fleetMasterView} element={<FleetMasterView />} />
+            <Route path={RouteNames.helperMasterEdit} element={<HelperMasterEdit />} />
 
-        <Route path={RouteNames.tripCreate} element={<CreateTrip />} />
-        <Route path={RouteNames.contractualView} element={<ViewTrip />} />
-        <Route path={RouteNames.tripView} element={<ViewTrip />} />
-        <Route path={RouteNames.adhocView} element={<ViewTrip />} />
-        <Route path={RouteNames.managerVendorView} element={<ViewTrip />} />
+            <Route path={RouteNames.vendorMasterEdit} element={<VendorMasterEdit />} />
+            <Route path={RouteNames.laneMasterView} element={<LaneMasterView />} />
+            <Route
+               path={RouteNames.contractorMasterView}
+               element={<ContractorMasterView />}
+            />
+            <Route
+               path={RouteNames.LocationMasterView}
+               element={<LocationMasterView />}
+            />
+            <Route path={RouteNames.driverMasterEdit} element={<DriverMasterEdit />} />
 
-        {/* Manager Add Vendor  */}
-        <Route path={RouteNames.managerAddVendor} element={<VendorCreateForm />} />
-        <Route path={RouteNames.CreateAdhoc} element={<AdhocCreate />} />
-        {/* <Route path="/Login" element={<Login/>}/> */}
-        {/* <Route path="/Signup" element={<SignUp />} /> */}
-        <Route path={RouteNames.addUser} element={<AddUser />} />
-        <Route path={RouteNames.listUser} element={<ListUser />} />
-        <Route path={RouteNames.updateUser} element={<ViewUser />} />
-        {/* <Route
+            {/* for view  */}
+            <Route path={RouteNames.fleetMasterView} element={<FleetMasterView />} />
+
+            <Route path={RouteNames.tripCreate} element={<CreateTrip />} />
+            <Route path={RouteNames.contractualView} element={<ViewTrip />} />
+            <Route path={RouteNames.tripView} element={<ViewTrip />} />
+            <Route path={RouteNames.adhocView} element={<ViewTrip />} />
+            <Route path={RouteNames.managerVendorView} element={<ViewTrip />} />
+
+            {/* Manager Add Vendor  */}
+            <Route path={RouteNames.managerAddVendor} element={<VendorCreateForm />} />
+
+            <Route path={RouteNames.CreateAdhoc} element={<AdhocCreate />} />
+            {/* <Route path="/Login" element={<Login/>}/> */}
+            {/* <Route path="/Signup" element={<SignUp />} /> */}
+            <Route path={RouteNames.addUser} element={<AddUser />} />
+            <Route path={RouteNames.listUser} element={<ListUser />} />
+            <Route path={RouteNames.updateUser} element={<ViewUser />} />
+            {/* <Route
                path=""
                element={<Navigate to={'Login'} />}
             /> */}
-      </Route>
+         </Route>
 
-      <Route path="/Login" element={<Login />} />
-    </Routes>
-  );
+         <Route path="/Login" element={<Login />} />
+      </Routes>
+   );
 }
 
 export default AppRoutes;

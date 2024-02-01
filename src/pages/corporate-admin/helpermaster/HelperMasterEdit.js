@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
-import CustomInput from "../../../../components/common/CustomInput/CustomInput";
-import CustomDatePicker from "../../../../components/common/CustomDatePicker/CustomDatePicker";
-import CustomRadio from "../../../../components/common/CustomRadio/CustomRadio";
-import CustomFileUpload from "../../../../components/common/CustomFileUpload/CustomFileUpload";
-import CustomTextArea from "../../../../components/common/CustomTextArea/CustomTextArea";
-import BodyHeader from "../../../../components/common/CommonBodyHeader";
-import CustomDropdown from "../../../../components/common/CustomDropdown/CustomDropdown";
+import CustomInput from "../../../components/common/CustomInput/CustomInput";
+import CustomDatePicker from "../../../components/common/CustomDatePicker/CustomDatePicker";
+import CustomRadio from "../../../components/common/CustomRadio/CustomRadio";
+import CustomFileUpload from "../../../components/common/CustomFileUpload/CustomFileUpload";
+import CustomTextArea from "../../../components/common/CustomTextArea/CustomTextArea";
+import BodyHeader from "../../../components/common/CommonBodyHeader";
+import CustomDropdown from "../../../components/common/CustomDropdown/CustomDropdown";
 import { useSelector, useDispatch } from "react-redux";
-import { addHelperMasterAsync } from "../../../../redux/features/helperMaster";
-import { fetchAllContractorsAsync } from "../../../../redux/features/driverMaster";
+import { useParams } from "react-router-dom";
+import {
+  addHelperMasterAsync,
+  fetchSingleHelperMasterAsync,
+  updateHelperMasterAsync,
+} from "../../../redux/features/helperMaster";
+import { fetchAllContractorsAsync } from "../../../redux/features/driverMaster";
 
-function HelperMasterAddForm() {
+function HelperMasterEdit() {
   const dispatch = useDispatch();
   const driverMaster = useSelector((state) => state.driverMaster);
   const contractorsData = driverMaster?.contractors?.map?.((item) => ({
@@ -18,8 +23,11 @@ function HelperMasterAddForm() {
     value: item?.id,
   }));
 
-  const [payRollType, setpayRollType] = useState("Eisaku Pay Roll");
-  console.log(payRollType);
+  const singleHelperMaster = useSelector(
+    (state) => state.helperMaster.singleHelperMaster
+  );
+  const params = useParams();
+
   const [formData, setFormData] = useState({
     name: "",
     dob: "",
@@ -36,7 +44,7 @@ function HelperMasterAddForm() {
     ifscCode: "",
     accountHolderName: "",
     monthlySalaryAmount: "",
-
+    payroll: "",
     contractorId: "",
     contractorName: "",
     monthlySalaryCommissionAmount: "",
@@ -65,6 +73,7 @@ function HelperMasterAddForm() {
     // console.log(formData, 'helper Data');
 
     const data = {
+      id: params?.id,
       name: formData.name,
       dob: formData.dob,
       doj: formData.dateOfJoining,
@@ -75,7 +84,7 @@ function HelperMasterAddForm() {
       aadhar_card_doc: formData.aadharDocument,
       pan_card: formData.panNo,
       pan_card_doc: formData.panDocument,
-      payroll: payRollType,
+      payroll: formData.payroll,
       account_number: formData.accountNumber,
       bank_name: formData.bankName,
       ifsc_code: formData.ifscCode,
@@ -87,16 +96,17 @@ function HelperMasterAddForm() {
       monthly_salary_commission_amount: formData.monthlySalaryCommissionAmount,
 
       model_id: 5,
-      action_id: 1,
+      action_id: 2,
+      _method: "PATCH",
     };
 
-    if (payRollType === "Eisaku Pay roll") {
+    if (formData.payroll === "Eisaku Pay Roll") {
       delete data.contractor;
       delete data.contractor_master_id;
       delete data.monthly_salary_commission_amount;
     }
 
-    if (payRollType === "Contractor") {
+    if (formData.payroll === "Contractor") {
       delete data.account_number;
       delete data.bank_name;
       delete data.ifsc_code;
@@ -109,16 +119,44 @@ function HelperMasterAddForm() {
       newData.append(key, data[key]);
     });
 
-    dispatch(addHelperMasterAsync(newData));
+    dispatch(updateHelperMasterAsync(newData));
   };
 
   useEffect(() => {
     dispatch(fetchAllContractorsAsync());
+    dispatch(fetchSingleHelperMasterAsync(params?.id));
   }, []);
+
+  useEffect(() => {
+    if (singleHelperMaster)
+      setFormData({
+        name: singleHelperMaster?.name,
+        dob: singleHelperMaster.dob,
+        dateOfJoining: singleHelperMaster.doj,
+        dateOfExit: singleHelperMaster.doe,
+        aadharNo: singleHelperMaster.aadhar_card,
+        aadharDocument: singleHelperMaster.aadhar_card_doc,
+        panNo: singleHelperMaster.pan_card,
+        panDocument: singleHelperMaster.pan_card_doc,
+        helperImage: singleHelperMaster.helper_image,
+        address: singleHelperMaster.address,
+        accountNumber: singleHelperMaster.account_number,
+        bankName: singleHelperMaster.bank_name,
+        ifscCode: singleHelperMaster.ifsc_code,
+        accountHolderName: singleHelperMaster.account_holder_name,
+        monthlySalaryAmount:
+          singleHelperMaster.monthly_salary_commission_amount,
+        payroll: singleHelperMaster.payroll,
+        contractorId: singleHelperMaster.contractor_master_id,
+        contractorName: singleHelperMaster.contractor,
+        monthlySalaryCommissionAmount:
+          singleHelperMaster.monthly_salary_commission_amount,
+      });
+  }, [singleHelperMaster]);
 
   return (
     <div>
-      <BodyHeader title="Add Helper Master" />
+      <BodyHeader title="Edit Helper Master" />
       <form className="p-3 shadow-lg" onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-lg-12">
@@ -253,22 +291,23 @@ function HelperMasterAddForm() {
               <div className="card-body">
                 <div className="form-group">
                   <CustomRadio
-                    label="Eisaku Pay roll"
+                    label="Eisaku Pay Roll"
                     id="eisakuPayRoll"
+                    name="payroll"
                     value="Eisaku Pay Roll"
-                    name="payRollType"
-                    defaultChecked={payRollType === "Eisaku Pay Roll"}
-                    onChange={(event) => setpayRollType(event.target.value)}
+                    checked={formData.payroll === "Eisaku Pay Roll"}
+                    onChange={handleChange}
                   />
                   <CustomRadio
                     label="Contractor"
-                    id="contractor"
                     value="Contractor"
-                    name="payRollType"
-                    onChange={(event) => setpayRollType(event.target.value)}
+                    id="contractor"
+                    name="payroll"
+                    checked={formData.payroll === "Contractor"}
+                    onChange={handleChange}
                   />
                 </div>
-                {payRollType === "Contractor" && (
+                {formData.payroll === "Contractor" && (
                   <div className="row">
                     <div className="col-lg-6">
                       <CustomDropdown
@@ -302,7 +341,7 @@ function HelperMasterAddForm() {
                   </div>
                 )}
 
-                {payRollType === "Eisaku Pay Roll" && (
+                {formData.payroll === "Eisaku Pay Roll" && (
                   <div className="row">
                     <div className="col-lg-4">
                       <CustomInput
@@ -379,4 +418,4 @@ function HelperMasterAddForm() {
   );
 }
 
-export default HelperMasterAddForm;
+export default HelperMasterEdit;
