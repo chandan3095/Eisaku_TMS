@@ -1,5 +1,4 @@
 import React from "react";
-import CustomTextArea from "../CustomTextArea/CustomTextArea";
 
 const CustomModal = ({
    title = "Reject Remarks",

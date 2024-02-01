@@ -35,6 +35,9 @@ import ViewUser from "../pages/user/ViewUser";
 import CustomerMasterEditForm from "../pages/corporate-admin/customermaster/CustomerMasterEditForm";
 import HelperMasterEdit from "../pages/corporate-admin/helpermaster/HelperMasterEdit";
 import VendorMasterEdit from "../pages/corporate-admin/vendormaster/VendorMasterEdit";
+import ContractorMasterEdit from "../pages/corporate-admin/contractormaster/contractorMasterEdit";
+import ContractorMasterContactDetails from "../pages/corporate-admin/contractormaster/contractorMasterContactDetails";
+import ContactDetailsAddFrom from "../components/common/contactDetailsAdd/ContactDetailsAddFrom";
 
 function AppRoutes() {
    return (
@@ -42,11 +45,9 @@ function AppRoutes() {
          {/* for dashboard  */}
          <Route path="/" element={<Skeleton />}>
             <Route path="" element={<Login />} />
-
             <Route path="dashboard" element={<HomeDashboard />} />
-
             <Route path={RouteNames.profileView} element={<Profile />} />
-
+            =======
             <Route
                path={RouteNames.fleetMasterAddForm}
                element={<FleetMasterAddForm />}
@@ -78,7 +79,6 @@ function AppRoutes() {
                element={<LocationMasterAdd />}
             />
             <Route path={RouteNames.LocationMasterEdit} element={<LocationMasterAdd />} />
-
             {/* for list  */}
             <Route path={RouteNames.fleetMasterList} element={<FleetMasterList />} />
             <Route path={RouteNames.driverMasterView} element={<DriverMasterList />} />
@@ -88,9 +88,7 @@ function AppRoutes() {
                element={<CustomerMasterView />}
             />
             <Route path={RouteNames.vendorMasterView} element={<VendorMasterView />} />
-
             <Route path={RouteNames.helperMasterEdit} element={<HelperMasterEdit />} />
-
             <Route path={RouteNames.vendorMasterEdit} element={<VendorMasterEdit />} />
             <Route path={RouteNames.laneMasterView} element={<LaneMasterView />} />
             <Route
@@ -102,25 +100,30 @@ function AppRoutes() {
                element={<LocationMasterView />}
             />
             <Route path={RouteNames.driverMasterEdit} element={<DriverMasterEdit />} />
-
             {/* for view  */}
             <Route path={RouteNames.fleetMasterView} element={<FleetMasterView />} />
-
             <Route path={RouteNames.tripCreate} element={<CreateTrip />} />
             <Route path={RouteNames.contractualView} element={<ViewTrip />} />
             <Route path={RouteNames.tripView} element={<ViewTrip />} />
             <Route path={RouteNames.adhocView} element={<ViewTrip />} />
             <Route path={RouteNames.managerVendorView} element={<ViewTrip />} />
-
             {/* Manager Add Vendor  */}
             <Route path={RouteNames.managerAddVendor} element={<VendorCreateForm />} />
-
             <Route path={RouteNames.CreateAdhoc} element={<AdhocCreate />} />
             {/* <Route path="/Login" element={<Login/>}/> */}
             {/* <Route path="/Signup" element={<SignUp />} /> */}
             <Route path={RouteNames.addUser} element={<AddUser />} />
             <Route path={RouteNames.listUser} element={<ListUser />} />
             <Route path={RouteNames.updateUser} element={<ViewUser />} />
+            <Route
+               path={RouteNames.contractorMasterEdit}
+               element={<ContractorMasterEdit />}
+            />
+            <Route
+               path={RouteNames.contractorMasterContacts}
+               element={<ContractorMasterContactDetails />}
+            />
+            {/* <Route path={RouteNames.contractorMasterContactsAdd} element={<ContactDetailsAddFrom />} /> */}
             {/* <Route
                path=""
                element={<Navigate to={'Login'} />}

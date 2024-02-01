@@ -35,6 +35,7 @@ export const handleLocationMasterList = async () =>
          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
       },
    });
+
 export const handleLocationMasterSingleList = async (id, model_id, action_id) => {
    // console.log(EndUrls.locationMasterSingleList(id, model_id, action_id));
    return await client.get(EndUrls.locationMasterSingleList(id, model_id, action_id), {
@@ -87,13 +88,6 @@ export const listDriverMasterApiCall = async () =>
    await client.get(EndUrls.listDriverMaster, config);
 export const updateDriverMasterApiCall = async (data) =>
    await client.post(EndUrls.updateDriverMaster, data, config);
-
-export const handleContractorMasterApiCall = async (data) =>
-   await client.post(EndUrls.contractorAdd, data, {
-      headers: {
-         Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-      },
-   });
 
 // customer master
 // export const fetchAllCustomersApiCall = async () =>
@@ -207,3 +201,26 @@ export const addContactApi = async (data) =>
 // update vendor
 export const updateVendorApi = async (data) =>
    await client.post("vendor/update", data, config);
+
+// contractor master
+export const handleContractorMasterApiCall = async (data) =>
+   await client.post(EndUrls.contractorAdd, data, {
+      headers: {
+         Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      },
+   });
+
+export const handleContractorMasterListApiCall = async (data) =>
+   await client.get(EndUrls.contractorList, config);
+
+export const handleContractorMasterEditApiCall = async (data) =>
+   await client.post(EndUrls.contractorUpdate, data, config);
+
+export const handleContractorcontactsdetailsApiCall = async (id) =>
+   await client.get(EndUrls.singleConractorContactDetails(id), config);
+
+export const handlesingleContractorcontactsdetailsAddApiCall = async (data) =>
+   await client.post(EndUrls.singleConractorContactAdd, data, config);
+
+export const handlesingleContractorcontactsdetailsEditApiCall = async (data) =>
+   await client.post(EndUrls.singleConractorContactEdit, data, config);

@@ -36,8 +36,13 @@ const RouteNames = {
 
    vendorMasterEdit: "/vendor-master/edit/:id",
    laneMasterEdit: "/lane-master/edit",
-   contractorMasterEdit: "/contractor-master/edit",
    LocationMasterEdit: "/location-master/:formType/:id",
+   //contractor Contact details
+   contractorMasterContacts: "/contractor-master/:id/contact-details",
+   // contractorMasterContactsAdd: '/contractor-master/:id/add-contact',
+
+   // edit
+   contractorMasterEdit: "/contractor-master/edit/:id",
 
    // manager Trip view
    tripCreate: "/trip/adhoc/add",
