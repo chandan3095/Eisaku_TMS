@@ -70,19 +70,21 @@ export const addCustomerMasterAsync = createAsyncThunk(
 // update fleet
 export const updateCustomerMasterAsync = createAsyncThunk(
     "driverMaster/update-customer-master",
-    async (data, thunkAPI) => {
+    async ({ data, err, done }, thunkAPI) => {
         try {
             console.log(data);
             const response = await updateCustomerMasterApiCall(data);
             console.log({ response });
 
             if (response.data?.statusCode === 200) {
+                done && done();
                 return thunkAPI.fulfillWithValue(response.data?.res);
             } else {
                 throw response;
             }
         } catch (error) {
             // You can customize the error handling here
+            err && err();
             console.log(error);
             thunkAPI.rejectWithValue(error?.response?.data);
             throw error?.response?.data;
@@ -154,9 +156,7 @@ export const updateSingleCustomerChildAsync = createAsyncThunk(
         try {
             const response = await client.post(`customer/update/child`, data, {
                 headers: {
-                    Authorization: `Bearer ${JSON.parse(
-                        localStorage.getItem("token")
-                    )}`,
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                 },
             });
             console.log({ response });
@@ -184,9 +184,7 @@ export const addSingleCustomerChildAsync = createAsyncThunk(
         try {
             const response = await client.post(`customer/add/child`, data, {
                 headers: {
-                    Authorization: `Bearer ${JSON.parse(
-                        localStorage.getItem("token")
-                    )}`,
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
                 },
             });
             console.log({ response });
@@ -281,26 +279,17 @@ const customerMasterSlice = createSlice({
         });
 
         //
-        builder.addCase(
-            fetchSingleCustomerMasterAsync.pending,
-            (state, action) => {
-                state.isLoading = true;
-            }
-        );
-        builder.addCase(
-            fetchSingleCustomerMasterAsync.fulfilled,
-            (state, action) => {
-                console.log({ ful: action.payload });
-                state.isLoading = false;
-                state.singleCustomerMaster = action.payload;
-            }
-        );
-        builder.addCase(
-            fetchSingleCustomerMasterAsync.rejected,
-            (state, action) => {
-                state.isLoading = false;
-            }
-        );
+        builder.addCase(fetchSingleCustomerMasterAsync.pending, (state, action) => {
+            state.isLoading = true;
+        });
+        builder.addCase(fetchSingleCustomerMasterAsync.fulfilled, (state, action) => {
+            console.log({ ful: action.payload });
+            state.isLoading = false;
+            state.singleCustomerMaster = action.payload;
+        });
+        builder.addCase(fetchSingleCustomerMasterAsync.rejected, (state, action) => {
+            state.isLoading = false;
+        });
     },
 });
 
