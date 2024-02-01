@@ -216,13 +216,15 @@ const EditContactPerson = ({ data, vendorId, mode }) => {
         }
       />
       {mode === "add" ? (
-        <button
-          type="button"
-          className="btn btn-primary float-right"
-          onClick={addButtonHandler}
-        >
-          <i className="fas fa-plus"></i> Add item
-        </button>
+        <div>
+          <button
+            type="button"
+            className="btn btn-primary float-right"
+            onClick={addButtonHandler}
+          >
+            <i className="fas fa-plus"></i> Add item
+          </button>
+        </div>
       ) : (
         <DataTable
           columns={columns}

@@ -84,7 +84,7 @@ const EditLaneDetails = ({ data, mode, vendorId }) => {
     // return;
     const newData = new FormData();
     newData.append("vendor_master_id", formData.vendorId);
-    newData.append("lane_master_id", laneNameSelect.laneId);
+    newData.append("lane_master_id", formData.id);
     newData.append("_method", "PATCH");
     newData.append("model_id", 7);
     newData.append("action_id", 2);
@@ -312,13 +312,15 @@ const EditLaneDetails = ({ data, mode, vendorId }) => {
         }
       />
       {mode === "add" ? (
-        <button
-          type="button"
-          className="btn btn-primary float-right"
-          onClick={addButtonHandler}
-        >
-          <i className="fas fa-plus"></i> Add item
-        </button>
+        <div>
+          <button
+            type="button"
+            className="btn btn-primary float-right"
+            onClick={addButtonHandler}
+          >
+            <i className="fas fa-plus"></i> Add item
+          </button>
+        </div>
       ) : (
         <DataTable
           columns={columns}

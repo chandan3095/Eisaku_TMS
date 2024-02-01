@@ -70,7 +70,7 @@ const VendorMasterEdit = () => {
         bankDocument: singleVendorMaster?.bank_document,
         gstNumber: singleVendorMaster?.gst_number,
         gstDocument: singleVendorMaster?.gst_document,
-        location: singleVendorMaster?.location_master.id,
+        location: singleVendorMaster?.location_master?.id,
         address: singleVendorMaster?.address,
         agreementStartDate: singleVendorMaster?.agreement_start_date,
         agreementEndDate: singleVendorMaster?.agreement_end_date,
@@ -322,7 +322,7 @@ const VendorMasterEdit = () => {
         <div className="col-lg-12">
           <div className="card card-primary">
             <div className="card-header">
-              <h3 className="card-title">Lane Details</h3>
+              <h3 className="card-title">Contact Person Details</h3>
             </div>
             <EditContactPerson
               data={singleVendorMaster?.contact_personal_details}
