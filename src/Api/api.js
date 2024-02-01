@@ -154,11 +154,21 @@ export const contactPersonDetailsApiCall = async (id) =>
 export const singleVendorMasterApiCall = async (id) =>
   await client.get(`/vendor/fetch/${id}?&model_id=7&action_id=3`, config);
 
-export const updateContactApi = async (data) =>
-  await client.post("/vendor/update/child", data, config);
-
+// Lanne master details
 export const laneMasterDetailsApiCall = async (id) =>
   await client.get(
     `/vendor/fetch/child/${id}?&table_name=lane_masters&model_id=7&action_id=3`,
     config
   );
+
+// Update contact
+export const updateVendorChildApi = async (data) =>
+  await client.post("/vendor/update/child", data, config);
+
+// Add contact for vendor
+export const addContactApi = async (data) =>
+  await client.post("/vendor/add/child", data, config);
+
+// update vendor
+export const updateVendorApi = async (data) =>
+  await client.post("vendor/update", data, config);
