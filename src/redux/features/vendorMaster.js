@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
+  addContactApi,
   addVendorMasterApiCall,
   contactPersonDetailsApiCall,
   getAllLaneApiCall,
@@ -7,7 +8,8 @@ import {
   laneMasterDetailsApiCall,
   listVendorMasterApiCall,
   singleVendorMasterApiCall,
-  updateContactApi,
+  updateVendorApi,
+  updateVendorChildApi,
 } from "../../Api/api";
 
 // initial state
@@ -22,7 +24,7 @@ const initialState = {
   isError: false,
   isSuccess: false,
 };
-
+// Fetch location list
 export const fetchAllLocationAsync = createAsyncThunk(
   "vendorMaster/fetchAllLocation",
   async (data, thunkAPI) => {
@@ -40,7 +42,7 @@ export const fetchAllLocationAsync = createAsyncThunk(
     }
   }
 );
-
+// Fetch lane list
 export const fetchAllLaneAsync = createAsyncThunk(
   "vendorMaster/fetchAllLane",
   async (data, thunkAPI) => {
@@ -77,7 +79,7 @@ export const addVendorMasterAsync = createAsyncThunk(
     }
   }
 );
-
+// Fetch Vendor list
 export const listVendorMasterAsync = createAsyncThunk(
   "vendorMaster/fetchVendorList",
   async (data, thunkAPI) => {
@@ -95,7 +97,7 @@ export const listVendorMasterAsync = createAsyncThunk(
     }
   }
 );
-
+// Fetch contactPerson deatils
 export const fetchContactPersonDetailsAsync = createAsyncThunk(
   "vendorMaster/fetchContactPersonDetails",
   async (data, thunkAPI) => {
@@ -114,6 +116,7 @@ export const fetchContactPersonDetailsAsync = createAsyncThunk(
   }
 );
 
+// Fetch single vendorMaster
 export const fetchSingleVendorMasterAsync = createAsyncThunk(
   "vendorMaster/singleVendor",
   async (data, thunkAPI) => {
@@ -131,7 +134,7 @@ export const fetchSingleVendorMasterAsync = createAsyncThunk(
     }
   }
 );
-
+// Fetch lane master details
 export const fetchLaneMasterDetailsAsync = createAsyncThunk(
   "vendorMaster/fetchLaneMasterDetails",
   async (data, thunkAPI) => {
@@ -150,12 +153,50 @@ export const fetchLaneMasterDetailsAsync = createAsyncThunk(
   }
 );
 
-// Update contact
-export const updateContactAsync = createAsyncThunk(
-  "vendorMaster/updateContact",
+// Update child contact/lane
+export const updateVendorChildAsync = createAsyncThunk(
+  "vendorMaster/updateChild",
   async (data, thunkAPI) => {
     try {
-      const response = await updateContactApi(data);
+      const response = await updateVendorChildApi(data);
+      if (response?.data?.statusCode === 200) {
+        return thunkAPI.fulfillWithValue(response?.data?.res);
+      } else {
+        throw response;
+      }
+    } catch (error) {
+      console.log(error);
+      thunkAPI.rejectWithValue(error?.response?.data);
+      throw error?.response?.data;
+    }
+  }
+);
+
+// Add contact
+export const addContactAsync = createAsyncThunk(
+  "vendorMaster/addContact",
+  async (data, thunkAPI) => {
+    try {
+      const response = await addContactApi(data);
+      if (response?.data?.statusCode === 200) {
+        return thunkAPI.fulfillWithValue(response?.data?.res);
+      } else {
+        throw response;
+      }
+    } catch (error) {
+      console.log(error);
+      thunkAPI.rejectWithValue(error?.response?.data);
+      throw error?.response?.data;
+    }
+  }
+);
+
+// Update vendor
+export const updateVendorAsync = createAsyncThunk(
+  "vendorMaster/UpdateVendor",
+  async (data, thunkAPI) => {
+    try {
+      const response = await updateVendorApi(data);
       if (response?.data?.statusCode === 200) {
         return thunkAPI.fulfillWithValue(response?.data?.res);
       } else {

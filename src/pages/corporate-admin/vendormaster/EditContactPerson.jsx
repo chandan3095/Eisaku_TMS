@@ -5,15 +5,15 @@ import DataTable from "react-data-table-component";
 import { useDispatch, useSelector } from "react-redux";
 import { contactPersonDetailsApiCall } from "../../../Api/api";
 import {
+  addContactAsync,
   fetchContactPersonDetailsAsync,
-  updateContactAsync,
+  updateVendorChildAsync,
 } from "../../../redux/features/vendorMaster";
 import CustomInput from "../../../components/common/CustomInput/CustomInput";
 
-const EditContactPerson = ({ data }) => {
+const EditContactPerson = ({ data, vendorId, mode }) => {
   const [showModal, setshowModal] = useState(false);
   const [isChecked, setIsChecked] = useState(true);
-  const [loading, setLoading] = useState(true);
 
   const contactPersonDetials = useSelector(
     (state) => state.vendorMaster.contactPersonData
@@ -50,6 +50,32 @@ const EditContactPerson = ({ data }) => {
     });
   };
 
+  // Add button handler
+  const addButtonHandler = () => {
+    setshowModal(true);
+    setformData((prev) => ({
+      ...prev,
+      vendorId,
+    }));
+  };
+
+  const addContact = () => {
+    const newData = new FormData();
+    newData.append("vendor_master_id", formData.vendorId);
+    newData.append("model_id", 7);
+    newData.append("action_id", 1);
+    const ard = {
+      contact_person_name: formData.name,
+      mobile: formData.mobile,
+      email: formData.email,
+    };
+    Object.keys(ard).forEach((key, index) => {
+      newData.append(`${key}[]`, ard[key]);
+    });
+
+    dispatch(addContactAsync(newData));
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setformData((prev) => ({ ...prev, [name]: value }));
@@ -74,7 +100,7 @@ const EditContactPerson = ({ data }) => {
       newData.append(`${key}[]`, ard[key]);
     });
 
-    dispatch(updateContactAsync(newData));
+    dispatch(updateVendorChildAsync(newData));
   };
 
   const columns = [
@@ -147,7 +173,7 @@ const EditContactPerson = ({ data }) => {
       <CustomModal
         showModal={showModal}
         handleCloseModal={handleCloseModal}
-        onSubmit={updateContact}
+        onSubmit={mode === "add" ? addContact : updateContact}
         child={
           <>
             <div className="">
@@ -189,17 +215,27 @@ const EditContactPerson = ({ data }) => {
           </>
         }
       />
-      <DataTable
-        columns={columns}
-        data={data}
-        sortable
-        fixedHeader
-        pagination
-        responsive
-        striped={true}
-        borderColor="#000000"
-        customStyles={customStyles}
-      ></DataTable>
+      {mode === "add" ? (
+        <button
+          type="button"
+          className="btn btn-primary float-right"
+          onClick={addButtonHandler}
+        >
+          <i className="fas fa-plus"></i> Add item
+        </button>
+      ) : (
+        <DataTable
+          columns={columns}
+          data={data}
+          sortable
+          fixedHeader
+          pagination
+          responsive
+          striped={true}
+          borderColor="#000000"
+          customStyles={customStyles}
+        ></DataTable>
+      )}
     </>
   );
 };
