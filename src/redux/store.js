@@ -12,31 +12,43 @@ import locationMasterListSlice from "../redux/features/location-master/listLocat
 import locationMasterSingleListSlice from "../redux/features/location-master/singleListLocationMasterSlice";
 import fleetMasterReducer from "./features/fleetMaster";
 import driverMasterReducer from "./features/driverMaster";
+import customerMasterReducer from "./features/customerMaster";
+import laneMasterReducer from "./features/laneMaster";
+import helperReducer from "./features/helperSlice";
 import helperMasterReducer from "./features/helperMaster";
 import vendorMasterReducer from "./features/vendorMaster";
+import contractorMasterAddSlice from "./features/contractor-master/contractorMasterAddSlice";
+import contractorMasterListSlice from "./features/contractor-master/contractorMasterListSlice";
+import singleContractorContactDetailsSlice from "./features/contractor-master/singleContractorContactDetailsSlice";
 
 const rootReducer = combineReducers({
-  addUser: addUserReducer,
-  listUser: listUserSlice,
-  loginReducer: loginReducer,
-  driveMaster: DriveMasterReducer,
-  locationMasterReducer: locationMasterReducer,
-  locationMasterListSlice: locationMasterListSlice,
-  locationMasterSingleListSlice: locationMasterSingleListSlice,
-  fleetMaster: fleetMasterReducer,
-  driverMaster: driverMasterReducer,
-  helperMaster: helperMasterReducer,
-  vendorMaster: vendorMasterReducer,
+   addUser: addUserReducer,
+   listUser: listUserSlice,
+   loginReducer: loginReducer,
+   driveMaster: DriveMasterReducer,
+   locationMasterReducer: locationMasterReducer,
+   locationMasterListSlice: locationMasterListSlice,
+   locationMasterSingleListSlice: locationMasterSingleListSlice,
+   fleetMaster: fleetMasterReducer,
+   driverMaster: driverMasterReducer,
+   customerMaster: customerMasterReducer,
+   laneMaster: laneMasterReducer,
+   helper: helperReducer,
+   helperMaster: helperMasterReducer,
+   vendorMaster: vendorMasterReducer,
+   contractorMasterAddSlice: contractorMasterAddSlice,
+   contractorMasterListSlice: contractorMasterListSlice,
+   singlecontractorContactDetailsSlice: singleContractorContactDetailsSlice,
 });
 
 const persistConfig = {
-  key: "root",
-  storage,
+   key: "root",
+   storage,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({
-  reducer: persistedReducer,
+   reducer: persistedReducer,
 });
 export const persistor = persistStore(store);
 

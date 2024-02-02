@@ -7,6 +7,12 @@ import * as Yup from "yup";
 import CustomToggleSwitch from "../../../../components/common/CustomToggle";
 import CustomModal from "../../../../components/common/Modal";
 import DataTable from "react-data-table-component";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  addSingleFleetChildAsync,
+  updateSingleFleetChildAsync,
+} from "../../../../redux/features/fleetMaster";
 
 function ServiceRecord({
   handleFileChange,
@@ -16,6 +22,11 @@ function ServiceRecord({
   formik,
   handleServiceBillChange,
 }) {
+  const params = useParams();
+  const dispatch = useDispatch();
+
+  const [action, setAction] = useState(""); // State to manage toggle
+
   const [isChecked, setIsChecked] = useState({}); // State to manage toggle
 
   const toggleSwitch = () => {
@@ -55,7 +66,23 @@ function ServiceRecord({
     ...item,
     action: (
       <>
-        <button className="btn btn-primary mx-2" onClick={handleShowModal} type="button">
+        <button
+          className="btn btn-primary mx-2"
+          onClick={() => {
+            console.log({ item });
+            setAction("edit");
+            setFormData({
+              id: item?.id,
+              odometerReading: item?.odometerReading,
+              serviceDate: item?.serviceDate,
+              serviceAmount: item?.serviceAmount,
+              serviceStationName: item?.serviceStationName,
+              serviceBillUpload: item?.serviceBillUpload,
+            });
+            handleShowModal();
+          }}
+          type="button"
+        >
           Edit
         </button>
         <CustomToggleSwitch id="dataOne" checked={isChecked} onChange={toggleSwitch} />
@@ -63,120 +90,6 @@ function ServiceRecord({
     ),
   }));
 
-  const _data = [
-    {
-      id: 1,
-      vehicleNumber: "UP-80K-8271",
-      vehicleName: "Mini Car",
-      vehicleTitle: "Mini Car",
-      action: (
-        <>
-          <button
-            className="btn btn-primary mx-2"
-            onClick={handleShowModal}
-            type="button"
-          >
-            Edit
-          </button>
-          <CustomToggleSwitch id="dataOne" checked={isChecked} onChange={toggleSwitch} />
-        </>
-      ),
-    },
-    {
-      id: 2,
-      vehicleNumber: "UP-80K-8271",
-      vehicleName: "Mini Car",
-      vehicleTitle: "Mini Car",
-      action: (
-        <>
-          <button
-            className="btn btn-primary mx-2"
-            onClick={handleShowModal}
-            type="button"
-          >
-            Edit
-          </button>
-          <CustomToggleSwitch id="dataTwo" checked={isChecked} onChange={toggleSwitch} />
-        </>
-      ),
-    },
-    {
-      id: 3,
-      vehicleNumber: "UP-80K-8271",
-      vehicleName: "Mini Car",
-      vehicleTitle: "Mini Car",
-      action: (
-        <>
-          <button
-            className="btn btn-primary mx-2"
-            onClick={handleShowModal}
-            type="button"
-          >
-            Edit
-          </button>
-          <CustomToggleSwitch
-            id="dataThree"
-            checked={isChecked}
-            onChange={toggleSwitch}
-          />
-        </>
-      ),
-    },
-    {
-      id: 4,
-      vehicleNumber: "UP-80K-8271",
-      vehicleName: "Mini Car",
-      vehicleTitle: "Mini Car",
-      action: (
-        <>
-          <button
-            className="btn btn-primary mx-2"
-            onClick={handleShowModal}
-            type="button"
-          >
-            Edit
-          </button>
-          <CustomToggleSwitch id="dataFour" checked={isChecked} onChange={toggleSwitch} />
-        </>
-      ),
-    },
-    {
-      id: 5,
-      vehicleNumber: "UP-80K-8271",
-      vehicleName: "Mini Car",
-      vehicleTitle: "Mini Car",
-      action: (
-        <>
-          <button
-            className="btn btn-primary mx-2"
-            onClick={handleShowModal}
-            type="button"
-          >
-            Edit
-          </button>
-          <CustomToggleSwitch id="dataFive" checked={isChecked} onChange={toggleSwitch} />
-        </>
-      ),
-    },
-    {
-      id: 6,
-      vehicleNumber: "UP-80K-8271",
-      vehicleName: "Mini Car",
-      vehicleTitle: "Mini Car",
-      action: (
-        <>
-          <button
-            className="btn btn-primary mx-2"
-            onClick={handleShowModal}
-            type="button"
-          >
-            Edit
-          </button>
-          <CustomToggleSwitch id="dataSix" checked={isChecked} onChange={toggleSwitch} />
-        </>
-      ),
-    },
-  ];
   const customStyles = {
     table: {
       style: {
@@ -205,12 +118,80 @@ function ServiceRecord({
       },
     },
   };
+
+  const [formData, setFormData] = useState({
+    id: "",
+    odometerReading: "",
+    serviceDate: "",
+    serviceAmount: "",
+    serviceStationName: "",
+    serviceBillUpload: "",
+  });
+
+  console.log({ formData });
+
+  const handleChange = (e) => {
+    const { name, value, type } = e.target;
+    // console.log({ name, value, type, file: e.target.files[0] });
+    if (type === "file") {
+      setFormData((prev) => ({ ...prev, [name]: e.target.files[0] }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleSubmit = () => {
+    const newData = new FormData();
+
+    const data = {
+      fleet_master_id: params?.id,
+      model_id: 3,
+      service_record_id: formData?.id,
+    };
+    const dataArr = {
+      service_record_odometer_reading: [formData.odometerReading],
+      service_date: [formData.serviceDate],
+      service_amount: [formData.serviceAmount],
+      service_station_name: [formData.serviceStationName],
+    };
+
+    Object.keys(data).forEach((item) => {
+      newData.append(item, data[item]);
+    });
+    Object.keys(dataArr).forEach((item) => {
+      newData.append(`${item}[]`, JSON.stringify(dataArr[item]));
+    });
+
+    if (action === "edit") {
+      newData.append("_method", "PATCH");
+      newData.append("action_id", 2);
+      typeof formData.serviceBillUpload === "object" &&
+        newData.append("service_bill_upload[]", formData.serviceBillUpload);
+
+      dispatch(updateSingleFleetChildAsync(newData)).then(() => {
+        handleCloseModal();
+      });
+    }
+
+    if (action === "add") {
+      newData.append("action_id", 1);
+
+      newData.append("service_bill_upload[]", formData.serviceBillUpload);
+
+      dispatch(addSingleFleetChildAsync(newData)).then(() => {
+        handleCloseModal();
+      });
+    }
+  };
+
   return (
     <>
       <CustomModal
         showModal={isModalVisible}
         handleCloseModal={handleCloseModal}
         modalSize="modal-xl"
+        title="Service Record"
+        onSubmit={handleSubmit}
         child={
           <div
             className="tab-pane fade show active"
@@ -225,96 +206,71 @@ function ServiceRecord({
                 </div>
 
                 <div className="card-body">
-                  {serviceBillAdd.map((item, index) => (
-                    <div
-                      className={
-                        index < serviceBillAdd.length - 1 && serviceBillAdd.length > 1
-                          ? "row border-bottom mb-4 pb-3"
-                          : "row"
-                      }
-                    >
-                      <div className="col-lg-4">
-                        <CustomInput
-                          require={require}
-                          label="Odometer reading"
-                          id="odometerReading"
-                          placeholder="Enter Amount"
-                          name={"odometerReading"}
-                          value={item.odometerReading}
-                          onChange={(e) => handleServiceBillChange(item?.id, e)}
-                        />
-                      </div>
-                      <div className="col-lg-4">
-                        <CustomDatePicker
-                          require={require}
-                          label="Service Date"
-                          id="serviceDate"
-                          placeholder="Select Service Date"
-                          name={"serviceDate"}
-                          value={item.serviceDate}
-                          onChange={(e) => handleServiceBillChange(item?.id, e)}
-                        />
-                      </div>
-                      <div className="col-lg-4">
-                        <CustomInput
-                          require={require}
-                          label="Service Amount"
-                          id="serviceAmount"
-                          placeholder="Enter Service Amount"
-                          name={"serviceAmount"}
-                          value={item.serviceAmount}
-                          onChange={(e) => handleServiceBillChange(item?.id, e)}
-                        />
-                      </div>
-                      <div className="col-lg-4">
-                        <CustomInput
-                          require={require}
-                          label="Service Station Name"
-                          id="serviceStationName"
-                          placeholder="Enter Service Station Name"
-                          name={"serviceStationName"}
-                          value={item.serviceStationName}
-                          onChange={(e) => handleServiceBillChange(item?.id, e)}
-                        />
-                      </div>
-                      <div className="col-lg-4">
-                        <label className="text-bold">
-                          Service bill upload <span className="text-danger">*</span>
-                        </label>
-                        <CustomFileUpload
-                          accept=".pdf, .doc, .docx"
-                          // onChange={(event) => handleFileChange(event)}
-                          name={"serviceBillUpload"}
-                          value={item.serviceBillUpload}
-                          onChange={(e) => {
-                            handleServiceBillChange(item?.id, e, true);
-                          }}
-                          // errors={formik.errors.insuranceAmount}
-                          // message={formik.errors.insuranceAmount}
-                        />
-                      </div>
-                      <div className="col-lg-4 mt-4 pt-2">
-                        {index > 0 && (
-                          <button
-                            type="button"
-                            className="btn btn-danger float-left ml-3"
-                            onClick={handleServiceBillDelete}
-                          >
-                            <i className="fas fa-trash"></i> Delete item
-                          </button>
-                        )}
-                      </div>
+                  <div className={"row"}>
+                    <div className="col-lg-4">
+                      <CustomInput
+                        require={require}
+                        label="Odometer reading"
+                        id="odometerReading"
+                        placeholder="Enter Amount"
+                        name={"odometerReading"}
+                        value={formData.odometerReading}
+                        onChange={handleChange}
+                        // value={item.odometerReading}
+                        // onChange={(e) =>
+                        //     handleServiceBillChange(
+                        //         item?.id,
+                        //         e
+                        //     )
+                        // }
+                      />
                     </div>
-                  ))}
-                  <div className="row">
-                    <div className="col-6">
-                      <button
-                        type="button"
-                        className="btn btn-primary float-left"
-                        onClick={handleServiceBill}
-                      >
-                        <i className="fas fa-plus"></i> Add More
-                      </button>
+                    <div className="col-lg-4">
+                      <CustomDatePicker
+                        require={require}
+                        label="Service Date"
+                        id="serviceDate"
+                        placeholder="Select Service Date"
+                        name={"serviceDate"}
+                        value={formData.serviceDate}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="col-lg-4">
+                      <CustomInput
+                        require={require}
+                        label="Service Amount"
+                        id="serviceAmount"
+                        placeholder="Enter Service Amount"
+                        name={"serviceAmount"}
+                        value={formData.serviceAmount}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="col-lg-4">
+                      <CustomInput
+                        require={require}
+                        label="Service Station Name"
+                        id="serviceStationName"
+                        placeholder="Enter Service Station Name"
+                        name={"serviceStationName"}
+                        value={formData.serviceStationName}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="col-lg-4">
+                      <label className="text-bold">
+                        Service bill upload <span className="text-danger">*</span>
+                      </label>
+                      <CustomFileUpload
+                        accept=".pdf, .doc, .docx, .png, .jpg"
+                        // onChange={(event) => handleFileChange(event)}
+                        name={"serviceBillUpload"}
+                        value={formData.serviceBillUpload}
+                        onChange={handleChange}
+                        // errors={formik.errors.insuranceAmount}
+                        // message={formik.errors.insuranceAmount}
+                      />
                     </div>
                   </div>
                 </div>
@@ -335,6 +291,29 @@ function ServiceRecord({
         borderColor="#000000"
         customStyles={customStyles}
       ></DataTable>
+
+      <div className="row">
+        <div className="col-6">
+          <button
+            type="button"
+            className="btn btn-primary float-left"
+            onClick={() => {
+              setAction("add");
+              setFormData({
+                id: "",
+                odometerReading: "",
+                serviceDate: "",
+                serviceAmount: "",
+                serviceStationName: "",
+                serviceBillUpload: "",
+              });
+              handleShowModal();
+            }}
+          >
+            <i className="fas fa-plus"></i> Add More
+          </button>
+        </div>
+      </div>
     </>
   );
 }

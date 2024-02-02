@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CustomInput from '../../../components/common/CustomInput/CustomInput';
 import CustomFileUpload from '../../../components/common/CustomFileUpload/CustomFileUpload';
 import MultipleFileUpload from '../../../components/common/MultipleFileUpload/MultipleFileUpload';
@@ -9,36 +9,71 @@ import { FormikProvider, Form, useFormik } from 'formik';
 import * as yup from "yup";
 import { useDispatch } from 'react-redux';
 import { addContractorMasterAsync } from '../../../redux/features/contractor-master/contractorMasterAddSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { editContractorMasterAsync } from '../../../redux/features/contractor-master/contractorMasterEditSlice';
+import client from '../../../Api/client';
+import EndUrls from '../../../Api/endUrls';
 
-const ContractorMasterAdd = () => {
+
+const ContractorMasterEdit = () => {
    const [addContact, setAddContact] = useState([
-      {  id: 1,
-         contact_person_name: '',
+      {
+         id: 1,
+         name: '',
          mobile: '',
          email: ''
       }
    ]);
-   // const [addEmail, setAddEmail] = useState([""]);
-   const dispatch = useDispatch()
-   const navigate=useNavigate()
-   const [gstUpload, setGstUpload] = useState(null)
-   const [bankDetailsUpload, setBankDetailsUpload] = useState(null)
-   const [agreementDetailsUpload, setAgreementDetailsUpload] = useState(null)
 
    const handleAddContact = () => {
       setAddContact((prev) => [...prev, {
-         id: prev.length+1,
-         contact_person_name: '',
+         id: prev.length + 1,
+         name: '',
          mobile: '',
          email: ''
       }]);
    };
+   // const [addEmail, setAddEmail] = useState([""]);
+   const [fetchedContractor, setFetchedContractor] = useState({
+      name: '',
+      location: '',
+      gst_no: '',
+      address: '',
+      // contact_personal_details:'',
+      account_no: '',
+      bank_name: '',
+      ifsc_code: '',
+      account_holder_name: '',
+      gst_document:'',
+      bank_document:'',
+      agreement_details:''
+   })
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+   const [gstUpload, setGstUpload] = useState(null)
+   const [bankDetailsUpload, setBankDetailsUpload] = useState(null)
+   const [agreementDetailsUpload, setAgreementDetailsUpload] = useState(null)
+   const params= useParams()
 
-   // console.log(addContact);
+   // const handleAddContact = () => {
+   //    setAddContact([...addContact, ""]);
+   // };
    // const handleAddEmail = () => {
    //    setAddEmail([...addEmail, ""]);
    // };
+
+   const handleChangeContactPerson = (id, e) => {
+      const contactData = addContact.map((item) => {
+         if (item.id === id) {
+            return {
+               ...item, [e.target.name]: e.target.value
+            }
+         }
+         return item
+      })
+      setAddContact(contactData)
+   }
 
    const handleRemoveContact = (index) => {
       const updatedContacts = [...addContact];
@@ -61,64 +96,66 @@ const ContractorMasterAdd = () => {
       setAgreementDetailsUpload(file)
    }
 
-   const handleChangeContactPerson=(id,e)=>{
-      const contactData=addContact.map((item)=>{
-         if (item.id === id){
-            return{
-               ...item, [e.target.name]:e.target.value
-            }
-         }
-         return item
-      })
-      setAddContact(contactData)
-   }
-   // console.log(gstUpload);
+   const handleUpdateContractor=async(formData)=>{
+      console.log(formData);
+      const updatedData= new FormData()
+      updatedData.append("id", params.id)
+      updatedData.append('name', formData.name);
+      updatedData.append('location', formData.location);
+      updatedData.append('gst_no', formData.gst_no);
+      updatedData.append('address', formData.address);
+      updatedData.append('account_no', formData.account_no);
+      updatedData.append('bank_name', formData.bank_name);
+      updatedData.append('ifsc_code', formData.ifsc_code);
+      updatedData.append('account_holder_name', formData.account_holder_name);
 
-   const handleContractor = async (formData) => {
+      gstUpload && updatedData.append('gst_document', gstUpload);
+      bankDetailsUpload && updatedData.append('bank_document', bankDetailsUpload)
+      agreementDetailsUpload && updatedData.append('agreement_details', agreementDetailsUpload)
+      updatedData.append("model_id", 9);
+      updatedData.append("action_id", 2)
+      updatedData.append("_method", "PATCH")
 
-      const conpername = addContact.map((item, index) => {
-         return item.contact_person_name
-      })
-      console.log(conpername);
-
-      const conpermobile = addContact.map((item, index) => {
-         return item.mobile
-      })
-
-      const conperemail = addContact.map((item, index) => {
-         return item.email
-      })
-
-      console.log('INFO', 'contractor form', formData);
-      const newData = new FormData()
-      // Object.entries(formData).forEach(([key, value]) => {
-      //    newData.append(key, value);
-      // });
-      newData.append('name', formData.name);
-      newData.append('location', formData.location);
-      newData.append('gst_no', formData.gst_no);
-      newData.append('address', formData.address);
-      newData.append('account_no', formData.account_no);
-      newData.append('bank_name', formData.bank_name);
-      newData.append('ifsc_code', formData.ifsc_code);
-      newData.append('account_holder_name', formData.account_holder_name);
-
-      newData.append('gst_document', gstUpload);
-      newData.append('bank_document', bankDetailsUpload)
-      newData.append('agreement_details', agreementDetailsUpload)
-
-      newData.append('contact_person_name[]', JSON.stringify(conpername))
-      newData.append('mobile[]', JSON.stringify(conpermobile))
-      newData.append('email[]', JSON.stringify(conperemail))
-      newData.append("model_id", 9);
-      newData.append("action_id",1)
-
-      console.log('INFO', 'contractor add form', ...newData);
-
-      dispatch(addContractorMasterAsync(newData))
+      console.log(gstUpload);
+      dispatch(editContractorMasterAsync(updatedData))
       navigate('/contractor-master/view')
    }
 
+
+   
+   const fetchContractor = `https://webideasolution.in/eisakutms/public/api/contractor/fetch/${params.id}?&model_id=9&action_id=3`
+
+   useEffect(() => {
+      const fetchData = async () => {
+         try {
+            const response = await axios.get(fetchContractor, {
+               headers: {
+                  Authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`
+               }
+            });
+            console.log(response.data);
+            setAddContact(response?.data?.res?.contact_personal_details)
+            console.log(response?.data?.res);
+            setFetchedContractor({
+               ...fetchedContractor,
+               name: response?.data?.res?.name,
+               location: response?.data?.res?.location,
+               gst_no: response?.data?.res?.gst_no,
+               address: response?.data?.res?.address,
+               account_no: response?.data?.res?.account_no,
+               bank_name: response?.data?.res?.bank_name,
+               ifsc_code: response?.data?.res?.ifsc_code,
+               account_holder_name: response?.data?.res?.account_holder_name,
+               gst_document: response?.data?.res?.gst_document,
+               bank_document:response?.data?.res?.bank_document,
+               agreement_details: response?.data?.res?.agreement_details
+            })
+         } catch (error) {
+            console.log(error);
+         }
+      };
+      fetchData();
+   }, [fetchContractor, params.id]);
 
    const contractorMasterAddSchema = yup.object().shape({
       name: yup
@@ -188,26 +225,17 @@ const ContractorMasterAdd = () => {
    });
 
    const formik = useFormik({
-      initialValues: {
-         name: '',
-         location: '',
-         gst_no: '',
-         address: '',
-         mobile: '',
-         contact_person_name: '',
-         email: '',
-         account_no: '',
-         bank_name: '',
-         ifsc_code: '',
-         account_holder_name: '',
-      },
+      initialValues: fetchedContractor,
+      enableReinitialize: true,
       // validationSchema: contractorMasterAddSchema,
-      onSubmit: handleContractor
-   })
+      onSubmit: handleUpdateContractor
+   });
+
    const { errors, touched, getFieldProps, handleSubmit, resetForm } = formik;
+   
    return (
       <div>
-         <BodyHeader title="Add Contractor Master" />
+         <BodyHeader title="Edit Contractor Master" />
          <FormikProvider value={formik}>
             <Form className="p-3 shadow-lg">
                <div className="row">
@@ -261,12 +289,15 @@ const ContractorMasterAdd = () => {
                                  <label className="text-bold">GST Document <span className='text-danger'>*</span></label>
                                  <CustomFileUpload
                                     label="GST Details"
-                                    id="gstUpload"
-                                    name="gstUpload"
+                                    id="gst_document"
+                                    name="gst_document"
                                     // {...getFieldProps("gstUpload")}
                                     // errors={errors.gstUpload && touched.gstUpload}
                                     // message={errors.gstUpload}
                                     onChange={handleGstUpload} />
+                                 <span className='text-success' style={{ fontSize: ".8rem" }}>
+                                    {fetchedContractor?.gst_document.split('/').pop()}
+                                 </span>
                               </div>
 
                               <div className="col-12 col-sm-12 col-md-12 col-lg- mb-3">
@@ -296,28 +327,30 @@ const ContractorMasterAdd = () => {
                                                 label="Contact Person Name"
                                                 inputType="text"
                                                 id="#contact_person_name"
-                                                name="contact_person_name"
-                                                value={item.contact_person_name}
+                                                name="name"
+                                                value={item.name}
                                                 placeholder="Enter Contact Person Name."
-                                                onChange={(e)=>handleChangeContactPerson(item.id,e)}
-                                                // {...getFieldProps("contact_person_name")}
-                                                // errors={errors.contact_person_name && touched.contact_person_name}
-                                                // message={"ERROR"}
+                                                onChange={(e) => handleChangeContactPerson(item.id, e)}
+                                                disabled={true}
+                                             // {...getFieldProps("contact_person_name")}
+                                             // errors={errors.contact_person_name && touched.contact_person_name}
+                                             // message={"ERROR"}
                                              />
                                           </div>
                                           <div className="col-12 col-sm-12 col-md- col-lg-4">
                                              <CustomInput
                                                 require={require}
                                                 label="Mobile No"
-                                                inputType="number"
+                                                inputType="text"
                                                 id="#mobile"
                                                 name="mobile"
                                                 placeholder="Enter Contact Person Mobile No."
                                                 value={item.mobile}
                                                 onChange={(e) => handleChangeContactPerson(item.id, e)}
-                                                // {...getFieldProps("mobile")}
-                                                // errors={errors.mobile && touched.mobile}
-                                                // message={"ERROR"}
+                                                disabled={true}
+                                             // {...getFieldProps("mobile")}
+                                             // errors={errors.mobile && touched.mobile}
+                                             // message={"ERROR"}
                                              />
                                           </div>
                                           <div className="col-12 col-sm-12 col-md- col-lg-4">
@@ -330,9 +363,10 @@ const ContractorMasterAdd = () => {
                                                 placeholder="Enter Contact Person Email"
                                                 value={item.email}
                                                 onChange={(e) => handleChangeContactPerson(item.id, e)}
-                                                // {...getFieldProps("email")}
-                                                // errors={errors.email && touched.email}
-                                                // message={"ERROR"}
+                                                disabled={true}
+                                             // {...getFieldProps("email")}
+                                             // errors={errors.email && touched.email}
+                                             // message={"ERROR"}
                                              />
                                           </div>
 
@@ -424,13 +458,16 @@ const ContractorMasterAdd = () => {
                            <label className="text-bold">Bank Document<span className='text-danger'>*</span></label>
                            <CustomFileUpload
                               label="Bank Details"
-                              id="bankDetails"
-                              name="bankDetails"
+                              id="bank_document"
+                              name="bank_document"
                               // {...getFieldProps("bankDetails")}
                               // errors={errors.bankDetails && touched.bankDetails}
                               // message={errors.bankDetails}
                               onChange={handleBankDetailsUpload}
                            />
+                           <span className='text-success' style={{ fontSize: ".8rem" }}>
+                              {fetchedContractor?.bank_document.split('/').pop()}
+                           </span>
                         </div>
                      </div>
                   </div>
@@ -446,13 +483,16 @@ const ContractorMasterAdd = () => {
                            <div className="col-lg-4">
                               <CustomFileUpload
                                  label="Agreement Details"
-                                 id="agreementDetails"
-                                 name="agreementDetails"
+                                 id="agreement_details"
+                                 name="agreement_details"
                                  // {...getFieldProps("agreementDetails")}
                                  // errors={errors.agreementDetails && touched.agreementDetails}
                                  // message={errors.agreementDetails} 
                                  onChange={handleAgreementDetailsUpload}
                               />
+                              <span className='text-success' style={{ fontSize: ".8rem" }}>
+                                 {fetchedContractor?.agreement_details.split('/').pop()}
+                              </span>
                            </div>
                         </div>
                      </div>
@@ -461,11 +501,11 @@ const ContractorMasterAdd = () => {
 
                <div className="mt-3 text-center">
                   <button className="btn btn-primary px-4 py-3" type="submit" onClick={handleSubmit}>
-                     <h5 className="mb-0 text-uppercase">Submit</h5>
+                     <h5 className="mb-0 text-uppercase">Update</h5>
                   </button>
-                  <button className="btn btn-danger ml-3 px-4 py-3" type="submit">
+                  {/* <button className="btn btn-danger ml-3 px-4 py-3" type="submit">
                      <h5 className="mb-0 text-uppercase">reset</h5>
-                  </button>
+                  </button> */}
                </div>
             </Form>
          </FormikProvider>
@@ -473,4 +513,4 @@ const ContractorMasterAdd = () => {
    )
 }
 
-export default ContractorMasterAdd
+export default ContractorMasterEdit

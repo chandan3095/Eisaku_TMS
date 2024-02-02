@@ -29,7 +29,11 @@ const CustomDropdown = ({
         onChange={onChange}
         multi={multiple}
         disabled={disabled}
-        style={{ backgroundColor: disabled ? "#e9ecef" : "#fff" }}
+        style={{
+          backgroundColor: disabled ? "#e9ecef" : "#fff",
+          // zIndex: 999999999,
+          // width: "100%",
+        }}
       />
       {errors && (
         <div className="text-danger" style={{ fontSize: ".8rem" }}>
