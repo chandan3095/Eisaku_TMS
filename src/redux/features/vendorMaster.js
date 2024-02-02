@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
-  addContactApi,
+  addVendorChildApi,
   addVendorMasterApiCall,
   contactPersonDetailsApiCall,
   getAllLaneApiCall,
@@ -172,12 +172,12 @@ export const updateVendorChildAsync = createAsyncThunk(
   }
 );
 
-// Add contact
-export const addContactAsync = createAsyncThunk(
+// Add child
+export const addVendorChildAsync = createAsyncThunk(
   "vendorMaster/addContact",
   async (data, thunkAPI) => {
     try {
-      const response = await addContactApi(data);
+      const response = await addVendorChildApi(data);
       if (response?.data?.statusCode === 200) {
         return thunkAPI.fulfillWithValue(response?.data?.res);
       } else {
