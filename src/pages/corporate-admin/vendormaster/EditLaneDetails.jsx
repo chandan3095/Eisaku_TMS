@@ -7,6 +7,7 @@ import CustomDropdown from "../../../components/common/CustomDropdown/CustomDrop
 import { useSelector, useDispatch } from "react-redux";
 import CustomInput from "../../../components/common/CustomInput/CustomInput";
 import {
+  addVendorChildAsync,
   fetchAllLaneAsync,
   updateVendorChildAsync,
 } from "../../../redux/features/vendorMaster";
@@ -25,7 +26,7 @@ const EditLaneDetails = ({ data, mode, vendorId }) => {
     unloadingCharges: "",
     miscellaneousCarges: "",
     miscellaneousRemarks: "",
-    vendorId: "",
+    vendorId: vendorId,
     id: "",
   });
 
@@ -53,11 +54,14 @@ const EditLaneDetails = ({ data, mode, vendorId }) => {
   };
 
   const handleLaneNameSelect = (values) => {
-    setlaneNameSelect({
-      laneName: values?.[0]?.label,
-      laneId: values?.[0]?.value,
-    });
+    // setlaneNameSelect({
+    //   laneName: values?.[0]?.label,
+    //   laneId: values?.[0]?.value,
+    // });
+    setFormData((prev) => ({ ...prev, id: values[0]?.value }));
   };
+
+  // Edit Btton Handler
   const editHandler = (data) => {
     setFormData({
       expressRate: data?.cust_express_mode_rate_additional,
@@ -75,16 +79,19 @@ const EditLaneDetails = ({ data, mode, vendorId }) => {
     setshowModal(true);
   };
 
+  // Add button handler
   const addButtonHandler = () => {
+    console.log({ vendorId });
     setshowModal(true);
   };
 
-  const updateHandler = () => {
+  // Update api call
+  const updateLane = () => {
     // console.log(formData);
     // return;
     const newData = new FormData();
     newData.append("vendor_master_id", formData.vendorId);
-    newData.append("lane_master_id", laneNameSelect.laneId);
+    newData.append("lane_master_id", formData.id);
     newData.append("_method", "PATCH");
     newData.append("model_id", 7);
     newData.append("action_id", 2);
@@ -107,6 +114,33 @@ const EditLaneDetails = ({ data, mode, vendorId }) => {
     });
 
     dispatch(updateVendorChildAsync(newData));
+  };
+
+  // Add api call
+  const addLane = () => {
+    const newData = new FormData();
+    newData.append("vendor_master_id", formData.vendorId);
+    newData.append("lane_master_id[]", formData.id);
+    newData.append("model_id", 7);
+    newData.append("action_id", 1);
+
+    // for array of elements
+    const ard = {
+      vend_express_mode_rate_additional: formData.expressRate,
+      vend_super_express_mode_rate_additional: formData.superExpressRate,
+      vend_multiple_loading_location_rate_additional: formData.loadingRate,
+      vend_multiple_unloading_location_rate_additional: formData.unLoadingRate,
+      vend_loading_charges: formData.loadingCharges,
+      vend_unloading_charge: formData.unloadingCharges,
+      vend_detention_rate_additional: formData.destinationRate,
+      vend_miscellaneous_charges: formData.miscellaneousCarges,
+      vend_miscellaneous_remarks: formData.miscellaneousRemarks,
+    };
+
+    Object.keys(ard).forEach((key, index) => {
+      newData.append(`${key}[]`, ard[key]);
+    });
+    dispatch(addVendorChildAsync(newData));
   };
 
   const columns = [
@@ -183,7 +217,7 @@ const EditLaneDetails = ({ data, mode, vendorId }) => {
         modalSize={"modal-xl"}
         showModal={showModal}
         handleCloseModal={handleCloseModal}
-        onSubmit={updateHandler}
+        onSubmit={mode === "add" ? addLane : updateLane}
         child={
           <>
             <div className="row">
@@ -312,13 +346,15 @@ const EditLaneDetails = ({ data, mode, vendorId }) => {
         }
       />
       {mode === "add" ? (
-        <button
-          type="button"
-          className="btn btn-primary float-right"
-          onClick={addButtonHandler}
-        >
-          <i className="fas fa-plus"></i> Add item
-        </button>
+        <div>
+          <button
+            type="button"
+            className="btn btn-primary float-right"
+            onClick={addButtonHandler}
+          >
+            <i className="fas fa-plus"></i> Add item
+          </button>
+        </div>
       ) : (
         <DataTable
           columns={columns}

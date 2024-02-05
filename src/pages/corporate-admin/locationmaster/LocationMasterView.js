@@ -14,7 +14,7 @@ function LocationMasterView() {
     (state) => state.locationMasterListSlice
   );
   // const [userRecords, setUserRecords] = useState(userList)
-  //   console.log(locationMasterList, "000");
+  console.log(locationMasterList, "000");
 
   const navigate = useNavigate();
   const [records, setRecords] = useState([]);
@@ -24,9 +24,12 @@ function LocationMasterView() {
 
   useEffect(() => {
     setRecords(data);
-    return ()=>{setRecords([])};
+    return () => {
+      setRecords([]);
+    };
   }, [locationMasterList]);
-console.log(records, 'records');
+
+  // console.log(records, "records");
   const [isChecked, setIsChecked] = useState(); // State to manage toggle
   const toggleSwitch = (index) => {
     setIsChecked(!isChecked);
@@ -46,8 +49,8 @@ console.log(records, 'records');
     },
   ];
   const data =
-    locationMasterList?.user?.res?.length > 0
-      ? locationMasterList.user.res.map?.((item, index) => {
+    locationMasterList?.data?.res?.length > 0
+      ? locationMasterList.data.res.map?.((item, index) => {
           const isChecked = parseInt(item.is_active);
           let editUserId = item.id;
           let formType = "Edit";

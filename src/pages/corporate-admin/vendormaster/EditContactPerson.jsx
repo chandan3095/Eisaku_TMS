@@ -5,7 +5,7 @@ import DataTable from "react-data-table-component";
 import { useDispatch, useSelector } from "react-redux";
 import { contactPersonDetailsApiCall } from "../../../Api/api";
 import {
-  addContactAsync,
+  addVendorChildAsync,
   fetchContactPersonDetailsAsync,
   updateVendorChildAsync,
 } from "../../../redux/features/vendorMaster";
@@ -73,7 +73,7 @@ const EditContactPerson = ({ data, vendorId, mode }) => {
       newData.append(`${key}[]`, ard[key]);
     });
 
-    dispatch(addContactAsync(newData));
+    dispatch(addVendorChildAsync(newData));
   };
 
   const handleChange = (e) => {
@@ -216,13 +216,15 @@ const EditContactPerson = ({ data, vendorId, mode }) => {
         }
       />
       {mode === "add" ? (
-        <button
-          type="button"
-          className="btn btn-primary float-right"
-          onClick={addButtonHandler}
-        >
-          <i className="fas fa-plus"></i> Add item
-        </button>
+        <div>
+          <button
+            type="button"
+            className="btn btn-primary float-right"
+            onClick={addButtonHandler}
+          >
+            <i className="fas fa-plus"></i> Add item
+          </button>
+        </div>
       ) : (
         <DataTable
           columns={columns}
